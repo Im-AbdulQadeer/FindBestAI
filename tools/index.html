@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Browse 500+ AI tools across 20 categories. Filter by pricing, category, and rating. Find the best free and paid AI tools for every task.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:title" content="All AI Tools — AI Hub">
+<meta property="og:url" content="https://aihub.tools/tools/">
+<link rel="canonical" href="https://aihub.tools/tools/">
+<title>All AI Tools — AI Hub | 500+ Tools Compared</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"All AI Tools","url":"https://aihub.tools/tools/","description":"Browse 500+ AI tools across 20 categories."}
+</script>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb orb-a"></div>
+<div class="bg-orb orb-b"></div>
+<div class="bg-orb orb-c"></div>
+<div class="scan-line"></div>
+
+<nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
+<div class="mobile-menu" id="mobileMenu" role="menu"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-badge">// AI TOOLS DIRECTORY</div>
+  <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;letter-spacing:-0.04em;color:var(--text);margin-bottom:12px">All <em style="font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AI Tools</em></h1>
+  <p style="color:var(--text2);font-size:0.95rem;max-width:540px">Browse 500+ AI tools across 20 categories. Filter by category, pricing, and more.</p>
+</div>
+
+<!-- AD TOP -->
+<div style="padding:24px 32px 0;max-width:1380px;margin:0 auto">
+  <div class="ad-unit ad-leaderboard">Advertisement<small>Google AdSense 728×90</small></div>
+</div>
+
+<!-- FILTERS -->
+<section class="section" style="padding-bottom:0">
+  <div class="cats-wrap" id="toolsCats" role="list" aria-label="Category filters"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;align-items:center">
+    <input type="text" id="toolsSearch" class="form-input" style="max-width:280px;padding:10px 16px" placeholder="🔍 Search tools…" oninput="filterTools()">
+    <select id="toolsPricing" class="form-input" style="max-width:180px;padding:10px 16px" onchange="filterTools()">
+      <option value="">All Pricing</option>
+      <option value="free">Free</option>
+      <option value="freemium">Freemium</option>
+      <option value="paid">Paid</option>
+    </select>
+    <div style="margin-left:auto;font-size:0.78rem;font-family:'JetBrains Mono',monospace;color:var(--text3)" id="toolsCount"></div>
+  </div>
+</section>
+
+<!-- TOOLS GRID -->
+<section class="section" style="padding-top:0" aria-label="All AI tools">
+  <div class="tools-grid" id="toolsPageGrid"></div>
+  <div id="noToolsMsg" style="display:none;text-align:center;padding:60px 20px;color:var(--text3)">
+    <div style="font-size:2rem;margin-bottom:12px">🤔</div>
+    <div style="font-size:1rem;font-weight:600;color:var(--text2)">No tools found</div>
+    <div style="font-size:0.85rem;margin-top:6px">Try a different search or category</div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-block reveal">
+  <div class="newsletter-inner">
+    <div class="newsletter-glow"></div>
+    <h2>Get Weekly AI Tool Picks</h2>
+    <p>New tools and reviews delivered every Monday. No spam — unsubscribe anytime.</p>
+    <div class="nl-form">
+      <input type="email" placeholder="your@email.com" aria-label="Email address">
+      <button class="btn-primary" onclick="subscribeNewsletter()">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<footer id="site-footer" role="contentinfo"></footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" aria-label="Close modal">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-ic" id="toastIc"></span>
+  <span id="toastMsg"></span>
+</div>
+
+<script src="/assets/js/data.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/nav.js"></script>
+<script>
+/* ── TOOLS PAGE ── */
+let activeCat = '';
+let allToolsRendered = false;
+
+function renderAllTools(){
+  const grid = document.getElementById('toolsPageGrid');
+  if(allToolsRendered) return;
+  TOOLS.forEach(t => grid.appendChild(makeCard(t)));
+  allToolsRendered = true;
+  updateToolsCount();
+}
+
+function filterTools(){
+  const q = (document.getElementById('toolsSearch')?.value || '').toLowerCase().trim();
+  const pricing = document.getElementById('toolsPricing')?.value || '';
+  const cards = document.querySelectorAll('#toolsPageGrid .card');
+  let visible = 0;
+  cards.forEach(card => {
+    const id = parseInt(card.querySelector('.card-btn')?.getAttribute('onclick')?.match(/\d+/)?.[0]);
+    const t = TOOLS.find(x=>x.id===id);
+    if(!t){ card.style.display=''; return; }
+    const matchCat = !activeCat || t.cat === activeCat;
+    const matchQ = !q || t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.cat.toLowerCase().includes(q);
+    const matchPrice = !pricing || t.pricing === pricing;
+    const show = matchCat && matchQ && matchPrice;
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  document.getElementById('noToolsMsg').style.display = visible === 0 ? 'block' : 'none';
+  updateToolsCount(visible);
+}
+
+function updateToolsCount(count){
+  const el = document.getElementById('toolsCount');
+  if(el) el.textContent = (count !== undefined ? count : TOOLS.length) + ' tools';
+}
+
+(function(){
+  /* Check URL for cat param */
+  const urlCat = new URLSearchParams(window.location.search).get('cat');
+  if(urlCat) activeCat = urlCat;
+
+  renderCats('toolsCats', cat => {
+    activeCat = activeCat === cat.name ? '' : cat.name;
+    filterTools();
+  });
+
+  renderAllTools();
+
+  /* If URL cat, trigger filter */
+  if(activeCat) filterTools();
+
+  initCommonUI();
+})();
+</script>
+</body>
+</html>

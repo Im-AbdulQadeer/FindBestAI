@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Compare AI tools side by side. Choose up to 6 tools and see pricing, features, ratings, and free alternatives at a glance.">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Compare AI Tools — AI Hub">
+<meta property="og:url" content="https://aihub.tools/compare/">
+<link rel="canonical" href="https://aihub.tools/compare/">
+<title>Compare AI Tools Side by Side — AI Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb orb-a"></div>
+<div class="bg-orb orb-b"></div>
+<div class="bg-orb orb-c"></div>
+<div class="scan-line"></div>
+
+<nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
+<div class="mobile-menu" id="mobileMenu" role="menu"></div>
+
+<div class="page-hero">
+  <div class="page-badge">// COMPARE TOOLS</div>
+  <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;letter-spacing:-0.04em;color:var(--text);margin-bottom:12px">Compare <em style="font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AI Tools</em></h1>
+  <p style="color:var(--text2);font-size:0.95rem;max-width:540px">Select up to 6 tools to compare features, pricing, and ratings side by side.</p>
+</div>
+
+<!-- AD TOP -->
+<div style="padding:24px 32px 0;max-width:1380px;margin:0 auto">
+  <div class="ad-unit ad-leaderboard">Advertisement<small>Google AdSense 728×90</small></div>
+</div>
+
+<!-- COMPARE BUILDER -->
+<section class="section">
+  <div class="compare-builder">
+    <div class="builder-title">Build Your Comparison</div>
+    <div class="builder-sub">Select tools below, then click Compare. Mix any category.</div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+      <input type="text" id="compareSearch" class="form-input" style="max-width:260px;padding:10px 16px" placeholder="🔍 Search tools…" oninput="renderToolSelector()">
+      <select id="compareCatFilter" class="form-input" style="max-width:200px;padding:10px 16px" onchange="renderToolSelector()">
+        <option value="">All Categories</option>
+      </select>
+    </div>
+    <div class="tool-selector-grid" id="toolSelectorGrid"></div>
+    <div class="builder-actions">
+      <button class="btn-primary" onclick="buildComparison()" style="padding:11px 28px">Compare Selected →</button>
+      <span style="font-size:0.8rem;color:var(--text3);font-family:'JetBrains Mono',monospace" id="selectionCount">0 tools selected</span>
+      <button class="clear-btn" onclick="clearSelection()">✕ Clear</button>
+    </div>
+  </div>
+
+  <!-- COMPARE RESULT -->
+  <div class="compare-result" id="compareResult">
+    <div class="compare-result-head">
+      <div class="compare-result-title" id="compareResultTitle">Comparison</div>
+      <button class="clear-btn" onclick="clearSelection()">✕ Clear & restart</button>
+    </div>
+    <div class="t-scroll">
+      <table id="compareResultTable"></table>
+    </div>
+  </div>
+</section>
+
+<!-- PRE-BUILT COMPARE TABLES -->
+<section class="section reveal">
+  <div class="section-head">
+    <div><div class="section-label">// CURATED</div><h2 class="section-title">Image AI Compared</h2></div>
+  </div>
+  <div class="compare-wrap">
+    <div class="compare-head"><div class="compare-title">// Best AI Image Generators 2026</div></div>
+    <div class="t-scroll">
+      <table>
+        <thead><tr><th>TOOL</th><th>FREE PLAN</th><th>PRICE</th><th>QUALITY</th><th>SPEED</th><th>API</th><th>COMMERCIAL</th><th>RATING</th></tr></thead>
+        <tbody id="imgCompareBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-head">
+    <div><div class="section-label">// CURATED</div><h2 class="section-title">Writing AI Compared</h2></div>
+  </div>
+  <div class="compare-wrap">
+    <div class="compare-head"><div class="compare-title">// Best AI Writing Tools 2026</div></div>
+    <div class="t-scroll">
+      <table>
+        <thead><tr><th>TOOL</th><th>FREE PLAN</th><th>PRICE</th><th>QUALITY</th><th>CONTEXT</th><th>API</th><th>INTEGRATIONS</th><th>RATING</th></tr></thead>
+        <tbody id="writeCompareBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-head">
+    <div><div class="section-label">// CURATED</div><h2 class="section-title">Video AI Compared</h2></div>
+  </div>
+  <div class="compare-wrap">
+    <div class="compare-head"><div class="compare-title">// Best AI Video Generators 2026</div></div>
+    <div class="t-scroll">
+      <table>
+        <thead><tr><th>TOOL</th><th>FREE PLAN</th><th>PRICE</th><th>QUALITY</th><th>MAX LENGTH</th><th>RESOLUTION</th><th>RATING</th></tr></thead>
+        <tbody id="videoCompareBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- AD MID -->
+<div style="padding:0 32px;max-width:1380px;margin:0 auto;display:flex;justify-content:center">
+  <div class="ad-unit ad-rectangle" style="max-width:728px;width:100%">Advertisement<small>Google AdSense 300×250</small></div>
+</div>
+
+<footer id="site-footer" role="contentinfo"></footer>
+
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" aria-label="Close modal">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-ic" id="toastIc"></span><span id="toastMsg"></span>
+</div>
+
+<script src="/assets/js/data.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/nav.js"></script>
+<script>
+(function(){
+  populateCompareCatFilter();
+  renderToolSelector();
+  updateSelectionCount();
+
+  renderCompareTable('imgCompareBody', COMPARE_DATA, [], row=>[row.quality,row.speed,row.api,row.commercial]);
+  renderCompareTable('writeCompareBody', WRITING_COMPARE, [], row=>[row.quality,row.ctx,row.api,row.int]);
+  renderCompareTable('videoCompareBody', VIDEO_COMPARE, [], row=>[row.quality,row.len,row.res]);
+
+  initCommonUI();
+})();
+</script>
+</body>
+</html>

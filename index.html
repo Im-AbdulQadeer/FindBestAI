@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta name="google-site-verification" content="HcnOuCSvGeAevy8BMMmVCVB4_OyutzGo690LvAkUlE4" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6Y8QJJMK9R"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6Y8QJJMK9R');</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="AI Hub — The world's most comprehensive AI tools directory. Compare 500+ AI tools, find free alternatives, read expert reviews and discover the best AI software for every task.">
+<meta name="keywords" content="AI tools, best AI tools, free AI tools, AI image generation, AI writing tools, ChatGPT alternatives, Midjourney alternatives, AI tools comparison">
+<meta name="author" content="AI Hub">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AI Hub — Discover the Best AI Tools">
+<meta property="og:description" content="Compare 500+ AI tools. Find free alternatives, expert reviews, and the perfect AI tool for every creative and professional task.">
+<meta property="og:url" content="https://aihub.tools">
+<meta property="og:site_name" content="AI Prime Hub">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI Hub — Discover the Best AI Tools">
+<meta name="twitter:description" content="Compare 500+ AI tools. Find free alternatives, expert reviews, and the perfect AI tool for every task.">
+<link rel="canonical" href="https://aihub.tools">
+<title>AI Hub — Discover the Best AI Tools | Free & Paid Compared</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"AI Hub","url":"https://aihub.tools","description":"The world's most comprehensive AI tools directory.","potentialAction":{"@type":"SearchAction","target":"https://aihub.tools/tools/?q={search_term_string}","query-input":"required name=search_term_string"}}
+</script>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb orb-a"></div>
+<div class="bg-orb orb-b"></div>
+<div class="bg-orb orb-c"></div>
+<div class="scan-line"></div>
+
+<nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
+<div class="mobile-menu" id="mobileMenu" role="menu"></div>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" aria-label="Hero section">
+  <div class="hero-eyebrow"><div class="live-dot"></div>500+ AI TOOLS — UPDATED DAILY</div>
+  <h1>Discover the Best<br><em>AI Tools</em> for Every Task</h1>
+  <p class="hero-sub">Your ultimate AI tools directory. Compare features, pricing, and free alternatives. Make smarter software decisions, faster.</p>
+  <div class="search-wrap">
+    <div class="search-ring">
+      <div class="search-box">
+        <div class="search-ic">⌕</div>
+        <input type="text" id="searchInput" placeholder="Search ChatGPT, Midjourney, Runway, Notion AI…" autocomplete="off" aria-label="Search AI tools" role="searchbox">
+        <button class="search-submit" onclick="performSearch()" aria-label="Search">Search</button>
+      </div>
+    </div>
+    <div class="search-dropdown" id="searchDropdown" role="listbox" aria-label="Search results"></div>
+    <div class="search-hints" aria-label="Popular searches">
+      <span>Try:</span>
+      <span class="hint-chip" onclick="setSearch('image generation')">🎨 Image Gen</span>
+      <span class="hint-chip" onclick="setSearch('video editing')">🎬 Video Editing</span>
+      <span class="hint-chip" onclick="setSearch('writing')">✍️ Writing</span>
+      <span class="hint-chip" onclick="setSearch('code')">💻 Coding</span>
+      <span class="hint-chip" onclick="setSearch('free')">🆓 Free Only</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar reveal" role="region" aria-label="Statistics">
+  <div class="stat-item"><span class="stat-n">500+</span><div class="stat-l">AI TOOLS</div></div>
+  <div class="stat-item"><span class="stat-n">20</span><div class="stat-l">CATEGORIES</div></div>
+  <div class="stat-item"><span class="stat-n">310+</span><div class="stat-l">FREE TOOLS</div></div>
+  <div class="stat-item"><span class="stat-n">2M+</span><div class="stat-l">MONTHLY USERS</div></div>
+</div>
+
+<!-- AD TOP -->
+<div style="padding:32px 32px 0;max-width:1380px;margin:0 auto">
+  <!-- Google AdSense 728×90 Leaderboard -->
+  <div class="ad-unit ad-leaderboard">Advertisement<small>Google AdSense 728×90</small></div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="section reveal" aria-label="Browse by category">
+  <div class="section-head">
+    <div><div class="section-label">// BROWSE BY</div><h2 class="section-title">Categories</h2></div>
+    <a href="/tools/" class="see-all">View all →</a>
+  </div>
+  <div class="cats-wrap" id="homeCats" role="list" aria-label="Category filters"></div>
+</section>
+
+<!-- FEATURED TOOLS -->
+<section class="section" aria-label="Featured AI tools">
+  <div class="section-head">
+    <div><div class="section-label">// EDITOR'S PICK</div><h2 class="section-title">Featured Tools</h2></div>
+    <a href="/tools/" class="see-all">See all →</a>
+  </div>
+  <div class="tools-grid featured-layout reveal" id="featuredTools"></div>
+</section>
+
+<!-- AD MID -->
+<div style="padding:0 32px;max-width:1380px;margin:0 auto">
+  <div class="ad-unit ad-leaderboard">Advertisement<small>Google AdSense 728×90 In-Article</small></div>
+</div>
+
+<!-- ALL TOOLS PREVIEW -->
+<section class="section" aria-label="All AI tools">
+  <div class="section-head">
+    <div><div class="section-label">// EXPLORE ALL</div><h2 class="section-title">Popular Tools</h2></div>
+    <a href="/tools/" class="see-all">Browse all 500+ →</a>
+  </div>
+  <div class="tools-grid reveal" id="homeTools"></div>
+  <div style="text-align:center;margin-top:40px">
+    <a href="/tools/" class="btn-primary" style="display:inline-block;padding:14px 40px;font-size:1rem;border-radius:14px;text-decoration:none">Browse All 500+ AI Tools →</a>
+  </div>
+</section>
+
+<!-- COMPARE TABLE -->
+<section class="section reveal" aria-label="Compare AI image tools">
+  <div class="section-head">
+    <div><div class="section-label">// QUICK COMPARE</div><h2 class="section-title">Image AI — Head to Head</h2></div>
+    <a href="/compare/" class="see-all">Full compare →</a>
+  </div>
+  <div class="compare-wrap">
+    <div class="compare-head">
+      <div class="compare-title">// Best AI Image Generators 2026</div>
+      <div class="compare-tabs">
+        <button class="ctab active">Image AI</button>
+        <button class="ctab" onclick="window.location='/compare/'">Writing AI</button>
+        <button class="ctab" onclick="window.location='/compare/'">Video AI</button>
+      </div>
+    </div>
+    <div class="t-scroll">
+      <table>
+        <thead><tr><th>TOOL</th><th>FREE PLAN</th><th>PRICE</th><th>QUALITY</th><th>SPEED</th><th>API</th><th>COMMERCIAL</th><th>RATING</th></tr></thead>
+        <tbody id="compareTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TRENDING -->
+<section class="section reveal" aria-label="Trending AI tools">
+  <div class="section-head">
+    <div><div class="section-label">// THIS WEEK</div><h2 class="section-title">Trending Now</h2></div>
+    <a href="/tools/" class="see-all">All tools →</a>
+  </div>
+  <div class="trending-grid" id="trendingGrid"></div>
+</section>
+
+<!-- AD RECTANGLE -->
+<div style="padding:0 32px;max-width:1380px;margin:0 auto;display:flex;justify-content:center">
+  <div class="ad-unit ad-rectangle" style="max-width:728px;width:100%">Advertisement<small>Google AdSense 300×250 Rectangle</small></div>
+</div>
+
+<!-- BLOG PREVIEW -->
+<section class="section reveal" aria-label="Latest articles">
+  <div class="section-head">
+    <div><div class="section-label">// LATEST</div><h2 class="section-title">Blog & Reviews</h2></div>
+    <a href="/blog/" class="see-all">All articles →</a>
+  </div>
+  <div class="articles-grid" id="homeArticles"></div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter-block reveal">
+  <div class="newsletter-inner">
+    <div class="newsletter-glow"></div>
+    <h2>Stay Ahead of the AI Curve</h2>
+    <p>Weekly digest of the best new AI tools, free alternatives, and expert reviews — straight to your inbox.</p>
+    <div class="nl-form">
+      <input type="email" placeholder="your@email.com" aria-label="Email address">
+      <button class="btn-primary" onclick="subscribeNewsletter()">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer id="site-footer" role="contentinfo"></footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-label="Tool details">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" aria-label="Close modal">✕</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-ic" id="toastIc"></span>
+  <span id="toastMsg"></span>
+</div>
+
+<script src="/assets/js/data.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/nav.js"></script>
+<script>
+/* ── HOME PAGE INIT ── */
+(function(){
+  /* Categories */
+  renderCats('homeCats', cat => {
+    window.location = '/tools/?cat=' + encodeURIComponent(cat.name);
+  });
+
+  /* Featured tools (first 3, first one featured) */
+  const fg = document.getElementById('featuredTools');
+  TOOLS.slice(0,3).forEach((t,i) => fg.appendChild(makeCard(t, i===0)));
+
+  /* Home tools (next 6) */
+  const hg = document.getElementById('homeTools');
+  TOOLS.slice(3,9).forEach(t => hg.appendChild(makeCard(t)));
+
+  /* Compare table */
+  renderCompareTable('compareTableBody', COMPARE_DATA, [], row=>[row.quality,row.speed,row.api,row.commercial]);
+
+  /* Trending */
+  renderTrending('trendingGrid');
+
+  /* Articles */
+  renderArticleCards('homeArticles', 6);
+
+  initCommonUI();
+})();
+</script>
+</body>
+</html>
