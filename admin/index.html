@@ -108,7 +108,6 @@
     </div>
     <div class="admin-nav-group">
       <div class="admin-nav-label">MONETIZATION</div>
-      <button class="admin-nav-item" onclick="showTab('ads')"><span class="nav-ic">💰</span>AdSense & Ads</button>
       <button class="admin-nav-item" onclick="showTab('analytics')"><span class="nav-ic">📈</span>Analytics</button>
     </div>
     <div class="admin-nav-group">
@@ -585,12 +584,9 @@ Do this for every new article after publishing:
     <!-- ADS -->
     <div id="tab-ads" class="tab-pane">
       <div class="admin-header">
-        <div><div class="admin-title">AdSense & Monetization</div><div class="admin-sub">// Manage ad placements and revenue</div></div>
       </div>
 
       <div class="github-panel">
-        <h4>💰 Google AdSense Setup Guide</h4>
-        <p>Your site already has AdSense placeholder units in place. Follow these steps to activate real ads once your site is live and has traffic.</p>
         <div class="code-block">1. Apply at adsense.google.com
    Requirements: 
    - Working website with original content ✓
@@ -600,10 +596,8 @@ Do this for every new article after publishing:
 
 2. After approval, get your Publisher ID: ca-pub-XXXXXXXXXXXXXXXX
 
-3. Add the AdSense auto-ads script to &lt;head&gt; of every page:
    &lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_ID" crossorigin="anonymous"&gt;&lt;/script&gt;
 
-4. Replace placeholder ad units with real AdSense code:
    &lt;ins class="adsbygoogle" style="display:block" 
         data-ad-client="ca-pub-YOUR_ID" 
         data-ad-slot="YOUR_SLOT_ID"
@@ -640,13 +634,11 @@ Do this for every new article after publishing:
       </div>
 
       <div class="github-panel" style="margin-top:0">
-        <h4>💡 Tips to Maximize AdSense Revenue</h4>
         <div class="code-block">• Publish more articles — more pages = more ad impressions
 • Target high-CPC keywords (AI tools, software comparisons)
 • Focus on US/UK/Canada traffic — highest RPM rates
 • Write long-form articles (1500+ words) — more ad slots
 • Add a mid-article ad between h2 sections for best CTR
-• Monitor RPM in AdSense dashboard and optimize placements
 • Alternative ad networks: Ezoic (premium), Mediavine (50k+ sessions/mo)</div>
       </div>
     </div>
@@ -676,7 +668,6 @@ Do this for every new article after publishing:
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <div style="padding:16px;background:var(--surface3);border-radius:10px">
               <div style="font-size:0.68rem;font-family:'JetBrains Mono',monospace;color:var(--accent);margin-bottom:6px">TRAFFIC</div>
-              <div style="font-size:0.85rem;color:var(--text2)">Organic search sessions — target 10k+/month for AdSense revenue</div>
             </div>
             <div style="padding:16px;background:var(--surface3);border-radius:10px">
               <div style="font-size:0.68rem;font-family:'JetBrains Mono',monospace;color:var(--accent);margin-bottom:6px">ENGAGEMENT</div>
@@ -723,7 +714,6 @@ Do this for every new article after publishing:
           <div class="panel-head"><div class="panel-title">Ad Settings</div></div>
           <div class="panel-body">
             <div class="form-group" style="margin-bottom:14px">
-              <label class="form-label">Google AdSense Publisher ID</label>
               <input class="form-input" id="s-adsense" type="text" placeholder="ca-pub-XXXXXXXXXXXXXXXX">
             </div>
             <div class="form-group" style="margin-bottom:14px">
@@ -932,7 +922,6 @@ function generateArticleFile() {
 <nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
 <div class="mobile-menu" id="mobileMenu" role="menu"></div>
 <div style="padding:24px 32px 0;max-width:1380px;margin:0 auto">
-  <div class="ad-unit ad-leaderboard">Advertisement</div>
 </div>
 <article class="article-full" itemscope itemtype="https://schema.org/Article">
   <button class="article-full-back" onclick="window.location='/blog/'">← Back to Blog</button>
@@ -946,7 +935,6 @@ function generateArticleFile() {
     <div class="author-av">📝</div>
     <div><div class="author-name">${author}</div><div class="author-role">// AI Hub Editorial Team</div></div>
   </div>
-  <div style="margin-bottom:32px"><div class="ad-unit" style="height:90px">Advertisement</div></div>
   <div class="article-body-content" itemprop="articleBody">
 ${content}
   </div>
@@ -954,7 +942,6 @@ ${content}
   <div class="related-articles"><h3>Related Articles</h3><div class="related-grid" id="relatedArticles"></div></div>
 </article>
 <div style="padding:0 32px;max-width:760px;margin:0 auto 48px;display:flex;justify-content:center">
-  <div class="ad-unit ad-rectangle" style="max-width:728px;width:100%">Advertisement</div>
 </div>
 <footer id="site-footer" role="contentinfo"></footer>
 <div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true"><div class="modal-box" id="modalBox"><button class="modal-close">✕</button><div id="modalContent"></div></div></div>
@@ -1021,8 +1008,405 @@ function copySitemap() {
 /* ── SETTINGS ── */
 function saveSettings() { showToast('✅ Settings saved — update data.js and redeploy for site-wide changes'); }
 
-/* ── INIT ── */
-(function(){
+/* ════════════════════════════════════════════════════════════
+   SECURITY SYSTEM — MULTI-LAYER CLIENT GATE
+   Layer 1: Brute-force lockout (5 attempts → 30min ban)
+   Layer 2: PBKDF2 password hashing (not plain text comparison)
+   Layer 3: Session expiry (auto-logout after 2 hours idle)
+   Layer 4: Rate limiting (1 attempt per 2 seconds)
+   Layer 5: Decoy honeypot (auto-bans bots filling hidden fields)
+   Layer 6: Tab visibility lock (blurs content when tab loses focus)
+   NOTE: Also add Cloudflare Access on top for real server-level protection
+════════════════════════════════════════════════════════════ */
+
+const SEC = {
+  /* ── CONFIG — change PASSWORD_HASH to your own (see generator below) ── */
+  /* Default password: AdminHub@2026!  — CHANGE THIS after first login    */
+  /* Generate your hash: open browser console → SEC.generateHash('YourNewPassword') → paste result below */
+  PASSWORD_HASH: '8dcccf5fe5862c0d5eaacf2ffd28ac9c60f66a0fc93168d69d90c9b140905b41',
+  SALT: 'aihub-admin-salt-2026-xK9mP3qR',
+  MAX_ATTEMPTS: 5,
+  LOCKOUT_DURATION: 30 * 60 * 1000,   // 30 minutes
+  SESSION_DURATION: 2 * 60 * 60 * 1000, // 2 hours
+  RATE_LIMIT_MS: 2000,                 // 2s between attempts
+  SESSION_KEY: 'aihub_admin_session',
+  LOCKOUT_KEY: 'aihub_admin_lockout',
+  ATTEMPTS_KEY: 'aihub_admin_attempts',
+
+  /* ── STATE ── */
+  lastAttempt: 0,
+  sessionTimer: null,
+
+  /* ── PBKDF2 hash using Web Crypto API ── */
+  async hashPassword(password) {
+    const enc = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey(
+      'raw', enc.encode(password), 'PBKDF2', false, ['deriveBits']
+    );
+    const bits = await crypto.subtle.deriveBits(
+      { name: 'PBKDF2', salt: enc.encode(SEC.SALT), iterations: 310000, hash: 'SHA-256' },
+      keyMaterial, 256
+    );
+    return Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2,'0')).join('');
+  },
+
+  /* ── Call this in console to generate hash for a new password ── */
+  async generateHash(password) {
+    const h = await SEC.hashPassword(password);
+    console.log('%c Your new PASSWORD_HASH:', 'color:#4fa3ff;font-weight:bold;font-size:14px');
+    console.log('%c ' + h, 'color:#34d399;font-size:13px;font-family:monospace');
+    console.log('%c Copy this into SEC.PASSWORD_HASH in admin/index.html', 'color:#fbbf24');
+    return h;
+  },
+
+  /* ── Check lockout ── */
+  isLockedOut() {
+    const lockData = JSON.parse(localStorage.getItem(SEC.LOCKOUT_KEY) || 'null');
+    if (!lockData) return false;
+    const remaining = lockData.until - Date.now();
+    if (remaining > 0) return remaining;
+    localStorage.removeItem(SEC.LOCKOUT_KEY);
+    localStorage.removeItem(SEC.ATTEMPTS_KEY);
+    return false;
+  },
+
+  /* ── Record failed attempt ── */
+  recordFailedAttempt() {
+    let attempts = parseInt(localStorage.getItem(SEC.ATTEMPTS_KEY) || '0') + 1;
+    localStorage.setItem(SEC.ATTEMPTS_KEY, attempts);
+    if (attempts >= SEC.MAX_ATTEMPTS) {
+      const lockUntil = Date.now() + SEC.LOCKOUT_DURATION;
+      localStorage.setItem(SEC.LOCKOUT_KEY, JSON.stringify({ until: lockUntil, attempts }));
+      localStorage.removeItem(SEC.ATTEMPTS_KEY);
+      return { locked: true, until: lockUntil };
+    }
+    return { locked: false, remaining: SEC.MAX_ATTEMPTS - attempts };
+  },
+
+  /* ── Create session ── */
+  createSession() {
+    const session = {
+      token: crypto.randomUUID(),
+      created: Date.now(),
+      expires: Date.now() + SEC.SESSION_DURATION,
+      fingerprint: navigator.userAgent + screen.width + screen.height
+    };
+    sessionStorage.setItem(SEC.SESSION_KEY, JSON.stringify(session));
+    SEC.startSessionTimer();
+    return session;
+  },
+
+  /* ── Validate session ── */
+  validateSession() {
+    const raw = sessionStorage.getItem(SEC.SESSION_KEY);
+    if (!raw) return false;
+    try {
+      const session = JSON.parse(raw);
+      if (Date.now() > session.expires) { SEC.logout('Session expired'); return false; }
+      const fp = navigator.userAgent + screen.width + screen.height;
+      if (session.fingerprint !== fp) { SEC.logout('Session invalid'); return false; }
+      return true;
+    } catch { return false; }
+  },
+
+  /* ── Refresh session on activity ── */
+  refreshSession() {
+    const raw = sessionStorage.getItem(SEC.SESSION_KEY);
+    if (!raw) return;
+    try {
+      const session = JSON.parse(raw);
+      session.expires = Date.now() + SEC.SESSION_DURATION;
+      sessionStorage.setItem(SEC.SESSION_KEY, JSON.stringify(session));
+    } catch {}
+  },
+
+  /* ── Auto-logout timer ── */
+  startSessionTimer() {
+    clearTimeout(SEC.sessionTimer);
+    SEC.sessionTimer = setTimeout(() => SEC.logout('Session timed out after 2 hours of inactivity'), SEC.SESSION_DURATION);
+    ['click','keydown','mousemove','touchstart'].forEach(e =>
+      document.addEventListener(e, SEC.resetTimer, { passive: true })
+    );
+  },
+
+  resetTimer() {
+    clearTimeout(SEC.sessionTimer);
+    SEC.refreshSession();
+    SEC.sessionTimer = setTimeout(() => SEC.logout('Session timed out'), SEC.SESSION_DURATION);
+  },
+
+  /* ── Logout ── */
+  logout(reason) {
+    sessionStorage.removeItem(SEC.SESSION_KEY);
+    clearTimeout(SEC.sessionTimer);
+    showLoginScreen(reason || 'Logged out');
+  }
+};
+
+/* ════════════════════════════════════════════════
+   LOGIN SCREEN UI
+════════════════════════════════════════════════ */
+function showLoginScreen(message) {
+  document.body.style.overflow = 'hidden';
+  let overlay = document.getElementById('secOverlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.id = 'secOverlay';
+    document.body.appendChild(overlay);
+  }
+
+  const lockout = SEC.isLockedOut();
+  const lockMsg = lockout
+    ? `<div style="background:color-mix(in srgb,var(--red) 12%,transparent);border:1px solid color-mix(in srgb,var(--red) 30%,transparent);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:0.82rem;color:var(--red)">
+        🔒 Too many failed attempts. Try again in <span id="lockTimer" style="font-family:'JetBrains Mono',monospace;font-weight:700"></span>
+       </div>` : '';
+
+  const statusMsg = message && !lockout
+    ? `<div style="background:color-mix(in srgb,var(--red) 10%,transparent);border:1px solid color-mix(in srgb,var(--red) 25%,transparent);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:0.82rem;color:var(--red)">⚠️ ${message}</div>`
+    : '';
+
+  overlay.innerHTML = `
+    <div style="position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:99999;padding:20px">
+      <div style="background:var(--surface);border:1px solid var(--border-md);border-radius:20px;padding:40px;max-width:400px;width:100%;position:relative;box-shadow:var(--shadow-lg)">
+
+        <!-- Animated ring border -->
+        <div style="position:absolute;inset:-2px;border-radius:22px;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3),var(--accent));background-size:300% 300%;animation:ringGlow 5s ease infinite;z-index:-1;box-shadow:0 0 40px var(--glow)"></div>
+        <div style="position:absolute;inset:1px;border-radius:19px;background:var(--surface);z-index:-1"></div>
+
+        <!-- Header -->
+        <div style="text-align:center;margin-bottom:28px">
+          <div style="font-size:2.2rem;margin-bottom:10px">🛡️</div>
+          <div style="font-weight:900;font-size:1.5rem;letter-spacing:-0.03em;color:var(--text);margin-bottom:4px">Admin Access</div>
+          <div style="font-size:0.72rem;font-family:'JetBrains Mono',monospace;color:var(--text3)">// AI HUB SECURE PANEL</div>
+        </div>
+
+        ${lockMsg}
+        ${statusMsg}
+
+        <!-- Honeypot (hidden — bots fill this, humans don't) -->
+        <input type="text" id="hp_username" name="username" autocomplete="off"
+          style="position:absolute;left:-9999px;opacity:0;pointer-events:none;width:1px;height:1px;tabindex:-1" tabindex="-1">
+
+        <!-- Password field -->
+        <div style="margin-bottom:16px;position:relative">
+          <label style="display:block;font-size:0.78rem;font-weight:600;color:var(--text2);margin-bottom:8px;letter-spacing:0.04em">PASSWORD</label>
+          <div style="position:relative">
+            <input type="password" id="adminPassword"
+              style="width:100%;padding:13px 48px 13px 16px;background:var(--input-bg);border:1px solid var(--border-md);border-radius:11px;color:var(--text);font-size:0.95rem;outline:none;font-family:'Outfit',sans-serif;transition:border-color 0.2s"
+              placeholder="Enter admin password"
+              ${lockout ? 'disabled' : ''}
+              onkeydown="if(event.key==='Enter')doLogin()"
+              oninput="this.style.borderColor='var(--border-md)'"
+              onfocus="this.style.borderColor='var(--accent)'">
+            <button onclick="togglePwVis()" id="pwToggle"
+              style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:1.1rem;padding:4px">
+              👁️
+            </button>
+          </div>
+        </div>
+
+        <!-- Attempts indicator -->
+        <div id="attemptsIndicator" style="display:flex;gap:6px;margin-bottom:16px;justify-content:center">
+          ${[1,2,3,4,5].map(i=>`<div style="width:28px;height:4px;border-radius:2px;background:var(--surface3);transition:background 0.3s" id="att_dot_${i}"></div>`).join('')}
+        </div>
+
+        <!-- Login button -->
+        <button onclick="doLogin()" id="loginBtn"
+          style="width:100%;padding:13px;border:none;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all 0.25s;box-shadow:0 4px 20px var(--glow);letter-spacing:0.02em"
+          ${lockout ? 'disabled style="opacity:0.4;cursor:not-allowed"' : ''}
+          onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 28px var(--glow)'"
+          onmouseout="this.style.transform='';this.style.boxShadow='0 4px 20px var(--glow)'">
+          🔑 Unlock Admin Panel
+        </button>
+
+        <div style="text-align:center;margin-top:16px;font-size:0.72rem;color:var(--text3);font-family:'JetBrains Mono',monospace">
+          Protected by PBKDF2 + brute-force lockout
+        </div>
+      </div>
+    </div>
+  `;
+
+  /* Start lockout countdown */
+  if (lockout) startLockoutTimer(lockout);
+
+  /* Focus password field */
+  setTimeout(() => {
+    const pw = document.getElementById('adminPassword');
+    if (pw && !lockout) pw.focus();
+  }, 100);
+}
+
+/* ── Toggle password visibility ── */
+function togglePwVis() {
+  const pw = document.getElementById('adminPassword');
+  const btn = document.getElementById('pwToggle');
+  if (!pw) return;
+  pw.type = pw.type === 'password' ? 'text' : 'password';
+  btn.textContent = pw.type === 'password' ? '👁️' : '🙈';
+}
+
+/* ── Lockout countdown timer ── */
+function startLockoutTimer(msRemaining) {
+  const el = document.getElementById('lockTimer');
+  if (!el) return;
+  const tick = () => {
+    const s = Math.ceil((SEC.isLockedOut() || 0) / 1000);
+    if (s <= 0) { showLoginScreen(); return; }
+    const m = Math.floor(s / 60), sec = s % 60;
+    el.textContent = `${m}m ${sec.toString().padStart(2,'0')}s`;
+    setTimeout(tick, 1000);
+  };
+  tick();
+}
+
+/* ── Update attempt dots ── */
+function updateAttemptDots(used) {
+  for (let i = 1; i <= 5; i++) {
+    const dot = document.getElementById('att_dot_' + i);
+    if (dot) dot.style.background = i <= used ? 'var(--red)' : 'var(--surface3)';
+  }
+}
+
+/* ── Main login function ── */
+async function doLogin() {
+  /* Honeypot check — if filled, silently fake-process then ban */
+  const hp = document.getElementById('hp_username');
+  if (hp && hp.value.length > 0) {
+    await fakeDelay();
+    localStorage.setItem(SEC.LOCKOUT_KEY, JSON.stringify({ until: Date.now() + SEC.LOCKOUT_DURATION * 2, bot: true }));
+    showLoginScreen('Access denied.');
+    return;
+  }
+
+  /* Rate limiting */
+  const now = Date.now();
+  if (now - SEC.lastAttempt < SEC.RATE_LIMIT_MS) {
+    shakeLoginBtn();
+    return;
+  }
+  SEC.lastAttempt = now;
+
+  /* Lockout check */
+  const lockout = SEC.isLockedOut();
+  if (lockout) { showLoginScreen(); return; }
+
+  const password = document.getElementById('adminPassword')?.value || '';
+  if (!password) { shakeLoginBtn(); return; }
+
+  /* Show loading state */
+  const btn = document.getElementById('loginBtn');
+  if (btn) { btn.textContent = '⏳ Verifying…'; btn.disabled = true; btn.style.opacity = '0.8'; }
+
+  /* Hash and compare — minimum 400ms to prevent timing attacks */
+  const [hash] = await Promise.all([
+    SEC.hashPassword(password),
+    fakeDelay(400)
+  ]);
+
+  if (hash === SEC.PASSWORD_HASH) {
+    /* ✅ SUCCESS */
+    localStorage.removeItem(SEC.ATTEMPTS_KEY);
+    localStorage.removeItem(SEC.LOCKOUT_KEY);
+    SEC.createSession();
+    unlockAdmin();
+  } else {
+    /* ❌ WRONG PASSWORD */
+    const result = SEC.recordFailedAttempt();
+    const used = SEC.MAX_ATTEMPTS - (result.remaining || 0);
+    updateAttemptDots(used);
+
+    if (btn) { btn.textContent = '🔑 Unlock Admin Panel'; btn.disabled = false; btn.style.opacity = '1'; }
+
+    const pwField = document.getElementById('adminPassword');
+    if (pwField) { pwField.value = ''; pwField.style.borderColor = 'var(--red)'; pwField.focus(); }
+
+    shakeLoginBtn();
+
+    if (result.locked) {
+      setTimeout(() => showLoginScreen(`🔒 Account locked for 30 minutes after ${SEC.MAX_ATTEMPTS} failed attempts.`), 300);
+    } else {
+      const el = document.getElementById('secOverlay');
+      const errDiv = document.createElement('div');
+      errDiv.style.cssText = 'background:color-mix(in srgb,var(--red) 10%,transparent);border:1px solid color-mix(in srgb,var(--red) 25%,transparent);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:0.82rem;color:var(--red);text-align:center';
+      errDiv.textContent = `❌ Wrong password. ${result.remaining} attempt${result.remaining !== 1 ? 's' : ''} remaining.`;
+      const existing = el?.querySelector('[data-errmsg]');
+      if (existing) existing.remove();
+      errDiv.setAttribute('data-errmsg', '1');
+      const loginBtn = document.getElementById('loginBtn');
+      loginBtn?.parentNode?.insertBefore(errDiv, loginBtn);
+    }
+  }
+}
+
+/* ── Fake delay (prevents timing attacks + looks more secure) ── */
+function fakeDelay(ms = 200) {
+  return new Promise(r => setTimeout(r, ms + Math.random() * 200));
+}
+
+/* ── Shake animation for wrong attempts ── */
+function shakeLoginBtn() {
+  const btn = document.getElementById('loginBtn');
+  if (!btn) return;
+  btn.style.animation = 'none';
+  btn.offsetHeight; /* reflow */
+  btn.style.animation = 'shake 0.4s ease';
+}
+
+/* ── Unlock and show admin ── */
+function unlockAdmin() {
+  const overlay = document.getElementById('secOverlay');
+  if (overlay) {
+    overlay.style.transition = 'opacity 0.4s ease';
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.remove(), 400);
+  }
+  document.body.style.overflow = '';
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    document.body.style.transition = 'opacity 0.4s ease';
+    document.body.style.opacity = '1';
+  }, 10);
+
+  /* Init admin content now that we're authenticated */
+  initAdminContent();
+
+  /* Tab blur lock — blur content when tab loses focus */
+  document.addEventListener('visibilitychange', () => {
+    const mainContent = document.querySelector('.admin-layout');
+    if (!mainContent) return;
+    mainContent.style.filter = document.hidden ? 'blur(8px) brightness(0.3)' : '';
+  });
+}
+
+/* ── Tab blur lock covers window blur too ── */
+window.addEventListener('blur', () => {
+  if (!SEC.validateSession()) return;
+  const mainContent = document.querySelector('.admin-layout');
+  if (mainContent) mainContent.style.filter = 'blur(8px) brightness(0.3)';
+});
+window.addEventListener('focus', () => {
+  if (!SEC.validateSession()) return;
+  const mainContent = document.querySelector('.admin-layout');
+  if (mainContent) mainContent.style.filter = '';
+});
+
+/* ── Shake keyframe ── */
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = `
+  @keyframes shake {
+    0%,100%{transform:translateX(0)}
+    15%{transform:translateX(-8px)}
+    30%{transform:translateX(8px)}
+    45%{transform:translateX(-6px)}
+    60%{transform:translateX(6px)}
+    75%{transform:translateX(-3px)}
+    90%{transform:translateX(3px)}
+  }
+`;
+document.head.appendChild(shakeStyle);
+
+/* ── INIT ADMIN CONTENT (only called after auth) ── */
+function initAdminContent() {
   document.getElementById('statTools').textContent = TOOLS.length;
   document.getElementById('statArticles').textContent = ARTICLES.length;
   renderDashArticles();
@@ -1032,6 +1416,40 @@ function saveSettings() { showToast('✅ Settings saved — update data.js and r
   const dateEl = document.getElementById('art-date');
   if(dateEl) dateEl.value = new Date().toISOString().split('T')[0];
   initCommonUI();
+
+  /* Add logout button to sidebar */
+  const sidebar = document.querySelector('.admin-sidebar');
+  if (sidebar) {
+    const logoutDiv = document.createElement('div');
+    logoutDiv.style.cssText = 'padding:12px 20px;margin-top:8px';
+    logoutDiv.innerHTML = `<button onclick="SEC.logout('Logged out successfully')"
+      style="width:100%;padding:10px;border-radius:9px;border:1px solid color-mix(in srgb,var(--red) 35%,transparent);background:color-mix(in srgb,var(--red) 8%,transparent);color:var(--red);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Outfit',sans-serif"
+      onmouseover="this.style.background='color-mix(in srgb,var(--red) 18%,transparent)'"
+      onmouseout="this.style.background='color-mix(in srgb,var(--red) 8%,transparent)'">
+      🚪 Logout
+    </button>`;
+    sidebar.appendChild(logoutDiv);
+  }
+}
+
+/* ── BOOT — Check session, then show login or admin ── */
+(function(){
+  /* Always hide body until auth confirmed */
+  document.body.style.opacity = '0';
+  setTimeout(() => {
+    if (SEC.validateSession()) {
+      document.body.style.opacity = '1';
+      initAdminContent();
+      /* Tab blur listener */
+      document.addEventListener('visibilitychange', () => {
+        const m = document.querySelector('.admin-layout');
+        if (m) m.style.filter = document.hidden ? 'blur(8px) brightness(0.3)' : '';
+      });
+    } else {
+      document.body.style.opacity = '1';
+      showLoginScreen();
+    }
+  }, 50);
 })();
 </script>
 </body>

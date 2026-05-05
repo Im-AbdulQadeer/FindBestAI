@@ -73,34 +73,89 @@ const SEARCH_EXTRA = [
 
 function getSearchAll(){
   return [
-    ...TOOLS.map(t=>({name:t.name,cat:t.cat,emoji:t.emoji,bg:t.bg,id:t.id})),
+    ...TOOLS.map(t=>({name:t.name,cat:t.cat,emoji:t.emoji,bg:t.bg,id:t.id,pricing:t.pricing})),
     ...SEARCH_EXTRA
   ];
+}
+
+function runSearch(q){
+  if(!q){ searchDropdown.classList.remove('open'); return; }
+
+  let hits = [];
+  /* Special: "free" filter — show free tools */
+  const isFreeQuery = q === 'free' || q === 'free only' || q === 'freeonly';
+  if(isFreeQuery){
+    hits = TOOLS.filter(t=>t.pricing==='free').slice(0,7)
+      .map(t=>({name:t.name,cat:t.cat,emoji:t.emoji,bg:t.bg,id:t.id,pricing:t.pricing}));
+    /* Add a "View all free tools" shortcut at top */
+    searchDropdown.innerHTML = `
+      <div class="sd-item" onclick="window.location='/tools/?pricing=free'" style="background:color-mix(in srgb,var(--green) 6%,transparent);border-bottom:1px solid var(--border)">
+        <div class="sd-icon" style="background:linear-gradient(135deg,var(--green),#059669)">🆓</div>
+        <div><div class="sd-name" style="color:var(--green)">Browse All Free AI Tools</div><div class="sd-cat">${TOOLS.filter(t=>t.pricing==='free').length}+ free tools in directory</div></div>
+      </div>
+      ${hits.map(h=>`
+        <div class="sd-item" onclick="openModal(${h.id})" role="option" tabindex="0">
+          <div class="sd-icon" style="background:${h.bg}">${h.emoji}</div>
+          <div>
+            <div class="sd-name">${h.name}</div>
+            <div class="sd-cat">${h.cat} · <span style="color:var(--green)">FREE</span></div>
+          </div>
+        </div>
+      `).join('')}
+    `;
+    searchDropdown.classList.add('open');
+    return;
+  }
+
+  /* Normal search — name + cat match */
+  hits = getSearchAll().filter(i=>
+    i.name.toLowerCase().includes(q) ||
+    i.cat.toLowerCase().includes(q) ||
+    (i.pricing && i.pricing.toLowerCase().includes(q))
+  ).slice(0,7);
+
+  if(!hits.length){
+    searchDropdown.innerHTML=`<div class="sd-empty">No results for "<strong>${q}</strong>" — <a href="/tools/" style="color:var(--accent)">Browse all tools →</a></div>`;
+  } else {
+    searchDropdown.innerHTML = hits.map(h=>`
+      <div class="sd-item" onclick="${h.id ? `openModal(${h.id})` : `window.location='/tools/'`}" role="option" tabindex="0">
+        <div class="sd-icon" style="background:${h.bg}">${h.emoji}</div>
+        <div><div class="sd-name">${h.name}</div><div class="sd-cat">${h.cat}</div></div>
+      </div>
+    `).join('');
+  }
+  searchDropdown.classList.add('open');
 }
 
 if(searchInput && searchDropdown){
   searchInput.addEventListener('input', () => {
     const q = searchInput.value.toLowerCase().trim();
-    if(!q){ searchDropdown.classList.remove('open'); return; }
-    const hits = getSearchAll().filter(i=>i.name.toLowerCase().includes(q)||i.cat.toLowerCase().includes(q)).slice(0,7);
-    if(!hits.length){
-      searchDropdown.innerHTML=`<div class="sd-empty">No results for "<strong>${q}</strong>"</div>`;
-    } else {
-      searchDropdown.innerHTML = hits.map(h=>`
-        <div class="sd-item" onclick="${h.id ? `openModal(${h.id})` : `window.location='/tools/'`}" role="option" tabindex="0">
-          <div class="sd-icon" style="background:${h.bg}">${h.emoji}</div>
-          <div><div class="sd-name">${h.name}</div><div class="sd-cat">${h.cat}</div></div>
-        </div>
-      `).join('');
-    }
-    searchDropdown.classList.add('open');
+    runSearch(q);
   });
   document.addEventListener('click', e=>{ if(!e.target.closest('.search-wrap')) searchDropdown.classList.remove('open'); });
   searchInput.addEventListener('keydown', e=>{ if(e.key==='Escape') searchDropdown.classList.remove('open'); });
 }
 
-function setSearch(q){ if(searchInput){ searchInput.value=q; searchInput.dispatchEvent(new Event('input')); searchInput.focus(); } }
-function performSearch(){ if(searchInput){ const q=searchInput.value.trim(); if(!q) return; searchInput.dispatchEvent(new Event('input')); } }
+function setSearch(q){
+  if(searchInput){
+    searchInput.value=q;
+    runSearch(q.toLowerCase().trim());
+    searchInput.focus();
+  }
+}
+
+/* Free Only hint chip — goes directly to filtered tools page */
+function goFreeOnly(){
+  window.location='/tools/?pricing=free';
+}
+
+function performSearch(){
+  if(searchInput){
+    const q=searchInput.value.trim();
+    if(!q) return;
+    runSearch(q.toLowerCase());
+  }
+}
 
 /* ── CARD FACTORY ── */
 function mkBadges(t){

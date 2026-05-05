@@ -36,7 +36,6 @@
 
 <!-- AD TOP -->
 <div style="padding:24px 32px 0;max-width:1380px;margin:0 auto">
-  <div class="ad-unit ad-leaderboard">Advertisement<small>Google AdSense 728×90</small></div>
 </div>
 
 <!-- FILTERS -->
@@ -134,8 +133,9 @@ function updateToolsCount(count){
 }
 
 (function(){
-  /* Check URL for cat param */
-  const urlCat = new URLSearchParams(window.location.search).get('cat');
+  const params = new URLSearchParams(window.location.search);
+  const urlCat = params.get('cat');
+  const urlPricing = params.get('pricing');
   if(urlCat) activeCat = urlCat;
 
   renderCats('toolsCats', cat => {
@@ -143,10 +143,15 @@ function updateToolsCount(count){
     filterTools();
   });
 
+  /* Pre-fill pricing filter from URL */
+  if(urlPricing){
+    const pricingSel = document.getElementById('toolsPricing');
+    if(pricingSel) pricingSel.value = urlPricing;
+  }
+
   renderAllTools();
 
-  /* If URL cat, trigger filter */
-  if(activeCat) filterTools();
+  if(activeCat || urlPricing) filterTools();
 
   initCommonUI();
 })();

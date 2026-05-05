@@ -59,7 +59,7 @@
       <span class="hint-chip" onclick="setSearch('video editing')">🎬 Video Editing</span>
       <span class="hint-chip" onclick="setSearch('writing')">✍️ Writing</span>
       <span class="hint-chip" onclick="setSearch('code')">💻 Coding</span>
-      <span class="hint-chip" onclick="setSearch('free')">🆓 Free Only</span>
+      <span class="hint-chip" onclick="goFreeOnly()" style="border-color:color-mix(in srgb,var(--green) 40%,transparent);color:var(--green)">🆓 Free Only</span>
     </div>
   </div>
 </section>
@@ -70,12 +70,6 @@
   <div class="stat-item"><span class="stat-n">20</span><div class="stat-l">CATEGORIES</div></div>
   <div class="stat-item"><span class="stat-n">310+</span><div class="stat-l">FREE TOOLS</div></div>
   <div class="stat-item"><span class="stat-n">2M+</span><div class="stat-l">MONTHLY USERS</div></div>
-</div>
-
-<!-- AD TOP -->
-<div style="padding:32px 32px 0;max-width:1380px;margin:0 auto">
-  <!-- Google AdSense 728×90 Leaderboard -->
-  <div class="ad-unit ad-leaderboard">Advertisement<small>Google AdSense 728×90</small></div>
 </div>
 
 <!-- CATEGORIES -->
@@ -95,11 +89,6 @@
   </div>
   <div class="tools-grid featured-layout reveal" id="featuredTools"></div>
 </section>
-
-<!-- AD MID -->
-<div style="padding:0 32px;max-width:1380px;margin:0 auto">
-  <div class="ad-unit ad-leaderboard">Advertisement<small>Google AdSense 728×90 In-Article</small></div>
-</div>
 
 <!-- ALL TOOLS PREVIEW -->
 <section class="section" aria-label="All AI tools">
@@ -145,11 +134,6 @@
   </div>
   <div class="trending-grid" id="trendingGrid"></div>
 </section>
-
-<!-- AD RECTANGLE -->
-<div style="padding:0 32px;max-width:1380px;margin:0 auto;display:flex;justify-content:center">
-  <div class="ad-unit ad-rectangle" style="max-width:728px;width:100%">Advertisement<small>Google AdSense 300×250 Rectangle</small></div>
-</div>
 
 <!-- BLOG PREVIEW -->
 <section class="section reveal" aria-label="Latest articles">
