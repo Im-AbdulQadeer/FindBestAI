@@ -38,7 +38,7 @@
       <div id="cf-success" style="display:none;text-align:center;padding:40px 20px">
         <div style="font-size:3rem;margin-bottom:16px">✅</div>
         <div style="font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:8px">Message Sent!</div>
-        <div style="color:var(--text2);font-size:0.9rem;line-height:1.65;margin-bottom:20px">Thank you for reaching out. We'll reply to <strong id="cf-reply-email" style="color:var(--accent)"></strong> within 48 hours.</div>
+        <div style="color:var(--text2);font-size:0.9rem;line-height:1.65;margin-bottom:20px">Thank you for reaching out. We'll reply to <strong id="cf-reply-email" style="color:var(--accent)"></strong> within 24 hours.</div>
         <button onclick="resetContactForm()" class="btn-outline" style="padding:10px 24px;border-radius:10px;cursor:pointer">Send Another Message</button>
       </div>
 
@@ -101,7 +101,7 @@
           <div class="contact-ic">⏱️</div>
           <div>
             <div class="contact-label">// RESPONSE TIME</div>
-            <div class="contact-val">Within 48 hours</div>
+            <div class="contact-val">Within 24 hours</div>
           </div>
         </div>
         <div class="contact-item">
@@ -165,11 +165,36 @@ async function submitContactForm(e) {
   const btnSpin = document.getElementById('cf-btn-spinner');
   const btn     = document.getElementById('cf-submit-btn');
 
-  /* Validate */
+  /* ── Validate ── */
   const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if(!name){ showError('Please enter your name.'); return; }
+
+  // Name: must be real (has vowels, no pure consonant gibberish)
+  const nameNoSpace = name.replace(/\s/g,'');
+  const nameVowels  = (name.match(/[aeiou]/gi)||[]).length;
+  const nameIsGibberish = nameNoSpace.length > 3 && nameVowels === 0;
+  const nameHasRepeat   = /(..)\1{2,}/.test(name);
+  if(!name || name.length < 3){ showError('Please enter your full name.'); return; }
+  if(nameIsGibberish || nameHasRepeat){ showError('Please enter a real name.'); return; }
+
+  // Email: format check + block disposable domains
+  const disposable = ['mailinator.com','guerrillamail.com','tempmail.com','throwaway.email',
+    'fakeinbox.com','sharklasers.com','grr.la','spam4.me','trashmail.com','dispostable.com',
+    'yopmail.com','maildrop.cc','temp-mail.org','getnada.com','discard.email',
+    '10minutemail.com','minutemail.com','mailnull.com','guerrillamail.info'];
   if(!email || !emailRx.test(email)){ showError('Please enter a valid email address.'); return; }
-  if(!message || message.length < 10){ showError('Please enter a message (at least 10 characters).'); return; }
+  const emailDomain = email.split('@')[1]?.toLowerCase();
+  if(disposable.includes(emailDomain)){ showError('Disposable emails are not accepted. Please use a real email.'); return; }
+
+  // Message: block keyboard mashing (low vowel ratio, repeated chars, too short word count)
+  const msgClean   = message.replace(/\s/g,'');
+  const msgVowels  = (message.match(/[aeiou]/gi)||[]).length;
+  const vowelRatio = msgClean.length > 0 ? msgVowels / msgClean.length : 0;
+  const msgWords   = message.trim().split(/\s+/).length;
+  const msgRepeat  = /(.{2,})\1{3,}/.test(message);
+  if(!message || message.length < 20){ showError('Please enter a message (at least 20 characters).'); return; }
+  if(msgWords < 3){ showError('Please write at least 3 words in your message.'); return; }
+  if(vowelRatio < 0.10 && msgClean.length > 8){ showError('Your message looks invalid. Please write a real message.'); return; }
+  if(msgRepeat){ showError('Please enter a valid message.'); return; }
 
   hideError();
 
