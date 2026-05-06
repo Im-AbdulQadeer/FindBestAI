@@ -2,9 +2,12 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/webp" href="/logo.webp">
+<link rel="apple-touch-icon" href="/logo.webp">
+<link rel="shortcut icon" href="/logo.webp">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<title>AI Hub — Admin Panel</title>
+<title>Find Best AI — Admin Panel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -86,7 +89,7 @@
   <!-- SIDEBAR -->
   <aside class="admin-sidebar">
     <div class="admin-logo">
-      <div class="nav-logo">AI Hub</div>
+      <div class="nav-logo">Find Best AI</div>
       <small>// ADMIN PANEL v2.0</small>
     </div>
 
@@ -243,8 +246,8 @@
       <div class="admin-header">
         <div><div class="admin-title">New Article</div><div class="admin-sub">// Write and publish a blog post or review</div></div>
         <div style="display:flex;gap:8px">
-          <button class="btn-outline" onclick="saveAsDraft()">Save Draft</button>
-          <button class="btn-primary" onclick="publishArticle()">Publish →</button>
+          <button class="btn-outline" id="draftBtn" onclick="saveAsDraft()" style="padding:8px 18px;cursor:pointer">💾 Save Draft</button>
+          <button class="btn-primary" id="publishBtn" style="padding:8px 20px;color:#fff!important;-webkit-text-fill-color:#fff!important;cursor:pointer">🚀 Publish Live</button>
         </div>
       </div>
 
@@ -320,7 +323,7 @@
               </div>
               <div class="form-group" style="margin-bottom:0">
                 <label class="form-label">Author</label>
-                <input class="form-input" id="art-author" type="text" value="AI Prime Hub Editorial">
+                <input class="form-input" id="art-author" type="text" value="Find Best AI Editorial">
               </div>
             </div>
           </div>
@@ -698,7 +701,7 @@ Do this for every new article after publishing:
           <div class="panel-body">
             <div class="form-group" style="margin-bottom:14px">
               <label class="form-label">Site Name</label>
-              <input class="form-input" id="s-name" type="text" value="AI Hub">
+              <input class="form-input" id="s-name" type="text" value="Find Best AI">
             </div>
             <div class="form-group" style="margin-bottom:14px">
               <label class="form-label">Domain</label>
@@ -891,7 +894,7 @@ function generateArticleFile() {
   const metaDesc = document.getElementById('art-meta')?.value || excerpt;
   const keyword = document.getElementById('art-keyword')?.value || '';
   const tags = document.getElementById('art-tags')?.value || '';
-  const author = document.getElementById('art-author')?.value || 'AI Prime Hub Editorial';
+  const author = document.getElementById('art-author')?.value || 'Find Best AI Editorial';
   const date = document.getElementById('art-date')?.value || new Date().toISOString().split('T')[0];
   const tagArr = tags.split(',').map(t=>t.trim()).filter(Boolean);
 
@@ -899,6 +902,9 @@ function generateArticleFile() {
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/webp" href="/logo.webp">
+<link rel="apple-touch-icon" href="/logo.webp">
+<link rel="shortcut icon" href="/logo.webp">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="${metaDesc}">
 <meta name="keywords" content="${keyword}">
@@ -914,7 +920,7 @@ function generateArticleFile() {
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/main.css">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Article","headline":"${title}","datePublished":"${date}","author":{"@type":"Organization","name":"${author}"},"publisher":{"@type":"Organization","name":"AI Hub","url":"https://aihub.tools"},"description":"${metaDesc}","mainEntityOfPage":{"@type":"WebPage","@id":"https://aihub.tools/blog/${slug}/"}}
+{"@context":"https://schema.org","@type":"Article","headline":"${title}","datePublished":"${date}","author":{"@type":"Organization","name":"${author}"},"publisher":{"@type":"Organization","name":"Find Best AI","url":"https://aihub.tools"},"description":"${metaDesc}","mainEntityOfPage":{"@type":"WebPage","@id":"https://aihub.tools/blog/${slug}/"}}
 <\/script>
 </head>
 <body>
@@ -1432,15 +1438,538 @@ function initAdminContent() {
   }
 }
 
+/* ════════════════════════════════════════════════════════════
+   GITHUB API — MAKES ADMIN FULLY FUNCTIONAL
+   Publishing an article → commits HTML file to your GitHub repo
+   → Cloudflare Pages auto-deploys in ~30 seconds
+   No server, no database, 100% free
+════════════════════════════════════════════════════════════ */
+const GH = {
+  /* ── CONFIGURE THESE after reading the setup guide in the Settings tab ── */
+  token: localStorage.getItem('gh_token') || '',
+  owner: localStorage.getItem('gh_owner') || '',   // your GitHub username
+  repo:  localStorage.getItem('gh_repo')  || '',   // your repo name e.g. "aihub"
+  branch: 'main',
+
+  get configured(){ return this.token && this.owner && this.repo; },
+
+  headers(){
+    return {
+      'Authorization': `Bearer ${this.token}`,
+      'Accept': 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28',
+      'Content-Type': 'application/json'
+    };
+  },
+
+  /* Get file SHA (needed for update, null for new file) */
+  async getFileSHA(path){
+    try {
+      const r = await fetch(
+        `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${path}?ref=${this.branch}`,
+        { headers: this.headers() }
+      );
+      if(r.status === 404) return null;
+      const d = await r.json();
+      return d.sha || null;
+    } catch { return null; }
+  },
+
+  /* Commit a file to GitHub */
+  async commitFile(path, content, message){
+    const sha = await this.getFileSHA(path);
+    const body = {
+      message,
+      content: btoa(unescape(encodeURIComponent(content))), // base64 encode
+      branch: this.branch,
+    };
+    if(sha) body.sha = sha; // required for updates
+
+    const r = await fetch(
+      `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${path}`,
+      { method: 'PUT', headers: this.headers(), body: JSON.stringify(body) }
+    );
+    if(!r.ok){
+      const err = await r.json();
+      throw new Error(err.message || `GitHub API error ${r.status}`);
+    }
+    return await r.json();
+  },
+
+  /* Test connection */
+  async testConnection(){
+    if(!this.configured) throw new Error('GitHub not configured — go to Settings tab');
+    const r = await fetch(
+      `https://api.github.com/repos/${this.owner}/${this.repo}`,
+      { headers: this.headers() }
+    );
+    if(!r.ok) throw new Error('Cannot connect — check your token, username and repo name');
+    return await r.json();
+  },
+
+  /* Save settings to localStorage */
+  saveSettings(token, owner, repo){
+    this.token = token; this.owner = owner; this.repo = repo;
+    localStorage.setItem('gh_token', token);
+    localStorage.setItem('gh_owner', owner);
+    localStorage.setItem('gh_repo',  repo);
+  }
+};
+
+/* ════════════════════════════════════════════════════════════
+   ARTICLE BUILDER — generates full SEO article HTML
+════════════════════════════════════════════════════════════ */
+function buildArticleHTML(data){
+  const {title, slug, cat, emoji, excerpt, content, metaDesc, keyword, tags, author, date, readTime} = data;
+  const tagArr = tags.split(',').map(t=>t.trim()).filter(Boolean);
+  const displayDate = new Date(date).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  const domain = 'https://findbestai.pages.dev';
+
+  return `<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" type="image/webp" href="/logo.webp">
+<link rel="apple-touch-icon" href="/logo.webp">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="${metaDesc || excerpt}">
+<meta name="keywords" content="${keyword}">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${metaDesc || excerpt}">
+<meta property="og:url" content="${domain}/blog/${slug}/">
+<meta property="og:site_name" content="Find Best AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<link rel="canonical" href="${domain}/blog/${slug}/">
+<title>${title} — Find Best AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"${title}","datePublished":"${date}","dateModified":"${date}","author":{"@type":"Person","name":"${author}"},"publisher":{"@type":"Organization","name":"Find Best AI","url":"${domain}","logo":{"@type":"ImageObject","url":"${domain}/logo.webp"}},"description":"${metaDesc || excerpt}","mainEntityOfPage":{"@type":"WebPage","@id":"${domain}/blog/${slug}/"}}
+<\/script>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="bg-orb orb-a"></div>
+<div class="bg-orb orb-b"></div>
+<div class="bg-orb orb-c"></div>
+<div class="scan-line"></div>
+<nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
+<div class="mobile-menu" id="mobileMenu" role="menu"></div>
+
+<article class="article-full" itemscope itemtype="https://schema.org/Article">
+  <button class="article-full-back" onclick="window.location='/blog/'">← Back to Blog</button>
+  <div class="article-hero-thumb" style="background:linear-gradient(135deg,#0a0020,#1a0050,#0d0030)">${emoji || '📝'}</div>
+  <div class="article-hero-meta">
+    <span class="article-tag">${cat}</span>
+    <span class="article-date">${displayDate}</span>
+    <span class="article-tag" style="color:var(--green);border-color:color-mix(in srgb,var(--green) 30%,transparent)">${readTime || '5 MIN READ'}</span>
+  </div>
+  <h1 itemprop="headline">${title}</h1>
+  <div class="article-byline">
+    <div class="author-av">✍️</div>
+    <div>
+      <div class="author-name">${author}</div>
+      <div class="author-role">// Find Best AI Editorial</div>
+    </div>
+    <div class="article-read-time">${readTime || '5 MIN READ'}</div>
+  </div>
+  <div class="article-body-content" itemprop="articleBody">
+${content}
+  </div>
+  ${tagArr.length ? `<div class="article-tags-row">${tagArr.map(t=>`<span class="tag">${t}</span>`).join('')}</div>` : ''}
+  <div class="related-articles">
+    <h3>Related Articles</h3>
+    <div class="related-grid" id="relatedArticles"></div>
+  </div>
+</article>
+
+<footer id="site-footer" role="contentinfo"></footer>
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true">
+  <div class="modal-box" id="modalBox"><button class="modal-close" aria-label="Close">✕</button><div id="modalContent"></div></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-ic" id="toastIc"></span><span id="toastMsg"></span>
+</div>
+<script src="/assets/js/data.js"><\/script>
+<script src="/assets/js/app.js"><\/script>
+<script src="/assets/js/nav.js"><\/script>
+<script>
+(function(){
+  const rg = document.getElementById('relatedArticles');
+  if(rg) ARTICLES.slice(0,4).forEach(a=>{
+    const card = document.createElement('div');
+    card.className = 'related-card';
+    card.innerHTML = \`<div class="related-thumb" style="background:\${a.thumb}">\${a.emoji}</div><div class="related-body"><div class="related-title">\${a.title}</div></div>\`;
+    card.addEventListener('click', ()=>window.location='/blog/'+a.slug+'/');
+    rg.appendChild(card);
+  });
+  initCommonUI();
+})();
+<\/script>
+</body>
+</html>`;
+}
+
+/* ════════════════════════════════════════════════════════════
+   PUBLISH ARTICLE — commits to GitHub → auto-deploys
+════════════════════════════════════════════════════════════ */
+async function publishArticle(){
+  /* Validate GitHub config */
+  if(!GH.configured){
+    showToast('⚙️ Set up GitHub in Settings tab first');
+    showTab('settings');
+    return;
+  }
+
+  /* Gather form values */
+  const title   = document.getElementById('art-title')?.value?.trim();
+  const slug    = document.getElementById('art-slug')?.value?.trim()
+                    .toLowerCase().replace(/[^a-z0-9-]/g,'').replace(/--+/g,'-');
+  const cat     = document.getElementById('art-cat')?.value;
+  const emoji   = document.getElementById('art-emoji')?.value?.trim() || '📝';
+  const excerpt = document.getElementById('art-excerpt')?.value?.trim();
+  const content = document.getElementById('art-content')?.value?.trim();
+  const metaDesc= document.getElementById('art-meta')?.value?.trim();
+  const keyword = document.getElementById('art-keyword')?.value?.trim();
+  const tags    = document.getElementById('art-tags')?.value?.trim();
+  const author  = document.getElementById('art-author')?.value?.trim() || 'Find Best AI Editorial';
+  const date    = document.getElementById('art-date')?.value || new Date().toISOString().split('T')[0];
+  const readTime= document.getElementById('art-readtime')?.value?.trim();
+  const status  = document.getElementById('art-status')?.value;
+
+  /* Validate required fields */
+  if(!title){ showToast('⚠️ Title is required'); document.getElementById('art-title')?.focus(); return; }
+  if(!slug){  showToast('⚠️ URL slug is required'); document.getElementById('art-slug')?.focus(); return; }
+  if(!content || content.length < 100){ showToast('⚠️ Article content is too short (min 100 chars)'); return; }
+
+  /* Show publishing state */
+  const btn = document.getElementById('publishBtn');
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Publishing…'; }
+
+  try {
+    /* 1. Build the article HTML */
+    const html = buildArticleHTML({title,slug,cat,emoji,excerpt,content,metaDesc,keyword,tags,author,date,readTime});
+
+    /* 2. Commit article file to GitHub */
+    const filePath = `blog/${slug}/index.html`;
+    await GH.commitFile(
+      filePath,
+      html,
+      `📝 Add article: ${title}`
+    );
+
+    /* 3. Update ARTICLES array in data.js */
+    await updateDataJS({title, slug, cat, emoji, excerpt, date, tags, author, readTime});
+
+    /* 4. Update sitemap.xml */
+    await updateSitemap(slug, date);
+
+    /* 5. Success! */
+    showPublishSuccess(slug, title);
+
+  } catch(err) {
+    console.error('Publish error:', err);
+    showToast('❌ ' + (err.message || 'Publish failed'));
+  } finally {
+    if(btn){ btn.disabled=false; btn.textContent='🚀 Publish Live'; }
+  }
+}
+
+/* Save as draft — commits with draft note, won't appear in blog listing */
+async function saveAsDraft(){
+  if(!GH.configured){ showToast('⚙️ Set up GitHub in Settings tab first'); showTab('settings'); return; }
+  const title = document.getElementById('art-title')?.value?.trim();
+  const slug  = document.getElementById('art-slug')?.value?.trim() || 'draft-' + Date.now();
+  const content = document.getElementById('art-content')?.value?.trim() || '';
+  if(!title){ showToast('⚠️ Add a title first'); return; }
+  try {
+    const html = buildArticleHTML({
+      title:`[DRAFT] ${title}`,
+      slug, cat:'DRAFT',
+      emoji: document.getElementById('art-emoji')?.value || '📝',
+      excerpt: document.getElementById('art-excerpt')?.value || '',
+      content: content || '<p>Draft content…</p>',
+      metaDesc:'', keyword:'', tags:'',
+      author: document.getElementById('art-author')?.value || 'Find Best AI Editorial',
+      date: document.getElementById('art-date')?.value || new Date().toISOString().split('T')[0],
+      readTime:'5 MIN READ'
+    });
+    await GH.commitFile(`blog/${slug}/index.html`, html, `💾 Save draft: ${title}`);
+    showToast('💾 Draft saved to GitHub — not yet in blog listing');
+  } catch(err){ showToast('❌ ' + err.message); }
+}
+
+/* Update data.js ARTICLES array on GitHub */
+async function updateDataJS(article){
+  try {
+    /* Fetch current data.js */
+    const r = await fetch(
+      `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/assets/js/data.js?ref=${GH.branch}`,
+      { headers: GH.headers() }
+    );
+    const fileData = await r.json();
+    const currentContent = decodeURIComponent(escape(atob(fileData.content)));
+
+    /* Build new article entry */
+    const tagArr = (article.tags||'').split(',').map(t=>t.trim()).filter(Boolean);
+    const newEntry = `  {
+    slug:'${article.slug}',
+    emoji:'${article.emoji}',
+    thumb:'linear-gradient(135deg,#0a0020,#1a0050,#0d0030)',
+    cat:'${article.cat}',
+    date:'${new Date(article.date).toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})}',
+    title:'${article.title.replace(/'/g,"\\'")}',
+    excerpt:'${(article.excerpt||'').replace(/'/g,"\\'")}',
+    tags:[${tagArr.map(t=>`'${t}'`).join(',')}],
+    readTime:'${article.readTime||"5 MIN READ"}',
+    author:'${article.author}',
+    authorRole:'// Find Best AI Editorial',
+    authorEmoji:'📝',
+    fullContent:''
+  },`;
+
+    /* Insert after "const ARTICLES = [" */
+    const marker = 'const ARTICLES = [';
+    const insertAt = currentContent.indexOf(marker);
+    if(insertAt === -1) return; // can't find marker, skip
+
+    const newContent = currentContent.slice(0, insertAt + marker.length) + '\n' + newEntry + currentContent.slice(insertAt + marker.length);
+
+    await GH.commitFile(
+      'assets/js/data.js',
+      newContent,
+      `📊 Add article to ARTICLES: ${article.title}`
+    );
+  } catch(err){
+    console.warn('Could not update data.js:', err.message);
+    /* Non-fatal — article HTML is already published */
+  }
+}
+
+/* Update sitemap.xml on GitHub */
+async function updateSitemap(slug, date){
+  try {
+    const r = await fetch(
+      `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/sitemap.xml?ref=${GH.branch}`,
+      { headers: GH.headers() }
+    );
+    const fileData = await r.json();
+    const currentXml = decodeURIComponent(escape(atob(fileData.content)));
+    const domain = 'https://findbestai.pages.dev';
+    const newUrl = `\n  <url>\n    <loc>${domain}/blog/${slug}/</loc>\n    <lastmod>${date}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.8</priority>\n  </url>`;
+    const updatedXml = currentXml.replace('</urlset>', newUrl + '\n</urlset>');
+    await GH.commitFile('sitemap.xml', updatedXml, `🗺️ Add ${slug} to sitemap`);
+  } catch(err){
+    console.warn('Could not update sitemap:', err.message);
+  }
+}
+
+/* Show success state after publish */
+function showPublishSuccess(slug, title){
+  const content = document.querySelector('#tab-new-article .admin-content') || document.getElementById('tab-new-article');
+  const successDiv = document.createElement('div');
+  successDiv.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.8);backdrop-filter:blur(12px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+  successDiv.innerHTML = `
+    <div style="background:var(--surface);border:1px solid var(--border-md);border-radius:20px;padding:40px;max-width:480px;width:100%;text-align:center;position:relative">
+      <div style="position:absolute;inset:-2px;border-radius:22px;background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3),var(--accent));background-size:300% 300%;animation:ringGlow 4s ease infinite;z-index:-1;box-shadow:0 0 40px var(--glow)"></div>
+      <div style="position:absolute;inset:1px;border-radius:19px;background:var(--surface);z-index:-1"></div>
+      <div style="font-size:3rem;margin-bottom:16px">🚀</div>
+      <h2 style="font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:8px">Article Published!</h2>
+      <p style="color:var(--text2);font-size:0.9rem;line-height:1.65;margin-bottom:6px">"${title}" has been committed to GitHub.</p>
+      <p style="color:var(--text3);font-size:0.8rem;margin-bottom:24px;font-family:'JetBrains Mono',monospace">⏱ Cloudflare Pages will deploy in ~30 seconds</p>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <a href="/blog/${slug}/" target="_blank"
+          style="padding:11px 22px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:600;font-size:0.9rem;text-decoration:none">
+          View Article ↗
+        </a>
+        <button onclick="this.closest('[style*=fixed]').remove(); clearArticleForm();"
+          style="padding:11px 22px;border-radius:10px;border:1px solid var(--border-md);background:var(--surface3);color:var(--text2);font-size:0.9rem;cursor:pointer">
+          Write Another
+        </button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(successDiv);
+}
+
+function clearArticleForm(){
+  ['art-title','art-slug','art-excerpt','art-content','art-meta','art-keyword','art-tags','art-emoji','art-readtime'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+  document.getElementById('slugPreview').textContent = 'findbestai.pages.dev/blog/your-slug/';
+  document.getElementById('metaCount').textContent = '0 / 155';
+}
+
+/* ════════════════════════════════════════════════════════════
+   GITHUB SETTINGS — save to localStorage, test connection
+════════════════════════════════════════════════════════════ */
+function saveGitHubSettings(){
+  const token = document.getElementById('s-gh-token')?.value?.trim();
+  const owner = document.getElementById('s-gh-owner')?.value?.trim();
+  const repo  = document.getElementById('s-gh-repo')?.value?.trim();
+  if(!token || !owner || !repo){
+    showToast('⚠️ All 3 GitHub fields are required');
+    return;
+  }
+  GH.saveSettings(token, owner, repo);
+  showToast('✅ GitHub settings saved!');
+  updateGitHubStatus('saved');
+}
+
+async function testGitHubConnection(){
+  const btn = document.getElementById('ghTestBtn');
+  if(btn){ btn.disabled=true; btn.textContent='⏳ Testing…'; }
+  try {
+    const repo = await GH.testConnection();
+    showToast('✅ Connected to ' + repo.full_name + ' (' + repo.default_branch + ')');
+    updateGitHubStatus('connected', repo.full_name);
+  } catch(err){
+    showToast('❌ ' + err.message);
+    updateGitHubStatus('error', err.message);
+  } finally {
+    if(btn){ btn.disabled=false; btn.textContent='🔌 Test Connection'; }
+  }
+}
+
+function updateGitHubStatus(state, detail){
+  const el = document.getElementById('ghStatus');
+  if(!el) return;
+  const colors = { connected:'var(--green)', saved:'var(--accent)', error:'var(--red)' };
+  const icons  = { connected:'✅', saved:'💾', error:'❌' };
+  const labels = { connected:`Connected to ${detail}`, saved:'Settings saved — click Test to verify', error:detail };
+  el.style.color = colors[state] || 'var(--text3)';
+  el.textContent = (icons[state]||'') + ' ' + (labels[state]||'');
+}
+
+/* ════════════════════════════════════════════════════════════
+   SETTINGS TAB — render GitHub config section
+════════════════════════════════════════════════════════════ */
+function renderGitHubSettingsUI(){
+  const panel = document.getElementById('ghSettingsPanel');
+  if(!panel) return;
+  panel.innerHTML = `
+    <div class="panel-head"><div class="panel-title">🐙 GitHub Integration</div><span id="ghStatus" style="font-size:0.78rem;font-family:'JetBrains Mono',monospace;color:var(--text3)">${GH.configured ? '✅ Configured' : '⚠️ Not configured'}</span></div>
+    <div class="panel-body">
+      <div style="background:color-mix(in srgb,var(--accent) 6%,var(--surface2));border:1px solid var(--border-md);border-radius:12px;padding:16px;margin-bottom:20px;font-size:0.83rem;color:var(--text2);line-height:1.7">
+        <strong style="color:var(--accent)">How it works:</strong> Publishing an article commits the file directly to your GitHub repo. Cloudflare Pages auto-deploys in ~30 seconds. Your GitHub token is stored only in your browser (localStorage) — never sent to any server except GitHub's API.
+      </div>
+
+      <div style="margin-bottom:16px;padding:14px 18px;background:var(--surface3);border-radius:10px;border:1px solid var(--border)">
+        <div style="font-size:0.68rem;font-family:'JetBrains Mono',monospace;color:var(--accent);margin-bottom:8px;font-weight:700">// STEP 1 — CREATE GITHUB TOKEN (Fine-grained)</div>
+        <ol style="color:var(--text2);font-size:0.82rem;line-height:1.85;padding-left:18px">
+          <li>Go to <a href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener" style="color:var(--accent)">github.com/settings/tokens?type=beta</a></li>
+          <li>Click <strong>"Generate new token"</strong></li>
+          <li>Name it: <code style="background:var(--surface);padding:1px 6px;border-radius:4px;font-family:'JetBrains Mono',monospace">FindBestAI-Admin</code></li>
+          <li>Repository access: <strong>Only select repositories</strong> → choose your site repo</li>
+          <li>Permissions → Repository permissions → <strong>Contents: Read and Write</strong></li>
+          <li>Click <strong>"Generate token"</strong> → copy it immediately (shown only once)</li>
+        </ol>
+      </div>
+
+      <div class="form-row" style="margin-bottom:14px">
+        <div>
+          <label class="form-label">GitHub Username</label>
+          <input class="form-input" id="s-gh-owner" type="text" placeholder="e.g. abdulqadeer123" value="${GH.owner}">
+        </div>
+        <div>
+          <label class="form-label">Repository Name</label>
+          <input class="form-input" id="s-gh-repo" type="text" placeholder="e.g. findbestai" value="${GH.repo}">
+        </div>
+      </div>
+      <div class="form-group" style="margin-bottom:16px">
+        <label class="form-label">GitHub Token (stored in browser only)</label>
+        <div style="position:relative">
+          <input class="form-input" id="s-gh-token" type="password" placeholder="github_pat_xxxxxxxxxxxx" value="${GH.token}" style="padding-right:80px">
+          <button onclick="const i=document.getElementById('s-gh-token');i.type=i.type==='password'?'text':'password'" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.78rem;font-family:'JetBrains Mono',monospace">SHOW</button>
+        </div>
+        <div style="font-size:0.72rem;color:var(--text3);margin-top:5px;font-family:'JetBrains Mono',monospace">⚠️ Never share this token. It's saved only in your browser localStorage.</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button onclick="saveGitHubSettings()" class="btn-primary" style="padding:11px 24px;color:#fff!important;-webkit-text-fill-color:#fff!important">💾 Save Settings</button>
+        <button onclick="testGitHubConnection()" id="ghTestBtn" class="btn-outline" style="padding:11px 24px;cursor:pointer">🔌 Test Connection</button>
+        <button onclick="if(confirm('Clear GitHub credentials?')){localStorage.removeItem('gh_token');localStorage.removeItem('gh_owner');localStorage.removeItem('gh_repo');GH.token='';GH.owner='';GH.repo='';showToast('Cleared');renderGitHubSettingsUI();}" style="padding:11px 18px;border:1px solid color-mix(in srgb,var(--red) 30%,transparent);border-radius:10px;background:transparent;color:var(--red);font-size:0.85rem;cursor:pointer">🗑️ Clear</button>
+      </div>
+    </div>
+  `;
+}
+
+/* ════════════════════════════════════════════════════════════
+   INIT ADMIN CONTENT (only called after auth)
+════════════════════════════════════════════════════════════ */
+function initAdminContent() {
+  document.getElementById('statTools').textContent = TOOLS.length;
+  document.getElementById('statArticles').textContent = ARTICLES.length;
+  renderDashArticles();
+  renderAdminArticles();
+  populateAdminCatFilter();
+  renderAdminTools();
+  const dateEl = document.getElementById('art-date');
+  if(dateEl) dateEl.value = new Date().toISOString().split('T')[0];
+
+  /* Inject GitHub settings into Settings tab */
+  const settingsTab = document.getElementById('tab-settings');
+  if(settingsTab){
+    const ghDiv = document.createElement('div');
+    ghDiv.id = 'ghSettingsPanel';
+    ghDiv.className = 'panel';
+    ghDiv.style.marginTop = '24px';
+    settingsTab.appendChild(ghDiv);
+    renderGitHubSettingsUI();
+  }
+
+  /* Add readtime field to new article form */
+  const dateGroup = document.getElementById('art-date')?.closest('.form-group');
+  if(dateGroup && !document.getElementById('art-readtime')){
+    const rtGroup = document.createElement('div');
+    rtGroup.className = 'form-group';
+    rtGroup.style.marginBottom = '14px';
+    rtGroup.innerHTML = `<label class="form-label">Read Time</label><input class="form-input" id="art-readtime" type="text" placeholder="e.g. 5 MIN READ" value="5 MIN READ">`;
+    dateGroup.parentNode.insertBefore(rtGroup, dateGroup.nextSibling);
+  }
+
+  /* Wire Publish button */
+  const publishBtn = document.getElementById('publishBtn');
+  if(publishBtn){
+    publishBtn.onclick = publishArticle;
+    /* Show GitHub status badge */
+    if(!GH.configured){
+      const badge = document.createElement('span');
+      badge.style.cssText = 'font-size:0.72rem;font-family:JetBrains Mono,monospace;color:var(--gold);padding:4px 10px;border-radius:6px;background:color-mix(in srgb,var(--gold) 10%,transparent);border:1px solid color-mix(in srgb,var(--gold) 25%,transparent)';
+      badge.textContent = '⚙️ Setup GitHub in Settings';
+      publishBtn.parentNode.insertBefore(badge, publishBtn);
+    }
+  }
+
+  initCommonUI();
+
+  /* Add logout button to sidebar */
+  const sidebar = document.querySelector('.admin-sidebar');
+  if (sidebar && !sidebar.querySelector('.logout-btn')) {
+    const logoutDiv = document.createElement('div');
+    logoutDiv.style.cssText = 'padding:12px 20px;margin-top:8px';
+    logoutDiv.innerHTML = `<button class="logout-btn" onclick="SEC.logout('Logged out successfully')"
+      style="width:100%;padding:10px;border-radius:9px;border:1px solid color-mix(in srgb,var(--red) 35%,transparent);background:color-mix(in srgb,var(--red) 8%,transparent);color:var(--red);font-size:0.82rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:'Outfit',sans-serif"
+      onmouseover="this.style.background='color-mix(in srgb,var(--red) 18%,transparent)'"
+      onmouseout="this.style.background='color-mix(in srgb,var(--red) 8%,transparent)'">
+      🚪 Logout
+    </button>`;
+    sidebar.appendChild(logoutDiv);
+  }
+}
+
 /* ── BOOT — Check session, then show login or admin ── */
 (function(){
-  /* Always hide body until auth confirmed */
   document.body.style.opacity = '0';
   setTimeout(() => {
     if (SEC.validateSession()) {
       document.body.style.opacity = '1';
       initAdminContent();
-      /* Tab blur listener */
       document.addEventListener('visibilitychange', () => {
         const m = document.querySelector('.admin-layout');
         if (m) m.style.filter = document.hidden ? 'blur(8px) brightness(0.3)' : '';

@@ -2,11 +2,14 @@
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" type="image/webp" href="/logo.webp">
+<link rel="apple-touch-icon" href="/logo.webp">
+<link rel="shortcut icon" href="/logo.webp">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Contact AI Hub — Submit a tool, report an error, or get in touch with our team.">
+<meta name="description" content="Contact Find Best AI — Submit a tool, report an error, or get in touch with our team.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://aihub.tools/contact/">
-<title>Contact — AI Hub</title>
+<link rel="canonical" href="https://findbestai.pages.dev/contact/">
+<title>Contact — Find Best AI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -27,32 +30,61 @@
   <p style="color:var(--text2);font-size:0.95rem;margin-bottom:40px;max-width:520px">Submit a tool for review, report an error, ask about advertising, or just say hello.</p>
 
   <div class="contact-grid">
+    <!-- ═══ CONTACT FORM — powered by Web3Forms (free, no backend) ═══ -->
     <div class="contact-form reveal">
       <h3>Send a Message</h3>
-      <div class="form-group">
-        <label class="form-label" for="cf-name">Name *</label>
-        <input class="form-input" id="cf-name" type="text" placeholder="Your name">
+
+      <!-- SUCCESS STATE (hidden by default) -->
+      <div id="cf-success" style="display:none;text-align:center;padding:40px 20px">
+        <div style="font-size:3rem;margin-bottom:16px">✅</div>
+        <div style="font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:8px">Message Sent!</div>
+        <div style="color:var(--text2);font-size:0.9rem;line-height:1.65;margin-bottom:20px">Thank you for reaching out. We'll reply to <strong id="cf-reply-email" style="color:var(--accent)"></strong> within 48 hours.</div>
+        <button onclick="resetContactForm()" class="btn-outline" style="padding:10px 24px;border-radius:10px;cursor:pointer">Send Another Message</button>
       </div>
-      <div class="form-group">
-        <label class="form-label" for="cf-email">Email *</label>
-        <input class="form-input" id="cf-email" type="email" placeholder="your@email.com">
+
+      <!-- FORM (shown by default) -->
+      <div id="cf-form-wrap">
+        <!-- Honeypot for spam prevention -->
+        <input type="text" name="bot-field" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;width:1px;height:1px" tabindex="-1" id="cf-bot" autocomplete="off">
+
+        <div class="form-group">
+          <label class="form-label" for="cf-name">Name *</label>
+          <input class="form-input" id="cf-name" type="text" placeholder="Your full name" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-email">Email Address *</label>
+          <input class="form-input" id="cf-email" type="email" placeholder="your@email.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-subject">Subject</label>
+          <select class="form-input" id="cf-subject">
+            <option>Submit a Tool for Review</option>
+            <option>Report an Error</option>
+            <option>Advertising Inquiry</option>
+            <option>Partnership Proposal</option>
+            <option>General Question</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="cf-msg">Message *</label>
+          <textarea class="form-input" id="cf-msg" placeholder="Tell us more…" required></textarea>
+        </div>
+
+        <!-- Error message -->
+        <div id="cf-error" style="display:none;background:color-mix(in srgb,var(--red) 10%,transparent);border:1px solid color-mix(in srgb,var(--red) 25%,transparent);border-radius:10px;padding:10px 16px;margin-bottom:16px;font-size:0.85rem;color:var(--red)"></div>
+
+        <button id="cf-submit-btn" onclick="submitContactForm(event)"
+          class="btn-primary"
+          style="width:100%;padding:14px;font-size:0.95rem;border-radius:11px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:#fff!important;-webkit-text-fill-color:#fff!important">
+          <span id="cf-btn-text">Send Message →</span>
+          <span id="cf-btn-spinner" style="display:none">⏳ Sending…</span>
+        </button>
+
+        <p style="margin-top:12px;font-size:0.72rem;color:var(--text3);text-align:center;font-family:'JetBrains Mono',monospace">
+          📬 Delivered to findbestaiofficial@gmail.com · Anti-spam protected
+        </p>
       </div>
-      <div class="form-group">
-        <label class="form-label" for="cf-subject">Subject</label>
-        <select class="form-input" id="cf-subject">
-          <option>Submit a Tool for Review</option>
-          <option>Report an Error</option>
-          <option>Advertising Inquiry</option>
-          <option>Partnership Proposal</option>
-          <option>General Question</option>
-          <option>Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label class="form-label" for="cf-msg">Message</label>
-        <textarea class="form-input" id="cf-msg" placeholder="Tell us more…"></textarea>
-      </div>
-      <button class="btn-primary" onclick="submitContact()" style="width:100%;padding:14px;font-size:0.95rem;border-radius:11px">Send Message →</button>
     </div>
 
     <div>
@@ -62,7 +94,7 @@
           <div class="contact-ic">📧</div>
           <div>
             <div class="contact-label">// EMAIL</div>
-            <div class="contact-val">hello@aihub.tools</div>
+            <div class="contact-val">findbestaiofficial@gmail.com</div>
           </div>
         </div>
         <div class="contact-item">
@@ -97,6 +129,21 @@
         <p style="color:var(--text2);font-size:0.88rem;line-height:1.7;margin-bottom:14px">Know an AI tool that should be in our directory? We review all submissions and list tools that meet our quality standards.</p>
         <p style="color:var(--text3);font-size:0.78rem;font-family:'JetBrains Mono',monospace">Submission does not guarantee listing or a positive review. We maintain editorial independence on all ratings.</p>
       </div>
+
+      <div class="contact-info-card reveal stagger-3" style="margin-top:20px;background:color-mix(in srgb,var(--accent) 5%,var(--surface));border-color:var(--border-md)">
+        <h3 style="font-size:0.9rem;margin-bottom:10px">⚙️ Setup Required</h3>
+        <p style="color:var(--text2);font-size:0.82rem;line-height:1.65;margin-bottom:10px">
+          To activate email delivery, get your <strong>free Web3Forms API key</strong>:
+        </p>
+        <ol style="color:var(--text2);font-size:0.8rem;line-height:1.8;padding-left:18px">
+          <li>Go to <a href="https://web3forms.com" target="_blank" rel="noopener" style="color:var(--accent)">web3forms.com</a></li>
+          <li>Enter <strong>findbestaiofficial@gmail.com</strong></li>
+          <li>Click "Create Access Key"</li>
+          <li>Check your Gmail for the key</li>
+          <li>Replace <code style="background:var(--surface3);padding:1px 5px;border-radius:4px;font-size:0.75rem">YOUR_ACCESS_KEY_HERE</code> in contact/index.html</li>
+        </ol>
+        <p style="color:var(--text3);font-size:0.72rem;font-family:'JetBrains Mono',monospace;margin-top:8px">Free · 250 submissions/month · No credit card</p>
+      </div>
     </div>
   </div>
 </section>
@@ -108,6 +155,105 @@
 <script src="/assets/js/data.js"></script>
 <script src="/assets/js/app.js"></script>
 <script src="/assets/js/nav.js"></script>
-<script>initCommonUI();</script>
+<script>
+/*
+ * CONTACT FORM — Web3Forms
+ * Replace YOUR_ACCESS_KEY_HERE with your key from web3forms.com
+ * It's free (250 emails/month) — no backend or server needed
+ * Emails go directly to findbestaiofficial@gmail.com
+ */
+const WEB3FORMS_KEY = 'YOUR_ACCESS_KEY_HERE';
+
+async function submitContactForm(e) {
+  e.preventDefault();
+
+  /* Honeypot check */
+  if(document.getElementById('cf-bot')?.value) return;
+
+  const name    = document.getElementById('cf-name')?.value?.trim();
+  const email   = document.getElementById('cf-email')?.value?.trim();
+  const subject = document.getElementById('cf-subject')?.value;
+  const message = document.getElementById('cf-msg')?.value?.trim();
+  const errEl   = document.getElementById('cf-error');
+  const btnText = document.getElementById('cf-btn-text');
+  const btnSpin = document.getElementById('cf-btn-spinner');
+  const btn     = document.getElementById('cf-submit-btn');
+
+  /* Validate */
+  const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(!name){ showError('Please enter your name.'); return; }
+  if(!email || !emailRx.test(email)){ showError('Please enter a valid email address.'); return; }
+  if(!message || message.length < 10){ showError('Please enter a message (at least 10 characters).'); return; }
+
+  hideError();
+
+  /* Show loading */
+  btn.disabled = true;
+  btnText.style.display = 'none';
+  btnSpin.style.display = 'inline';
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: WEB3FORMS_KEY,
+        name: name,
+        email: email,
+        subject: '📬 [Find Best AI] ' + subject + ' — from ' + name,
+        message: message,
+        from_name: 'Find Best AI Contact Form',
+        replyto: email,
+        /* Spam prevention */
+        botcheck: '',
+      })
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+      /* Show success */
+      document.getElementById('cf-form-wrap').style.display = 'none';
+      document.getElementById('cf-success').style.display = 'block';
+      document.getElementById('cf-reply-email').textContent = email;
+    } else {
+      throw new Error(data.message || 'Submission failed');
+    }
+
+  } catch(err) {
+    btn.disabled = false;
+    btnText.style.display = 'inline';
+    btnSpin.style.display = 'none';
+
+    if(WEB3FORMS_KEY === 'YOUR_ACCESS_KEY_HERE'){
+      showError('⚙️ Setup needed: Get your free API key from web3forms.com and replace YOUR_ACCESS_KEY_HERE in the code. See the setup guide on the right →');
+    } else {
+      showError('Something went wrong. Please email us directly at findbestaiofficial@gmail.com');
+    }
+  }
+}
+
+function showError(msg){
+  const el = document.getElementById('cf-error');
+  if(el){ el.textContent = msg; el.style.display = 'block'; }
+}
+function hideError(){
+  const el = document.getElementById('cf-error');
+  if(el) el.style.display = 'none';
+}
+function resetContactForm(){
+  document.getElementById('cf-form-wrap').style.display = 'block';
+  document.getElementById('cf-success').style.display = 'none';
+  document.getElementById('cf-submit-btn').disabled = false;
+  document.getElementById('cf-btn-text').style.display = 'inline';
+  document.getElementById('cf-btn-spinner').style.display = 'none';
+  ['cf-name','cf-email','cf-msg'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.value = '';
+  });
+}
+
+initCommonUI();
+</script>
 </body>
 </html>
