@@ -1453,23 +1453,25 @@ const GH = {
 
   get configured(){ return this.token && this.owner && this.repo; },
 
-  headers(){
-    return {
-      'Authorization': `Bearer ${this.token}`,
+  headers(isWrite = false){
+    const h = {
+      'Authorization': `Bearer ${this.token.trim()}`,
       'Accept': 'application/vnd.github+json',
       'X-GitHub-Api-Version': '2022-11-28',
-      'Content-Type': 'application/json'
     };
+    if(isWrite) h['Content-Type'] = 'application/json';
+    return h;
   },
 
   /* Get file SHA (needed for update, null for new file) */
   async getFileSHA(path){
     try {
       const r = await fetch(
-        `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${path}?ref=${this.branch}`,
-        { headers: this.headers() }
+        `https://api.github.com/repos/${this.owner.trim()}/${this.repo.trim()}/contents/${path}?ref=${this.branch}`,
+        { method:'GET', headers: this.headers(), mode:'cors', cache:'no-cache' }
       );
       if(r.status === 404) return null;
+      if(!r.ok) return null;
       const d = await r.json();
       return d.sha || null;
     } catch { return null; }
@@ -1480,30 +1482,65 @@ const GH = {
     const sha = await this.getFileSHA(path);
     const body = {
       message,
-      content: btoa(unescape(encodeURIComponent(content))), // base64 encode
+      content: btoa(unescape(encodeURIComponent(content))),
       branch: this.branch,
     };
-    if(sha) body.sha = sha; // required for updates
+    if(sha) body.sha = sha;
 
-    const r = await fetch(
-      `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${path}`,
-      { method: 'PUT', headers: this.headers(), body: JSON.stringify(body) }
-    );
+    let r;
+    try {
+      r = await fetch(
+        `https://api.github.com/repos/${this.owner.trim()}/${this.repo.trim()}/contents/${path}`,
+        { method:'PUT', headers: this.headers(true), body: JSON.stringify(body), mode:'cors' }
+      );
+    } catch(netErr) {
+      throw new Error('Network blocked — disable browser extensions on admin page, then retry.');
+    }
+
+    if(r.status === 401) throw new Error('Token invalid — regenerate at github.com/settings/tokens');
+    if(r.status === 403) throw new Error('Token lacks write permission on Contents');
+    if(r.status === 404) throw new Error('Repo or branch not found — check Settings');
+    if(r.status === 409) throw new Error('Git conflict — another commit is in progress, retry in 5 seconds');
     if(!r.ok){
-      const err = await r.json();
+      const err = await r.json().catch(()=>({}));
       throw new Error(err.message || `GitHub API error ${r.status}`);
     }
     return await r.json();
   },
 
-  /* Test connection */
+  /* Test connection with detailed error reporting */
   async testConnection(){
     if(!this.configured) throw new Error('GitHub not configured — go to Settings tab');
-    const r = await fetch(
-      `https://api.github.com/repos/${this.owner}/${this.repo}`,
-      { headers: this.headers() }
-    );
-    if(!r.ok) throw new Error('Cannot connect — check your token, username and repo name');
+
+    /* Trim whitespace that users accidentally paste */
+    this.token = this.token.trim();
+    this.owner = this.owner.trim();
+    this.repo  = this.repo.trim();
+
+    let r;
+    try {
+      r = await fetch(
+        `https://api.github.com/repos/${this.owner}/${this.repo}`,
+        {
+          method: 'GET',
+          headers: this.headers(),
+          mode: 'cors',
+          cache: 'no-cache'
+        }
+      );
+    } catch(netErr) {
+      /* Network-level failure — likely CSP or ad-blocker */
+      throw new Error(
+        'Network blocked. Causes: (1) Browser extension blocking GitHub API — try disabling ad-blockers on this page. ' +
+        '(2) Wait 30 seconds for the new _headers file to deploy on Cloudflare, then retry.'
+      );
+    }
+
+    if(r.status === 401) throw new Error('Token invalid or expired — generate a new one at github.com/settings/tokens');
+    if(r.status === 403) throw new Error('Token lacks permissions — make sure Contents: Read and Write is enabled');
+    if(r.status === 404) throw new Error('Repo not found — check username and repo name are exactly correct (case-sensitive)');
+    if(!r.ok) throw new Error(`GitHub API returned ${r.status} — check your details and try again`);
+
     return await r.json();
   },
 
@@ -1709,8 +1746,8 @@ async function updateDataJS(article){
   try {
     /* Fetch current data.js */
     const r = await fetch(
-      `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/assets/js/data.js?ref=${GH.branch}`,
-      { headers: GH.headers() }
+      `https://api.github.com/repos/${GH.owner.trim()}/${GH.repo.trim()}/contents/assets/js/data.js?ref=${GH.branch}`,
+      { method:'GET', headers: GH.headers(), mode:'cors', cache:'no-cache' }
     );
     const fileData = await r.json();
     const currentContent = decodeURIComponent(escape(atob(fileData.content)));
@@ -1755,8 +1792,8 @@ async function updateDataJS(article){
 async function updateSitemap(slug, date){
   try {
     const r = await fetch(
-      `https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/sitemap.xml?ref=${GH.branch}`,
-      { headers: GH.headers() }
+      `https://api.github.com/repos/${GH.owner.trim()}/${GH.repo.trim()}/contents/sitemap.xml?ref=${GH.branch}`,
+      { method:'GET', headers: GH.headers(), mode:'cors', cache:'no-cache' }
     );
     const fileData = await r.json();
     const currentXml = decodeURIComponent(escape(atob(fileData.content)));
@@ -1847,6 +1884,74 @@ function updateGitHubStatus(state, detail){
   el.textContent = (icons[state]||'') + ' ' + (labels[state]||'');
 }
 
+async function diagnoseConnection(){
+  const out = document.getElementById('diagnoseOutput');
+  if(!out) return;
+  out.style.display = 'block';
+  out.textContent = '🔍 Running diagnostics...\n';
+
+  const token = document.getElementById('s-gh-token')?.value?.trim() || GH.token;
+  const owner = document.getElementById('s-gh-owner')?.value?.trim() || GH.owner;
+  const repo  = document.getElementById('s-gh-repo')?.value?.trim()  || GH.repo;
+
+  out.textContent += `\n📋 Settings:\n  Username: "${owner}"\n  Repo: "${repo}"\n  Token: "${token ? token.substring(0,12)+'...' : 'NOT SET'}"\n`;
+
+  /* Test 1: Basic internet */
+  out.textContent += '\n[1/4] Testing internet connection...';
+  try {
+    await fetch('https://httpbin.org/get', { mode:'cors', cache:'no-cache' });
+    out.textContent += ' ✅ OK\n';
+  } catch {
+    out.textContent += ' ❌ No internet or all external fetches blocked\n';
+  }
+
+  /* Test 2: Can we reach GitHub at all */
+  out.textContent += '[2/4] Reaching api.github.com...';
+  try {
+    const r = await fetch('https://api.github.com/', { mode:'cors', cache:'no-cache' });
+    out.textContent += r.ok ? ' ✅ OK\n' : ` ⚠️ Status ${r.status}\n`;
+  } catch(e) {
+    out.textContent += ` ❌ BLOCKED — ${e.message}\n`;
+    out.textContent += '   → FIX: Disable ad-blockers/VPN on this page, or try a different browser\n';
+  }
+
+  /* Test 3: Token auth */
+  if(token){
+    out.textContent += '[3/4] Validating token...';
+    try {
+      const r = await fetch('https://api.github.com/user', {
+        headers:{ 'Authorization':`Bearer ${token}`, 'Accept':'application/vnd.github+json' },
+        mode:'cors', cache:'no-cache'
+      });
+      if(r.ok){ const u = await r.json(); out.textContent += ` ✅ Token valid — logged in as @${u.login}\n`; }
+      else if(r.status===401) out.textContent += ' ❌ Token INVALID — generate a new one\n';
+      else if(r.status===403) out.textContent += ' ⚠️ Token valid but rate-limited\n';
+      else out.textContent += ` ⚠️ Status ${r.status}\n`;
+    } catch(e) { out.textContent += ` ❌ BLOCKED — ${e.message}\n`; }
+  } else {
+    out.textContent += '[3/4] Token not set — skipped\n';
+  }
+
+  /* Test 4: Repo access */
+  if(token && owner && repo){
+    out.textContent += `[4/4] Checking repo "${owner}/${repo}"...`;
+    try {
+      const r = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
+        headers:{ 'Authorization':`Bearer ${token}`, 'Accept':'application/vnd.github+json' },
+        mode:'cors', cache:'no-cache'
+      });
+      if(r.ok){ const d = await r.json(); out.textContent += ` ✅ Found! Default branch: ${d.default_branch}\n`; GH.branch = d.default_branch; }
+      else if(r.status===404) out.textContent += ` ❌ NOT FOUND — check username/repo name are exactly correct\n`;
+      else if(r.status===403) out.textContent += ` ❌ No access — token may not have permission to this repo\n`;
+      else out.textContent += ` ⚠️ Status ${r.status}\n`;
+    } catch(e) { out.textContent += ` ❌ BLOCKED — ${e.message}\n`; }
+  } else {
+    out.textContent += '[4/4] Repo details missing — skipped\n';
+  }
+
+  out.textContent += '\n✅ Diagnostics complete. Share above output if you need help.';
+}
+
 /* ════════════════════════════════════════════════════════════
    SETTINGS TAB — render GitHub config section
 ════════════════════════════════════════════════════════════ */
@@ -1893,8 +1998,10 @@ function renderGitHubSettingsUI(){
       <div style="display:flex;gap:10px;flex-wrap:wrap">
         <button onclick="saveGitHubSettings()" class="btn-primary" style="padding:11px 24px;color:#fff!important;-webkit-text-fill-color:#fff!important">💾 Save Settings</button>
         <button onclick="testGitHubConnection()" id="ghTestBtn" class="btn-outline" style="padding:11px 24px;cursor:pointer">🔌 Test Connection</button>
+        <button onclick="diagnoseConnection()" class="btn-outline" style="padding:11px 18px;cursor:pointer;border-color:var(--gold);color:var(--gold)">🔍 Diagnose</button>
         <button onclick="if(confirm('Clear GitHub credentials?')){localStorage.removeItem('gh_token');localStorage.removeItem('gh_owner');localStorage.removeItem('gh_repo');GH.token='';GH.owner='';GH.repo='';showToast('Cleared');renderGitHubSettingsUI();}" style="padding:11px 18px;border:1px solid color-mix(in srgb,var(--red) 30%,transparent);border-radius:10px;background:transparent;color:var(--red);font-size:0.85rem;cursor:pointer">🗑️ Clear</button>
       </div>
+      <div id="diagnoseOutput" style="display:none;margin-top:14px;padding:14px;background:var(--surface3);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--text2);line-height:1.8;white-space:pre-wrap"></div>
     </div>
   `;
 }
