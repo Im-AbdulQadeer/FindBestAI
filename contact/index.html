@@ -168,15 +168,34 @@ async function submitContactForm(e) {
   /* ── Validate ── */
   const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  // Name: must be real (has vowels, no pure consonant gibberish)
+  /* ── Gibberish detector helpers ── */
+  function isGibberishWord(w){
+    if(w.length < 4) return false;
+    const v = (w.match(/[aeiou]/gi)||[]).length / w.length;
+    // consonant cluster: 4+ consonants in a row
+    const cluster = /[^aeiou]{4,}/i.test(w);
+    // repeated syllable: bla-bla, cv-cv pattern repeated 2+
+    const syllableRepeat = /^(.{2,4})\1+$/i.test(w);
+    return syllableRepeat || (v < 0.15 && cluster);
+  }
+
+  function gibberishScore(text){
+    const words = text.toLowerCase().replace(/[^a-z\s]/g,'').trim().split(/\s+/).filter(w=>w.length>2);
+    if(!words.length) return 0;
+    const bad = words.filter(isGibberishWord).length;
+    return bad / words.length; // 0 = clean, 1 = all gibberish
+  }
+
+  // ── NAME ──
   const nameNoSpace = name.replace(/\s/g,'');
   const nameVowels  = (name.match(/[aeiou]/gi)||[]).length;
-  const nameIsGibberish = nameNoSpace.length > 3 && nameVowels === 0;
-  const nameHasRepeat   = /(..)\1{2,}/.test(name);
+  const nameSyllableRepeat = /^(.{2,4})\1+$/i.test(nameNoSpace); // blabla, abcabc
+  const nameIsGibberish    = (nameNoSpace.length > 3 && nameVowels === 0) || nameSyllableRepeat;
+  const nameGibScore = gibberishScore(name);
   if(!name || name.length < 3){ showError('Please enter your full name.'); return; }
-  if(nameIsGibberish || nameHasRepeat){ showError('Please enter a real name.'); return; }
+  if(nameIsGibberish || nameGibScore > 0.5){ showError('Please enter a real name.'); return; }
 
-  // Email: format check + block disposable domains
+  // ── EMAIL ──
   const disposable = ['mailinator.com','guerrillamail.com','tempmail.com','throwaway.email',
     'fakeinbox.com','sharklasers.com','grr.la','spam4.me','trashmail.com','dispostable.com',
     'yopmail.com','maildrop.cc','temp-mail.org','getnada.com','discard.email',
@@ -184,17 +203,23 @@ async function submitContactForm(e) {
   if(!email || !emailRx.test(email)){ showError('Please enter a valid email address.'); return; }
   const emailDomain = email.split('@')[1]?.toLowerCase();
   if(disposable.includes(emailDomain)){ showError('Disposable emails are not accepted. Please use a real email.'); return; }
+  // Block if email local part itself is pure gibberish repeated pattern (blablabla@...)
+  const emailLocal = email.split('@')[0].toLowerCase();
+  const emailLocalRepeat = /^(.{2,4})\1{2,}$/.test(emailLocal);
+  if(emailLocalRepeat){ showError('Please use a real email address.'); return; }
 
-  // Message: block keyboard mashing (low vowel ratio, repeated chars, too short word count)
+  // ── MESSAGE ──
   const msgClean   = message.replace(/\s/g,'');
   const msgVowels  = (message.match(/[aeiou]/gi)||[]).length;
   const vowelRatio = msgClean.length > 0 ? msgVowels / msgClean.length : 0;
   const msgWords   = message.trim().split(/\s+/).length;
   const msgRepeat  = /(.{2,})\1{3,}/.test(message);
+  const msgGibScore = gibberishScore(message);
   if(!message || message.length < 20){ showError('Please enter a message (at least 20 characters).'); return; }
-  if(msgWords < 3){ showError('Please write at least 3 words in your message.'); return; }
+  if(msgWords < 4){ showError('Please write at least 4 words in your message.'); return; }
   if(vowelRatio < 0.10 && msgClean.length > 8){ showError('Your message looks invalid. Please write a real message.'); return; }
   if(msgRepeat){ showError('Please enter a valid message.'); return; }
+  if(msgGibScore > 0.55){ showError('Your message appears to contain random text. Please describe your enquiry clearly.'); return; }
 
   hideError();
 
