@@ -38,7 +38,7 @@
       <div id="cf-success" style="display:none;text-align:center;padding:40px 20px">
         <div style="font-size:3rem;margin-bottom:16px">✅</div>
         <div style="font-weight:700;font-size:1.1rem;color:var(--text);margin-bottom:8px">Message Sent!</div>
-        <div style="color:var(--text2);font-size:0.9rem;line-height:1.65;margin-bottom:20px">Thank you for reaching out. We'll reply to <strong id="cf-reply-email" style="color:var(--accent)"></strong> within 24 hours.</div>
+        <div style="color:var(--text2);font-size:0.9rem;line-height:1.65;margin-bottom:20px">Thank you for reaching out. We'll reply to <strong id="cf-reply-email" style="color:var(--accent)"></strong> within 48 hours.</div>
         <button onclick="resetContactForm()" class="btn-outline" style="padding:10px 24px;border-radius:10px;cursor:pointer">Send Another Message</button>
       </div>
 
@@ -101,7 +101,7 @@
           <div class="contact-ic">⏱️</div>
           <div>
             <div class="contact-label">// RESPONSE TIME</div>
-            <div class="contact-val">Within 24 hours</div>
+            <div class="contact-val">Within 48 hours</div>
           </div>
         </div>
         <div class="contact-item">
@@ -130,6 +130,20 @@
         <p style="color:var(--text3);font-size:0.78rem;font-family:'JetBrains Mono',monospace">Submission does not guarantee listing or a positive review. We maintain editorial independence on all ratings.</p>
       </div>
 
+      <div class="contact-info-card reveal stagger-3" style="margin-top:20px;background:color-mix(in srgb,var(--accent) 5%,var(--surface));border-color:var(--border-md)">
+        <h3 style="font-size:0.9rem;margin-bottom:10px">⚙️ Setup Required</h3>
+        <p style="color:var(--text2);font-size:0.82rem;line-height:1.65;margin-bottom:10px">
+          To activate email delivery, get your <strong>free Web3Forms API key</strong>:
+        </p>
+        <ol style="color:var(--text2);font-size:0.8rem;line-height:1.8;padding-left:18px">
+          <li>Go to <a href="https://web3forms.com" target="_blank" rel="noopener" style="color:var(--accent)">web3forms.com</a></li>
+          <li>Enter <strong>findbestaiofficial@gmail.com</strong></li>
+          <li>Click "Create Access Key"</li>
+          <li>Check your Gmail for the key</li>
+          <li>Replace <code style="background:var(--surface3);padding:1px 5px;border-radius:4px;font-size:0.75rem">YOUR_ACCESS_KEY_HERE</code> in contact/index.html</li>
+        </ol>
+        <p style="color:var(--text3);font-size:0.72rem;font-family:'JetBrains Mono',monospace;margin-top:8px">Free · 250 submissions/month · No credit card</p>
+      </div>
     </div>
   </div>
 </section>
@@ -148,7 +162,7 @@
  * It's free (250 emails/month) — no backend or server needed
  * Emails go directly to findbestaiofficial@gmail.com
  */
-const WEB3FORMS_KEY = 'd9a8fc3c-5b28-421c-afb4-3896ec892a7e';
+const WEB3FORMS_KEY = 'YOUR_ACCESS_KEY_HERE';
 
 async function submitContactForm(e) {
   e.preventDefault();
@@ -165,61 +179,11 @@ async function submitContactForm(e) {
   const btnSpin = document.getElementById('cf-btn-spinner');
   const btn     = document.getElementById('cf-submit-btn');
 
-  /* ── Validate ── */
+  /* Validate */
   const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  /* ── Gibberish detector helpers ── */
-  function isGibberishWord(w){
-    if(w.length < 4) return false;
-    const v = (w.match(/[aeiou]/gi)||[]).length / w.length;
-    // consonant cluster: 4+ consonants in a row
-    const cluster = /[^aeiou]{4,}/i.test(w);
-    // repeated syllable: bla-bla, cv-cv pattern repeated 2+
-    const syllableRepeat = /^(.{2,4})\1+$/i.test(w);
-    return syllableRepeat || (v < 0.15 && cluster);
-  }
-
-  function gibberishScore(text){
-    const words = text.toLowerCase().replace(/[^a-z\s]/g,'').trim().split(/\s+/).filter(w=>w.length>2);
-    if(!words.length) return 0;
-    const bad = words.filter(isGibberishWord).length;
-    return bad / words.length; // 0 = clean, 1 = all gibberish
-  }
-
-  // ── NAME ──
-  const nameNoSpace = name.replace(/\s/g,'');
-  const nameVowels  = (name.match(/[aeiou]/gi)||[]).length;
-  const nameSyllableRepeat = /^(.{2,4})\1+$/i.test(nameNoSpace); // blabla, abcabc
-  const nameIsGibberish    = (nameNoSpace.length > 3 && nameVowels === 0) || nameSyllableRepeat;
-  const nameGibScore = gibberishScore(name);
-  if(!name || name.length < 3){ showError('Please enter your full name.'); return; }
-  if(nameIsGibberish || nameGibScore > 0.5){ showError('Please enter a real name.'); return; }
-
-  // ── EMAIL ──
-  const disposable = ['mailinator.com','guerrillamail.com','tempmail.com','throwaway.email',
-    'fakeinbox.com','sharklasers.com','grr.la','spam4.me','trashmail.com','dispostable.com',
-    'yopmail.com','maildrop.cc','temp-mail.org','getnada.com','discard.email',
-    '10minutemail.com','minutemail.com','mailnull.com','guerrillamail.info'];
+  if(!name){ showError('Please enter your name.'); return; }
   if(!email || !emailRx.test(email)){ showError('Please enter a valid email address.'); return; }
-  const emailDomain = email.split('@')[1]?.toLowerCase();
-  if(disposable.includes(emailDomain)){ showError('Disposable emails are not accepted. Please use a real email.'); return; }
-  // Block if email local part itself is pure gibberish repeated pattern (blablabla@...)
-  const emailLocal = email.split('@')[0].toLowerCase();
-  const emailLocalRepeat = /^(.{2,4})\1{2,}$/.test(emailLocal);
-  if(emailLocalRepeat){ showError('Please use a real email address.'); return; }
-
-  // ── MESSAGE ──
-  const msgClean   = message.replace(/\s/g,'');
-  const msgVowels  = (message.match(/[aeiou]/gi)||[]).length;
-  const vowelRatio = msgClean.length > 0 ? msgVowels / msgClean.length : 0;
-  const msgWords   = message.trim().split(/\s+/).length;
-  const msgRepeat  = /(.{2,})\1{3,}/.test(message);
-  const msgGibScore = gibberishScore(message);
-  if(!message || message.length < 20){ showError('Please enter a message (at least 20 characters).'); return; }
-  if(msgWords < 4){ showError('Please write at least 4 words in your message.'); return; }
-  if(vowelRatio < 0.10 && msgClean.length > 8){ showError('Your message looks invalid. Please write a real message.'); return; }
-  if(msgRepeat){ showError('Please enter a valid message.'); return; }
-  if(msgGibScore > 0.55){ showError('Your message appears to contain random text. Please describe your enquiry clearly.'); return; }
+  if(!message || message.length < 10){ showError('Please enter a message (at least 10 characters).'); return; }
 
   hideError();
 
