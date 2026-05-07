@@ -165,6 +165,21 @@ const TRENDING = [
 
 const ARTICLES = [
   {
+    slug:'test',
+    emoji:'📝',
+    thumb:'linear-gradient(135deg,#0a0020,#1a0050,#0d0030)',
+    cat:'ROUNDUP',
+    date:'May 7, 2026',
+    title:'test',
+    excerpt:'',
+    tags:[],
+    readTime:'5 MIN READ',
+    author:'Find Best AI Editorial',
+    authorRole:'// Find Best AI Editorial',
+    authorEmoji:'📝',
+    fullContent:''
+  },
+  {
     slug:'best-ai-video-generator-2026',
     emoji:'🎬',
     thumb:'linear-gradient(135deg,#0a0020,#1a0050,#0d0030)',
