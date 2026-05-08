@@ -59,13 +59,107 @@ function showToast(msg, icon=''){
 }
 
 /* ── LOGO HELPER ── */
+/* ── DIRECT LOGO OVERRIDES (high-quality SVG/PNG from official CDNs) ── */
+const LOGO_OVERRIDES = {
+  'openai.com':           'https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/ChatGPT_logo.svg/180px-ChatGPT_logo.svg.png',
+  'claude.ai':            'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Claude_AI_logo.svg/180px-Claude_AI_logo.svg.png',
+  'gemini.google.com':    'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Google_Gemini_logo.svg/180px-Google_Gemini_logo.svg.png',
+  'copilot.microsoft.com':'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Microsoft_365_Copilot_Icon.svg/180px-Microsoft_365_Copilot_Icon.svg.png',
+  'deepseek.com':         'https://logo.clearbit.com/deepseek.com?size=120',
+  'grok.com':             'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Grok_logo.svg/180px-Grok_logo.svg.png',
+  'midjourney.com':       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Midjourney_Emblem.png/180px-Midjourney_Emblem.png',
+  'stability.ai':         'https://logo.clearbit.com/stability.ai?size=120',
+  'firefly.adobe.com':    'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Adobe_Firefly_wordmark.svg/180px-Adobe_Firefly_wordmark.svg.png',
+  'leonardo.ai':          'https://logo.clearbit.com/leonardo.ai?size=120',
+  'ideogram.ai':          'https://logo.clearbit.com/ideogram.ai?size=120',
+  'blackforestlabs.ai':   'https://logo.clearbit.com/blackforestlabs.ai?size=120',
+  'runwayml.com':         'https://logo.clearbit.com/runwayml.com?size=120',
+  'pika.art':             'https://logo.clearbit.com/pika.art?size=120',
+  'klingai.com':          'https://logo.clearbit.com/klingai.com?size=120',
+  'sora.com':             'https://logo.clearbit.com/sora.com?size=120',
+  'lumalabs.ai':          'https://logo.clearbit.com/lumalabs.ai?size=120',
+  'descript.com':         'https://logo.clearbit.com/descript.com?size=120',
+  'capcut.com':           'https://logo.clearbit.com/capcut.com?size=120',
+  'github.com':           'https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/180px-Octicons-mark-github.svg.png',
+  'cursor.sh':            'https://logo.clearbit.com/cursor.sh?size=120',
+  'codeium.com':          'https://logo.clearbit.com/codeium.com?size=120',
+  'bolt.new':             'https://logo.clearbit.com/bolt.new?size=120',
+  'v0.dev':               'https://logo.clearbit.com/v0.dev?size=120',
+  'replit.com':           'https://logo.clearbit.com/replit.com?size=120',
+  'jasper.ai':            'https://logo.clearbit.com/jasper.ai?size=120',
+  'copy.ai':              'https://logo.clearbit.com/copy.ai?size=120',
+  'writesonic.com':       'https://logo.clearbit.com/writesonic.com?size=120',
+  'grammarly.com':        'https://logo.clearbit.com/grammarly.com?size=120',
+  'notion.so':            'https://logo.clearbit.com/notion.so?size=120',
+  'elevenlabs.io':        'https://logo.clearbit.com/elevenlabs.io?size=120',
+  'murf.ai':              'https://logo.clearbit.com/murf.ai?size=120',
+  'suno.ai':              'https://logo.clearbit.com/suno.ai?size=120',
+  'udio.com':             'https://logo.clearbit.com/udio.com?size=120',
+  'canva.com':            'https://logo.clearbit.com/canva.com?size=120',
+  'figma.com':            'https://logo.clearbit.com/figma.com?size=120',
+  'heygen.com':           'https://logo.clearbit.com/heygen.com?size=120',
+  'synthesia.io':         'https://logo.clearbit.com/synthesia.io?size=120',
+  'perplexity.ai':        'https://logo.clearbit.com/perplexity.ai?size=120',
+  'notebooklm.google':    'https://logo.clearbit.com/notebooklm.google?size=120',
+  'you.com':              'https://logo.clearbit.com/you.com?size=120',
+  'zapier.com':           'https://logo.clearbit.com/zapier.com?size=120',
+  'make.com':             'https://logo.clearbit.com/make.com?size=120',
+  'n8n.io':               'https://logo.clearbit.com/n8n.io?size=120',
+  'semrush.com':          'https://logo.clearbit.com/semrush.com?size=120',
+  'surferseo.com':        'https://logo.clearbit.com/surferseo.com?size=120',
+  'adobe.com':            'https://logo.clearbit.com/adobe.com?size=120',
+  'remove.bg':            'https://logo.clearbit.com/remove.bg?size=120',
+  'julius.ai':            'https://logo.clearbit.com/julius.ai?size=120',
+  'tableau.com':          'https://logo.clearbit.com/tableau.com?size=120',
+  'intercom.com':         'https://logo.clearbit.com/intercom.com?size=120',
+  'botpress.com':         'https://logo.clearbit.com/botpress.com?size=120',
+  'chatpdf.com':          'https://logo.clearbit.com/chatpdf.com?size=120',
+  'humata.ai':            'https://logo.clearbit.com/humata.ai?size=120',
+  'instantly.ai':         'https://logo.clearbit.com/instantly.ai?size=120',
+  'spline.design':        'https://logo.clearbit.com/spline.design?size=120',
+  'meshy.ai':             'https://logo.clearbit.com/meshy.ai?size=120',
+  'otter.ai':             'https://logo.clearbit.com/otter.ai?size=120',
+  'fireflies.ai':         'https://logo.clearbit.com/fireflies.ai?size=120',
+  'gamma.app':            'https://logo.clearbit.com/gamma.app?size=120',
+  'loom.com':             'https://logo.clearbit.com/loom.com?size=120',
+  'character.ai':         'https://logo.clearbit.com/character.ai?size=120',
+  'cognition.ai':         'https://logo.clearbit.com/cognition.ai?size=120',
+  'fathom.video':         'https://logo.clearbit.com/fathom.video?size=120',
+  'phind.com':            'https://logo.clearbit.com/phind.com?size=120',
+  'elicit.com':           'https://logo.clearbit.com/elicit.com?size=120',
+  'consensus.app':        'https://logo.clearbit.com/consensus.app?size=120',
+  'mistral.ai':           'https://logo.clearbit.com/mistral.ai?size=120',
+  'meta.ai':              'https://logo.clearbit.com/meta.ai?size=120',
+  'pi.ai':                'https://logo.clearbit.com/pi.ai?size=120',
+  'skylum.com':           'https://logo.clearbit.com/skylum.com?size=120',
+  'playground.com':       'https://logo.clearbit.com/playground.com?size=120',
+  'bing.com':             'https://logo.clearbit.com/bing.com?size=120',
+  'designer.microsoft.com': 'https://logo.clearbit.com/microsoft.com?size=120',
+  'huggingface.co':       'https://logo.clearbit.com/huggingface.co?size=120',
+  'ai.google.dev':        'https://logo.clearbit.com/google.com?size=120',
+  'qwen.ai':              'https://logo.clearbit.com/qwen.ai?size=120',
+};
+
+
+const LOGO_SOURCES = [
+  d => `https://logo.clearbit.com/${d}?size=120`,
+  d => `https://img.logo.dev/${d}?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120`,
+  d => `https://icons.duckduckgo.com/ip3/${d}.ico`,
+  d => `https://www.google.com/s2/favicons?domain=${d}&sz=128`,
+];
+
 function toolLogo(t, size){
-  // t can be a full tool object (has .logo) or a partial (only .emoji/.bg)
-  // size: pixel size of the container (used for img sizing)
   if(!t.logo) return t.emoji || '';
-  const sz = size || 28;
-  const imgSz = Math.round(sz * 0.72);
-  return `<img src="https://www.google.com/s2/favicons?domain=${t.logo}&sz=64" alt="${t.name||''} logo" width="${imgSz}" height="${imgSz}" style="object-fit:contain;border-radius:4px" onerror="this.style.display='none';this.nextSibling&&(this.nextSibling.style.display='');this.insertAdjacentHTML('afterend','<span style=\\'display:inline\\'>${t.emoji||''}</span>');this.remove()">`;
+  const domain  = t.logo;
+  const emoji   = (t.emoji || '').replace(/'/g, "\\'");
+  const name    = (t.name  || '').replace(/"/g, '&quot;');
+
+  // Use high-quality override as first source, then fallback chain
+  const firstSrc = LOGO_OVERRIDES[domain] || LOGO_SOURCES[0](domain);
+  const allSrcs  = [firstSrc, ...LOGO_SOURCES.map(fn => fn(domain))];
+  const unique   = [...new Set(allSrcs)].join('|');
+
+  return `<img src="${firstSrc}" alt="${name} logo" data-srcs="${unique}" data-src-idx="0" onerror="(function(el){var i=parseInt(el.getAttribute('data-src-idx'))||0,s=el.getAttribute('data-srcs').split('|');i++;if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='${emoji}';sp.style.cssText='font-size:1.3em;line-height:1';el.parentNode.appendChild(sp);}})(this)" style="display:block;width:100%;height:100%;object-fit:contain;">`;
 }
 
 /* ── SEARCH ── */
