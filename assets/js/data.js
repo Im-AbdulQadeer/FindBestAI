@@ -165,35 +165,26 @@ const TRENDING = [
 
 const ARTICLES = [
   {
-    slug:'test',
-    emoji:'📝',
-    thumb:'linear-gradient(135deg,#0a0020,#1a0050,#0d0030)',
-    cat:'ROUNDUP',
-    date:'May 7, 2026',
-    title:'test',
-    excerpt:'',
-    tags:[],
-    readTime:'5 MIN READ',
-    author:'Find Best AI Editorial',
-    authorRole:'// Find Best AI Editorial',
-    authorEmoji:'📝',
-    fullContent:''
-  },
-  {
-    slug:'best-ai-video-generator-2026',
-    emoji:'🎬',
-    thumb:'linear-gradient(135deg,#0a0020,#1a0050,#0d0030)',
-    cat:'ROUNDUP',
-    date:'May 1, 2026',
-    title:'Best AI Video Generator Tools in 2026 — Free & Paid Compared',
-    excerpt:'AI video generation has exploded. We tested Sora, RunwayML, Kling AI, Pika, Synthesia, InVideo AI and Luma Dream Machine so you know exactly which one to use — and which to skip.',
-    keywords:'best AI video generator 2026, AI video generator free, text to video AI',
-    readTime:'9 MIN READ',
-    author:'AI Prime Hub Editorial',
-    authorRole:'Tools Research Team',
-    authorEmoji:'🎬',
-    tags:['AI Video','2026','Free Tools','Comparison','Text to Video'],
-    fullContent:`
+    slug: 'best-ai-video-generator-2026',
+    emoji: '🎬',
+    thumb: 'linear-gradient(135deg,#0a0020,#1a0050,#0d0030)',
+    cat: 'ROUNDUP',
+    date: 'May 1, 2026',
+    title: 'Best AI Video Generator Tools in 2026 — Free & Paid Compared',
+    excerpt: 'AI video generation has exploded. We tested Sora, RunwayML, Kling AI, Pika, Synthesia, InVideo AI and Luma Dream Machine so you know exactly which one to use — and which to skip.',
+    keywords: 'best AI video generator 2026, AI video generator free, text to video AI',
+    readTime: '9 MIN READ',
+    author: 'AI Prime Hub Editorial',
+    authorRole: 'Tools Research Team',
+    authorEmoji: '🎬',
+    tags: [
+      'AI Video',
+      '2026',
+      'Free Tools',
+      'Comparison',
+      'Text to Video'
+    ],
+    fullContent: `
       <p class="article-lead">If you searched for the best AI video generator in 2026, you are in exactly the right place. We spent three weeks testing every major text-to-video AI tool — running identical prompts, measuring output quality, checking free plan limits, and calculating real-world value. This is the most complete, hands-on comparison you will find anywhere.</p>
       <div class="article-toc">
         <div class="article-toc-title">📋 What's in this guide</div>
@@ -233,10 +224,85 @@ const ARTICLES = [
       <p>Luma Dream Machine specialises in smooth, fluid motion. Upload a product image and a text prompt, and Luma will generate a gorgeous dynamic product video. <strong>Rating: ⭐⭐⭐½</strong></p>
     `
   },
-  {slug:'midjourney-vs-dalle-vs-firefly',emoji:'🏆',thumb:'linear-gradient(135deg,#0d0521,#2d0a6b)',cat:'COMPARISON',date:'Jan 28, 2025',title:'Midjourney vs DALL-E 3 vs Firefly: The 2025 Image AI Showdown',excerpt:'We tested all three on 50 identical prompts. The results were closer than expected, but one winner is clear.',tags:['Image AI','Midjourney','DALL-E','Firefly','Comparison'],readTime:'7 MIN READ',author:'AI Prime Hub Editorial',authorRole:'Image AI Specialist',authorEmoji:'🎨',fullContent:'<p class="article-lead">We ran 50 identical prompts through Midjourney, DALL-E 3, and Adobe Firefly to find out which image AI is actually best in 2025. The results surprised us.</p><h2>The Test Setup</h2><p>We tested each tool on portrait photography, abstract art, product photography, typography, and architectural visualization. Each prompt was run 3 times and the best result was selected for fair comparison.</p><h2>Winner: Midjourney (Still)</h2><p>Midjourney remains the gold standard for artistic quality and creative range. Its v6 model produces stunning, painterly results that neither DALL-E 3 nor Firefly can match for sheer beauty.</p><h2>Runner-up: Adobe Firefly (for commercial use)</h2><p>If you need commercially safe images, Firefly wins hands down. Every image is trained on licensed content — zero legal risk. The quality has also improved dramatically.</p><h2>Best free option: DALL-E 3 via Bing</h2><p>DALL-E 3 is available completely free via Bing Image Creator. For most everyday needs, it delivers impressive results at no cost.</p>'},
-  {slug:'10-free-ai-tools-replace-expensive-software',emoji:'💡',thumb:'linear-gradient(135deg,#001a10,#003d1f)',cat:'GUIDE',date:'Jan 25, 2025',title:'10 Free AI Tools That Replace Expensive Software',excerpt:'From Photoshop to Premiere Pro — these free AI tools can do 80% of the job at zero cost.',tags:['Free Tools','Budget','Alternatives'],readTime:'6 MIN READ',author:'AI Prime Hub Editorial',authorRole:'Tools Research Team',authorEmoji:'💡',fullContent:'<p class="article-lead">You do not need to spend thousands on software subscriptions. These 10 free AI tools can replace some of the most expensive software in the world — and in many cases, they\'re better.</p><h2>1. Remove.bg — Replace Photoshop Background Removal</h2><p>Background removal in Photoshop used to take 20 minutes. Remove.bg does it in 5 seconds, completely free, with better edge detection than most professionals can achieve manually.</p><h2>2. CapCut — Replace Premiere Pro for Social Media</h2><p>For short-form video editing, CapCut is free and faster than Premiere for the tasks that matter on social media — auto captions, background removal, trending templates.</p><h2>3. Canva AI — Replace Adobe Express</h2><p>Canva\'s free tier is genuinely useful with AI generation, templates, and brand tools. The paid tier ($15/mo) is a fraction of the Adobe CC cost.</p><h2>4. Grammarly — Replace ProWritingAid</h2><p>The free version of Grammarly catches 90% of errors. Upgrade only if you need the advanced style suggestions.</p><h2>5. NotebookLM — Replace Expensive Research Tools</h2><p>Google\'s NotebookLM is completely free and lets you upload 50 sources and chat with your research. No research subscription needed.</p>'},
-  {slug:'cursor-ai-deep-dive',emoji:'🚀',thumb:'linear-gradient(135deg,#150500,#3d1200)',cat:'REVIEW',date:'Jan 22, 2025',title:'Cursor AI Deep Dive: Is It Really the Future of Coding?',excerpt:'We used Cursor for 30 days as our primary IDE. Here\'s what we found — including the frustrating parts.',tags:['Cursor','Code AI','IDE','Review'],readTime:'8 MIN READ',author:'AI Prime Hub Editorial',authorRole:'Developer Tools Specialist',authorEmoji:'💻',fullContent:'<p class="article-lead">We switched our entire development workflow to Cursor AI for 30 days. Here\'s our honest, detailed review — the good, the great, and the genuinely frustrating parts.</p><h2>What Cursor Actually Is</h2><p>Cursor is a VS Code fork with AI deeply integrated throughout. It is not a plugin — it is a completely separate editor that is API-compatible with VS Code extensions.</p><h2>The Tab Autocomplete Is Extraordinary</h2><p>Cursor\'s Tab key predicts not just the next line, but entire blocks of code. After two days of use, you start to feel like you\'re navigating a code graph rather than writing characters.</p><h2>Composer Mode Changes Everything</h2><p>Composer mode lets you describe a change and Cursor makes it across multiple files simultaneously. "Add dark mode to my React app" actually works.</p><h2>The Frustrating Parts</h2><p>Context limits are real. On large codebases, Cursor sometimes loses track of architecture decisions made in other files. The $20/mo plan can feel restrictive on heavy usage days.</p><h2>Verdict: Yes, it\'s the future</h2><p>After 30 days, not one member of our team wants to go back to vanilla VS Code. Cursor is the most significant productivity upgrade we\'ve found in years.</p>'},
-  {slug:'ai-prompt-engineering-101',emoji:'🎨',thumb:'linear-gradient(135deg,#050015,#15003d)',cat:'GUIDE',date:'Jan 7, 2025',title:'AI Prompt Engineering 101: Get Better Results Every Time',excerpt:'Master the art of prompting to unlock the full potential of image and text AI tools.',tags:['Prompt Engineering','Guide','AI Tips'],readTime:'5 MIN READ',author:'AI Prime Hub Editorial',authorRole:'AI Researcher',authorEmoji:'🎨',fullContent:'<p class="article-lead">The difference between a mediocre AI output and an extraordinary one is usually the prompt. Prompt engineering is the skill of communicating clearly with AI — and it can be learned in minutes.</p><h2>The 5-Part Prompt Formula</h2><p>The best prompts include: (1) Context — who you are and why you need this, (2) Task — what specifically you want, (3) Format — how you want the output structured, (4) Tone — the voice and style, (5) Constraints — what to avoid.</p><h2>For Image Generation</h2><p>Be specific about style: "photorealistic, 8K, studio lighting, shallow depth of field" is better than "good photo." Reference artists whose work matches your vision: "in the style of Ansel Adams" or "anime style by Studio Ghibli."</p><h2>For Writing AI</h2><p>Give the AI a role: "You are a senior copywriter with 15 years of experience writing for luxury brands." Then give it your task. Role assignment dramatically improves output quality.</p><h2>Chain Your Prompts</h2><p>Complex tasks work better in steps. First generate an outline, then expand each section, then refine the tone. One mega-prompt rarely beats a thoughtful chain.</p>'},
+  {
+    slug: 'midjourney-vs-dalle-vs-firefly',
+    emoji: '🏆',
+    thumb: 'linear-gradient(135deg,#0d0521,#2d0a6b)',
+    cat: 'COMPARISON',
+    date: 'Jan 28, 2025',
+    title: 'Midjourney vs DALL-E 3 vs Firefly: The 2025 Image AI Showdown',
+    excerpt: 'We tested all three on 50 identical prompts. The results were closer than expected, but one winner is clear.',
+    tags: [
+      'Image AI',
+      'Midjourney',
+      'DALL-E',
+      'Firefly',
+      'Comparison'
+    ],
+    readTime: '7 MIN READ',
+    author: 'AI Prime Hub Editorial',
+    authorRole: 'Image AI Specialist',
+    authorEmoji: '🎨',
+    fullContent: `<p class="article-lead">We ran 50 identical prompts through Midjourney, DALL-E 3, and Adobe Firefly to find out which image AI is actually best in 2025. The results surprised us.</p><h2>The Test Setup</h2><p>We tested each tool on portrait photography, abstract art, product photography, typography, and architectural visualization. Each prompt was run 3 times and the best result was selected for fair comparison.</p><h2>Winner: Midjourney (Still)</h2><p>Midjourney remains the gold standard for artistic quality and creative range. Its v6 model produces stunning, painterly results that neither DALL-E 3 nor Firefly can match for sheer beauty.</p><h2>Runner-up: Adobe Firefly (for commercial use)</h2><p>If you need commercially safe images, Firefly wins hands down. Every image is trained on licensed content — zero legal risk. The quality has also improved dramatically.</p><h2>Best free option: DALL-E 3 via Bing</h2><p>DALL-E 3 is available completely free via Bing Image Creator. For most everyday needs, it delivers impressive results at no cost.</p>`
+  },
+  {
+    slug: '10-free-ai-tools-replace-expensive-software',
+    emoji: '💡',
+    thumb: 'linear-gradient(135deg,#001a10,#003d1f)',
+    cat: 'GUIDE',
+    date: 'Jan 25, 2025',
+    title: '10 Free AI Tools That Replace Expensive Software',
+    excerpt: 'From Photoshop to Premiere Pro — these free AI tools can do 80% of the job at zero cost.',
+    tags: [
+      'Free Tools',
+      'Budget',
+      'Alternatives'
+    ],
+    readTime: '6 MIN READ',
+    author: 'AI Prime Hub Editorial',
+    authorRole: 'Tools Research Team',
+    authorEmoji: '💡',
+    fullContent: `<p class="article-lead">You do not need to spend thousands on software subscriptions. These 10 free AI tools can replace some of the most expensive software in the world — and in many cases, they're better.</p><h2>1. Remove.bg — Replace Photoshop Background Removal</h2><p>Background removal in Photoshop used to take 20 minutes. Remove.bg does it in 5 seconds, completely free, with better edge detection than most professionals can achieve manually.</p><h2>2. CapCut — Replace Premiere Pro for Social Media</h2><p>For short-form video editing, CapCut is free and faster than Premiere for the tasks that matter on social media — auto captions, background removal, trending templates.</p><h2>3. Canva AI — Replace Adobe Express</h2><p>Canva's free tier is genuinely useful with AI generation, templates, and brand tools. The paid tier ($15/mo) is a fraction of the Adobe CC cost.</p><h2>4. Grammarly — Replace ProWritingAid</h2><p>The free version of Grammarly catches 90% of errors. Upgrade only if you need the advanced style suggestions.</p><h2>5. NotebookLM — Replace Expensive Research Tools</h2><p>Google's NotebookLM is completely free and lets you upload 50 sources and chat with your research. No research subscription needed.</p>`
+  },
+  {
+    slug: 'cursor-ai-deep-dive',
+    emoji: '🚀',
+    thumb: 'linear-gradient(135deg,#150500,#3d1200)',
+    cat: 'REVIEW',
+    date: 'Jan 22, 2025',
+    title: 'Cursor AI Deep Dive: Is It Really the Future of Coding?',
+    excerpt: 'We used Cursor for 30 days as our primary IDE. Here\'s what we found — including the frustrating parts.',
+    tags: [
+      'Cursor',
+      'Code AI',
+      'IDE',
+      'Review'
+    ],
+    readTime: '8 MIN READ',
+    author: 'AI Prime Hub Editorial',
+    authorRole: 'Developer Tools Specialist',
+    authorEmoji: '💻',
+    fullContent: `<p class="article-lead">We switched our entire development workflow to Cursor AI for 30 days. Here's our honest, detailed review — the good, the great, and the genuinely frustrating parts.</p><h2>What Cursor Actually Is</h2><p>Cursor is a VS Code fork with AI deeply integrated throughout. It is not a plugin — it is a completely separate editor that is API-compatible with VS Code extensions.</p><h2>The Tab Autocomplete Is Extraordinary</h2><p>Cursor's Tab key predicts not just the next line, but entire blocks of code. After two days of use, you start to feel like you're navigating a code graph rather than writing characters.</p><h2>Composer Mode Changes Everything</h2><p>Composer mode lets you describe a change and Cursor makes it across multiple files simultaneously. "Add dark mode to my React app" actually works.</p><h2>The Frustrating Parts</h2><p>Context limits are real. On large codebases, Cursor sometimes loses track of architecture decisions made in other files. The $20/mo plan can feel restrictive on heavy usage days.</p><h2>Verdict: Yes, it's the future</h2><p>After 30 days, not one member of our team wants to go back to vanilla VS Code. Cursor is the most significant productivity upgrade we've found in years.</p>`
+  },
+  {
+    slug: 'ai-prompt-engineering-101',
+    emoji: '🎨',
+    thumb: 'linear-gradient(135deg,#050015,#15003d)',
+    cat: 'GUIDE',
+    date: 'Jan 7, 2025',
+    title: 'AI Prompt Engineering 101: Get Better Results Every Time',
+    excerpt: 'Master the art of prompting to unlock the full potential of image and text AI tools.',
+    tags: [
+      'Prompt Engineering',
+      'Guide',
+      'AI Tips'
+    ],
+    readTime: '5 MIN READ',
+    author: 'AI Prime Hub Editorial',
+    authorRole: 'AI Researcher',
+    authorEmoji: '🎨',
+    fullContent: `<p class="article-lead">The difference between a mediocre AI output and an extraordinary one is usually the prompt. Prompt engineering is the skill of communicating clearly with AI — and it can be learned in minutes.</p><h2>The 5-Part Prompt Formula</h2><p>The best prompts include: (1) Context — who you are and why you need this, (2) Task — what specifically you want, (3) Format — how you want the output structured, (4) Tone — the voice and style, (5) Constraints — what to avoid.</p><h2>For Image Generation</h2><p>Be specific about style: "photorealistic, 8K, studio lighting, shallow depth of field" is better than "good photo." Reference artists whose work matches your vision: "in the style of Ansel Adams" or "anime style by Studio Ghibli."</p><h2>For Writing AI</h2><p>Give the AI a role: "You are a senior copywriter with 15 years of experience writing for luxury brands." Then give it your task. Role assignment dramatically improves output quality.</p><h2>Chain Your Prompts</h2><p>Complex tasks work better in steps. First generate an outline, then expand each section, then refine the tone. One mega-prompt rarely beats a thoughtful chain.</p>`
+  }
 ];
 
 // ─── Category tool meta (for generated tools) ───
