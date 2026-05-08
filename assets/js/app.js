@@ -153,13 +153,19 @@ function toolLogo(t, size){
   const domain  = t.logo;
   const emoji   = (t.emoji || '').replace(/'/g, "\\'");
   const name    = (t.name  || '').replace(/"/g, '&quot;');
+  const brand   = t.brand || '';
 
   // Use high-quality override as first source, then fallback chain
   const firstSrc = LOGO_OVERRIDES[domain] || LOGO_SOURCES[0](domain);
   const allSrcs  = [firstSrc, ...LOGO_SOURCES.map(fn => fn(domain))];
   const unique   = [...new Set(allSrcs)].join('|');
 
-  return `<img src="${firstSrc}" alt="${name} logo" data-srcs="${unique}" data-src-idx="0" onerror="(function(el){var i=parseInt(el.getAttribute('data-src-idx'))||0,s=el.getAttribute('data-srcs').split('|');i++;if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='${emoji}';sp.style.cssText='font-size:1.3em;line-height:1';el.parentNode.appendChild(sp);}})(this)" style="display:block;width:100%;height:100%;object-fit:contain;">`;
+  // onload: apply brand bg to parent container
+  const onload = brand
+    ? `this.parentNode.style.background='${brand}';this.parentNode.style.border='none';`
+    : '';
+
+  return `<img src="${firstSrc}" alt="${name} logo" data-srcs="${unique}" data-src-idx="0" data-brand="${brand}" onload="${onload}" onerror="(function(el){var i=parseInt(el.getAttribute('data-src-idx'))||0,s=el.getAttribute('data-srcs').split('|');i++;if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='${emoji}';sp.style.cssText='font-size:1.3em;line-height:1';el.parentNode.appendChild(sp);}})(this)" style="display:block;width:100%;height:100%;object-fit:contain;">`;
 }
 
 /* ── SEARCH ── */
@@ -167,17 +173,17 @@ const searchInput = document.getElementById('searchInput');
 const searchDropdown = document.getElementById('searchDropdown');
 
 const SEARCH_EXTRA = [
-  {name:'Stable Diffusion',cat:'Image Generation',emoji:'🖼️',logo:'stability.ai',bg:'linear-gradient(135deg,#4f46e5,#7c3aed)'},
-  {name:'Synthesia',cat:'Video Avatars',emoji:'🎥',logo:'synthesia.io',bg:'linear-gradient(135deg,#10b981,#059669)'},
-  {name:'Otter.ai',cat:'Transcription',emoji:'🎤',logo:'otter.ai',bg:'linear-gradient(135deg,#0ea5e9,#0284c7)'},
-  {name:'Copy.ai',cat:'Writing & Copy',emoji:'📋',logo:'copy.ai',bg:'linear-gradient(135deg,#8b5cf6,#7c3aed)'},
-  {name:'Lensa AI',cat:'Photo Editing',emoji:'📸',logo:'lensa.ai',bg:'linear-gradient(135deg,#f43f5e,#be123c)'},
-  {name:'Gamma App',cat:'Presentations',emoji:'⚡',logo:'gamma.app',bg:'linear-gradient(135deg,#a855f7,#7c3aed)'},
+  {name:'Stable Diffusion',cat:'Image Generation',emoji:'🖼️',logo:'stability.ai',brand:'#7C3AED',bg:'linear-gradient(135deg,#4f46e5,#7c3aed)'},
+  {name:'Synthesia',cat:'Video Avatars',emoji:'🎥',logo:'synthesia.io',brand:'#6D28D9',bg:'linear-gradient(135deg,#10b981,#059669)'},
+  {name:'Otter.ai',cat:'Transcription',emoji:'🎤',logo:'otter.ai',brand:'#0EA5E9',bg:'linear-gradient(135deg,#0ea5e9,#0284c7)'},
+  {name:'Copy.ai',cat:'Writing & Copy',emoji:'📋',logo:'copy.ai',brand:'#7C3AED',bg:'linear-gradient(135deg,#8b5cf6,#7c3aed)'},
+  {name:'Lensa AI',cat:'Photo Editing',emoji:'📸',logo:'lensa.ai',brand:'#F43F5E',bg:'linear-gradient(135deg,#f43f5e,#be123c)'},
+  {name:'Gamma App',cat:'Presentations',emoji:'⚡',logo:'gamma.app',brand:'#8B5CF6',bg:'linear-gradient(135deg,#a855f7,#7c3aed)'},
 ];
 
 function getSearchAll(){
   return [
-    ...TOOLS.map(t=>({name:t.name,cat:t.cat,emoji:t.emoji,logo:t.logo,bg:t.bg,id:t.id,pricing:t.pricing})),
+    ...TOOLS.map(t=>({name:t.name,cat:t.cat,emoji:t.emoji,logo:t.logo,brand:t.brand,bg:t.bg,id:t.id,pricing:t.pricing})),
     ...SEARCH_EXTRA
   ];
 }
@@ -190,7 +196,7 @@ function runSearch(q){
   const isFreeQuery = q === 'free' || q === 'free only' || q === 'freeonly';
   if(isFreeQuery){
     hits = TOOLS.filter(t=>t.pricing==='free').slice(0,7)
-      .map(t=>({name:t.name,cat:t.cat,emoji:t.emoji,logo:t.logo,bg:t.bg,id:t.id,pricing:t.pricing}));
+      .map(t=>({name:t.name,cat:t.cat,emoji:t.emoji,logo:t.logo,brand:t.brand,bg:t.bg,id:t.id,pricing:t.pricing}));
     /* Add a "View all free tools" shortcut at top */
     searchDropdown.innerHTML = `
       <div class="sd-item" onclick="window.location='/tools/?pricing=free'" style="background:color-mix(in srgb,var(--green) 6%,transparent);border-bottom:1px solid var(--border)">
@@ -199,7 +205,7 @@ function runSearch(q){
       </div>
       ${hits.map(h=>`
         <div class="sd-item" onclick="openModal(${h.id})" role="option" tabindex="0">
-          <div class="sd-icon" style="background:${h.bg}">${toolLogo(h,38)}</div>
+          <div class="sd-icon" style="background:${h.brand||h.bg}">${toolLogo(h,38)}</div>
           <div>
             <div class="sd-name">${h.name}</div>
             <div class="sd-cat">${h.cat} · <span style="color:var(--green)">FREE</span></div>
@@ -223,7 +229,7 @@ function runSearch(q){
   } else {
     searchDropdown.innerHTML = hits.map(h=>`
       <div class="sd-item" onclick="${h.id ? `openModal(${h.id})` : `window.location='/tools/'`}" role="option" tabindex="0">
-        <div class="sd-icon" style="background:${h.bg}">${toolLogo(h,38)}</div>
+        <div class="sd-icon" style="background:${h.brand||h.bg}">${toolLogo(h,38)}</div>
         <div><div class="sd-name">${h.name}</div><div class="sd-cat">${h.cat}</div></div>
       </div>
     `).join('');
@@ -281,7 +287,7 @@ function makeCard(t, featured=false){
     ${featured ? '<div class="featured-mark">⭐ EDITOR\'S PICK</div>' : ''}
     <div class="card-top">
       <div style="display:flex;flex-direction:column;gap:8px">
-        <div class="tool-icon" style="background:${t.bg}">${toolLogo(t,52)}</div>
+        <div class="tool-icon" style="background:${t.brand||t.bg}">${toolLogo(t,52)}</div>
         <div class="tool-name">${t.name}</div>
         <div class="tool-cat">${t.cat.toUpperCase()}</div>
       </div>
@@ -307,7 +313,7 @@ function openModal(id){
   if(!tool) return;
   document.getElementById('modalContent').innerHTML = `
     <div class="modal-logo-row">
-      <div class="modal-icon" style="background:${tool.bg}">${toolLogo(tool,58)}</div>
+      <div class="modal-icon" style="background:${tool.brand||tool.bg}">${toolLogo(tool,58)}</div>
       <div>
         <h2>${tool.name}</h2>
         <div class="modal-sub">// ${tool.cat.toUpperCase()} · ${tool.price}</div>
@@ -443,7 +449,7 @@ function renderCompareTable(tbodyId, data, extraHeaders, extraColsFn){
     const freeClass = row.free && row.free.includes('✓') ? 'tick' : 'cross';
     const extraCols = extraColsFn ? extraColsFn(row) : [];
     tr.innerHTML=`
-      <td><div class="td-name"><div class="mini-ico" style="background:${row.bg}">${toolLogo(row,32)}</div><div>${row.name}${row.best?'<br><span style="font-size:0.62rem;color:var(--accent);font-family:JetBrains Mono,monospace">BEST</span>':''}</div></div></td>
+      <td><div class="td-name"><div class="mini-ico" style="background:${row.brand||row.bg}">${toolLogo(row,32)}</div><div>${row.name}${row.best?'<br><span style="font-size:0.62rem;color:var(--accent);font-family:JetBrains Mono,monospace">BEST</span>':''}</div></div></td>
       <td class="${freeClass}">${row.free}</td>
       <td class="${row.price==='Free'?'price-free':'price-paid'}">${row.price}</td>
       ${extraCols.map(c=>`<td style="color:var(--text2)">${c}</td>`).join('')}
@@ -480,7 +486,7 @@ function renderToolSelector(){
   matches.forEach(t=>{
     const chip=document.createElement('div');
     chip.className='tool-select-chip'+(selectedToolIds.has(t.id)?' selected':'');
-    chip.innerHTML=`<div class="chip-ico" style="background:${t.bg}">${toolLogo(t,28)}</div><div class="chip-name">${t.name}</div><div class="chip-check">✓</div>`;
+    chip.innerHTML=`<div class="chip-ico" style="background:${t.brand||t.bg}">${toolLogo(t,28)}</div><div class="chip-name">${t.name}</div><div class="chip-check">✓</div>`;
     chip.addEventListener('click',()=>{
       if(selectedToolIds.has(t.id)){ selectedToolIds.delete(t.id); }
       else{ if(selectedToolIds.size>=6){ showToast('Max 6 tools at a time'); return; } selectedToolIds.add(t.id); }
@@ -509,7 +515,7 @@ function buildComparison(){
   const picks=TOOLS.filter(t=>selectedToolIds.has(t.id));
   const table=document.getElementById('compareResultTable');
   if(!table) return;
-  const head=`<thead><tr><th>FEATURE</th>${picks.map(p=>`<th><div class="td-name"><div class="mini-ico" style="background:${p.bg}">${toolLogo(p,32)}</div><div>${p.name}</div></div></th>`).join('')}</tr></thead>`;
+  const head=`<thead><tr><th>FEATURE</th>${picks.map(p=>`<th><div class="td-name"><div class="mini-ico" style="background:${p.brand||p.bg}">${toolLogo(p,32)}</div><div>${p.name}</div></div></th>`).join('')}</tr></thead>`;
   const rows=[
     ['Category',picks.map(p=>p.cat)],
     ['Pricing',picks.map(p=>p.pricing.toUpperCase())],
