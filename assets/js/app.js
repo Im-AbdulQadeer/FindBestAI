@@ -150,6 +150,11 @@ const LOGO_SOURCES = [
 
 function toolLogo(t, size){
   if(!t.logo) return t.emoji || '';
+  // If logo is a URL or absolute path (uploaded image), render directly
+  if(/^(https?:|\/)/.test(t.logo)){
+    const emoji=(t.emoji||'').replace(/'/g,"\\'");
+    return `<img src="${t.logo}" alt="${(t.name||'').replace(/"/g,'&quot;')} logo" onerror="this.onerror=null;this.style.display='none';var sp=document.createElement('span');sp.textContent='${emoji}';sp.style.cssText='font-size:1.3em;line-height:1';this.parentNode.appendChild(sp);" style="display:block;width:100%;height:100%;object-fit:contain;">`;
+  }
   const domain  = t.logo;
   const emoji   = (t.emoji || '').replace(/'/g, "\\'");
   const name    = (t.name  || '').replace(/"/g, '&quot;');
@@ -425,7 +430,7 @@ function renderArticleCards(containerId, limit){
     const card = document.createElement('div');
     card.className='article-card reveal';
     card.innerHTML=`
-      <div class="article-thumb" style="background:${a.thumb}">${a.emoji}</div>
+      <div class="article-thumb" style="background:${a.thumb}">${a.image?`<img src="${a.image}" alt="${(a.title||'').replace(/"/g,'&quot;')}" style="width:100%;height:100%;object-fit:cover;display:block">`:(a.emoji||'')}</div>
       <div class="article-body">
         <div class="article-meta">
           <span class="article-tag">${a.cat}</span>
@@ -443,7 +448,16 @@ function renderArticleCards(containerId, limit){
 function renderCompareTable(tbodyId, data, extraHeaders, extraColsFn){
   const tbody = document.getElementById(tbodyId);
   if(!tbody) return;
-  data.forEach(row=>{
+  data.forEach(rawRow=>{
+    // Merge in logo/brand from matching TOOLS entry (by name) so compare tables
+    // use the same uploaded logos / brand domains as the rest of the site.
+    const match = (typeof TOOLS!=='undefined') ? TOOLS.find(t=>t.name.toLowerCase()===rawRow.name.toLowerCase()
+      || t.name.toLowerCase().startsWith(rawRow.name.toLowerCase().split(' ')[0])) : null;
+    const row = Object.assign({}, rawRow, {
+      logo:  rawRow.logo  || (match && match.logo),
+      brand: rawRow.brand || (match && match.brand),
+      emoji: rawRow.emoji || (match && match.emoji),
+    });
     const tr = document.createElement('tr');
     if(row.best) tr.className='best-row';
     const freeClass = row.free && row.free.includes('✓') ? 'tick' : 'cross';
