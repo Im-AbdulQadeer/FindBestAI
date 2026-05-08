@@ -380,6 +380,30 @@ async function putFile(path,text,msg,sha){
   if(sha)body.sha=sha;
   return gh(`/contents/${path}`,{method:'PUT',body:JSON.stringify(body)});
 }
+/* Upload an image File to the repo at assets/uploads/<prefix>-<ts>.<ext>.
+   Returns the absolute path (e.g. /assets/uploads/tool-169..png) to store. */
+async function uploadImageFile(file,prefix){
+  if(!file) return '';
+  const ext=(file.name.split('.').pop()||'png').toLowerCase().replace(/[^a-z0-9]/g,'')||'png';
+  const safe=(prefix||'img').replace(/[^a-z0-9-]/gi,'').toLowerCase()||'img';
+  const path='assets/uploads/'+safe+'-'+Date.now()+'.'+ext;
+  // read as base64 (raw, without data: prefix)
+  const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=rej;r.readAsDataURL(file)});
+  const body={message:'Upload '+path,content:b64,branch:CFG.branch,
+    committer:{name:document.getElementById('setName').value||'FindBestAI Admin',email:document.getElementById('setEmail').value||'admin@findbestai.com'}};
+  await gh(`/contents/${path}`,{method:'PUT',body:JSON.stringify(body)});
+  return '/'+path;
+}
+/* Render an upload control bound to a hidden input id. */
+function imgUploadField(label,inputId,currentVal,prefix){
+  const preview=currentVal?`<img src="${esc(currentVal)}" alt="" style="max-height:60px;max-width:140px;border-radius:6px;margin-top:6px;background:#0008;padding:4px">`:'';
+  return `<div class="field"><label>${label}</label>
+    <input type="hidden" id="${inputId}" value="${esc(currentVal||'')}">
+    <input type="file" accept="image/*" onchange="(async function(el){const btn=el.parentNode.querySelector('.up-status');btn.textContent='Uploading…';try{const url=await uploadImageFile(el.files[0],'${prefix}');document.getElementById('${inputId}').value=url;btn.innerHTML='✅ '+url+'<br><img src=&quot;'+url+'&quot; style=&quot;max-height:60px;max-width:140px;border-radius:6px;margin-top:6px;background:#0008;padding:4px&quot;>';toast('Image uploaded','ok')}catch(e){btn.textContent='❌ '+e.message;toast(e.message,'err')}})(this)">
+    <div class="up-status" style="font-size:11px;color:var(--mute);margin-top:4px">${preview}</div>
+  </div>`;
+}
+
 async function deleteFile(path,msg,sha){
   const body={message:msg,sha,branch:CFG.branch,
     committer:{name:document.getElementById('setName').value||'FindBestAI Admin',email:document.getElementById('setEmail').value||'admin@findbestai.com'}};
@@ -599,7 +623,7 @@ function renderTools(){
   if(!rows.length){tb.innerHTML='<tr><td colspan="6"><div class="empty">No tools match.</div></td></tr>';return}
   tb.innerHTML=rows.map((t,i)=>`<tr>
     <td>${t.id}</td>
-    <td><span class="emoji-cell">${esc(t.emoji||'')}</span> <strong>${esc(t.name)}</strong><div style="color:var(--mute);font-size:11.5px;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.desc||'')}</div></td>
+    <td>${t.logo&&/\//.test(t.logo)?`<img src="${esc(t.logo)}" style="width:22px;height:22px;object-fit:contain;vertical-align:middle;border-radius:4px;background:#0008;padding:2px">`:`<span class="emoji-cell">${esc(t.emoji||'')}</span>`} <strong>${esc(t.name)}</strong><div style="color:var(--mute);font-size:11.5px;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.desc||'')}</div></td>
     <td><span class="tag">${esc(t.cat)}</span></td>
     <td>${esc(t.pricing||'')} · ${esc(t.price||'')}</td>
     <td>⭐ ${t.rating||''} <span style="color:var(--mute)">(${esc(t.reviews||'')})</span></td>
@@ -617,7 +641,8 @@ function editTool(idx){
       <div class="field"><label>ID</label><input id="f_id" type="number" value="${t.id}"></div>
       <div class="field"><label>Name</label><input id="f_name" value="${esc(t.name)}"></div>
       <div class="field"><label>Category</label><select id="f_cat">${cats.map(c=>`<option ${c===t.cat?'selected':''}>${esc(c)}</option>`).join('')}</select></div>
-      <div class="field"><label>Emoji</label><input id="f_emoji" value="${esc(t.emoji||'')}"></div>
+      ${imgUploadField('Logo image (upload)','f_logo',t.logo||'','tool-'+(t.name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,30))}
+      <div class="field"><label>Emoji (fallback)</label><input id="f_emoji" value="${esc(t.emoji||'')}"></div>
       <div class="field"><label>Pricing</label><select id="f_pricing">${['free','freemium','paid'].map(p=>`<option ${p===t.pricing?'selected':''}>${p}</option>`).join('')}</select></div>
       <div class="field"><label>Badge</label><select id="f_badge">${['','best','new','open'].map(p=>`<option value="${p}" ${p===(t.badge||'')?'selected':''}>${p||'(none)'}</option>`).join('')}</select></div>
       <div class="field"><label>URL</label><input id="f_url" value="${esc(t.url||'')}"></div>
@@ -636,7 +661,7 @@ function editTool(idx){
 function saveTool(idx){
   const v=k=>document.getElementById('f_'+k).value;
   const obj={
-    id:Number(v('id'))||0,name:v('name').trim(),cat:v('cat'),emoji:v('emoji'),
+    id:Number(v('id'))||0,name:v('name').trim(),cat:v('cat'),emoji:v('emoji'),logo:v('logo'),
     bg:v('bg'),pricing:v('pricing'),badge:v('badge'),url:v('url').trim(),
     desc:v('desc').trim(),rating:Number(v('rating'))||0,reviews:v('reviews'),
     tags:v('tags').split(',').map(s=>s.trim()).filter(Boolean),
@@ -691,7 +716,7 @@ function renderArts(){
   const tb=document.getElementById('tbl-arts');
   if(!S.parsed.ARTICLES.length){tb.innerHTML='<tr><td colspan="5"><div class="empty">No articles.</div></td></tr>';return}
   tb.innerHTML=S.parsed.ARTICLES.map((a,i)=>`<tr>
-    <td><span class="emoji-cell">${esc(a.emoji||'')}</span> <strong>${esc(a.title)}</strong></td>
+    <td>${a.image?`<img src="${esc(a.image)}" style="width:28px;height:28px;object-fit:cover;vertical-align:middle;border-radius:4px">`:`<span class="emoji-cell">${esc(a.emoji||'')}</span>`} <strong>${esc(a.title)}</strong></td>
     <td><code>${esc(a.slug||'')}</code></td>
     <td><span class="tag">${esc(a.cat||'')}</span></td>
     <td>${esc(a.date||'')}</td>
@@ -709,7 +734,7 @@ function editArt(idx){
       <div class="field"><label>Slug</label><input id="a_slug" value="${esc(a.slug||'')}"></div>
       <div class="field"><label>Category</label><input id="a_cat" value="${esc(a.cat||'')}"></div>
       <div class="field"><label>Date</label><input id="a_date" value="${esc(a.date||'')}"></div>
-      <div class="field"><label>Emoji</label><input id="a_emoji" value="${esc(a.emoji||'')}"></div>
+      ${imgUploadField('Article home image','a_image',a.image||'','article-'+(a.slug||'').slice(0,30))}
       <div class="field"><label>Read time</label><input id="a_readTime" value="${esc(a.readTime||'')}"></div>
       <div class="field"><label>Author</label><input id="a_author" value="${esc(a.author||'')}"></div>
       <div class="field"><label>Author role</label><input id="a_authorRole" value="${esc(a.authorRole||'')}"></div>
@@ -723,8 +748,9 @@ function editArt(idx){
   `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveArt(${idx==null?-1:idx})">Save</button>`);
 }
 function saveArt(idx){
-  const v=k=>document.getElementById('a_'+k).value;
-  const obj={slug:v('slug').trim(),emoji:v('emoji'),thumb:v('thumb'),cat:v('cat'),date:v('date'),title:v('title').trim(),excerpt:v('excerpt'),keywords:v('keywords'),readTime:v('readTime'),author:v('author'),authorRole:v('authorRole'),authorEmoji:v('authorEmoji'),tags:v('tags').split(',').map(s=>s.trim()).filter(Boolean),fullContent:v('fullContent')};
+  const v=k=>{const el=document.getElementById('a_'+k);return el?el.value:''};
+  const prev=idx<0?{}:(S.parsed.ARTICLES[idx]||{});
+  const obj={slug:v('slug').trim(),emoji:prev.emoji||'📝',image:v('image'),thumb:v('thumb'),cat:v('cat'),date:v('date'),title:v('title').trim(),excerpt:v('excerpt'),keywords:v('keywords'),readTime:v('readTime'),author:v('author'),authorRole:v('authorRole'),authorEmoji:v('authorEmoji'),tags:v('tags').split(',').map(s=>s.trim()).filter(Boolean),fullContent:v('fullContent')};
   if(!obj.title||!obj.slug){return toast('Title and slug required','err')}
   if(idx<0)S.parsed.ARTICLES.push(obj);else S.parsed.ARTICLES[idx]=obj;
   closeModal();renderArts();renderDash();
