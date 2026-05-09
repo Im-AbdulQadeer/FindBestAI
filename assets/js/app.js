@@ -410,6 +410,7 @@ function renderTrending(containerId){
   TRENDING.forEach(t=>{
     const card = document.createElement('div');
     card.className='trend-card reveal';
+    if(t.id){ card.style.cursor='pointer'; card.setAttribute('role','button'); card.setAttribute('tabindex','0'); }
     card.innerHTML=`
       <div class="trend-n">${t.num}</div>
       <div class="trend-info">
@@ -418,6 +419,10 @@ function renderTrending(containerId){
       </div>
       <div class="trend-up">▲ ${t.up}</div>
     `;
+    if(t.id){
+      card.addEventListener('click', ()=>{ if(typeof openModal==='function') openModal(t.id); });
+      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(typeof openModal==='function') openModal(t.id);} });
+    }
     g.appendChild(card);
   });
 }

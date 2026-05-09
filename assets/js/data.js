@@ -265,14 +265,16 @@ const VIDEO_COMPARE = [
 ];
 
 const TRENDING = [
-  {num:'01',name:'Sora',cat:'Video Generation',up:'+340%',color:'#f43f5e'},
-  {num:'02',name:'Claude 3.5 Sonnet',cat:'AI Assistant',up:'+210%',color:'#f59e0b'},
-  {num:'03',name:'Midjourney v7',cat:'Image Generation',up:'+180%',color:'#7c3aed'},
-  {num:'04',name:'Cursor AI',cat:'Code Editor',up:'+165%',color:'#06b6d4'},
-  {num:'05',name:'Gamma App',cat:'AI Presentations',up:'+140%',color:'#10b981'},
-  {num:'06',name:'Perplexity Pro',cat:'AI Research',up:'+125%',color:'#0ea5e9'},
-  {num:'07',name:'HeyGen 3.0',cat:'AI Avatars',up:'+118%',color:'#f472b6'},
-  {num:'08',name:'Kling 2.0',cat:'Video Generation',up:'+95%',color:'#fb923c'},
+  {num:'01',id:27,name:'Sora',cat:'Video Generation',up:'+340%',color:'#f43f5e'},
+  {num:'02',id:2,name:'Claude 3.5 Sonnet',cat:'AI Assistant',up:'+210%',color:'#f59e0b'},
+  {num:'03',id:15,name:'Midjourney v7',cat:'Image Generation',up:'+180%',color:'#7c3aed'},
+  {num:'04',id:32,name:'Cursor AI',cat:'Code Editor',up:'+165%',color:'#06b6d4'},
+  {num:'05',id:76,name:'Gamma App',cat:'AI Presentations',up:'+140%',color:'#10b981'},
+  {num:'06',id:14,name:'Perplexity Pro',cat:'AI Research',up:'+125%',color:'#0ea5e9'},
+  {num:'07',id:52,name:'HeyGen 3.0',cat:'AI Avatars',up:'+118%',color:'#f472b6'},
+  {num:'08',id:26,name:'Kling 2.0',cat:'Video Generation',up:'+95%',color:'#fb923c'},
+  {num:'09',id:24,name:'Runway Gen-3',cat:'Video Generation',up:'+88%',color:'#22d3ee'},
+  {num:'10',id:25,name:'Pika Labs',cat:'Video Generation',up:'+72%',color:'#a78bfa'},
 ];
 
 const ARTICLES = [
