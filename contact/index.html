@@ -142,7 +142,7 @@
 <script src="/assets/js/app.js"></script>
 <script src="/assets/js/nav.js"></script>
 <script>
-const WEB3FORMS_KEY = 'd9a8fc3c-5b28-421c-afb4-3896ec892a7e';
+const CONTACT_KEY = 'd9a8fc3c-5b28-421c-afb4-3896ec892a7e';
 
 function showError(msg){
   const el = document.getElementById('cf-error');
@@ -235,7 +235,7 @@ async function submitContactForm(e) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
-        access_key:  WEB3FORMS_KEY,
+        access_key:  CONTACT_KEY,
         name:        name,
         email:       email,
         subject:     '[Find Best AI] ' + subject + ' — from ' + name,
