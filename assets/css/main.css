@@ -1157,8 +1157,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .modal-bg.open .modal-ring{transform:translateY(0) !important;}
   .modal-ring::before{border-radius:18px;}
   .modal-box{
-    padding:20px 18px 28px;flex:1;
-    overflow-y:scroll;
+    padding:16px 14px 18px;flex:1;
+    overflow-y:auto;
     scrollbar-width:thin;
     scrollbar-color:var(--border-md) transparent;
     border-radius:18px;width:100%;margin:0;
@@ -1167,14 +1167,26 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .modal-box::-webkit-scrollbar{width:4px}
   .modal-box::-webkit-scrollbar-track{background:transparent;border-radius:4px}
   .modal-box::-webkit-scrollbar-thumb{background:var(--border-md);border-radius:4px}
-  .modal-box h2{font-size:1.15rem}
-  .modal-sub{font-size:0.68rem;line-height:1.5}
-  .modal-btn-row{flex-direction:column;gap:8px}
+  .modal-box h2{font-size:1.05rem;margin-bottom:2px}
+  .modal-sub{font-size:0.62rem;line-height:1.45}
+  .modal-logo-row{margin-bottom:12px;gap:12px;}
+  .modal-icon{width:46px;height:46px;border-radius:12px;font-size:1.5rem;}
+  .modal-desc{font-size:0.8rem;line-height:1.55;margin-bottom:10px;}
+  .modal-stitle{font-size:0.58rem;margin:12px 0 6px;}
+  .modal-feature{font-size:0.78rem;margin-bottom:5px;gap:8px;}
+  .modal-alts{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+  .modal-alt{flex-direction:column;align-items:flex-start;gap:4px;padding:8px 8px;margin-bottom:0;border-radius:8px;}
+  .modal-alt-name{font-size:0.78rem;}
+  .modal-alts .badge{font-size:0.55rem;padding:2px 6px;}
+  .modal-rating-row{padding:10px 0;gap:12px;margin-top:0;}
+  .modal-rating-num{font-size:1.7rem;}
+  .modal-btn-row{flex-direction:column;gap:8px;margin-top:14px;}
+  .modal-btn-p,.modal-btn-s{padding:11px 18px;font-size:0.85rem;}
   .modal-handle{
     display:block;width:40px;height:4px;border-radius:2px;
-    background:var(--border-md);margin:0 auto 16px;
+    background:var(--border-md);margin:0 auto 10px;
   }
-  .modal-close{top:20px}
+  .modal-close{top:14px;right:14px;}
   .modal-logo-row{padding-top:4px}
   .card-footer{flex-wrap:wrap;gap:8px}
 

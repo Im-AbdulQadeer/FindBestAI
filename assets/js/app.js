@@ -328,7 +328,7 @@ function openModal(id){
     <div class="modal-stitle">// KEY FEATURES</div>
     ${tool.features.map(f=>`<div class="modal-feature">${f}</div>`).join('')}
     <div class="modal-stitle">// FREE ALTERNATIVES</div>
-    ${tool.alts.map(a=>`<div class="modal-alt"><span class="modal-alt-name">${a.n}</span><span class="badge ${a.t==='Free'?'b-free':a.t==='Freemium'?'b-freemium':'b-paid'}">${a.t.toUpperCase()}</span></div>`).join('')}
+    <div class="modal-alts">${tool.alts.map(a=>`<div class="modal-alt"><span class="modal-alt-name">${a.n}</span><span class="badge ${a.t==='Free'?'b-free':a.t==='Freemium'?'b-freemium':'b-paid'}">${a.t.toUpperCase()}</span></div>`).join('')}</div>
     <div class="modal-stitle">// COMMUNITY RATING</div>
     <div class="modal-rating-row">
       <div class="modal-rating-num">${tool.rating}</div>
