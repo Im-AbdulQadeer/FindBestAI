@@ -142,151 +142,132 @@
 <script src="/assets/js/app.js"></script>
 <script src="/assets/js/nav.js"></script>
 <script>
-/*
- * CONTACT FORM — Web3Forms
- * Replace YOUR_ACCESS_KEY_HERE with your key from web3forms.com
- * It's free (250 emails/month) — no backend or server needed
- * Emails go directly to findbestaiofficial@gmail.com
- */
 const WEB3FORMS_KEY = 'd9a8fc3c-5b28-421c-afb4-3896ec892a7e';
-
-async function submitContactForm(e) {
-  e.preventDefault();
-
-  /* Honeypot check */
-  if(document.getElementById('cf-bot')?.value) return;
-
-  const name    = document.getElementById('cf-name')?.value?.trim();
-  const email   = document.getElementById('cf-email')?.value?.trim();
-  const subject = document.getElementById('cf-subject')?.value;
-  const message = document.getElementById('cf-msg')?.value?.trim();
-  const errEl   = document.getElementById('cf-error');
-  const btnText = document.getElementById('cf-btn-text');
-  const btnSpin = document.getElementById('cf-btn-spinner');
-  const btn     = document.getElementById('cf-submit-btn');
-
-  /* ── Validate ── */
-  const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  /* ── Gibberish detector helpers ── */
-  function isGibberishWord(w){
-    if(w.length < 4) return false;
-    const v = (w.match(/[aeiou]/gi)||[]).length / w.length;
-    // consonant cluster: 4+ consonants in a row
-    const cluster = /[^aeiou]{4,}/i.test(w);
-    // repeated syllable: bla-bla, cv-cv pattern repeated 2+
-    const syllableRepeat = /^(.{2,4})\1+$/i.test(w);
-    return syllableRepeat || (v < 0.15 && cluster);
-  }
-
-  function gibberishScore(text){
-    const words = text.toLowerCase().replace(/[^a-z\s]/g,'').trim().split(/\s+/).filter(w=>w.length>2);
-    if(!words.length) return 0;
-    const bad = words.filter(isGibberishWord).length;
-    return bad / words.length; // 0 = clean, 1 = all gibberish
-  }
-
-  // ── NAME ──
-  const nameNoSpace = name.replace(/\s/g,'');
-  const nameVowels  = (name.match(/[aeiou]/gi)||[]).length;
-  const nameSyllableRepeat = /^(.{2,4})\1+$/i.test(nameNoSpace); // blabla, abcabc
-  const nameIsGibberish    = (nameNoSpace.length > 3 && nameVowels === 0) || nameSyllableRepeat;
-  const nameGibScore = gibberishScore(name);
-  if(!name || name.length < 3){ showError('Please enter your full name.'); return; }
-  if(nameIsGibberish || nameGibScore > 0.5){ showError('Please enter a real name.'); return; }
-
-  // ── EMAIL ──
-  const disposable = ['mailinator.com','guerrillamail.com','tempmail.com','throwaway.email',
-    'fakeinbox.com','sharklasers.com','grr.la','spam4.me','trashmail.com','dispostable.com',
-    'yopmail.com','maildrop.cc','temp-mail.org','getnada.com','discard.email',
-    '10minutemail.com','minutemail.com','mailnull.com','guerrillamail.info'];
-  if(!email || !emailRx.test(email)){ showError('Please enter a valid email address.'); return; }
-  const emailDomain = email.split('@')[1]?.toLowerCase();
-  if(disposable.includes(emailDomain)){ showError('Disposable emails are not accepted. Please use a real email.'); return; }
-  // Block if email local part itself is pure gibberish repeated pattern (blablabla@...)
-  const emailLocal = email.split('@')[0].toLowerCase();
-  const emailLocalRepeat = /^(.{2,4})\1{2,}$/.test(emailLocal);
-  if(emailLocalRepeat){ showError('Please use a real email address.'); return; }
-
-  // ── MESSAGE ──
-  const msgClean   = message.replace(/\s/g,'');
-  const msgVowels  = (message.match(/[aeiou]/gi)||[]).length;
-  const vowelRatio = msgClean.length > 0 ? msgVowels / msgClean.length : 0;
-  const msgWords   = message.trim().split(/\s+/).length;
-  const msgRepeat  = /(.{2,})\1{3,}/.test(message);
-  const msgGibScore = gibberishScore(message);
-  if(!message || message.length < 20){ showError('Please enter a message (at least 20 characters).'); return; }
-  if(msgWords < 4){ showError('Please write at least 4 words in your message.'); return; }
-  if(vowelRatio < 0.10 && msgClean.length > 8){ showError('Your message looks invalid. Please write a real message.'); return; }
-  if(msgRepeat){ showError('Please enter a valid message.'); return; }
-  if(msgGibScore > 0.55){ showError('Your message appears to contain random text. Please describe your enquiry clearly.'); return; }
-
-  hideError();
-
-  /* Show loading */
-  btn.disabled = true;
-  btnText.style.display = 'none';
-  btnSpin.style.display = 'inline';
-
-  try {
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_KEY,
-        name: name,
-        email: email,
-        subject: '📬 [Find Best AI] ' + subject + ' — from ' + name,
-        message: message,
-        from_name: 'Find Best AI Contact Form',
-        replyto: email,
-        /* Spam prevention */
-        botcheck: '',
-      })
-    });
-
-    const data = await res.json();
-
-    if(data.success){
-      /* Show success */
-      document.getElementById('cf-form-wrap').style.display = 'none';
-      document.getElementById('cf-success').style.display = 'block';
-      document.getElementById('cf-reply-email').textContent = email;
-    } else {
-      throw new Error(data.message || 'Submission failed');
-    }
-
-  } catch(err) {
-    btn.disabled = false;
-    btnText.style.display = 'inline';
-    btnSpin.style.display = 'none';
-
-    if(WEB3FORMS_KEY === 'YOUR_ACCESS_KEY_HERE'){
-      showError('⚙️ Setup needed: Get your free API key from web3forms.com and replace YOUR_ACCESS_KEY_HERE in the code. See the setup guide on the right →');
-    } else {
-      showError('Something went wrong. Please email us directly at findbestaiofficial@gmail.com');
-    }
-  }
-}
 
 function showError(msg){
   const el = document.getElementById('cf-error');
-  if(el){ el.textContent = msg; el.style.display = 'block'; }
+  if(el){ el.textContent = msg; el.style.display = 'block'; el.scrollIntoView({behavior:'smooth',block:'nearest'}); }
 }
 function hideError(){
   const el = document.getElementById('cf-error');
   if(el) el.style.display = 'none';
 }
 function resetContactForm(){
-  document.getElementById('cf-form-wrap').style.display = 'block';
-  document.getElementById('cf-success').style.display = 'none';
-  document.getElementById('cf-submit-btn').disabled = false;
-  document.getElementById('cf-btn-text').style.display = 'inline';
-  document.getElementById('cf-btn-spinner').style.display = 'none';
+  const formWrap = document.getElementById('cf-form-wrap');
+  const success  = document.getElementById('cf-success');
+  const btn      = document.getElementById('cf-submit-btn');
+  const btnText  = document.getElementById('cf-btn-text');
+  const btnSpin  = document.getElementById('cf-btn-spinner');
+  if(formWrap) formWrap.style.display = 'block';
+  if(success)  success.style.display  = 'none';
+  if(btn)      btn.disabled = false;
+  if(btnText)  btnText.style.display  = 'inline';
+  if(btnSpin)  btnSpin.style.display  = 'none';
   ['cf-name','cf-email','cf-msg'].forEach(id=>{
     const el = document.getElementById(id);
     if(el) el.value = '';
   });
+  hideError();
+}
+
+async function submitContactForm(e) {
+  if(e && e.preventDefault) e.preventDefault();
+
+  /* ── Guard: all elements must exist ── */
+  const nameEl    = document.getElementById('cf-name');
+  const emailEl   = document.getElementById('cf-email');
+  const subjectEl = document.getElementById('cf-subject');
+  const msgEl     = document.getElementById('cf-msg');
+  const botEl     = document.getElementById('cf-bot');
+  const btn       = document.getElementById('cf-submit-btn');
+  const btnText   = document.getElementById('cf-btn-text');
+  const btnSpin   = document.getElementById('cf-btn-spinner');
+
+  if(!nameEl || !emailEl || !msgEl || !btn){
+    showError('Form error — please refresh the page and try again.');
+    return;
+  }
+
+  /* ── Honeypot ── */
+  if(botEl && botEl.value) return;
+
+  /* ── Read values safely ── */
+  const name    = (nameEl.value    || '').trim();
+  const email   = (emailEl.value   || '').trim();
+  const subject = (subjectEl ? subjectEl.value : 'General Question') || 'General Question';
+  const message = (msgEl.value     || '').trim();
+
+  /* ── Validation ── */
+  if(!name || name.length < 2){
+    showError('Please enter your name (at least 2 characters).');
+    nameEl.focus();
+    return;
+  }
+
+  const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if(!email || !emailRx.test(email)){
+    showError('Please enter a valid email address.');
+    emailEl.focus();
+    return;
+  }
+
+  if(!message || message.length < 10){
+    showError('Please enter a message (at least 10 characters).');
+    msgEl.focus();
+    return;
+  }
+
+  if(message.trim().split(/\s+/).length < 3){
+    showError('Please write at least 3 words in your message.');
+    msgEl.focus();
+    return;
+  }
+
+  hideError();
+
+  /* ── Show loading state ── */
+  btn.disabled = true;
+  if(btnText) btnText.style.display = 'none';
+  if(btnSpin) btnSpin.style.display = 'inline';
+
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key:  WEB3FORMS_KEY,
+        name:        name,
+        email:       email,
+        subject:     '[Find Best AI] ' + subject + ' — from ' + name,
+        message:     message,
+        from_name:   'Find Best AI Contact Form',
+        replyto:     email,
+        botcheck:    ''
+      })
+    });
+
+    if(!res.ok) throw new Error('Network error: ' + res.status);
+
+    const data = await res.json();
+
+    if(data.success){
+      const formWrap  = document.getElementById('cf-form-wrap');
+      const success   = document.getElementById('cf-success');
+      const replySpan = document.getElementById('cf-reply-email');
+      if(formWrap)  formWrap.style.display  = 'none';
+      if(success)   success.style.display   = 'block';
+      if(replySpan) replySpan.textContent   = email;
+    } else {
+      throw new Error(data.message || 'Submission rejected by server.');
+    }
+
+  } catch(err) {
+    console.error('Contact form error:', err);
+    btn.disabled = false;
+    if(btnText) btnText.style.display = 'inline';
+    if(btnSpin) btnSpin.style.display = 'none';
+    showError('Could not send your message. Please email us directly at findbestaiofficial@gmail.com');
+  }
 }
 
 initCommonUI();
