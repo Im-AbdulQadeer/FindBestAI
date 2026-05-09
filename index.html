@@ -194,7 +194,7 @@
 
   /* Home tools (next 6) */
   const hg = document.getElementById('homeTools');
-  TOOLS.slice(3,9).forEach(t => hg.appendChild(makeCard(t)));
+  TOOLS.slice(3,11).forEach(t => hg.appendChild(makeCard(t)));
 
   /* Compare table */
   renderCompareTable('compareTableBody', COMPARE_DATA, [], row=>[row.quality,row.speed,row.api,row.commercial]);

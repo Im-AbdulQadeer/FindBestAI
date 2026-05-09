@@ -79,7 +79,6 @@
           <a href="/tools/">🎬 Video Editing</a>
           <a href="/tools/">✍️ Writing Tools</a>
           <a href="/tools/">💻 Code Assistants</a>
-          <a href="/tools/">📄 PDF &amp; Docs</a>
           <a href="/tools/">🔬 Research Tools</a>
         </div>
         <div class="footer-col">

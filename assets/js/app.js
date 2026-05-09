@@ -474,7 +474,12 @@ function renderCompareTable(tbodyId, data, extraHeaders, extraColsFn){
 }
 
 /* ── MISC ── */
-function subscribeNewsletter(btn){
+/* ── NEWSLETTER — uses Web3Forms (free, no backend needed)
+   Replace YOUR_WEB3FORMS_ACCESS_KEY below after signing up at https://web3forms.com
+   They'll send submissions to your email address for free. ── */
+const WEB3FORMS_KEY = 'd9a8fc3c-5b28-421c-afb4-3896ec892a7e';
+
+async function subscribeNewsletter(btn){
   const form = (btn && btn.closest && btn.closest('.nl-form')) || document.querySelector('.nl-form');
   if(!form){ showToast('⚠️ Form not found.'); return; }
   const input = form.querySelector('input[type="email"]');
@@ -485,14 +490,43 @@ function subscribeNewsletter(btn){
     showToast('⚠️ Please enter a valid email.');
     return;
   }
+  // Duplicate check
   try{
     const list = JSON.parse(localStorage.getItem('fba_newsletter')||'[]');
     if(list.includes(email.toLowerCase())){ showToast('✨ You\'re already subscribed!'); return; }
-    list.push(email.toLowerCase());
-    localStorage.setItem('fba_newsletter', JSON.stringify(list));
   }catch(e){}
-  if(input) input.value='';
-  showToast('✅ You\'re subscribed! Check your inbox.');
+
+  // Disable button while sending
+  if(btn && btn.tagName==='BUTTON'){ btn.disabled=true; btn.textContent='Sending…'; }
+  try{
+    if(WEB3FORMS_KEY && WEB3FORMS_KEY !== 'YOUR_WEB3FORMS_ACCESS_KEY'){
+      const res = await fetch('https://api.web3forms.com/submit',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Accept':'application/json'},
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: 'New Newsletter Subscriber — Find Best AI',
+          email,
+          message: `New subscriber: ${email}\nDate: ${new Date().toISOString()}`
+        })
+      });
+      const data = await res.json();
+      if(!data.success) throw new Error(data.message || 'Submission failed');
+    }
+    // Save locally
+    try{
+      const list = JSON.parse(localStorage.getItem('fba_newsletter')||'[]');
+      list.push(email.toLowerCase());
+      localStorage.setItem('fba_newsletter', JSON.stringify(list));
+    }catch(e){}
+    if(input) input.value='';
+    showToast('✅ You\'re subscribed! Check your inbox.');
+  }catch(err){
+    console.error('Newsletter error:',err);
+    showToast('⚠️ Something went wrong. Please try again.');
+  }finally{
+    if(btn && btn.tagName==='BUTTON'){ btn.disabled=false; btn.textContent='Subscribe'; }
+  }
 }
 function submitContact(){
   const n=document.getElementById('cf-name');
