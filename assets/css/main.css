@@ -787,6 +787,7 @@ td:first-child{color:var(--text);font-weight:600}
   border:1px solid var(--border-md);background:var(--surface3);color:var(--text2);font-size:1rem;
   display:flex;align-items:center;justify-content:center;transition:all 0.2s;z-index:2;
 }
+.modal-handle{display:none;}
 .modal-close:hover{border-color:var(--accent);color:var(--accent)}
 .modal-logo-row{display:flex;align-items:center;gap:16px;margin-bottom:20px;padding-right:44px;}
 .modal-icon{width:58px;height:58px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:1.9rem;flex-shrink:0;}
@@ -1094,7 +1095,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .card::before{border-radius:18px}
   .card::after{border-radius:15px}
   .card.featured{padding:20px}
-  .card-top{gap:10px}
+  .card-top{gap:10px;padding-top:2px}
   .tool-icon{width:44px;height:44px;font-size:1.4rem;border-radius:12px}
   .tool-icon img{width:100%;height:100%;}
   .tool-name{font-size:0.95rem}
@@ -1144,21 +1145,29 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .compare-result table{min-width:520px;font-size:0.82rem}
 
   /* ── MODAL ── */
-  .modal-bg{padding:0;align-items:flex-end}
+  .modal-bg{padding:0;align-items:flex-end;justify-content:flex-end;flex-direction:column}
   .modal-ring{
     border-radius:20px 20px 0 0;width:100%;max-width:100%;margin:0;
-    transform:translateY(40px) scale(1) !important;
+    transform:translateY(60px) !important;
+    transition:transform 0.32s cubic-bezier(0.23,1,0.32,1);
+    height:92vh;display:flex;flex-direction:column;
   }
-  .modal-bg.open .modal-ring{transform:translateY(0) scale(1) !important;}
+  .modal-bg.open .modal-ring{transform:translateY(0) !important;}
   .modal-ring::before{border-radius:20px 20px 0 0;}
   .modal-box{
-    padding:20px;max-height:88vh;overflow-y:auto;
+    padding:20px;flex:1;overflow-y:auto;
     border-radius:20px 20px 0 0;width:100%;margin:0;
+    max-height:none;
   }
   .modal-box h2{font-size:1.15rem}
   .modal-sub{font-size:0.68rem;line-height:1.5}
   .modal-btn-row{flex-direction:column;gap:8px}
-  .modal-btn-row a,.modal-btn-row button{width:100%;text-align:center;justify-content:center}
+  .modal-handle{
+    display:block;width:40px;height:4px;border-radius:2px;
+    background:var(--border-md);margin:0 auto 16px;
+  }
+  .modal-close{top:20px}
+  .modal-logo-row{padding-top:4px}
   .card-footer{flex-wrap:wrap;gap:8px}
 
   /* ── FOOTER ── */
