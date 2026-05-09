@@ -755,25 +755,32 @@ td:first-child{color:var(--text);font-weight:600}
   opacity:0;pointer-events:none;transition:opacity 0.3s;padding:20px;
 }
 .modal-bg.open{opacity:1;pointer-events:all}
-.modal-box{
-  background:var(--surface2);border:none;
-  border-radius:22px;padding:36px;max-width:620px;width:100%;
-  position:relative;max-height:88vh;overflow-y:auto;
+/* Non-scrolling ring wrapper — ring always covers all 4 sides */
+.modal-ring{
+  position:relative;
+  max-width:620px;width:100%;
+  border-radius:22px;
   transform:translateY(24px) scale(0.97);
   transition:transform 0.3s cubic-bezier(0.23,1,0.32,1);
+  box-shadow:0 0 60px var(--glow),0 0 120px var(--glow2);
 }
-.modal-bg.open .modal-box{transform:translateY(0) scale(1)}
-/* Full 4-side animated ring — same technique as search bar */
-.modal-box::before{
+.modal-bg.open .modal-ring{transform:translateY(0) scale(1)}
+/* Full 4-side animated ring — 2px, covers entire modal including scroll area */
+.modal-ring::before{
   content:'';position:absolute;inset:0;border-radius:inherit;
-  padding:1.5px;
+  padding:2px;
   background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3),var(--accent));
   background-size:300% 300%;
   animation:ringGlow 5s ease infinite;
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;
-  pointer-events:none;z-index:0;
-  box-shadow:0 0 40px var(--glow),0 0 80px var(--glow2);
+  pointer-events:none;z-index:2;
+}
+.modal-box{
+  background:var(--surface2);border:none;
+  border-radius:22px;padding:36px;width:100%;
+  position:relative;max-height:88vh;overflow-y:auto;
+  transition:var(--transition-theme);
 }
 .modal-close{
   position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:9px;
@@ -1136,6 +1143,12 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
 
   /* ── MODAL ── */
   .modal-bg{padding:0;align-items:flex-end}
+  .modal-ring{
+    border-radius:20px 20px 0 0;width:100%;max-width:100%;margin:0;
+    transform:translateY(40px) scale(1) !important;
+  }
+  .modal-bg.open .modal-ring{transform:translateY(0) scale(1) !important;}
+  .modal-ring::before{border-radius:20px 20px 0 0;}
   .modal-box{
     padding:20px;max-height:88vh;overflow-y:auto;
     border-radius:20px 20px 0 0;width:100%;margin:0;
