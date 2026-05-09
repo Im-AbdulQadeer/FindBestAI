@@ -519,8 +519,9 @@ ul{list-style:none}
   transition:all 0.2s;white-space:nowrap;flex-shrink:0;
 }
 .card:hover .tag{border-color:var(--border-md);color:var(--text2)}
-.card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--border);}
-.alt-hint{font-size:0.74rem;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.card-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:14px;border-top:1px solid var(--border);}
+.alt-hint{font-size:0.74rem;color:var(--text3);font-family:'JetBrains Mono',monospace;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-btn{flex-shrink:0}
 .alt-hint span{color:var(--green)}
 .card-btn{
   padding:7px 18px;border-radius:9px;border:1px solid var(--border-md);
@@ -779,7 +780,7 @@ td:first-child{color:var(--text);font-weight:600}
 .modal-box{
   background:var(--surface2);border:none;
   border-radius:22px;padding:24px 28px;width:100%;
-  position:relative;max-height:92vh;overflow-y:auto;
+  position:relative;max-height:92vh;overflow-y:auto;overflow-x:hidden;
   transition:var(--transition-theme);
 }
 .modal-close{
@@ -805,13 +806,13 @@ td:first-child{color:var(--text);font-weight:600}
 .modal-alt-name{font-weight:600;font-size:0.82rem;color:var(--text)}
 .modal-rating-row{display:flex;align-items:center;gap:16px;padding:10px 0;margin-top:2px}
 .modal-rating-num{font-size:2rem;font-weight:900;letter-spacing:-0.04em;color:var(--accent);line-height:1;}
-.modal-btn-row{display:flex;gap:12px;margin-top:16px}
+.modal-btn-row{display:flex;gap:12px;margin-top:16px;width:100%;}
 .modal-btn-p{
   flex:1;padding:11px;border:none;border-radius:11px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
-  color:#fff;font-weight:600;font-size:0.9rem;transition:all 0.22s;box-shadow:0 4px 16px var(--glow);
+  color:#fff;font-weight:600;font-size:0.9rem;transition:all 0.22s;box-shadow:0 2px 10px var(--glow);min-width:0;
 }
-.modal-btn-p:hover{box-shadow:0 4px 24px var(--glow);transform:translateY(-1px)}
+.modal-btn-p:hover{box-shadow:0 3px 14px var(--glow);transform:translateY(-1px)}
 .modal-btn-s{padding:11px 22px;border:1px solid var(--border-md);border-radius:11px;background:var(--surface3);color:var(--text2);font-size:0.9rem;transition:all 0.22s;}
 .modal-btn-s:hover{border-color:var(--border-hi);color:var(--text)}
 
