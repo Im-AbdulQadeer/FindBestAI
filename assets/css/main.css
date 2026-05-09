@@ -1085,7 +1085,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .see-all{font-size:0.75rem;white-space:nowrap;padding-top:4px}
 
   /* ── TOOL CARDS ── */
-  .tools-grid,.featured-layout{grid-template-columns:1fr;gap:14px;align-items:start;grid-auto-rows:auto;}
+  .tools-grid,.featured-layout,.tools-grid.featured-layout{grid-template-columns:1fr;gap:14px;align-items:start;grid-auto-rows:auto;}
   .card{
     padding:18px;
     overflow:hidden; /* clip the ring glow so it doesn't bleed */
@@ -1145,23 +1145,23 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .compare-result table{min-width:520px;font-size:0.82rem}
 
   /* ── MODAL ── */
-  .modal-bg{padding:0;align-items:flex-end;justify-content:flex-end;flex-direction:column;padding-top:8vh}
+  .modal-bg{padding:5vh 8px;align-items:center;justify-content:center;flex-direction:column;}
   .modal-ring{
-    border-radius:20px 20px 0 0;
+    border-radius:18px;
     width:calc(100% - 16px);max-width:100%;
     margin:0 8px;
-    transform:translateY(60px) !important;
+    transform:translateY(40px) scale(0.98) !important;
     transition:transform 0.32s cubic-bezier(0.23,1,0.32,1);
-    height:auto;max-height:88vh;display:flex;flex-direction:column;
+    height:auto;max-height:90vh;display:flex;flex-direction:column;
   }
   .modal-bg.open .modal-ring{transform:translateY(0) !important;}
-  .modal-ring::before{border-radius:20px 20px 0 0;}
+  .modal-ring::before{border-radius:18px;}
   .modal-box{
     padding:20px 18px 28px;flex:1;
     overflow-y:scroll;
     scrollbar-width:thin;
     scrollbar-color:var(--border-md) transparent;
-    border-radius:20px 20px 0 0;width:100%;margin:0;
+    border-radius:18px;width:100%;margin:0;
     max-height:none;box-sizing:border-box;
   }
   .modal-box::-webkit-scrollbar{width:4px}
