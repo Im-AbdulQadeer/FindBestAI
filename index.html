@@ -154,8 +154,8 @@
     <h2>Stay Ahead of the AI Curve</h2>
     <p>Weekly digest of the best new AI tools, free alternatives, and expert reviews — straight to your inbox.</p>
     <div class="nl-form">
-      <input type="email" placeholder="your@email.com" aria-label="Email address">
-      <button class="btn-primary" onclick="subscribeNewsletter()">Subscribe</button>
+      <input type="email" placeholder="your@email.com" aria-label="Email address" onkeydown="if(event.key===&apos;Enter&apos;){event.preventDefault();subscribeNewsletter(this);}">
+      <button class="btn-primary" onclick="subscribeNewsletter(this)">Subscribe</button>
     </div>
   </div>
 </div>

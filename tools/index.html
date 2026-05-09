@@ -43,8 +43,8 @@
 
 <!-- FILTERS -->
 <section class="section" style="padding-bottom:0">
-  <div class="cats-wrap" id="toolsCats" role="list" aria-label="Category filters"></div>
-  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;align-items:center">
+  <div class="cats-wrap" id="toolsCats" role="list" aria-label="Category filters" style="margin-bottom:20px"></div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:32px;align-items:center">
     <input type="text" id="toolsSearch" class="form-input" style="max-width:280px;padding:10px 16px" placeholder="🔍 Search tools…" oninput="filterTools()">
     <select id="toolsPricing" class="form-input" style="max-width:180px;padding:10px 16px" onchange="filterTools()">
       <option value="">All Pricing</option>
@@ -73,8 +73,8 @@
     <h2>Get Weekly AI Tool Picks</h2>
     <p>New tools and reviews delivered every Monday. No spam — unsubscribe anytime.</p>
     <div class="nl-form">
-      <input type="email" placeholder="your@email.com" aria-label="Email address">
-      <button class="btn-primary" onclick="subscribeNewsletter()">Subscribe</button>
+      <input type="email" placeholder="your@email.com" aria-label="Email address" onkeydown="if(event.key===&apos;Enter&apos;){event.preventDefault();subscribeNewsletter(this);}">
+      <button class="btn-primary" onclick="subscribeNewsletter(this)">Subscribe</button>
     </div>
   </div>
 </div>

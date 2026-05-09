@@ -474,7 +474,26 @@ function renderCompareTable(tbodyId, data, extraHeaders, extraColsFn){
 }
 
 /* ── MISC ── */
-function subscribeNewsletter(){ showToast('✅ You\'re subscribed! Check your inbox.'); }
+function subscribeNewsletter(btn){
+  const form = (btn && btn.closest && btn.closest('.nl-form')) || document.querySelector('.nl-form');
+  if(!form){ showToast('⚠️ Form not found.'); return; }
+  const input = form.querySelector('input[type="email"]');
+  const email = (input?.value || '').trim();
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  if(!re.test(email)){
+    if(input){ input.focus(); input.style.borderColor='var(--red,#ef4444)'; setTimeout(()=>{input.style.borderColor='';},1800); }
+    showToast('⚠️ Please enter a valid email.');
+    return;
+  }
+  try{
+    const list = JSON.parse(localStorage.getItem('fba_newsletter')||'[]');
+    if(list.includes(email.toLowerCase())){ showToast('✨ You\'re already subscribed!'); return; }
+    list.push(email.toLowerCase());
+    localStorage.setItem('fba_newsletter', JSON.stringify(list));
+  }catch(e){}
+  if(input) input.value='';
+  showToast('✅ You\'re subscribed! Check your inbox.');
+}
 function submitContact(){
   const n=document.getElementById('cf-name');
   const e=document.getElementById('cf-email');
