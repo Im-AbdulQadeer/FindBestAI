@@ -813,7 +813,7 @@ td:first-child{color:var(--text);font-weight:600}
   color:#fff;font-weight:600;font-size:0.9rem;transition:all 0.22s;box-shadow:0 2px 10px var(--glow);min-width:0;
 }
 .modal-btn-p:hover{box-shadow:0 3px 14px var(--glow);transform:translateY(-1px)}
-.modal-btn-s{padding:11px 22px;border:1px solid var(--border-md);border-radius:11px;background:var(--surface3);color:var(--text2);font-size:0.9rem;transition:all 0.22s;}
+.modal-btn-s{padding:11px 22px;border:1px solid var(--border-md);border-radius:11px;background:var(--surface3);color:var(--text2);font-size:0.9rem;transition:all 0.22s;cursor:pointer;white-space:nowrap;}
 .modal-btn-s:hover{border-color:var(--border-hi);color:var(--text)}
 
 /* ═══════════════════════════════════════
@@ -1159,7 +1159,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .modal-bg.open .modal-ring{transform:translateY(0) !important;}
   .modal-ring::before{border-radius:18px;}
   .modal-box{
-    padding:16px 14px 18px;flex:1;
+    padding:16px 14px 28px;flex:1;
     overflow-y:auto;
     scrollbar-width:thin;
     scrollbar-color:var(--border-md) transparent;
@@ -1183,7 +1183,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .modal-rating-row{padding:10px 0;gap:12px;margin-top:0;}
   .modal-rating-num{font-size:1.7rem;}
   .modal-btn-row{flex-direction:column;gap:8px;margin-top:14px;}
-  .modal-btn-p,.modal-btn-s{padding:11px 18px;font-size:0.85rem;}
+  .modal-btn-p,.modal-btn-s{padding:11px 18px;font-size:0.85rem;width:100%;text-align:center;box-sizing:border-box;display:flex;align-items:center;justify-content:center;}
+  .modal-btn-s{flex-shrink:0;}
   .modal-handle{display:none !important;}
   .modal-close{top:14px;right:14px;}
   .modal-logo-row{padding-top:4px}
@@ -1223,7 +1224,7 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
   .card{padding:16px;border-radius:14px}
   .tool-icon{width:40px;height:40px;font-size:1.25rem;border-radius:10px}
   .tool-icon img{width:100%;height:100%;}
-  .modal-box{padding:16px 14px 24px}
+  .modal-box{padding:16px 14px 28px}
   .nav-logo{font-size:1.1rem}
   .search-box{padding:4px 4px 4px 12px}
   .search-box input{font-size:0.85rem}
