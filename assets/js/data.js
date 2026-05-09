@@ -34,7 +34,7 @@ const TOOLS = [
     logo: 'openai.com',
     bg: 'linear-gradient(135deg,#10b981,#059669)',
     pricing: 'freemium',
-    badge: 'new',
+    badge: '',
     url: 'https://chat.openai.com',
     desc: 'ChatGPT is an advanced conversational AI from OpenAI, powered by the GPT-5 model, capable of complex dialogues, data analysis, and content creation.',
     rating: 4.9,
