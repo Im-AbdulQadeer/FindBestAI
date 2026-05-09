@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Best AI — Weekly Digest</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0b0e18; font-family: 'Outfit', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrapper { background: #0b0e18; padding: 32px 16px; }
+  .container { max-width: 600px; margin: 0 auto; }
+
+  /* Header */
+  .header { background: #07090f; border: 1px solid rgba(99,179,255,0.12); border-radius: 16px 16px 0 0; padding: 24px 40px; display: table; width: 100%; }
+  .header-left { display: table-cell; vertical-align: middle; }
+  .header-right { display: table-cell; vertical-align: middle; text-align: right; }
+  .logo-text { font-size: 22px; font-weight: 700; color: #eef2ff; letter-spacing: -0.5px; }
+  .logo-text span { color: #4fa3ff; }
+  .header-date { font-size: 11px; color: #3d5070; letter-spacing: 0.08em; }
+
+  /* Intro strip */
+  .intro { background: linear-gradient(90deg, rgba(79,163,255,0.06) 0%, rgba(167,139,250,0.06) 100%); border-left: 1px solid rgba(99,179,255,0.12); border-right: 1px solid rgba(99,179,255,0.12); border-bottom: 1px solid rgba(99,179,255,0.06); padding: 22px 40px; }
+  .intro p { font-size: 14px; color: #8899bb; line-height: 1.7; }
+  .intro strong { color: #eef2ff; }
+
+  /* Body */
+  .body { background: #07090f; border-left: 1px solid rgba(99,179,255,0.12); border-right: 1px solid rgba(99,179,255,0.12); padding: 36px 40px; }
+
+  /* Section label */
+  .section-label { font-size: 10px; color: #4fa3ff; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 1px solid rgba(99,179,255,0.10); }
+
+  /* Divider */
+  .divider { height: 1px; background: rgba(99,179,255,0.08); margin: 30px 0; }
+
+  /* === NEW TOOLS SECTION === */
+  .new-tools-box { background: linear-gradient(135deg, rgba(79,163,255,0.06) 0%, rgba(79,163,255,0.02) 100%); border: 1px solid rgba(79,163,255,0.18); border-radius: 12px; padding: 22px 24px; }
+  .new-tools-icon { font-size: 28px; margin-bottom: 10px; }
+  .new-tools-headline { font-size: 18px; font-weight: 700; color: #eef2ff; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .new-tools-headline span { color: #4fa3ff; }
+  .new-tools-desc { font-size: 13px; color: #8899bb; line-height: 1.7; margin-bottom: 18px; }
+  .new-tools-bullets { margin-bottom: 20px; }
+  .new-tools-bullets li { font-size: 13px; color: #8899bb; line-height: 1.6; padding: 5px 0; list-style: none; padding-left: 16px; position: relative; }
+  .new-tools-bullets li::before { content: "→"; color: #4fa3ff; position: absolute; left: 0; }
+  .btn-primary { display: inline-block; background: #4fa3ff; color: #07090f; font-size: 14px; font-weight: 700; padding: 11px 28px; border-radius: 8px; text-decoration: none; letter-spacing: -0.2px; }
+
+  /* === BLOG SECTION === */
+  .blog-box { background: linear-gradient(135deg, rgba(167,139,250,0.06) 0%, rgba(167,139,250,0.02) 100%); border: 1px solid rgba(167,139,250,0.18); border-radius: 12px; padding: 22px 24px; }
+  .blog-icon { font-size: 28px; margin-bottom: 10px; }
+  .blog-headline { font-size: 18px; font-weight: 700; color: #eef2ff; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .blog-headline span { color: #a78bfa; }
+  .blog-desc { font-size: 13px; color: #8899bb; line-height: 1.7; margin-bottom: 18px; }
+  .blog-bullets { margin-bottom: 20px; }
+  .blog-bullets li { font-size: 13px; color: #8899bb; line-height: 1.6; padding: 5px 0; list-style: none; padding-left: 16px; position: relative; }
+  .blog-bullets li::before { content: "→"; color: #a78bfa; position: absolute; left: 0; }
+  .btn-secondary { display: inline-block; background: rgba(167,139,250,0.15); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); font-size: 14px; font-weight: 700; padding: 11px 28px; border-radius: 8px; text-decoration: none; letter-spacing: -0.2px; }
+
+  /* Tip box */
+  .tip { background: rgba(250,204,21,0.04); border: 1px solid rgba(250,204,21,0.15); border-radius: 10px; padding: 18px 20px; }
+  .tip-label { font-size: 10px; color: #facc15; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 10px; }
+  .tip p { font-size: 13px; color: #8899bb; line-height: 1.7; }
+  .tip strong { color: #eef2ff; }
+
+  /* Stats row */
+  .stats-row { display: table; width: 100%; border-collapse: separate; border-spacing: 10px; margin: 0 -10px 0; }
+  .stat-cell { display: table-cell; background: #0b0e18; border: 1px solid rgba(99,179,255,0.10); border-radius: 10px; padding: 14px 16px; text-align: center; width: 33.33%; }
+  .stat-num { font-size: 20px; font-weight: 700; color: #4fa3ff; letter-spacing: -0.5px; }
+  .stat-label { font-size: 11px; color: #3d5070; margin-top: 3px; }
+
+  /* Footer */
+  .footer { background: #07090f; border: 1px solid rgba(99,179,255,0.12); border-top: none; border-radius: 0 0 16px 16px; padding: 22px 40px; text-align: center; }
+  .footer p { font-size: 12px; color: #3d5070; line-height: 2.2; }
+  .footer a { color: #4fa3ff; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <span class="logo-text">Find<span>Best</span>AI</span>
+    </div>
+    <div class="header-right">
+      <div class="header-date">WEEKLY DIGEST</div>
+    </div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="intro">
+    <p>Hey 👋 Another week, another batch of <strong>fresh AI tools and in-depth reviews</strong> handpicked for you. Here's everything new on FindBestAI this week — tools added, articles published, and one quick tip.</p>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- STATS -->
+    <div class="section-label">// THIS WEEK AT A GLANCE</div>
+    <table class="stats-row">
+      <tr>
+        <td class="stat-cell">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">AI Tools Listed</div>
+        </td>
+        <td class="stat-cell">
+          <div class="stat-num">New</div>
+          <div class="stat-label">Tools Added</div>
+        </td>
+        <td class="stat-cell">
+          <div class="stat-num">New</div>
+          <div class="stat-label">Reviews Published</div>
+        </td>
+      </tr>
+    </table>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 1: NEW TOOLS -->
+    <div class="section-label">// NEW AI TOOLS THIS WEEK</div>
+
+    <div class="new-tools-box">
+      <div class="new-tools-icon">🛠️</div>
+      <div class="new-tools-headline">Fresh Tools, <span>Just Added</span></div>
+      <div class="new-tools-desc">
+        We've added new AI tools to the directory this week — covering writing, productivity, image generation, coding, and more. Every tool is manually reviewed and categorized so you can find exactly what you need.
+      </div>
+      <ul class="new-tools-bullets">
+        <li>Free, freemium &amp; paid options across every category</li>
+        <li>Honest descriptions — no sponsored fluff</li>
+        <li>Filter by use case, pricing, and platform</li>
+      </ul>
+      <a href="https://findbestai.pages.dev" class="btn-primary">Browse All AI Tools →</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 2: BLOG / REVIEWS -->
+    <div class="section-label">// LATEST FROM THE BLOG</div>
+
+    <div class="blog-box">
+      <div class="blog-icon">📝</div>
+      <div class="blog-headline">New <span>Reviews &amp; Comparisons</span> Are Up</div>
+      <div class="blog-desc">
+        This week we published new in-depth articles comparing popular AI tools head-to-head. Real tests, real results — not just spec sheets. If you're trying to pick the right tool, our blog saves you hours of research.
+      </div>
+      <ul class="blog-bullets">
+        <li>Side-by-side tool comparisons with identical prompts</li>
+        <li>Honest pricing breakdowns and hidden costs exposed</li>
+        <li>Best picks for different budgets and use cases</li>
+      </ul>
+      <a href="https://findbestai.pages.dev/blog/" class="btn-secondary">Read Latest Articles →</a>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 3: TIP -->
+    <div class="section-label">// AI TIP OF THE WEEK</div>
+    <div class="tip">
+      <div class="tip-label">// THIS WEEK'S TIP</div>
+      <p><strong>Stop using vague prompts.</strong> Instead of "write me a blog post about AI", try: <strong>"Write a 600-word intro for a tech-savvy audience explaining why most people pick the wrong AI writing tool — focus on pricing traps."</strong> Specificity = dramatically better output every time.</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>
+      <a href="https://findbestai.pages.dev">findbestai.pages.dev</a> · AI tools directory<br>
+      You subscribed at Find Best AI.<br>
+      <a href="{$unsubscribe}">Unsubscribe</a> &nbsp;·&nbsp; <a href="https://findbestai.pages.dev/privacy/">Privacy Policy</a>
+    </p>
+  </div>
+
+</div>
+</div>
+</body>
+</html>

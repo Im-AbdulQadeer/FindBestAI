@@ -481,10 +481,36 @@ function renderCompareTable(tbodyId, data, extraHeaders, extraColsFn){
 }
 
 /* ── MISC ── */
-/* ── NEWSLETTER — uses Web3Forms (free, no backend needed)
-   Replace YOUR_WEB3FORMS_ACCESS_KEY below after signing up at https://web3forms.com
-   They'll send submissions to your email address for free. ── */
-const WEB3FORMS_KEY = 'd9a8fc3c-5b28-421c-afb4-3896ec892a7e';
+
+/* ── NEWSLETTER — MailerLite Integration (via Cloudflare Pages Function) ────────
+   HOW TO SET UP:
+
+   STEP 1 — Get your MailerLite API Key:
+     MailerLite dashboard → Integrations → Developer API → Generate new token
+     Copy the API token.
+
+   STEP 2 — (Optional) Get your Group ID:
+     MailerLite → Subscribers → Groups → create a group e.g. "FindBestAI"
+     Click the group → the URL contains the ID: /subscribers/groups/12345678
+     Copy that number as your Group ID.
+
+   STEP 3 — Add environment variables in Cloudflare:
+     Cloudflare dashboard → Pages → findbestai → Settings → Environment variables
+     Add (Production):
+       MAILERLITE_API_KEY   = (paste your API token)
+       MAILERLITE_GROUP_ID  = (paste group ID, or leave blank for main list)
+     Save → Redeploy.
+
+   STEP 4 — Instant Welcome Email:
+     MailerLite → Automations → Create automation
+     Trigger: "When subscriber joins a group" (or "When subscriber is added")
+     Action: Send email → design your welcome email → Activate ✅
+
+   STEP 5 — Weekly Campaign:
+     MailerLite → Campaigns → Create campaign → Regular campaign
+     → After sending once, use an Automation with
+       trigger: "Based on date/time" → recurring weekly ✅
+   ─────────────────────────────────────────────────────────────────────────── */
 
 async function subscribeNewsletter(btn){
   const form = (btn && btn.closest && btn.closest('.nl-form')) || document.querySelector('.nl-form');
@@ -492,45 +518,53 @@ async function subscribeNewsletter(btn){
   const input = form.querySelector('input[type="email"]');
   const email = (input?.value || '').trim();
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
   if(!re.test(email)){
     if(input){ input.focus(); input.style.borderColor='var(--red,#ef4444)'; setTimeout(()=>{input.style.borderColor='';},1800); }
     showToast('⚠️ Please enter a valid email.');
     return;
   }
-  // Duplicate check
+
+  // Duplicate check (localStorage)
   try{
     const list = JSON.parse(localStorage.getItem('fba_newsletter')||'[]');
     if(list.includes(email.toLowerCase())){ showToast('✨ You\'re already subscribed!'); return; }
   }catch(e){}
 
-  // Disable button while sending
-  if(btn && btn.tagName==='BUTTON'){ btn.disabled=true; btn.textContent='Sending…'; }
+  if(btn && btn.tagName==='BUTTON'){ btn.disabled=true; btn.textContent='Subscribing…'; }
+
   try{
-    if(WEB3FORMS_KEY && WEB3FORMS_KEY !== 'YOUR_WEB3FORMS_ACCESS_KEY'){
-      const res = await fetch('https://api.web3forms.com/submit',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','Accept':'application/json'},
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: 'New Newsletter Subscriber — Find Best AI',
-          email,
-          message: `New subscriber: ${email}\nDate: ${new Date().toISOString()}`
-        })
-      });
-      const data = await res.json();
-      if(!data.success) throw new Error(data.message || 'Submission failed');
+    // Call our secure Cloudflare Pages Function (API key is stored server-side)
+    const res = await fetch('/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await res.json();
+
+    if(!res.ok){
+      throw new Error(data.error || 'Subscription failed. Please try again.');
     }
-    // Save locally
+
+    // Save locally to prevent duplicate submissions
     try{
       const list = JSON.parse(localStorage.getItem('fba_newsletter')||'[]');
       list.push(email.toLowerCase());
       localStorage.setItem('fba_newsletter', JSON.stringify(list));
     }catch(e){}
-    if(input) input.value='';
-    showToast('✅ You\'re subscribed! Check your inbox.');
+
+    if(input) input.value = '';
+
+    if(data.already){
+      showToast('✨ You\'re already on the list!');
+    } else {
+      showToast('✅ Subscribed! Check your inbox for a welcome email 🎉');
+    }
+
   }catch(err){
-    console.error('Newsletter error:',err);
-    showToast('⚠️ Something went wrong. Please try again.');
+    console.error('Newsletter error:', err);
+    showToast('⚠️ ' + (err.message && err.message.length < 90 ? err.message : 'Something went wrong. Please try again.'));
   }finally{
     if(btn && btn.tagName==='BUTTON'){ btn.disabled=false; btn.textContent='Subscribe'; }
   }

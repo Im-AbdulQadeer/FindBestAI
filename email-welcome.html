@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome to Find Best AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0b0e18; font-family: 'Outfit', Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wrapper { background: #0b0e18; padding: 32px 16px; }
+  .container { max-width: 600px; margin: 0 auto; }
+
+  /* Header */
+  .header { background: #07090f; border: 1px solid rgba(99,179,255,0.12); border-radius: 16px 16px 0 0; padding: 28px 40px; text-align: center; }
+  .logo-wrap { display: inline-flex; align-items: center; gap: 10px; }
+  .logo-text { font-size: 24px; font-weight: 700; color: #eef2ff; letter-spacing: -0.5px; }
+  .logo-text span { color: #4fa3ff; }
+  .logo-badge { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #4fa3ff; background: rgba(79,163,255,0.1); border: 1px solid rgba(79,163,255,0.2); border-radius: 4px; padding: 2px 7px; letter-spacing: 0.08em; margin-left: 4px; vertical-align: middle; }
+
+  /* Hero */
+  .hero { background: linear-gradient(160deg, #0d1120 0%, #0b0e18 60%); border-left: 1px solid rgba(99,179,255,0.12); border-right: 1px solid rgba(99,179,255,0.12); padding: 40px 40px 32px; text-align: center; }
+  .hero-eyebrow { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #4fa3ff; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 16px; }
+  .hero h1 { font-size: 30px; font-weight: 700; color: #eef2ff; line-height: 1.25; margin-bottom: 14px; }
+  .hero h1 em { font-style: normal; color: #a78bfa; }
+  .hero p { font-size: 15px; color: #8899bb; line-height: 1.7; max-width: 440px; margin: 0 auto; }
+
+  /* Body */
+  .body { background: #07090f; border-left: 1px solid rgba(99,179,255,0.12); border-right: 1px solid rgba(99,179,255,0.12); padding: 32px 40px; }
+
+  /* Benefit rows */
+  .benefit { display: table; width: 100%; margin-bottom: 20px; }
+  .benefit-icon { display: table-cell; width: 44px; vertical-align: top; }
+  .benefit-icon-inner { width: 36px; height: 36px; background: rgba(79,163,255,0.08); border: 1px solid rgba(79,163,255,0.18); border-radius: 8px; text-align: center; line-height: 36px; font-size: 18px; }
+  .benefit-content { display: table-cell; vertical-align: top; padding-left: 14px; }
+  .benefit-content h3 { font-size: 15px; font-weight: 600; color: #eef2ff; margin-bottom: 3px; }
+  .benefit-content p { font-size: 13px; color: #8899bb; line-height: 1.6; }
+
+  /* Divider */
+  .divider { height: 1px; background: rgba(99,179,255,0.10); margin: 28px 0; }
+
+  /* Stats row */
+  .stats { display: table; width: 100%; margin-bottom: 28px; }
+  .stat { display: table-cell; text-align: center; }
+  .stat-num { font-size: 24px; font-weight: 700; color: #4fa3ff; }
+  .stat-label { font-size: 11px; font-family: 'JetBrains Mono', monospace; color: #3d5070; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px; }
+
+  /* CTA */
+  .cta { text-align: center; margin: 28px 0; }
+  .cta a { display: inline-block; background: #4fa3ff; color: #07090f; font-size: 15px; font-weight: 700; padding: 14px 40px; border-radius: 8px; text-decoration: none; letter-spacing: -0.2px; }
+
+  /* Tip box */
+  .tip { background: rgba(167,139,250,0.06); border: 1px solid rgba(167,139,250,0.18); border-radius: 10px; padding: 16px 18px; margin-top: 24px; }
+  .tip-label { font-size: 10px; font-family: 'JetBrains Mono', monospace; color: #a78bfa; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .tip p { font-size: 13px; color: #8899bb; line-height: 1.6; }
+  .tip strong { color: #eef2ff; }
+
+  /* Footer */
+  .footer { background: #07090f; border: 1px solid rgba(99,179,255,0.12); border-top: none; border-radius: 0 0 16px 16px; padding: 24px 40px; text-align: center; }
+  .footer p { font-size: 12px; color: #3d5070; line-height: 2; }
+  .footer a { color: #4fa3ff; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-wrap">
+      <span class="logo-text">Find<span>Best</span>AI</span>
+      <span class="logo-badge">AI TOOLS DIRECTORY</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">// YOU'RE IN</div>
+    <h1>Welcome to the<br><em>AI tools universe</em> 🚀</h1>
+    <p>You just joined thousands of creators, developers and founders who discover the best AI tools before everyone else.</p>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">AI Tools</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">20</div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">310+</div>
+        <div class="stat-label">Free Tools</div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Benefits -->
+    <div class="benefit">
+      <div class="benefit-icon"><div class="benefit-icon-inner">🔍</div></div>
+      <div class="benefit-content">
+        <h3>Discover the right tool instantly</h3>
+        <p>Search by use case — "free video editor", "ChatGPT alternative", "AI for designers" — and find the exact match in seconds.</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon"><div class="benefit-icon-inner">🆓</div></div>
+      <div class="benefit-content">
+        <h3>Free alternatives to everything paid</h3>
+        <p>We surface 310+ free AI tools so you never overpay. Every tool is labeled — free, freemium, or paid.</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon"><div class="benefit-icon-inner">📊</div></div>
+      <div class="benefit-content">
+        <h3>Side-by-side comparisons</h3>
+        <p>Compare any two tools on features, pricing, speed and quality. Make decisions with real data, not guesswork.</p>
+      </div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-icon"><div class="benefit-icon-inner">📬</div></div>
+      <div class="benefit-content">
+        <h3>Weekly digest, zero noise</h3>
+        <p>Every week we send only the best new tools and reviews — no spam, no filler. Unsubscribe anytime in one click.</p>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <a href="https://findbestai.pages.dev">Explore 500+ AI Tools →</a>
+    </div>
+
+    <!-- Tip -->
+    <div class="tip">
+      <div class="tip-label">// PRO TIP</div>
+      <p>Use the <strong>Compare tool</strong> on the site to put any two AI tools head-to-head on pricing and features. It saves hours of research.</p>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>
+      <a href="https://findbestai.pages.dev">findbestai.pages.dev</a> · AI tools directory<br>
+      You subscribed at Find Best AI.<br>
+      <a href="{{unsubscribe}}">Unsubscribe</a> &nbsp;·&nbsp; <a href="https://findbestai.pages.dev/privacy/">Privacy Policy</a>
+    </p>
+  </div>
+
+</div>
+</div>
+</body>
+</html>
