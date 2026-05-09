@@ -756,14 +756,25 @@ td:first-child{color:var(--text);font-weight:600}
 }
 .modal-bg.open{opacity:1;pointer-events:all}
 .modal-box{
-  background:var(--surface2);border:1px solid var(--border-md);
+  background:var(--surface2);border:none;
   border-radius:22px;padding:36px;max-width:620px;width:100%;
   position:relative;max-height:88vh;overflow-y:auto;
-  transform:translateY(24px) scale(0.97);transition:transform 0.3s;
-  transition:var(--transition-theme);
+  transform:translateY(24px) scale(0.97);
+  transition:transform 0.3s cubic-bezier(0.23,1,0.32,1);
 }
 .modal-bg.open .modal-box{transform:translateY(0) scale(1)}
-.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));border-radius:22px 22px 0 0;}
+/* Full 4-side animated ring — same technique as search bar */
+.modal-box::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  padding:1.5px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2),var(--accent3),var(--accent));
+  background-size:300% 300%;
+  animation:ringGlow 5s ease infinite;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none;z-index:0;
+  box-shadow:0 0 40px var(--glow),0 0 80px var(--glow2);
+}
 .modal-close{
   position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:9px;
   border:1px solid var(--border-md);background:var(--surface3);color:var(--text2);font-size:1rem;
