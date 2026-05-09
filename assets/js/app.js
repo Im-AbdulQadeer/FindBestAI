@@ -316,8 +316,6 @@ function makeCard(t, featured=false){
 function openModal(id){
   const tool = TOOLS.find(t=>t.id===id);
   if(!tool) return;
-  /* Trim description to 160 chars max to guarantee fit */
-  const desc = tool.desc.length > 160 ? tool.desc.slice(0,157).replace(/\s\S*$/,'') + '…' : tool.desc;
   /* Show only first 3 features to keep modal compact and scroll-free */
   const features = tool.features.slice(0,3);
   document.getElementById('modalContent').innerHTML = `
@@ -328,7 +326,7 @@ function openModal(id){
         <div class="modal-sub">// ${tool.cat.toUpperCase()} · ${tool.price}</div>
       </div>
     </div>
-    <p class="modal-desc">${desc}</p>
+    <p class="modal-desc">${tool.desc}</p>
     <div class="modal-stitle">// KEY FEATURES</div>
     ${features.map(f=>`<div class="modal-feature">${f}</div>`).join('')}
     <div class="modal-stitle">// FREE ALTERNATIVES</div>
