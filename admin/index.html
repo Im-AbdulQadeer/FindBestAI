@@ -1366,8 +1366,8 @@ async function saveSeoToIndex(){
     if(ogImg)html=html.replace(/(<meta\s+property="og:image"\s+content=")[^"]*(")/i,`$1${esc(ogImg)}$2`);
     const jsonld=gv('seo_jsonld');
     if(jsonld){
-      if(html.includes('"@context"'))html=html.replace(/<script\s+type="application\/ld\+json">[^<]*<\/script>/i,`<script type="application/ld+json">\n${jsonld}\n</script>`);
-      else html=html.replace('</head>',`<script type="application/ld+json">\n${jsonld}\n</script>\n</head>`);
+      if(html.includes('"@context"'))html=html.replace(/<script\s+type="application\/ld\+json">[^<]*<\/script>/i,`<script type="application/ld+json">\n${jsonld}\n<\/script>`);
+      else html=html.replace('</head>',`<script type="application/ld+json">\n${jsonld}\n<\/script>\n</head>`);
     }
     await putFile('index.html',html,'Update SEO meta tags',f.sha);
     toast('✅ SEO meta tags updated in index.html','ok');loadCommits();
