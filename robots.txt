@@ -3,4 +3,4 @@ Allow: /
 
 Disallow: /admin/
 
-Sitemap: https://aihub.tools/sitemap.xml
+Sitemap: https://findbestai.pages.dev/sitemap.xml
