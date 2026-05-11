@@ -1,648 +1,928 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FindBestAI — Admin Panel</title>
-<link rel="icon" href="/logo.webp">
-<link rel="stylesheet" href="/assets/css/main.css">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FindBestAI — Admin</title>
 <style>
-:root{--admin-sidebar:260px;--admin-header:64px}
-body{background:var(--bg2);overflow:hidden;font-family:'Outfit',sans-serif}
-#authOverlay{position:fixed;inset:0;z-index:9999;background:var(--bg);display:flex;align-items:center;justify-content:center}
-.auth-box{background:var(--surface);border:1px solid var(--border-md);border-radius:24px;padding:48px;max-width:420px;width:100%;text-align:center;box-shadow:var(--shadow-lg)}
-.auth-input{width:100%;padding:14px 18px;background:var(--input-bg);border:1px solid var(--border-md);border-radius:12px;color:var(--text);font-size:0.95rem;margin:12px 0;outline:none;transition:all 0.2s}
-.auth-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
-#app{display:none;height:100vh;grid-template-columns:var(--admin-sidebar) 1fr;grid-template-rows:var(--admin-header) 1fr}
-.sidebar{grid-row:1/-1;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
-.sidebar-header{padding:20px;border-bottom:1px solid var(--border)}
-.sidebar-logo{font-weight:900;font-size:1.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-item{padding:12px 20px;cursor:pointer;color:var(--text2);font-size:0.9rem;font-weight:500;transition:all 0.2s;display:flex;align-items:center;gap:12px;border-left:3px solid transparent}
-.nav-item:hover{background:var(--surface3);color:var(--text)}
-.nav-item.active{background:color-mix(in srgb,var(--accent) 10%,transparent);color:var(--accent);border-left-color:var(--accent)}
-.nav-section{padding:16px 20px 8px;font-size:0.65rem;font-family:'JetBrains Mono',monospace;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase}
-.admin-header{grid-column:2;background:var(--nav-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px}
-.header-actions{display:flex;gap:12px;align-items:center}
-.user-pill{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--surface3);border-radius:100px;font-size:0.8rem}
-.main-content{grid-column:2;overflow-y:auto;padding:32px}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:32px}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;transition:transform 0.2s}
-.stat-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.stat-val{font-size:2rem;font-weight:900;color:var(--accent);margin:8px 0}
-.stat-label{font-size:0.8rem;color:var(--text3);font-family:'JetBrains Mono',monospace}
-.admin-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:24px}
-.admin-card-header{padding:20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.admin-card-body{padding:20px}
-table{width:100%;border-collapse:collapse;font-size:0.85rem}
-th{text-align:left;padding:12px;color:var(--text3);font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:0.05em;border-bottom:1px solid var(--border)}
-td{padding:12px;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:middle}
-tr:hover td{background:var(--surface3)}
-.btn-sm{padding:6px 12px;font-size:0.75rem;border-radius:8px}
-.btn-danger{background:color-mix(in srgb,var(--red) 20%,transparent);color:var(--red);border:1px solid color-mix(in srgb,var(--red) 40%,transparent)}
-.btn-danger:hover{background:var(--red);color:#fff}
-.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.form-group{margin-bottom:16px}
-.form-label{display:block;font-size:0.75rem;color:var(--text3);margin-bottom:6px;font-weight:600;font-family:'JetBrains Mono',monospace}
-.form-input,textarea,select{width:100%;padding:10px 14px;background:var(--input-bg);border:1px solid var(--border-md);border-radius:10px;color:var(--text);font-size:0.9rem;outline:none;font-family:'Outfit',sans-serif}
-textarea{min-height:120px;resize:vertical;font-family:'JetBrains Mono',monospace;font-size:0.85rem}
-.form-input:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
-#toast{position:fixed;bottom:24px;right:24px;z-index:10000;background:var(--surface2);border:1px solid var(--border-md);padding:14px 20px;border-radius:12px;box-shadow:var(--shadow-lg);display:flex;align-items:center;gap:10px;transform:translateY(100px);opacity:0;transition:all 0.3s cubic-bezier(0.23,1,0.32,1)}
-#toast.show{transform:translateY(0);opacity:1}
-.loader{border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;width:20px;height:20px;animation:spin 0.8s linear infinite;display:inline-block}
-@keyframes spin{to{transform:rotate(360deg)}}
-.tag-input{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:var(--input-bg);border:1px solid var(--border-md);border-radius:10px;min-height:42px}
-.tag-chip{padding:4px 10px;background:var(--surface3);border:1px solid var(--border);border-radius:6px;font-size:0.75rem;color:var(--text2);display:flex;align-items:center;gap:6px}
-.tag-chip button{background:none;border:none;color:var(--text3);cursor:pointer;font-size:0.9rem}
-.preview-frame{width:100%;height:400px;border:1px solid var(--border);border-radius:12px;background:#fff}
-@media(max-width:768px){#app{grid-template-columns:1fr}.sidebar{display:none;position:fixed;inset:0;z-index:1000;width:100%}.sidebar.open{display:flex}.admin-header{grid-column:1}.main-content{grid-column:1;padding:16px}}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0f1117;--bg2:#1a1d27;--bg3:#242836;--card:#1e2230;--hover:#2a2f40;--input:#161922;
+  --border:#2d3348;--text:#e8eaf0;--mute:#9ca3b8;--dim:#6b7280;
+  --acc:#6c5ce7;--acc2:#a29bfe;--ok:#00cec9;--warn:#fdcb6e;--err:#ff6b6b;--info:#74b9ff;
+  --r:10px;
+}
+html,body{height:100%}
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;overflow:hidden}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:4px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--acc2);text-decoration:none}
+.hidden{display:none!important}
+
+/* ===== LOGIN ===== */
+.login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 30% 20%,rgba(108,92,231,.15),transparent 60%),var(--bg);z-index:50}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px;width:380px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.login-card h1{font-size:22px;margin-bottom:6px;background:linear-gradient(135deg,#a29bfe,#74b9ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.login-card p{color:var(--mute);font-size:13px;margin-bottom:22px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:var(--mute);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.field input,.field select,.field textarea{width:100%;background:var(--input);border:1px solid var(--border);border-radius:8px;padding:10px 12px;outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
+.field textarea{resize:vertical;font-family:'JetBrains Mono','Courier New',monospace;font-size:12.5px;line-height:1.55}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:1px solid var(--border);background:var(--bg3);color:var(--text);border-radius:8px;cursor:pointer;font-weight:500;transition:.15s}
+.btn:hover{background:var(--hover)}
+.btn-primary{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn-primary:hover{background:#7c6ff7}
+.btn-danger{background:transparent;border-color:var(--err);color:var(--err)}
+.btn-danger:hover{background:var(--err);color:#fff}
+.btn-ghost{background:transparent}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-block{width:100%;justify-content:center}
+.err-msg{background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.3);color:var(--err);padding:10px;border-radius:8px;font-size:13px;margin-bottom:14px}
+.hint{font-size:11.5px;color:var(--dim);margin-top:6px;line-height:1.5}
+
+/* ===== APP LAYOUT ===== */
+.app{display:grid;grid-template-columns:240px 1fr;height:100vh}
+.sidebar{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.brand{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+.brand-dot{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;font-size:14px}
+.nav{flex:1;overflow-y:auto;padding:12px 8px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--mute);margin-bottom:2px;font-size:13.5px;user-select:none}
+.nav-item:hover{background:var(--hover);color:var(--text)}
+.nav-item.active{background:rgba(108,92,231,.15);color:var(--acc2);font-weight:600}
+.nav-item .badge{margin-left:auto;background:var(--bg3);color:var(--mute);font-size:11px;padding:2px 7px;border-radius:10px}
+.nav-item.active .badge{background:var(--acc);color:#fff}
+.nav-section{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);padding:14px 14px 6px}
+.sidebar-foot{padding:12px;border-top:1px solid var(--border);font-size:12px;color:var(--mute)}
+
+.main{display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:54px;display:flex;align-items:center;gap:12px;padding:0 22px;border-bottom:1px solid var(--border);background:var(--bg2)}
+.topbar .status{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mute)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mute)}
+.dot.ok{background:var(--ok);box-shadow:0 0 6px var(--ok)}
+.dot.sync{background:var(--warn);animation:pulse 1.2s infinite}
+.dot.err{background:var(--err)}
+@keyframes pulse{50%{opacity:.4}}
+.topbar .spacer{flex:1}
+
+.content{flex:1;overflow-y:auto;padding:22px;background:var(--bg)}
+.section{display:none}
+.section.active{display:block}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:22px;font-weight:700}
+.section-head .sub{color:var(--mute);font-size:13px;margin-left:4px}
+.section-head .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.stat .lbl{font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.stat .val{font-size:26px;font-weight:700;margin-top:4px}
+.stat .hint{margin-top:4px}
+
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+.panel-h{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:600}
+.panel-h .actions{margin-left:auto;display:flex;gap:6px}
+.panel-b{padding:14px 18px}
+
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+th{background:var(--bg3);color:var(--mute);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;position:sticky;top:0}
+tr:hover td{background:rgba(255,255,255,.02)}
+td .row-actions{display:flex;gap:6px;justify-content:flex-end}
+td .row-actions .btn{padding:5px 10px;font-size:12px}
+.tag{display:inline-block;background:var(--bg3);color:var(--mute);padding:2px 8px;border-radius:10px;font-size:11px;margin:1px 2px}
+.swatch{display:inline-block;width:20px;height:20px;border-radius:6px;vertical-align:middle;margin-right:6px;border:1px solid var(--border)}
+.emoji-cell{font-size:18px}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.toolbar input,.toolbar select{background:var(--input);border:1px solid var(--border);border-radius:8px;padding:8px 12px;outline:none}
+.toolbar input{flex:1;min-width:200px}
+
+/* ===== MODAL ===== */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding:30px 20px;z-index:100;overflow-y:auto}
+.modal.open{display:flex}
+.modal-card{background:var(--card);border:1px solid var(--border);border-radius:14px;width:100%;max-width:780px;box-shadow:0 30px 80px rgba(0,0,0,.6);margin:auto 0}
+.modal-h{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:600}
+.modal-h .x{margin-left:auto;cursor:pointer;color:var(--mute);font-size:22px;line-height:1}
+.modal-h .x:hover{color:var(--text)}
+.modal-b{padding:18px 20px;max-height:calc(100vh - 200px);overflow-y:auto}
+.modal-f{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}.app{grid-template-columns:1fr}.sidebar{display:none}}
+
+/* ===== TOAST ===== */
+.toasts{position:fixed;bottom:18px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:200}
+.toast{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--acc);padding:10px 14px;border-radius:8px;font-size:13px;min-width:240px;box-shadow:0 8px 30px rgba(0,0,0,.5);animation:slide .25s ease}
+.toast.ok{border-left-color:var(--ok)}
+.toast.err{border-left-color:var(--err)}
+.toast.warn{border-left-color:var(--warn)}
+@keyframes slide{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.banner{padding:10px 14px;border-radius:8px;background:rgba(116,185,255,.1);border:1px solid rgba(116,185,255,.3);color:var(--info);font-size:13px;margin-bottom:14px;display:flex;gap:10px;align-items:center}
+.banner.ok{background:rgba(0,206,201,.1);border-color:rgba(0,206,201,.3);color:var(--ok)}
+.banner.err{background:rgba(255,107,107,.1);border-color:rgba(255,107,107,.3);color:var(--err)}
+
+.empty{text-align:center;padding:40px 20px;color:var(--mute)}
+.empty .big{font-size:38px;margin-bottom:8px}
+
+.kbd{font-family:'JetBrains Mono','Courier New',monospace;background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11.5px;color:var(--text)}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:14px;overflow-x:auto}
+.tab{padding:9px 14px;border-radius:8px 8px 0 0;cursor:pointer;color:var(--mute);font-size:13px;font-weight:500;border-bottom:2px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--acc2);border-bottom-color:var(--acc)}
+
+.codebox{background:var(--input);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'JetBrains Mono','Courier New',monospace;font-size:12px;color:var(--mute);overflow-x:auto;white-space:pre-wrap;word-break:break-word}
 </style>
 </head>
 <body>
 
-<div id="authOverlay">
-  <div class="auth-box">
-    <div style="font-size:2.5rem;margin-bottom:16px">🔐</div>
-    <h2 style="font-weight:900;letter-spacing:-0.04em;margin-bottom:8px">Admin Access</h2>
-    <p style="color:var(--text3);font-size:0.85rem;margin-bottom:24px">Sign in to manage your entire site</p>
-    <input type="text" id="ghUsername" class="auth-input" placeholder="GitHub Username" autocomplete="off">
-    <input type="password" id="ghToken" class="auth-input" placeholder="GitHub Personal Access Token" autocomplete="off">
-    <button class="btn-primary" style="width:100%;margin-top:12px;padding:14px" onclick="login()">Sign In →</button>
-    <p style="margin-top:20px;font-size:0.75rem;color:var(--text3)">Token needs <code>public_repo</code> scope. <a href="https://github.com/settings/tokens/new?scopes=public_repo&description=FindBestAI" target="_blank" style="color:var(--accent)">Create Token</a></p>
-  </div>
-</div>
-
-<div id="app">
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-      <div class="sidebar-logo">FindBestAI Admin</div>
-      <div style="font-size:0.7rem;color:var(--text3);margin-top:4px;font-family:'JetBrains Mono',monospace" id="repoStatus">Loading...</div>
-    </div>
-    <div class="nav-section">Overview</div>
-    <div class="nav-item active" onclick="switchTab('dashboard')">📊 Dashboard</div>
-    <div class="nav-section">Content</div>
-    <div class="nav-item" onclick="switchTab('tools')">🛠️ Tools <span id="navToolCount" class="cat-cnt" style="margin-left:auto">0</span></div>
-    <div class="nav-item" onclick="switchTab('categories')">🏷️ Categories</div>
-    <div class="nav-item" onclick="switchTab('articles')">📰 Articles</div>
-    <div class="nav-item" onclick="switchTab('comparisons')">📊 Comparisons</div>
-    <div class="nav-item" onclick="switchTab('trending')">🔥 Trending</div>
-    <div class="nav-section">Site Management</div>
-    <div class="nav-item" onclick="switchTab('siteText')">🌐 Site Text & Labels</div>
-    <div class="nav-item" onclick="switchTab('seo')">🔍 SEO & Meta</div>
-    <div class="nav-item" onclick="switchTab('scripts')">📈 Scripts & Analytics</div>
-    <div class="nav-item" onclick="switchTab('pages')">📄 Page Editor</div>
-    <div class="nav-item" onclick="switchTab('theme')">🎨 Theme & CSS</div>
-    <div class="nav-section">System</div>
-    <div class="nav-item" onclick="switchTab('settings')">⚙️ Settings & Deploy</div>
-    <div class="nav-item" onclick="window.open('/','_blank')">🌐 View Live Site</div>
-    <div class="nav-item" onclick="logout()" style="color:var(--red)">🚪 Sign Out</div>
-  </div>
-
-  <header class="admin-header">
-    <div style="display:flex;align-items:center;gap:16px">
-      <button class="hamburger" onclick="toggleSidebar()" style="display:none">☰</button>
-      <h2 id="pageTitle" style="font-weight:800;letter-spacing:-0.03em">Dashboard</h2>
-    </div>
-    <div class="header-actions">
-      <span id="commitStatus" style="font-size:0.8rem;color:var(--text3)">Ready</span>
-      <div class="user-pill">
-        <span id="userDisplay">👤 User</span>
-        <button class="btn-sm btn-outline" onclick="logout()">Sign Out</button>
+<!-- ============ LOGIN ============ -->
+<div class="login" id="login">
+  <div class="login-card">
+    <h1>🔐 FindBestAI Admin</h1>
+    <p>Sign in with your GitHub Personal Access Token.</p>
+    <div id="loginErr" class="err-msg hidden"></div>
+    <form onsubmit="return doLogin(event)">
+      <div class="field">
+        <label>GitHub username (optional, for commits)</label>
+        <input id="loginUser" type="text" placeholder="Im-AbdulQadeer" autocomplete="username">
       </div>
-    </div>
-  </header>
-
-  <main class="main-content" id="mainContent"></main>
+      <div class="field">
+        <label>GitHub Personal Access Token</label>
+        <input id="loginPat" type="password" placeholder="ghp_••••••••••••••••••••••" autocomplete="current-password" required>
+        <div class="hint">Needs <span class="kbd">repo</span> scope (or <span class="kbd">public_repo</span>). Stored only in this browser session.<br>
+        Create one: <a href="https://github.com/settings/tokens/new?scopes=repo&description=FindBestAI%20Admin" target="_blank">github.com/settings/tokens</a></div>
+      </div>
+      <button class="btn btn-primary btn-block" id="loginBtn" type="submit">Sign In</button>
+    </form>
+  </div>
 </div>
 
-<div id="toast"><span id="toastIc">✅</span><span id="toastMsg">Saved</span></div>
+<!-- ============ APP ============ -->
+<div class="app hidden" id="app">
+  <aside class="sidebar">
+    <div class="brand"><div class="brand-dot">🤖</div> FindBestAI</div>
+    <div class="nav" id="nav">
+      <div class="nav-section">Overview</div>
+      <div class="nav-item active" data-go="dashboard">📊 Dashboard</div>
+      <div class="nav-section">Content (data.js)</div>
+      <div class="nav-item" data-go="tools">🛠️ Tools <span class="badge" id="b-tools">0</span></div>
+      <div class="nav-item" data-go="categories">🏷️ Categories <span class="badge" id="b-cats">0</span></div>
+      <div class="nav-item" data-go="articles">📰 Articles <span class="badge" id="b-arts">0</span></div>
+      <div class="nav-item" data-go="compares">📊 Comparisons</div>
+      <div class="nav-item" data-go="trending">🔥 Trending <span class="badge" id="b-trend">0</span></div>
+      <div class="nav-section">Site Files</div>
+      <div class="nav-item" data-go="pages">📄 Pages <span class="badge" id="b-pages">0</span></div>
+      <div class="nav-item" data-go="commits">📜 Commits</div>
+      <div class="nav-section">Settings</div>
+      <div class="nav-item" data-go="settings">⚙️ Settings</div>
+      <div class="nav-item" onclick="window.open('https://findbestai.pages.dev/','_blank')">🌐 View Live Site ↗</div>
+    </div>
+    <div class="sidebar-foot">
+      <div>👤 <span id="meUser">…</span></div>
+      <div style="margin-top:8px"><button class="btn btn-ghost btn-block" onclick="logout()">Sign out</button></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="status"><span class="dot" id="syncDot"></span> <span id="syncTxt">Idle</span></div>
+      <div class="status">📦 <code style="background:var(--bg3);padding:2px 6px;border-radius:4px;font-size:11.5px">Im-AbdulQadeer/FindBestAI@main</code></div>
+      <div class="spacer"></div>
+      <button class="btn" onclick="loadAll()" title="Re-fetch from GitHub">🔄 Sync</button>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <section class="section active" id="s-dashboard">
+        <div class="section-head"><h2>Dashboard</h2><span class="sub">Live overview of your site content</span></div>
+        <div class="cards">
+          <div class="stat"><div class="lbl">Tools</div><div class="val" id="st-tools">—</div><div class="hint">in <code>TOOLS</code></div></div>
+          <div class="stat"><div class="lbl">Categories</div><div class="val" id="st-cats">—</div><div class="hint">in <code>CATS</code></div></div>
+          <div class="stat"><div class="lbl">Articles</div><div class="val" id="st-arts">—</div><div class="hint">in <code>ARTICLES</code></div></div>
+          <div class="stat"><div class="lbl">Pages</div><div class="val" id="st-pages">—</div><div class="hint">HTML files in repo</div></div>
+          <div class="stat"><div class="lbl">Trending</div><div class="val" id="st-trend">—</div><div class="hint">in <code>TRENDING</code></div></div>
+        </div>
+        <div class="panel">
+          <div class="panel-h">📜 Recent commits <div class="actions"><button class="btn" onclick="go('commits')">View all →</button></div></div>
+          <div class="panel-b" id="dashCommits"><div class="empty">Loading…</div></div>
+        </div>
+      </section>
+
+      <!-- TOOLS -->
+      <section class="section" id="s-tools">
+        <div class="section-head">
+          <h2>Tools</h2><span class="sub">Editing <code>TOOLS[]</code> in <code>assets/js/data.js</code></span>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="editTool(null)">＋ New Tool</button>
+            <button class="btn" onclick="commitArr('TOOLS','tools','Update tools')">💾 Commit changes</button>
+          </div>
+        </div>
+        <div class="toolbar">
+          <input id="toolSearch" placeholder="Search tools…" oninput="renderTools()">
+          <select id="toolFilterCat" onchange="renderTools()"><option value="">All categories</option></select>
+        </div>
+        <div class="panel"><div class="panel-b" style="padding:0;overflow-x:auto">
+          <table><thead><tr><th>ID</th><th>Tool</th><th>Category</th><th>Pricing</th><th>Rating</th><th></th></tr></thead><tbody id="tbl-tools"></tbody></table>
+        </div></div>
+      </section>
+
+      <!-- CATEGORIES -->
+      <section class="section" id="s-categories">
+        <div class="section-head"><h2>Categories</h2><span class="sub">Editing <code>CATS[]</code></span>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="editCat(null)">＋ New Category</button>
+            <button class="btn" onclick="commitArr('CATS','categories','Update categories')">💾 Commit changes</button>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-b" style="padding:0;overflow-x:auto">
+          <table><thead><tr><th>Icon</th><th>Name</th><th>Count</th><th>Tools (live)</th><th></th></tr></thead><tbody id="tbl-cats"></tbody></table>
+        </div></div>
+      </section>
+
+      <!-- ARTICLES -->
+      <section class="section" id="s-articles">
+        <div class="section-head"><h2>Articles</h2><span class="sub">Editing <code>ARTICLES[]</code></span>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="editArt(null)">＋ New Article</button>
+            <button class="btn" onclick="commitArr('ARTICLES','articles','Update articles')">💾 Commit changes</button>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-b" style="padding:0;overflow-x:auto">
+          <table><thead><tr><th>Title</th><th>Slug</th><th>Category</th><th>Date</th><th></th></tr></thead><tbody id="tbl-arts"></tbody></table>
+        </div></div>
+      </section>
+
+      <!-- COMPARES -->
+      <section class="section" id="s-compares">
+        <div class="section-head"><h2>Comparison Tables</h2><span class="sub">Editing <code>COMPARE_DATA</code>, <code>WRITING_COMPARE</code>, <code>VIDEO_COMPARE</code></span></div>
+        <div class="tabs">
+          <div class="tab active" data-cmp="COMPARE_DATA">Image (COMPARE_DATA)</div>
+          <div class="tab" data-cmp="WRITING_COMPARE">Writing</div>
+          <div class="tab" data-cmp="VIDEO_COMPARE">Video</div>
+        </div>
+        <div class="section-head" style="margin-bottom:10px">
+          <span class="sub">Editing as raw JSON-style entries</span>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="addCmpRow()">＋ Add row</button>
+            <button class="btn" id="cmpCommitBtn" onclick="commitCmp()">💾 Commit changes</button>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-b" style="padding:0;overflow-x:auto"><table id="tbl-cmp"></table></div></div>
+      </section>
+
+      <!-- TRENDING -->
+      <section class="section" id="s-trending">
+        <div class="section-head"><h2>Trending</h2><span class="sub">Editing <code>TRENDING[]</code></span>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="editTrend(null)">＋ New entry</button>
+            <button class="btn" onclick="commitArr('TRENDING','trending','Update trending')">💾 Commit changes</button>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-b" style="padding:0;overflow-x:auto">
+          <table><thead><tr><th>#</th><th>Name</th><th>Category</th><th>Δ</th><th>Color</th><th></th></tr></thead><tbody id="tbl-trend"></tbody></table>
+        </div></div>
+      </section>
+
+      <!-- PAGES -->
+      <section class="section" id="s-pages">
+        <div class="section-head"><h2>Pages</h2><span class="sub">HTML files in your repo</span>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="newPage()">＋ New Page</button>
+          </div>
+        </div>
+        <div class="panel"><div class="panel-b" style="padding:0;overflow-x:auto">
+          <table><thead><tr><th>Path</th><th>Size</th><th></th></tr></thead><tbody id="tbl-pages"></tbody></table>
+        </div></div>
+      </section>
+
+      <!-- COMMITS -->
+      <section class="section" id="s-commits">
+        <div class="section-head"><h2>Commits</h2><span class="sub">Last 30 commits on <code>main</code></span></div>
+        <div class="panel"><div class="panel-b" id="commitsList"><div class="empty">Loading…</div></div></div>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="section" id="s-settings">
+        <div class="section-head"><h2>Settings</h2></div>
+        <div class="panel"><div class="panel-b">
+          <div class="grid2">
+            <div class="field"><label>Repo</label><input value="Im-AbdulQadeer/FindBestAI" readonly></div>
+            <div class="field"><label>Branch</label><input id="setBranch" value="main"></div>
+            <div class="field"><label>Commit author name</label><input id="setName" value="FindBestAI Admin"></div>
+            <div class="field"><label>Commit author email</label><input id="setEmail" value="admin@findbestai.com"></div>
+          </div>
+          <div class="banner">ℹ️ Each save commits one file to GitHub. Cloudflare Pages auto-deploys within ~30s.</div>
+          <div class="banner ok">📂 Content source of truth: <code>assets/js/data.js</code> (parsed and re-emitted block-by-block; comments and other arrays are preserved).</div>
+        </div></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- ============ MODAL ============ -->
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-h"><span id="modalTitle">Edit</span><span class="x" onclick="closeModal()">×</span></div>
+    <div class="modal-b" id="modalBody"></div>
+    <div class="modal-f" id="modalFoot"></div>
+  </div>
+</div>
+
+<div class="toasts" id="toasts"></div>
 
 <script>
-/* ═══════════════════════════════════════
-   CONFIG & STATE
-   ═══════════════════════════════════════ */
-const CONFIG = {
-  owner: 'Im-AbdulQadeer',
-  repo: 'FindBestAI',
-  branch: 'main',
-  paths: {
-    dataJs: 'assets/js/data.js',
-    indexHtml: 'index.html',
-    about: 'about/index.html',
-    contact: 'contact/index.html',
-    privacy: 'privacy/index.html',
-    terms: 'terms/index.html',
-    cookies: 'cookies/index.html',
-    blog: 'blog/index.html',
-    tools: 'tools/index.html',
-    compare: 'compare/index.html'
-  }
+/* ============================================================
+   CONFIG + STATE
+============================================================ */
+const CFG={owner:'Im-AbdulQadeer',repo:'FindBestAI',branch:'main',dataPath:'assets/js/data.js',token:''};
+const API=()=>`https://api.github.com/repos/${CFG.owner}/${CFG.repo}`;
+const S={
+  raw:'',sha:'',
+  parsed:{TOOLS:[],CATS:[],ARTICLES:[],COMPARE_DATA:[],WRITING_COMPARE:[],VIDEO_COMPARE:[],TRENDING:[]},
+  pages:[],commits:[],activeCmp:'COMPARE_DATA'
 };
 
-let state = {
-  token: sessionStorage.getItem('fba_token'),
-  username: sessionStorage.getItem('fba_user'),
-  files: {},
-  data: { raw: '', CATS: [], TOOLS: [], ARTICLES: [], COMPARE_DATA: [], WRITING_COMPARE: [], VIDEO_COMPARE: [], TRENDING: [] },
-  pending: {},
-  siteText: {}
-};
+/* ============================================================
+   TOAST + MODAL
+============================================================ */
+function toast(msg,type){const t=document.createElement('div');t.className='toast '+(type||'');t.textContent=msg;document.getElementById('toasts').appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transition='.3s';setTimeout(()=>t.remove(),300)},3500)}
+function openModal(title,bodyHTML,footHTML){document.getElementById('modalTitle').textContent=title;document.getElementById('modalBody').innerHTML=bodyHTML;document.getElementById('modalFoot').innerHTML=footHTML||'';document.getElementById('modal').classList.add('open')}
+function closeModal(){document.getElementById('modal').classList.remove('open')}
+function setSync(state,txt){const d=document.getElementById('syncDot');d.className='dot '+state;document.getElementById('syncTxt').textContent=txt}
 
-/* ═══════════════════════════════════════
-   AUTH & INIT
-   ═══════════════════════════════════════ */
-function init() {
-  if (state.token && state.username) {
-    document.getElementById('authOverlay').style.display = 'none';
-    document.getElementById('app').style.display = 'grid';
-    document.getElementById('userDisplay').textContent = `👤 ${state.username}`;
-    document.getElementById('repoStatus').textContent = `${CONFIG.owner}/${CONFIG.repo}@${CONFIG.branch}`;
-    loadAllFiles();
-  }
-}
-
-function login() {
-  const user = document.getElementById('ghUsername').value.trim();
-  const token = document.getElementById('ghToken').value.trim();
-  if (!user || !token) return showToast('⚠️ Enter username and token');
-  state.username = user; state.token = token;
-  sessionStorage.setItem('fba_token', token);
-  sessionStorage.setItem('fba_user', user);
-  init();
-}
-
-function logout() { sessionStorage.clear(); location.reload(); }
-
-/* ═══════════════════════════════════════
+/* ============================================================
    GITHUB API
-   ═══════════════════════════════════════ */
-async function api(method, path, body = null) {
-  const headers = { 'Authorization': `token ${state.token}`, 'Accept': 'application/vnd.github.v3+json' };
-  if (body) headers['Content-Type'] = 'application/json';
-  const res = await fetch(`https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/${path}`, { method, headers, body: body ? JSON.stringify(body) : null });
-  if (!res.ok) { const err = await res.json(); throw new Error(err.message || 'API Error'); }
-  return res.json();
+============================================================ */
+async function gh(path,opts={}){
+  const url=path.startsWith('http')?path:API()+path;
+  const headers={'Authorization':`Bearer ${CFG.token}`,'Accept':'application/vnd.github+json',...(opts.headers||{})};
+  const r=await fetch(url,{...opts,headers});
+  if(r.status===204)return null;
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error((j&&j.message)||('HTTP '+r.status));
+  return j;
+}
+function b64encode(str){return btoa(unescape(encodeURIComponent(str)))}
+function b64decode(str){return decodeURIComponent(escape(atob(str.replace(/\n/g,''))))}
+
+async function getFile(path){
+  const j=await gh(`/contents/${path}?ref=${CFG.branch}`);
+  return {sha:j.sha,text:b64decode(j.content),path};
+}
+async function putFile(path,text,msg,sha){
+  const body={message:msg,content:b64encode(text),branch:CFG.branch,
+    committer:{name:document.getElementById('setName').value||'FindBestAI Admin',email:document.getElementById('setEmail').value||'admin@findbestai.com'}};
+  if(sha)body.sha=sha;
+  return gh(`/contents/${path}`,{method:'PUT',body:JSON.stringify(body)});
+}
+/* Upload an image File to the repo at assets/uploads/<prefix>-<ts>.<ext>.
+   Returns the absolute path (e.g. /assets/uploads/tool-169..png) to store. */
+async function uploadImageFile(file,prefix){
+  if(!file) return '';
+  const ext=(file.name.split('.').pop()||'png').toLowerCase().replace(/[^a-z0-9]/g,'')||'png';
+  const safe=(prefix||'img').replace(/[^a-z0-9-]/gi,'').toLowerCase()||'img';
+  const path='assets/uploads/'+safe+'-'+Date.now()+'.'+ext;
+  // read as base64 (raw, without data: prefix)
+  const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=rej;r.readAsDataURL(file)});
+  const body={message:'Upload '+path,content:b64,branch:CFG.branch,
+    committer:{name:document.getElementById('setName').value||'FindBestAI Admin',email:document.getElementById('setEmail').value||'admin@findbestai.com'}};
+  await gh(`/contents/${path}`,{method:'PUT',body:JSON.stringify(body)});
+  return '/'+path;
+}
+/* Render an upload control bound to a hidden input id. */
+function imgUploadField(label,inputId,currentVal,prefix){
+  const preview=currentVal?`<img src="${esc(currentVal)}" alt="" style="max-height:60px;max-width:140px;border-radius:6px;margin-top:6px;background:#0008;padding:4px">`:'';
+  return `<div class="field"><label>${label}</label>
+    <input type="hidden" id="${inputId}" value="${esc(currentVal||'')}">
+    <input type="file" accept="image/*" onchange="(async function(el){const btn=el.parentNode.querySelector('.up-status');btn.textContent='Uploading…';try{const url=await uploadImageFile(el.files[0],'${prefix}');document.getElementById('${inputId}').value=url;btn.innerHTML='✅ '+url+'<br><img src=&quot;'+url+'&quot; style=&quot;max-height:60px;max-width:140px;border-radius:6px;margin-top:6px;background:#0008;padding:4px&quot;>';toast('Image uploaded','ok')}catch(e){btn.textContent='❌ '+e.message;toast(e.message,'err')}})(this)">
+    <div class="up-status" style="font-size:11px;color:var(--mute);margin-top:4px">${preview}</div>
+  </div>`;
 }
 
-async function getFile(path) {
-  try {
-    const res = await api('GET', `contents/${path}?ref=${CONFIG.branch}`);
-    const content = decodeURIComponent(escape(atob(res.content)));
-    state.files[path] = { content, sha: res.sha, size: res.size };
-    return content;
-  } catch (e) { console.error(`Failed ${path}:`, e); return null; }
+async function deleteFile(path,msg,sha){
+  const body={message:msg,sha,branch:CFG.branch,
+    committer:{name:document.getElementById('setName').value||'FindBestAI Admin',email:document.getElementById('setEmail').value||'admin@findbestai.com'}};
+  return gh(`/contents/${path}`,{method:'DELETE',body:JSON.stringify(body)});
 }
 
-async function commitFile(path, content, message) {
-  const file = state.files[path];
-  if (!file) throw new Error('File not loaded');
-  const encoded = btoa(unescape(encodeURIComponent(content)));
-  await api('PUT', `contents/${path}`, { message, content: encoded, sha: file.sha, branch: CONFIG.branch });
-  file.content = content;
-  file.sha = (await api('GET', `contents/${path}?ref=${CONFIG.branch}`)).sha;
-  showToast('✅ Committed & deploying!');
-  updateStatus('Deploying...');
+/* ============================================================
+   data.js BLOCK PARSER + SERIALIZER
+   - Finds: const NAME = [ ... ]; (arrays) and const NAME = { ... }; (objects)
+   - Evaluates the literal in a sandboxed Function (data.js uses JS literals,
+     not JSON: single quotes, template strings, escaped apostrophes).
+============================================================ */
+function findBlock(src,name){
+  const re=new RegExp('(^|\\n)\\s*const\\s+'+name+'\\s*=\\s*','g');
+  const m=re.exec(src);
+  if(!m)return null;
+  const start=m.index+m[0].length;
+  const open=src[start];
+  const close=open==='['?']':(open==='{'?'}':null);
+  if(!close)return null;
+  // bracket-match, respecting strings + template literals + comments
+  let i=start,depth=0,inStr=null,inTpl=false,esc=false,inLine=false,inBlock=false;
+  for(;i<src.length;i++){
+    const c=src[i],n=src[i+1];
+    if(esc){esc=false;continue}
+    if(inStr){if(c==='\\'){esc=true;continue}if(c===inStr)inStr=null;continue}
+    if(inTpl){if(c==='\\'){esc=true;continue}if(c==='`'){inTpl=false}continue}
+    if(inLine){if(c==='\n')inLine=false;continue}
+    if(inBlock){if(c==='*'&&n==='/'){inBlock=false;i++}continue}
+    if(c==='/'&&n==='/'){inLine=true;i++;continue}
+    if(c==='/'&&n==='*'){inBlock=true;i++;continue}
+    if(c==="'"||c==='"'){inStr=c;continue}
+    if(c==='`'){inTpl=true;continue}
+    if(c==='['||c==='{'||c==='('){depth++;continue}
+    if(c===']'||c==='}'||c===')'){depth--;if(depth===0){i++;break}}
+  }
+  // include trailing semicolon if present
+  let end=i;
+  while(end<src.length&&/[\s;]/.test(src[end])){if(src[end]===';'){end++;break}end++}
+  return {start:m.index+(m[1]?1:0),end,literalStart:start,literalEnd:i,header:src.slice(m.index+(m[1]?1:0),start)};
+}
+function evalLiteral(text){
+  // sandboxed: no this/window access
+  // eslint-disable-next-line no-new-func
+  return Function('"use strict";return ('+text+')')();
+}
+function parseBlock(src,name){
+  const b=findBlock(src,name);if(!b)return null;
+  const lit=src.slice(b.literalStart,b.literalEnd);
+  try{return evalLiteral(lit)}catch(e){console.error('parse '+name,e);return null}
+}
+function serializeJS(v,indent){
+  indent=indent||0;
+  const pad=n=>'  '.repeat(n);
+  if(v===null)return 'null';
+  if(v===undefined)return 'undefined';
+  if(typeof v==='number'||typeof v==='boolean')return String(v);
+  if(typeof v==='string')return strLit(v);
+  if(Array.isArray(v)){
+    if(v.length===0)return '[]';
+    return '[\n'+v.map(x=>pad(indent+1)+serializeJS(x,indent+1)).join(',\n')+'\n'+pad(indent)+']';
+  }
+  if(typeof v==='object'){
+    const keys=Object.keys(v);
+    if(keys.length===0)return '{}';
+    const inline=keys.every(k=>typeof v[k]!=='object'||v[k]===null)&&keys.length<=8;
+    if(inline){
+      return '{'+keys.map(k=>keyLit(k)+':'+serializeJS(v[k],indent+1)).join(',')+'}';
+    }
+    return '{\n'+keys.map(k=>pad(indent+1)+keyLit(k)+': '+serializeJS(v[k],indent+1)).join(',\n')+'\n'+pad(indent)+'}';
+  }
+  return 'null';
+}
+function strLit(s){
+  // Use template literal if contains newlines or HTML (article fullContent), else single-quoted
+  if(/\n/.test(s)||(s.length>120&&/[<>]/.test(s))){
+    return '`'+s.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$\{/g,'\\${')+'`';
+  }
+  return "'"+s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n').replace(/\r/g,'')+"'";
+}
+function keyLit(k){return /^[A-Za-z_$][\w$]*$/.test(k)?k:strLit(k)}
+
+function spliceBlock(src,name,newValue){
+  const b=findBlock(src,name);if(!b)throw new Error('Block '+name+' not found');
+  const newLit=serializeJS(newValue,0);
+  return src.slice(0,b.literalStart)+newLit+';'+src.slice(b.literalEnd+(src[b.literalEnd]===';'?1:0));
 }
 
-async function loadAllFiles() {
-  updateStatus('Loading site...');
-  const dataContent = await getFile(CONFIG.paths.dataJs);
-  const indexContent = await getFile(CONFIG.paths.indexHtml);
-  if (dataContent) parseDataJs(dataContent);
-  if (indexContent) parseSiteText(indexContent);
-  updateStatus('Ready');
-  switchTab('dashboard');
+/* ============================================================
+   AUTH
+============================================================ */
+async function doLogin(e){
+  e.preventDefault();
+  const pat=document.getElementById('loginPat').value.trim();
+  const user=document.getElementById('loginUser').value.trim();
+  if(!pat){return showLoginErr('Token required.')}
+  const btn=document.getElementById('loginBtn');btn.disabled=true;btn.textContent='Connecting…';
+  CFG.token=pat;
+  try{
+    const repo=await gh('');
+    const me=await gh('https://api.github.com/user').catch(()=>null);
+    sessionStorage.setItem('fbai_pat',pat);
+    if(user)sessionStorage.setItem('fbai_user',user);
+    document.getElementById('login').classList.add('hidden');
+    document.getElementById('app').classList.remove('hidden');
+    document.getElementById('meUser').textContent=(me&&me.login)||user||'github';
+    document.getElementById('setName').value=(me&&me.name)||user||'FindBestAI Admin';
+    await loadAll();
+  }catch(err){
+    btn.disabled=false;btn.textContent='Sign In';
+    showLoginErr('Login failed: '+err.message);
+  }
+  return false;
 }
+function showLoginErr(m){const e=document.getElementById('loginErr');e.textContent=m;e.classList.remove('hidden')}
+function logout(){sessionStorage.removeItem('fbai_pat');location.reload()}
 
-/* ═══════════════════════════════════════
-   DATA PARSING (SAFE)
-   ═══════════════════════════════════════ */
-function parseDataJs(content) {
-  state.data.raw = content;
-  const extract = (name) => {
-    const match = content.match(new RegExp(`const ${name} = \\[([\\s\\S]*?)\\];`, 'm'));
-    if (!match) return [];
-    try {
-      let json = match[1].replace(/,\\s*]/g, ']').replace(/'/g, '"').replace(/(\\w+):/g, '"$1":');
-      return JSON.parse(`[${json}]`);
-    } catch (e) { console.error(`Parse ${name}:`, e); return []; }
-  };
-  state.data.CATS = extract('CATS');
-  state.data.TOOLS = extract('TOOLS');
-  state.data.ARTICLES = extract('ARTICLES');
-  state.data.COMPARE_DATA = extract('COMPARE_DATA');
-  state.data.WRITING_COMPARE = extract('WRITING_COMPARE');
-  state.data.VIDEO_COMPARE = extract('VIDEO_COMPARE');
-  state.data.TRENDING = extract('TRENDING');
-  document.getElementById('navToolCount').textContent = state.data.TOOLS.length;
-}
-
-function rebuildDataJs() {
-  let content = state.data.raw;
-  const replace = (name, data) => {
-    const regex = new RegExp(`(const ${name} = \\[)[\\s\\S]*?(\\];)`, 'm');
-    const json = JSON.stringify(data, null, 2).replace(/^\\[/, '').replace(/\\]$/, '');
-    content = content.replace(regex, `$1\\n${json}\\n$2`);
-  };
-  replace('CATS', state.data.CATS);
-  replace('TOOLS', state.data.TOOLS);
-  replace('ARTICLES', state.data.ARTICLES);
-  replace('COMPARE_DATA', state.data.COMPARE_DATA);
-  replace('WRITING_COMPARE', state.data.WRITING_COMPARE);
-  replace('VIDEO_COMPARE', state.data.VIDEO_COMPARE);
-  replace('TRENDING', state.data.TRENDING);
-  return content;
-}
-
-function parseSiteText(html) {
-  state.siteText = {
-    heroEyebrow: html.match(/<div class="hero-eyebrow"[^>]*>([\\s\\S]*?)<\\/div>/)?.[1]?.trim() || '',
-    heroTitle: html.match(/<h1[^>]*>([\\s\\S]*?)<\\/h1>/)?.[1]?.trim() || '',
-    heroSub: html.match(/<p class="hero-sub"[^>]*>([\\s\\S]*?)<\\/p>/)?.[1]?.trim() || '',
-    searchPlaceholder: html.match(/placeholder="([^"]*)"/)?.[1] || '',
-    stats: html.match(/<div class="stat-n">([\\s\\S]*?)<\\/div>[\\s\\S]*?<div class="stat-l">([\\s\\S]*?)<\\/div>/g)?.map(m => ({
-      val: m.match(/<div class="stat-n">([\\s\\S]*?)<\\/div>/)?.[1]?.trim(),
-      label: m.match(/<div class="stat-l">([\\s\\S]*?)<\\/div>/)?.[1]?.trim()
-    })) || [],
-    navLinks: html.match(/<div class="nav-links"[\\s\\S]*?<\\/div>/)?.[0]?.match(/<a href="([^"]*)"[^>]*>([\\s\\S]*?)<\\/a>/g)?.map(a => ({
-      href: a.match(/href="([^"]*)"/)?.[1],
-      text: a.replace(/<[^>]*>/g, '').trim()
-    })) || [],
-    footerBrand: html.match(/<div class="footer-brand"[\\s\\S]*?<\\/div>/)?.[0]?.replace(/<[^>]*>/g, '').trim() || '',
-    footerCols: html.match(/<div class="footer-col"[\\s\\S]*?<\\/div>/g)?.map(col => ({
-      title: col.match(/<h4[^>]*>([\\s\\S]*?)<\\/h4>/)?.[1]?.trim(),
-      links: col.match(/<a href="([^"]*)"[^>]*>([\\s\\S]*?)<\\/a>/g)?.map(a => ({ href: a.match(/href="([^"]*)"/)?.[1], text: a.replace(/<[^>]*>/g, '').trim() })) || []
-    })) || []
-  };
-}
-
-/* ═══════════════════════════════════════
-   UI ROUTER
-   ═══════════════════════════════════════ */
-function switchTab(tab) {
-  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-  event?.target?.classList.add('active');
-  const c = document.getElementById('mainContent');
-  const t = document.getElementById('pageTitle');
-  switch(tab) {
-    case 'dashboard': t.textContent='Dashboard'; renderDashboard(c); break;
-    case 'tools': t.textContent='Tools Manager'; renderTools(c); break;
-    case 'categories': t.textContent='Categories'; renderCategories(c); break;
-    case 'articles': t.textContent='Articles'; renderArticles(c); break;
-    case 'comparisons': t.textContent='Comparisons'; renderComparisons(c); break;
-    case 'trending': t.textContent='Trending'; renderTrending(c); break;
-    case 'siteText': t.textContent='Site Text & Labels'; renderSiteText(c); break;
-    case 'seo': t.textContent='SEO & Meta'; renderSEO(c); break;
-    case 'scripts': t.textContent='Scripts & Analytics'; renderScripts(c); break;
-    case 'pages': t.textContent='Page Editor'; renderPages(c); break;
-    case 'theme': t.textContent='Theme & CSS'; renderTheme(c); break;
-    case 'settings': t.textContent='Settings & Deploy'; renderSettings(c); break;
+/* ============================================================
+   LOAD ALL
+============================================================ */
+async function loadAll(){
+  setSync('sync','Loading data.js…');
+  try{
+    // 1. data.js
+    const f=await getFile(CFG.dataPath);
+    S.raw=f.text;S.sha=f.sha;
+    for(const k of Object.keys(S.parsed)){
+      const v=parseBlock(S.raw,k);
+      S.parsed[k]=Array.isArray(v)?v:(v||[]);
+    }
+    // 2. repo tree -> pages
+    setSync('sync','Listing pages…');
+    const tree=await gh(`/git/trees/${CFG.branch}?recursive=1`);
+    S.pages=(tree.tree||[]).filter(t=>t.type==='blob'&&/\.html$/i.test(t.path)&&!t.path.startsWith('admin/')).map(t=>({path:t.path,size:t.size,sha:t.sha}));
+    // 3. commits
+    setSync('sync','Loading commits…');
+    S.commits=await gh('/commits?per_page=30').catch(()=>[]);
+    setSync('ok','Synced '+new Date().toLocaleTimeString());
+    renderAll();
+    toast('Loaded '+S.parsed.TOOLS.length+' tools, '+S.parsed.CATS.length+' categories, '+S.parsed.ARTICLES.length+' articles, '+S.pages.length+' pages','ok');
+  }catch(e){
+    setSync('err','Sync failed');
+    toast('Load failed: '+e.message,'err');
   }
 }
 
-/* ═══════════════════════════════════════
-   RENDERERS
-   ═══════════════════════════════════════ */
-function renderDashboard(c) {
-  c.innerHTML = `
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-label">Tools</div><div class="stat-val">${state.data.TOOLS.length}</div></div>
-      <div class="stat-card"><div class="stat-label">Categories</div><div class="stat-val">${state.data.CATS.length}</div></div>
-      <div class="stat-card"><div class="stat-label">Articles</div><div class="stat-val">${state.data.ARTICLES.length}</div></div>
-      <div class="stat-card"><div class="stat-label">Trending</div><div class="stat-val">${state.data.TRENDING.length}</div></div>
+/* ============================================================
+   COMMIT HELPERS
+============================================================ */
+async function commitArr(blockName,key,msg){
+  if(!confirm('Commit changes to '+blockName+' in data.js?'))return;
+  setSync('sync','Committing…');
+  try{
+    const newSrc=spliceBlock(S.raw,blockName,S.parsed[blockName]);
+    const r=await putFile(CFG.dataPath,newSrc,msg,S.sha);
+    S.raw=newSrc;S.sha=r.content.sha;
+    setSync('ok','Committed '+new Date().toLocaleTimeString());
+    toast('✅ '+msg+' — Cloudflare Pages is deploying','ok');
+    loadCommits();
+  }catch(e){setSync('err','Commit failed');toast('Commit failed: '+e.message,'err')}
+}
+
+/* ============================================================
+   NAV
+============================================================ */
+function go(page){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.go===page));
+  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id==='s-'+page));
+}
+document.addEventListener('click',e=>{
+  const n=e.target.closest('.nav-item[data-go]');if(n)go(n.dataset.go);
+  const t=e.target.closest('.tab[data-cmp]');if(t){S.activeCmp=t.dataset.cmp;document.querySelectorAll('.tab[data-cmp]').forEach(x=>x.classList.toggle('active',x===t));renderCmp()}
+});
+
+/* ============================================================
+   RENDER
+============================================================ */
+function renderAll(){renderDash();renderTools();renderCats();renderArts();renderCmp();renderTrend();renderPages();renderCommits()}
+function setBadges(){
+  document.getElementById('b-tools').textContent=S.parsed.TOOLS.length;
+  document.getElementById('b-cats').textContent=S.parsed.CATS.length;
+  document.getElementById('b-arts').textContent=S.parsed.ARTICLES.length;
+  document.getElementById('b-trend').textContent=S.parsed.TRENDING.length;
+  document.getElementById('b-pages').textContent=S.pages.length;
+}
+function renderDash(){
+  setBadges();
+  document.getElementById('st-tools').textContent=S.parsed.TOOLS.length;
+  document.getElementById('st-cats').textContent=S.parsed.CATS.length;
+  document.getElementById('st-arts').textContent=S.parsed.ARTICLES.length;
+  document.getElementById('st-trend').textContent=S.parsed.TRENDING.length;
+  document.getElementById('st-pages').textContent=S.pages.length;
+  const c=document.getElementById('dashCommits');
+  if(!S.commits.length){c.innerHTML='<div class="empty">No commits.</div>';return}
+  c.innerHTML='<table><thead><tr><th>Message</th><th>Author</th><th>Date</th></tr></thead><tbody>'+
+    S.commits.slice(0,8).map(x=>`<tr><td>${esc(x.commit.message.split('\n')[0])}</td><td>${esc(x.commit.author.name)}</td><td>${new Date(x.commit.author.date).toLocaleString()}</td></tr>`).join('')+'</tbody></table>';
+}
+function loadCommits(){gh('/commits?per_page=30').then(c=>{S.commits=c||[];renderCommits();renderDash()}).catch(()=>{})}
+function renderCommits(){
+  const c=document.getElementById('commitsList');
+  if(!S.commits.length){c.innerHTML='<div class="empty">No commits yet.</div>';return}
+  c.innerHTML='<table><thead><tr><th>Message</th><th>Author</th><th>Date</th><th>SHA</th></tr></thead><tbody>'+
+    S.commits.map(x=>`<tr><td><a href="${x.html_url}" target="_blank">${esc(x.commit.message.split('\n')[0])}</a></td><td>${esc(x.commit.author.name)}</td><td>${new Date(x.commit.author.date).toLocaleString()}</td><td><code>${x.sha.slice(0,7)}</code></td></tr>`).join('')+'</tbody></table>';
+}
+
+/* ===== TOOLS ===== */
+function renderTools(){
+  const sel=document.getElementById('toolFilterCat');
+  const cats=[...new Set(S.parsed.TOOLS.map(t=>t.cat))].sort();
+  if(sel.options.length-1!==cats.length){
+    sel.innerHTML='<option value="">All categories</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join('');
+  }
+  const q=(document.getElementById('toolSearch').value||'').toLowerCase();
+  const fc=sel.value;
+  const rows=S.parsed.TOOLS.filter(t=>(!fc||t.cat===fc)&&(!q||(t.name+' '+t.desc+' '+(t.tags||[]).join(' ')).toLowerCase().includes(q)));
+  const tb=document.getElementById('tbl-tools');
+  if(!rows.length){tb.innerHTML='<tr><td colspan="6"><div class="empty">No tools match.</div></td></tr>';return}
+  tb.innerHTML=rows.map((t,i)=>`<tr>
+    <td>${t.id}</td>
+    <td>${t.logo&&/\//.test(t.logo)?`<img src="${esc(t.logo)}" style="width:22px;height:22px;object-fit:contain;vertical-align:middle;border-radius:4px;background:#0008;padding:2px">`:`<span class="emoji-cell">${esc(t.emoji||'')}</span>`} <strong>${esc(t.name)}</strong><div style="color:var(--mute);font-size:11.5px;max-width:380px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.desc||'')}</div></td>
+    <td><span class="tag">${esc(t.cat)}</span></td>
+    <td>${esc(t.pricing||'')} · ${esc(t.price||'')}</td>
+    <td>⭐ ${t.rating||''} <span style="color:var(--mute)">(${esc(t.reviews||'')})</span></td>
+    <td><div class="row-actions">
+      <button class="btn" onclick="editTool(${S.parsed.TOOLS.indexOf(t)})">Edit</button>
+      <button class="btn btn-danger" onclick="delItem('TOOLS',${S.parsed.TOOLS.indexOf(t)},'${esc(t.name)}')">×</button>
+    </div></td>
+  </tr>`).join('');
+}
+function editTool(idx){
+  const t=idx==null?{id:Math.max(0,...S.parsed.TOOLS.map(x=>x.id||0))+1,name:'',cat:S.parsed.CATS[0]?S.parsed.CATS[0].name:'',emoji:'🔧',bg:'linear-gradient(135deg,#7c3aed,#4f46e5)',pricing:'freemium',badge:'',url:'',desc:'',rating:4.5,reviews:'0',tags:[],features:[],alts:[],price:'',freeAlt:''}:{...S.parsed.TOOLS[idx]};
+  const cats=S.parsed.CATS.map(c=>c.name);
+  openModal(idx==null?'＋ New Tool':'Edit Tool: '+t.name,`
+    <div class="grid2">
+      <div class="field"><label>ID</label><input id="f_id" type="number" value="${t.id}"></div>
+      <div class="field"><label>Name</label><input id="f_name" value="${esc(t.name)}"></div>
+      <div class="field"><label>Category</label><select id="f_cat">${cats.map(c=>`<option ${c===t.cat?'selected':''}>${esc(c)}</option>`).join('')}</select></div>
+      ${imgUploadField('Logo image (upload)','f_logo',t.logo||'','tool-'+(t.name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,30))}
+      <div class="field"><label>Emoji (fallback)</label><input id="f_emoji" value="${esc(t.emoji||'')}"></div>
+      <div class="field"><label>Pricing</label><select id="f_pricing">${['free','freemium','paid'].map(p=>`<option ${p===t.pricing?'selected':''}>${p}</option>`).join('')}</select></div>
+      <div class="field"><label>Badge</label><select id="f_badge">${['','best','new','open'].map(p=>`<option value="${p}" ${p===(t.badge||'')?'selected':''}>${p||'(none)'}</option>`).join('')}</select></div>
+      <div class="field"><label>URL</label><input id="f_url" value="${esc(t.url||'')}"></div>
+      <div class="field"><label>Background (CSS gradient)</label><input id="f_bg" value="${esc(t.bg||'')}"></div>
+      <div class="field"><label>Price text</label><input id="f_price" value="${esc(t.price||'')}"></div>
+      <div class="field"><label>Free alternative</label><input id="f_freeAlt" value="${esc(t.freeAlt||'')}"></div>
+      <div class="field"><label>Rating</label><input id="f_rating" type="number" step="0.1" min="0" max="5" value="${t.rating||''}"></div>
+      <div class="field"><label>Reviews</label><input id="f_reviews" value="${esc(t.reviews||'')}"></div>
     </div>
-    <div class="admin-card"><div class="admin-card-header"><h3>Quick Actions</h3></div>
-    <div class="admin-card-body" style="display:flex;gap:12px;flex-wrap:wrap">
-      <button class="btn-primary" onclick="switchTab('tools')">➕ Add Tool</button>
-      <button class="btn-primary" style="background:var(--accent2)" onclick="switchTab('articles')">📝 Write Article</button>
-      <button class="btn-outline" onclick="downloadBackup()">📥 Backup JSON</button>
-      <button class="btn-outline" onclick="window.open('https://github.com/${CONFIG.owner}/${CONFIG.repo}/commits/${CONFIG.branch}','_blank')">📜 Commits</button>
-    </div></div>
-    <div class="admin-card"><div class="admin-card-header"><h3>System</h3></div>
-    <div class="admin-card-body">
-      <p style="color:var(--text2)">✅ GitHub: <strong>${state.username}</strong></p>
-      <p style="color:var(--text2)">✅ Branch: <strong>${CONFIG.branch}</strong></p>
-      <p style="color:var(--text2)">✅ Cloudflare Pages Auto-Deploy Active</p>
-    </div></div>`;
+    <div class="field"><label>Description</label><textarea id="f_desc" rows="3">${esc(t.desc||'')}</textarea></div>
+    <div class="field"><label>Tags (comma separated)</label><input id="f_tags" value="${esc((t.tags||[]).join(', '))}"></div>
+    <div class="field"><label>Features (one per line)</label><textarea id="f_features" rows="5">${esc((t.features||[]).join('\n'))}</textarea></div>
+    <div class="field"><label>Alternatives — format: Name|Type, one per line</label><textarea id="f_alts" rows="3">${esc((t.alts||[]).map(a=>(a.n||'')+'|'+(a.t||'')).join('\n'))}</textarea></div>
+  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveTool(${idx==null?-1:idx})">Save</button>`);
+}
+function saveTool(idx){
+  const v=k=>document.getElementById('f_'+k).value;
+  const obj={
+    id:Number(v('id'))||0,name:v('name').trim(),cat:v('cat'),emoji:v('emoji'),logo:v('logo'),
+    bg:v('bg'),pricing:v('pricing'),badge:v('badge'),url:v('url').trim(),
+    desc:v('desc').trim(),rating:Number(v('rating'))||0,reviews:v('reviews'),
+    tags:v('tags').split(',').map(s=>s.trim()).filter(Boolean),
+    features:v('features').split('\n').map(s=>s.trim()).filter(Boolean),
+    alts:v('alts').split('\n').map(s=>s.trim()).filter(Boolean).map(line=>{const [n,t]=line.split('|');return {n:(n||'').trim(),t:(t||'').trim()}}),
+    price:v('price'),freeAlt:v('freeAlt')
+  };
+  if(!obj.name){return toast('Name required','err')}
+  if(idx<0)S.parsed.TOOLS.push(obj);else S.parsed.TOOLS[idx]=obj;
+  closeModal();renderTools();renderDash();
+  toast('Saved locally — click Commit to push','warn');
 }
 
-function renderTools(c) {
-  let html = `<div style="margin-bottom:20px;display:flex;gap:12px;flex-wrap:wrap">
-    <input type="text" id="toolSearch" placeholder="Search tools..." class="form-input" style="max-width:300px" oninput="filterTools(this.value)">
-    <button class="btn-primary" onclick="addTool()">➕ Add Tool</button>
-    <button class="btn-outline" onclick="commitData()">💾 Commit Changes</button>
-  </div><div class="admin-card"><table><thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Pricing</th><th>Rating</th><th>Actions</th></tr></thead><tbody id="toolsBody">`;
-  state.data.TOOLS.forEach(t => {
-    html += `<tr class="tool-row" data-name="${t.name.toLowerCase()}">
-      <td>${t.id}</td><td><strong>${t.name}</strong></td><td><span class="tag">${t.cat}</span></td>
-      <td>${t.pricing}</td><td>⭐ ${t.rating}</td>
-      <td><button class="btn-sm btn-outline" onclick="editTool(${t.id})">Edit</button> <button class="btn-sm btn-danger" onclick="deleteTool(${t.id})">Del</button></td>
+/* ===== CATEGORIES ===== */
+function renderCats(){
+  const tb=document.getElementById('tbl-cats');
+  if(!S.parsed.CATS.length){tb.innerHTML='<tr><td colspan="5"><div class="empty">No categories.</div></td></tr>';return}
+  tb.innerHTML=S.parsed.CATS.map((c,i)=>{
+    const live=S.parsed.TOOLS.filter(t=>t.cat===c.name).length;
+    return `<tr>
+      <td><span class="emoji-cell">${esc(c.icon||'')}</span></td>
+      <td><strong>${esc(c.name)}</strong></td>
+      <td>${c.count||0}</td>
+      <td><span class="tag">${live}</span></td>
+      <td><div class="row-actions">
+        <button class="btn" onclick="editCat(${i})">Edit</button>
+        <button class="btn btn-danger" onclick="delItem('CATS',${i},'${esc(c.name)}')">×</button>
+      </div></td>
     </tr>`;
-  });
-  html += `</tbody></table></div>`;
-  c.innerHTML = html;
+  }).join('');
+}
+function editCat(idx){
+  const c=idx==null?{icon:'🆕',name:'',count:0}:{...S.parsed.CATS[idx]};
+  openModal(idx==null?'＋ New Category':'Edit: '+c.name,`
+    <div class="grid3">
+      <div class="field"><label>Icon (emoji)</label><input id="c_icon" value="${esc(c.icon||'')}"></div>
+      <div class="field" style="grid-column:span 2"><label>Name</label><input id="c_name" value="${esc(c.name)}"></div>
+      <div class="field"><label>Count</label><input id="c_count" type="number" value="${c.count||0}"></div>
+    </div>
+  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveCat(${idx==null?-1:idx})">Save</button>`);
+}
+function saveCat(idx){
+  const obj={icon:document.getElementById('c_icon').value,name:document.getElementById('c_name').value.trim(),count:Number(document.getElementById('c_count').value)||0};
+  if(!obj.name){return toast('Name required','err')}
+  if(idx<0)S.parsed.CATS.push(obj);else S.parsed.CATS[idx]=obj;
+  closeModal();renderCats();renderDash();renderTools();
+  toast('Saved locally','warn');
 }
 
-function filterTools(q) {
-  document.querySelectorAll('.tool-row').forEach(r => r.style.display = r.dataset.name.includes(q.toLowerCase()) ? '' : 'none');
+/* ===== ARTICLES ===== */
+function renderArts(){
+  const tb=document.getElementById('tbl-arts');
+  if(!S.parsed.ARTICLES.length){tb.innerHTML='<tr><td colspan="5"><div class="empty">No articles.</div></td></tr>';return}
+  tb.innerHTML=S.parsed.ARTICLES.map((a,i)=>`<tr>
+    <td>${a.image?`<img src="${esc(a.image)}" style="width:28px;height:28px;object-fit:cover;vertical-align:middle;border-radius:4px">`:`<span class="emoji-cell">${esc(a.emoji||'')}</span>`} <strong>${esc(a.title)}</strong></td>
+    <td><code>${esc(a.slug||'')}</code></td>
+    <td><span class="tag">${esc(a.cat||'')}</span></td>
+    <td>${esc(a.date||'')}</td>
+    <td><div class="row-actions">
+      <button class="btn" onclick="editArt(${i})">Edit</button>
+      <button class="btn btn-danger" onclick="delItem('ARTICLES',${i},'${esc(a.title)}')">×</button>
+    </div></td>
+  </tr>`).join('');
+}
+function editArt(idx){
+  const a=idx==null?{slug:'',emoji:'📝',thumb:'linear-gradient(135deg,#0a0020,#1a0050)',cat:'GUIDE',date:new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}),title:'',excerpt:'',keywords:'',readTime:'5 MIN READ',author:'AI Prime Hub Editorial',authorRole:'Editorial',authorEmoji:'📝',tags:[],fullContent:'<p class="article-lead">…</p>'}:{...S.parsed.ARTICLES[idx]};
+  openModal(idx==null?'＋ New Article':'Edit: '+a.title,`
+    <div class="grid2">
+      <div class="field"><label>Title</label><input id="a_title" value="${esc(a.title||'')}"></div>
+      <div class="field"><label>Slug</label><input id="a_slug" value="${esc(a.slug||'')}"></div>
+      <div class="field"><label>Category</label><input id="a_cat" value="${esc(a.cat||'')}"></div>
+      <div class="field"><label>Date</label><input id="a_date" value="${esc(a.date||'')}"></div>
+      ${imgUploadField('Article home image','a_image',a.image||'','article-'+(a.slug||'').slice(0,30))}
+      <div class="field"><label>Read time</label><input id="a_readTime" value="${esc(a.readTime||'')}"></div>
+      <div class="field"><label>Author</label><input id="a_author" value="${esc(a.author||'')}"></div>
+      <div class="field"><label>Author role</label><input id="a_authorRole" value="${esc(a.authorRole||'')}"></div>
+      <div class="field"><label>Author emoji</label><input id="a_authorEmoji" value="${esc(a.authorEmoji||'')}"></div>
+      <div class="field"><label>Thumb (CSS gradient)</label><input id="a_thumb" value="${esc(a.thumb||'')}"></div>
+    </div>
+    <div class="field"><label>Excerpt</label><textarea id="a_excerpt" rows="2">${esc(a.excerpt||'')}</textarea></div>
+    <div class="field"><label>Keywords (SEO)</label><input id="a_keywords" value="${esc(a.keywords||'')}"></div>
+    <div class="field"><label>Tags (comma separated)</label><input id="a_tags" value="${esc((a.tags||[]).join(', '))}"></div>
+    <div class="field"><label>Full content (HTML)</label><textarea id="a_fullContent" rows="14" style="min-height:280px">${esc(a.fullContent||'')}</textarea></div>
+  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveArt(${idx==null?-1:idx})">Save</button>`);
+}
+function saveArt(idx){
+  const v=k=>{const el=document.getElementById('a_'+k);return el?el.value:''};
+  const prev=idx<0?{}:(S.parsed.ARTICLES[idx]||{});
+  const obj={slug:v('slug').trim(),emoji:prev.emoji||'📝',image:v('image'),thumb:v('thumb'),cat:v('cat'),date:v('date'),title:v('title').trim(),excerpt:v('excerpt'),keywords:v('keywords'),readTime:v('readTime'),author:v('author'),authorRole:v('authorRole'),authorEmoji:v('authorEmoji'),tags:v('tags').split(',').map(s=>s.trim()).filter(Boolean),fullContent:v('fullContent')};
+  if(!obj.title||!obj.slug){return toast('Title and slug required','err')}
+  if(idx<0)S.parsed.ARTICLES.push(obj);else S.parsed.ARTICLES[idx]=obj;
+  closeModal();renderArts();renderDash();
+  toast('Saved locally','warn');
 }
 
-function addTool() {
-  const id = Math.max(...state.data.TOOLS.map(t=>t.id),0)+1;
-  state.data.TOOLS.unshift({id,name:'New Tool',cat:'AI Assistants',emoji:'🤖',logo:'',brand:'#000000',bg:'linear-gradient(135deg,#7c3aed,#4f46e5)',pricing:'freemium',badge:'',url:'https://',desc:'Description',rating:4.5,reviews:'0',tags:['AI'],features:['Feature 1'],alts:[],price:'Free',freeAlt:'None'});
-  switchTab('tools'); editTool(id);
+/* ===== COMPARISONS ===== */
+function renderCmp(){
+  const data=S.parsed[S.activeCmp]||[];
+  const tbl=document.getElementById('tbl-cmp');
+  document.getElementById('cmpCommitBtn').onclick=()=>commitArr(S.activeCmp,S.activeCmp.toLowerCase(),'Update '+S.activeCmp);
+  if(!data.length){tbl.innerHTML='<tr><td><div class="empty">Empty.</div></td></tr>';return}
+  const cols=[...new Set(data.flatMap(r=>Object.keys(r)))];
+  let h='<thead><tr>'+cols.map(c=>`<th>${esc(c)}</th>`).join('')+'<th></th></tr></thead><tbody>';
+  h+=data.map((r,i)=>'<tr>'+cols.map(c=>`<td><input data-cmpi="${i}" data-cmpk="${c}" value="${esc(String(r[c]==null?'':r[c]))}" style="background:transparent;border:1px solid transparent;padding:4px 6px;width:100%;border-radius:4px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';cmpEdit(this)"></td>`).join('')+`<td><div class="row-actions"><button class="btn btn-danger" onclick="delCmpRow(${i})">×</button></div></td></tr>`).join('');
+  h+='</tbody>';
+  tbl.innerHTML=h;
+}
+function cmpEdit(input){
+  const i=+input.dataset.cmpi,k=input.dataset.cmpk;
+  let v=input.value;
+  const cur=S.parsed[S.activeCmp][i][k];
+  if(typeof cur==='boolean')v=v==='true';
+  else if(typeof cur==='number'&&!isNaN(Number(v)))v=Number(v);
+  S.parsed[S.activeCmp][i][k]=v;
+}
+function addCmpRow(){
+  const arr=S.parsed[S.activeCmp];
+  const tpl=arr[0]?Object.fromEntries(Object.keys(arr[0]).map(k=>[k,''])):{name:'',rating:'4.5'};
+  arr.push(tpl);renderCmp();
+}
+function delCmpRow(i){if(!confirm('Delete row?'))return;S.parsed[S.activeCmp].splice(i,1);renderCmp()}
+function commitCmp(){commitArr(S.activeCmp,S.activeCmp.toLowerCase(),'Update '+S.activeCmp)}
+
+/* ===== TRENDING ===== */
+function renderTrend(){
+  const tb=document.getElementById('tbl-trend');
+  if(!S.parsed.TRENDING.length){tb.innerHTML='<tr><td colspan="6"><div class="empty">Empty.</div></td></tr>';return}
+  tb.innerHTML=S.parsed.TRENDING.map((t,i)=>`<tr>
+    <td><strong>${esc(t.num||'')}</strong></td>
+    <td>${esc(t.name||'')}</td>
+    <td><span class="tag">${esc(t.cat||'')}</span></td>
+    <td style="color:var(--ok)">${esc(t.up||'')}</td>
+    <td><span class="swatch" style="background:${esc(t.color||'#888')}"></span><code>${esc(t.color||'')}</code></td>
+    <td><div class="row-actions">
+      <button class="btn" onclick="editTrend(${i})">Edit</button>
+      <button class="btn btn-danger" onclick="delItem('TRENDING',${i},'${esc(t.name||'')}')">×</button>
+    </div></td>
+  </tr>`).join('');
+}
+function editTrend(idx){
+  const t=idx==null?{num:String(S.parsed.TRENDING.length+1).padStart(2,'0'),name:'',cat:'',up:'+0%',color:'#7c3aed'}:{...S.parsed.TRENDING[idx]};
+  openModal(idx==null?'＋ New Trending':'Edit Trending',`
+    <div class="grid2">
+      <div class="field"><label>Number</label><input id="t_num" value="${esc(t.num||'')}"></div>
+      <div class="field"><label>Name</label><input id="t_name" value="${esc(t.name||'')}"></div>
+      <div class="field"><label>Category</label><input id="t_cat" value="${esc(t.cat||'')}"></div>
+      <div class="field"><label>Δ (e.g. +120%)</label><input id="t_up" value="${esc(t.up||'')}"></div>
+      <div class="field"><label>Color (hex)</label><input id="t_color" type="color" value="${esc(t.color||'#7c3aed')}"></div>
+    </div>
+  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveTrend(${idx==null?-1:idx})">Save</button>`);
+}
+function saveTrend(idx){
+  const v=k=>document.getElementById('t_'+k).value;
+  const obj={num:v('num'),name:v('name').trim(),cat:v('cat'),up:v('up'),color:v('color')};
+  if(!obj.name){return toast('Name required','err')}
+  if(idx<0)S.parsed.TRENDING.push(obj);else S.parsed.TRENDING[idx]=obj;
+  closeModal();renderTrend();renderDash();
+  toast('Saved locally','warn');
 }
 
-function deleteTool(id) { if(confirm('Delete?')){ state.data.TOOLS=state.data.TOOLS.filter(t=>t.id!==id); switchTab('tools'); } }
-
-function editTool(id) {
-  const t = state.data.TOOLS.find(x=>x.id===id); if(!t) return;
-  const c = document.getElementById('mainContent');
-  document.getElementById('pageTitle').textContent = `Edit: ${t.name}`;
-  c.innerHTML = `<div class="admin-card"><div class="admin-card-header"><h3>✏️ Tool #${t.id}</h3>
-    <div><button class="btn-sm btn-danger" onclick="switchTab('tools')">Cancel</button> <button class="btn-sm btn-primary" onclick="saveTool(${t.id})">💾 Save</button></div>
-  </div><div class="admin-card-body"><div class="form-grid">
-    <div class="form-group"><label class="form-label">Name</label><input class="form-input" id="tName" value="${t.name}"></div>
-    <div class="form-group"><label class="form-label">Category</label><select class="form-input" id="tCat">${state.data.CATS.map(c=>`<option value="${c.name}" ${c.name===t.cat?'selected':''}>${c.icon} ${c.name}</option>`).join('')}</select></div>
-    <div class="form-group"><label class="form-label">Emoji</label><input class="form-input" id="tEmoji" value="${t.emoji}"></div>
-    <div class="form-group"><label class="form-label">Pricing</label><select class="form-input" id="tPricing"><option value="free" ${t.pricing==='free'?'selected':''}>Free</option><option value="freemium" ${t.pricing==='freemium'?'selected':''}>Freemium</option><option value="paid" ${t.pricing==='paid'?'selected':''}>Paid</option></select></div>
-    <div class="form-group"><label class="form-label">Rating</label><input type="number" step="0.1" class="form-input" id="tRating" value="${t.rating}"></div>
-    <div class="form-group"><label class="form-label">Reviews</label><input class="form-input" id="tReviews" value="${t.reviews}"></div>
-    <div class="form-group"><label class="form-label">URL</label><input class="form-input" id="tUrl" value="${t.url}"></div>
-    <div class="form-group"><label class="form-label">Badge</label><select class="form-input" id="tBadge"><option value="">None</option><option value="best" ${t.badge==='best'?'selected':''}>✦ BEST</option><option value="new" ${t.badge==='new'?'selected':''}>NEW</option><option value="popular" ${t.badge==='popular'?'selected':''}>POPULAR</option><option value="open" ${t.badge==='open'?'selected':''}>OPEN</option><option value="hot" ${t.badge==='hot'?'selected':''}>HOT</option></select></div>
-    <div class="form-group"><label class="form-label">Price Text</label><input class="form-input" id="tPrice" value="${t.price}"></div>
-    <div class="form-group"><label class="form-label">Free Alt</label><input class="form-input" id="tFreeAlt" value="${t.freeAlt}"></div>
-    <div class="form-group"><label class="form-label">Logo Domain/URL</label><input class="form-input" id="tLogo" value="${t.logo}"></div>
-    <div class="form-group"><label class="form-label">Brand Color</label><input type="color" class="form-input" id="tBrand" value="${t.brand}"></div>
-  </div>
-  <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" id="tDesc">${t.desc}</textarea></div>
-  <div class="form-group"><label class="form-label">Tags (comma)</label><input class="form-input" id="tTags" value="${t.tags.join(', ')}"></div>
-  <div class="form-group"><label class="form-label">Features (newline)</label><textarea class="form-input" id="tFeatures">${t.features.join('\\n')}</textarea></div>
-  </div></div>`;
+/* ===== GENERIC DELETE ===== */
+function delItem(blockName,idx,name){
+  if(!confirm('Delete "'+name+'" from '+blockName+'?\n\n(Local change — click Commit to push.)'))return;
+  S.parsed[blockName].splice(idx,1);
+  renderAll();
+  toast('Removed locally — Commit to push','warn');
 }
 
-function saveTool(id) {
-  const t = state.data.TOOLS.find(x=>x.id===id);
-  t.name=document.getElementById('tName').value; t.cat=document.getElementById('tCat').value; t.emoji=document.getElementById('tEmoji').value;
-  t.pricing=document.getElementById('tPricing').value; t.rating=parseFloat(document.getElementById('tRating').value); t.reviews=document.getElementById('tReviews').value;
-  t.url=document.getElementById('tUrl').value; t.badge=document.getElementById('tBadge').value; t.price=document.getElementById('tPrice').value;
-  t.freeAlt=document.getElementById('tFreeAlt').value; t.logo=document.getElementById('tLogo').value; t.brand=document.getElementById('tBrand').value;
-  t.desc=document.getElementById('tDesc').value; t.tags=document.getElementById('tTags').value.split(',').map(s=>s.trim()).filter(Boolean);
-  t.features=document.getElementById('tFeatures').value.split('\\n').filter(Boolean);
-  showToast('✅ Tool saved locally'); switchTab('tools');
+/* ===== PAGES (raw HTML) ===== */
+function renderPages(){
+  const tb=document.getElementById('tbl-pages');
+  if(!S.pages.length){tb.innerHTML='<tr><td colspan="3"><div class="empty">No pages.</div></td></tr>';return}
+  tb.innerHTML=S.pages.map(p=>`<tr>
+    <td><strong>${esc(p.path)}</strong></td>
+    <td>${(p.size/1024).toFixed(1)} KB</td>
+    <td><div class="row-actions">
+      <button class="btn" onclick="window.open('https://findbestai.pages.dev/${p.path==='index.html'?'':p.path.replace(/index\\.html$/,'')}','_blank')">View ↗</button>
+      <button class="btn" onclick="editPage('${esc(p.path)}')">Edit</button>
+      <button class="btn btn-danger" onclick="deletePage('${esc(p.path)}','${p.sha}')">×</button>
+    </div></td>
+  </tr>`).join('');
+}
+async function editPage(path){
+  setSync('sync','Loading '+path+'…');
+  try{
+    const f=await getFile(path);
+    setSync('ok','Synced');
+    openModal('📄 '+path,`
+      <div class="banner">⚠️ This is the raw HTML file. Be careful — bad HTML breaks the page.</div>
+      <div class="field"><label>Commit message</label><input id="p_msg" value="Update ${esc(path)}"></div>
+      <div class="field"><label>HTML content</label><textarea id="p_body" style="min-height:420px;font-size:12px">${esc(f.text)}</textarea></div>
+    `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="savePage('${esc(path)}','${f.sha}')">💾 Commit</button>`);
+  }catch(e){setSync('err','Load failed');toast('Load failed: '+e.message,'err')}
+}
+async function savePage(path,sha){
+  const body=document.getElementById('p_body').value;
+  const msg=document.getElementById('p_msg').value||('Update '+path);
+  setSync('sync','Committing…');
+  try{
+    await putFile(path,body,msg,sha);
+    setSync('ok','Committed');closeModal();
+    toast('✅ '+path+' committed','ok');
+    loadCommits();
+  }catch(e){setSync('err','Commit failed');toast('Commit failed: '+e.message,'err')}
+}
+function newPage(){
+  openModal('＋ New Page',`
+    <div class="field"><label>Slug (folder name, e.g. <code>faq</code>)</label><input id="np_slug" placeholder="faq"></div>
+    <div class="field"><label>Title</label><input id="np_title" placeholder="Frequently Asked Questions"></div>
+    <div class="field"><label>Initial body HTML</label><textarea id="np_body" rows="6"><h1>Page title</h1>
+<p>Edit me…</p></textarea></div>
+  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="createPage()">Create</button>`);
+}
+async function createPage(){
+  const slug=document.getElementById('np_slug').value.trim().replace(/[^\w-]/g,'');
+  const title=document.getElementById('np_title').value.trim()||slug;
+  const body=document.getElementById('np_body').value;
+  if(!slug)return toast('Slug required','err');
+  const path=slug+'/index.html';
+  const html=`<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(title)} — FindBestAI</title>
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="icon" type="image/webp" href="/logo.webp">
+</head>
+<body>
+<div id="nav-root"></div>
+<main style="max-width:900px;margin:40px auto;padding:0 20px">
+${body}
+</main>
+<script src="/assets/js/data.js"><\/script>
+<script src="/assets/js/nav.js"><\/script>
+<script src="/assets/js/app.js"><\/script>
+</body>
+</html>`;
+  setSync('sync','Creating…');
+  try{
+    await putFile(path,html,'Create page '+path,null);
+    setSync('ok','Created');closeModal();
+    toast('✅ Page created at /'+slug+'/','ok');
+    loadAll();
+  }catch(e){setSync('err','Failed');toast('Create failed: '+e.message,'err')}
+}
+async function deletePage(path,sha){
+  if(!confirm('Delete '+path+' permanently from the repo?'))return;
+  setSync('sync','Deleting…');
+  try{await deleteFile(path,'Delete '+path,sha);setSync('ok','Deleted');toast('Deleted '+path,'ok');loadAll()}
+  catch(e){setSync('err','Failed');toast('Delete failed: '+e.message,'err')}
 }
 
-function renderCategories(c) {
-  let html = `<button class="btn-primary" style="margin-bottom:20px" onclick="addCat()">➕ Add Category</button>
-  <button class="btn-outline" style="margin-bottom:20px;margin-left:12px" onclick="commitData()">💾 Commit</button>
-  <div class="admin-card"><table><thead><tr><th>Icon</th><th>Name</th><th>Count</th><th>Actions</th></tr></thead><tbody>`;
-  state.data.CATS.forEach((cat,i)=>{
-    html+=`<tr><td style="font-size:1.5rem">${cat.icon}</td>
-    <td><input class="form-input" value="${cat.name}" onchange="state.data.CATS[${i}].name=this.value" style="padding:6px"></td>
-    <td><input type="number" class="form-input" value="${cat.count}" onchange="state.data.CATS[${i}].count=parseInt(this.value)" style="padding:6px;width:80px"></td>
-    <td><button class="btn-sm btn-danger" onclick="state.data.CATS.splice(${i},1);switchTab('categories')">Del</button></td></tr>`;
-  });
-  html+=`</tbody></table></div>`; c.innerHTML=html;
-}
-function addCat(){ state.data.CATS.push({icon:'🆕',name:'New',count:0}); switchTab('categories'); }
+/* ===== UTIL ===== */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
-function renderArticles(c) {
-  let html=`<button class="btn-primary" style="margin-bottom:20px" onclick="addArticle()">➕ New Article</button>
-  <button class="btn-outline" style="margin-bottom:20px;margin-left:12px" onclick="commitData()">💾 Commit</button>
-  <div class="admin-card"><table><thead><tr><th>Title</th><th>Slug</th><th>Date</th><th>Actions</th></tr></thead><tbody>`;
-  state.data.ARTICLES.forEach((a,i)=>{
-    html+=`<tr><td><strong>${a.title}</strong></td><td><span class="tag">${a.slug}</span></td><td>${a.date}</td>
-    <td><button class="btn-sm btn-outline" onclick="editArticle(${i})">Edit</button> <button class="btn-sm btn-danger" onclick="state.data.ARTICLES.splice(${i},1);switchTab('articles')">Del</button></td></tr>`;
-  });
-  html+=`</tbody></table></div>`; c.innerHTML=html;
-}
-function addArticle(){ state.data.ARTICLES.unshift({slug:'new',emoji:'📝',thumb:'linear-gradient(135deg,#000,#333)',cat:'GUIDE',date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),title:'New Article',excerpt:'Excerpt',keywords:'',readTime:'5 MIN',author:'Admin',authorRole:'Editor',authorEmoji:'👤',tags:['AI'],fullContent:'<p>Content...</p>'}); switchTab('articles'); editArticle(0); }
-function editArticle(i){
-  const a=state.data.ARTICLES[i]; const c=document.getElementById('mainContent');
-  document.getElementById('pageTitle').textContent=`Edit: ${a.title}`;
-  c.innerHTML=`<div class="admin-card"><div class="admin-card-header"><h3>📝 Article</h3><button class="btn-sm btn-primary" onclick="saveArticle(${i})">💾 Save</button></div>
-  <div class="admin-card-body"><div class="form-grid">
-    <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="aTitle" value="${a.title}"></div>
-    <div class="form-group"><label class="form-label">Slug</label><input class="form-input" id="aSlug" value="${a.slug}"></div>
-    <div class="form-group"><label class="form-label">Category</label><input class="form-input" id="aCat" value="${a.cat}"></div>
-    <div class="form-group"><label class="form-label">Date</label><input class="form-input" id="aDate" value="${a.date}"></div>
-    <div class="form-group"><label class="form-label">Tags (comma)</label><input class="form-input" id="aTags" value="${a.tags.join(', ')}"></div>
-    <div class="form-group"><label class="form-label">Read Time</label><input class="form-input" id="aRead" value="${a.readTime}"></div>
-  </div>
-  <div class="form-group"><label class="form-label">Excerpt</label><textarea class="form-input" id="aExcerpt">${a.excerpt}</textarea></div>
-  <div class="form-group"><label class="form-label">Full HTML Content</label><textarea class="form-input" id="aContent" style="min-height:300px">${a.fullContent}</textarea></div>
-  </div></div>`;
-}
-function saveArticle(i){
-  const a=state.data.ARTICLES[i];
-  a.title=document.getElementById('aTitle').value; a.slug=document.getElementById('aSlug').value; a.cat=document.getElementById('aCat').value;
-  a.date=document.getElementById('aDate').value; a.tags=document.getElementById('aTags').value.split(',').map(s=>s.trim());
-  a.readTime=document.getElementById('aRead').value; a.excerpt=document.getElementById('aExcerpt').value; a.fullContent=document.getElementById('aContent').value;
-  showToast('✅ Article saved'); switchTab('articles');
-}
-
-function renderComparisons(c){
-  c.innerHTML=`<div class="admin-card"><div class="admin-card-header"><h3>🖼️ Image AI Compare</h3><button class="btn-sm btn-primary" onclick="saveComp('COMPARE_DATA','compImg')">💾 Save</button></div>
-  <div class="admin-card-body"><textarea class="form-input" id="compImg" style="min-height:200px;font-family:monospace">${JSON.stringify(state.data.COMPARE_DATA,null,2)}</textarea></div></div>
-  <div class="admin-card"><div class="admin-card-header"><h3>✍️ Writing Compare</h3><button class="btn-sm btn-primary" onclick="saveComp('WRITING_COMPARE','compWri')">💾 Save</button></div>
-  <div class="admin-card-body"><textarea class="form-input" id="compWri" style="min-height:200px;font-family:monospace">${JSON.stringify(state.data.WRITING_COMPARE,null,2)}</textarea></div></div>
-  <div class="admin-card"><div class="admin-card-header"><h3>🎬 Video Compare</h3><button class="btn-sm btn-primary" onclick="saveComp('VIDEO_COMPARE','compVid')">💾 Save</button></div>
-  <div class="admin-card-body"><textarea class="form-input" id="compVid" style="min-height:200px;font-family:monospace">${JSON.stringify(state.data.VIDEO_COMPARE,null,2)}</textarea></div></div>`;
-}
-function saveComp(key,id){ try{ state.data[key]=JSON.parse(document.getElementById(id).value); showToast(`✅ ${key} saved`); }catch(e){ showToast('❌ Invalid JSON'); } }
-
-function renderTrending(c){
-  let html=`<button class="btn-primary" style="margin-bottom:20px" onclick="addTrend()">➕ Add</button>
-  <button class="btn-outline" style="margin-bottom:20px;margin-left:12px" onclick="commitData()">💾 Commit</button>
-  <div class="admin-card"><table><thead><tr><th>#</th><th>Name</th><th>Category</th><th>Δ%</th><th>Actions</th></tr></thead><tbody>`;
-  state.data.TRENDING.forEach((t,i)=>{
-    html+=`<tr><td>${t.num}</td><td><strong>${t.name}</strong></td><td>${t.cat}</td><td style="color:var(--green)">${t.up}</td>
-    <td><button class="btn-sm btn-danger" onclick="state.data.TRENDING.splice(${i},1);switchTab('trending')">Del</button></td></tr>`;
-  });
-  html+=`</tbody></table></div>`; c.innerHTML=html;
-}
-function addTrend(){ state.data.TRENDING.push({num:String(state.data.TRENDING.length+1).padStart(2,'0'),name:'New',cat:'Category',up:'+10%',color:'#fff'}); switchTab('trending'); }
-
-function renderSiteText(c){
-  const s = state.siteText;
-  c.innerHTML=`<div class="admin-card"><div class="admin-card-header"><h3>🌐 Hero & Stats</h3><button class="btn-sm btn-primary" onclick="saveSiteText()">💾 Save & Commit</button></div>
-  <div class="admin-card-body"><div class="form-grid">
-    <div class="form-group"><label class="form-label">Hero Eyebrow HTML</label><textarea class="form-input" id="stEyebrow">${s.heroEyebrow}</textarea></div>
-    <div class="form-group"><label class="form-label">Hero Title HTML</label><textarea class="form-input" id="stTitle">${s.heroTitle}</textarea></div>
-    <div class="form-group"><label class="form-label">Hero Subtitle HTML</label><textarea class="form-input" id="stSub">${s.heroSub}</textarea></div>
-    <div class="form-group"><label class="form-label">Search Placeholder</label><input class="form-input" id="stSearch" value="${s.searchPlaceholder}"></div>
-  </div>
-  <h4 style="margin:20px 0 10px;color:var(--text)">Stats Bar</h4>
-  <div id="statsEditor">${s.stats.map((st,i)=>`<div class="form-grid" style="margin-bottom:12px">
-    <input class="form-input" value="${st.val}" onchange="state.siteText.stats[${i}].val=this.value" placeholder="Value">
-    <input class="form-input" value="${st.label}" onchange="state.siteText.stats[${i}].label=this.value" placeholder="Label">
-  </div>`).join('')}</div>
-  </div></div>`;
-}
-async function saveSiteText(){
-  let html = state.files[CONFIG.paths.indexHtml].content;
-  const s = state.siteText;
-  s.heroEyebrow = document.getElementById('stEyebrow').value;
-  s.heroTitle = document.getElementById('stTitle').value;
-  s.heroSub = document.getElementById('stSub').value;
-  s.searchPlaceholder = document.getElementById('stSearch').value;
-  html = html.replace(/<div class="hero-eyebrow"[^>]*>[\\s\\S]*?<\\/div>/, `<div class="hero-eyebrow">${s.heroEyebrow}</div>`);
-  html = html.replace(/<h1[^>]*>[\\s\\S]*?<\\/h1>/, `<h1>${s.heroTitle}</h1>`);
-  html = html.replace(/<p class="hero-sub"[^>]*>[\\s\\S]*?<\\/p>/, `<p class="hero-sub">${s.heroSub}</p>`);
-  html = html.replace(/placeholder="[^"]*"/, `placeholder="${s.searchPlaceholder}"`);
-  await commitFile(CONFIG.paths.indexHtml, html, 'Update site text & labels');
-}
-
-function renderSEO(c){
-  const html = state.files[CONFIG.paths.indexHtml]?.content || '';
-  const getMeta = (n) => html.match(new RegExp(`<meta name="${n}" content="([^"]*)"`))?.[1] || '';
-  const getOG = (p) => html.match(new RegExp(`<meta property="${p}" content="([^"]*)"`))?.[1] || '';
-  c.innerHTML=`<div class="admin-card"><div class="admin-card-header"><h3>🔍 SEO & Meta (Homepage)</h3><button class="btn-sm btn-primary" onclick="saveSEO()">💾 Commit</button></div>
-  <div class="admin-card-body"><div class="form-grid">
-    <div class="form-group"><label class="form-label">Title</label><input class="form-input" id="seoTitle" value="${html.match(/<title>([\\s\\S]*?)<\\/title>/)?.[1]||''}"></div>
-    <div class="form-group"><label class="form-label">Meta Description</label><textarea class="form-input" id="seoDesc">${getMeta('description')}</textarea></div>
-    <div class="form-group"><label class="form-label">Keywords</label><input class="form-input" id="seoKeys" value="${getMeta('keywords')}"></div>
-    <div class="form-group"><label class="form-label">OG Title</label><input class="form-input" id="ogTitle" value="${getOG('og:title')}"></div>
-    <div class="form-group"><label class="form-label">OG Description</label><textarea class="form-input" id="ogDesc">${getOG('og:description')}</textarea></div>
-    <div class="form-group"><label class="form-label">OG Image</label><input class="form-input" id="ogImg" value="${getOG('og:image')}"></div>
-  </div></div></div>`;
-}
-async function saveSEO(){
-  let html = state.files[CONFIG.paths.indexHtml].content;
-  html = html.replace(/<title>[\\s\\S]*?<\\/title>/, `<title>${document.getElementById('seoTitle').value}</title>`);
-  html = html.replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${document.getElementById('seoDesc').value}">`);
-  html = html.replace(/<meta name="keywords" content="[^"]*">/, `<meta name="keywords" content="${document.getElementById('seoKeys').value}">`);
-  await commitFile(CONFIG.paths.indexHtml, html, 'Update SEO Meta Tags');
-}
-
-function renderScripts(c){
-  c.innerHTML=`<div class="admin-card"><div class="admin-card-header"><h3>📈 Scripts & Analytics</h3><button class="btn-sm btn-primary" onclick="saveScripts()">💾 Commit</button></div>
-  <div class="admin-card-body"><p style="color:var(--text3);margin-bottom:16px">Injected into &lt;head&gt; of index.html</p>
-  <div class="form-group"><label class="form-label">Google Analytics GA4 ID</label><input class="form-input" id="gaId" placeholder="G-XXXXXXXXXX"></div>
-  <div class="form-group"><label class="form-label">Google Search Console Verification</label><input class="form-input" id="gscId" placeholder="google-site-verification=..."></div>
-  <div class="form-group"><label class="form-label">Google AdSense Client ID</label><input class="form-input" id="adsId" placeholder="ca-pub-XXXXXXXXXXXXXXXX"></div>
-  <div class="form-group"><label class="form-label">Custom Head Scripts</label><textarea class="form-input" id="customHead" placeholder="&lt;script&gt;...&lt;/script&gt;"></textarea></div>
-  </div></div>`;
-}
-async function saveScripts(){
-  let html = state.files[CONFIG.paths.indexHtml].content;
-  html = html.replace(/<!-- ADMIN_SCRIPTS_START -->[\\s\\S]*?<!-- ADMIN_SCRIPTS_END -->/, '');
-  const ga = document.getElementById('gaId').value;
-  const gsc = document.getElementById('gscId').value;
-  const ads = document.getElementById('adsId').value;
-  const custom = document.getElementById('customHead').value;
-  let block = `<!-- ADMIN_SCRIPTS_START -->\\n`;
-  if(ga) block += `<script async src="https://www.googletagmanager.com/gtag/js?id=${ga}"><\\/script>\\n<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ga}');<\\/script>\\n`;
-  if(gsc) block += `<meta name="google-site-verification" content="${gsc}">\\n`;
-  if(ads) block += `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ads}" crossorigin="anonymous"><\\/script>\\n`;
-  if(custom) block += custom + `\\n`;
-  block += `<!-- ADMIN_SCRIPTS_END -->`;
-  html = html.replace('</head>', `${block}\\n</head>`);
-  await commitFile(CONFIG.paths.indexHtml, html, 'Update Scripts & Analytics');
-}
-
-function renderPages(c){
-  const pages = Object.entries(CONFIG.paths).filter(([k,v])=>v.endsWith('.html') && k!=='indexHtml');
-  let html = `<div class="admin-card"><div class="admin-card-header"><h3>📄 Static Pages</h3></div>
-  <div class="admin-card-body"><p style="color:var(--text3);margin-bottom:16px">Select a page to edit raw HTML. Changes commit instantly.</p>
-  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">
-    <button class="btn-sm btn-outline" onclick="loadPage('${CONFIG.paths.indexHtml}')">Homepage</button>
-    ${pages.map(([k,v])=>`<button class="btn-sm btn-outline" onclick="loadPage('${v}')">${k}</button>`).join('')}
-  </div>
-  <textarea id="pageEditor" class="form-input" style="min-height:400px;font-family:'JetBrains Mono',monospace;font-size:0.8rem" readonly>Select a page above</textarea>
-  <button class="btn-primary" style="margin-top:12px" onclick="savePage()">💾 Commit Changes</button>
-  </div></div>`;
-  c.innerHTML = html;
-}
-async function loadPage(path){
-  const content = state.files[path]?.content || await getFile(path);
-  const editor = document.getElementById('pageEditor');
-  editor.value = content; editor.dataset.path = path; editor.readOnly = false;
-}
-async function savePage(){
-  const editor = document.getElementById('pageEditor');
-  if(!editor.dataset.path) return;
-  await commitFile(editor.dataset.path, editor.value, `Update ${editor.dataset.path}`);
-}
-
-function renderTheme(c){
-  c.innerHTML=`<div class="admin-card"><div class="admin-card-header"><h3>🎨 Theme & CSS Variables</h3><button class="btn-sm btn-primary" onclick="saveTheme()">💾 Commit</button></div>
-  <div class="admin-card-body"><p style="color:var(--text3);margin-bottom:16px">Edit CSS variables. Applies globally.</p>
-  <div class="form-grid">
-    <div class="form-group"><label class="form-label">--accent</label><input type="color" class="form-input" id="cssAccent" value="#4fa3ff"></div>
-    <div class="form-group"><label class="form-label">--accent2</label><input type="color" class="form-input" id="cssAccent2" value="#a78bfa"></div>
-    <div class="form-group"><label class="form-label">--bg</label><input type="color" class="form-input" id="cssBg" value="#07090f"></div>
-    <div class="form-group"><label class="form-label">--surface</label><input type="color" class="form-input" id="cssSurface" value="#0f1320"></div>
-  </div>
-  <div class="form-group"><label class="form-label">Custom CSS (appended to main.css)</label><textarea class="form-input" id="customCSS" style="min-height:200px"></textarea></div>
-  </div></div>`;
-}
-async function saveTheme(){
-  let css = state.files['assets/css/main.css']?.content || '';
-  const accent = document.getElementById('cssAccent').value;
-  const accent2 = document.getElementById('cssAccent2').value;
-  const bg = document.getElementById('cssBg').value;
-  const surface = document.getElementById('cssSurface').value;
-  css = css.replace(/--accent:\\s*#[0-9a-fA-F]+/, `--accent: ${accent}`);
-  css = css.replace(/--accent2:\\s*#[0-9a-fA-F]+/, `--accent2: ${accent2}`);
-  css = css.replace(/--bg:\\s*#[0-9a-fA-F]+/, `--bg: ${bg}`);
-  css = css.replace(/--surface:\\s*#[0-9a-fA-F]+/, `--surface: ${surface}`);
-  const custom = document.getElementById('customCSS').value;
-  if(custom) css += `\\n/* CUSTOM ADMIN CSS */\\n${custom}`;
-  await commitFile('assets/css/main.css', css, 'Update Theme & CSS');
-}
-
-function renderSettings(c){
-  c.innerHTML=`<div class="admin-card"><div class="admin-card-header"><h3>⚙️ Settings & Deploy</h3></div>
-  <div class="admin-card-body">
-    <p style="color:var(--text2);margin-bottom:12px">Repo: <strong>${CONFIG.owner}/${CONFIG.repo}</strong></p>
-    <p style="color:var(--text2);margin-bottom:12px">Branch: <strong>${CONFIG.branch}</strong></p>
-    <button class="btn-primary" onclick="commitAll()">🚀 Commit All Pending Changes</button>
-    <p style="margin-top:12px;font-size:0.8rem;color:var(--text3)">Pushes all edits to GitHub → triggers Cloudflare Pages deploy (~30s)</p>
-  </div></div>`;
-}
-
-/* ═══════════════════════════════════════
-   COMMIT ENGINE
-   ═══════════════════════════════════════ */
-async function commitData(){
-  updateStatus('Committing data.js...');
-  try {
-    const newData = rebuildDataJs();
-    await commitFile(CONFIG.paths.dataJs, newData, 'Admin: Update content data');
-    updateStatus('Ready');
-  } catch(e) { showToast('❌ '+e.message); updateStatus('Error'); }
-}
-
-async function commitAll(){
-  if(!confirm('Commit all changes to main? This triggers a live deploy.')) return;
-  updateStatus('Committing all...');
-  try {
-    await commitData();
-    showToast('✅ All changes deployed!');
-  } catch(e) { showToast('❌ '+e.message); }
-  updateStatus('Ready');
-}
-
-/* ═══════════════════════════════════════
-   UTILS
-   ═══════════════════════════════════════ */
-function showToast(msg){
-  const t=document.getElementById('toast');
-  document.getElementById('toastMsg').textContent=msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3000);
-}
-function updateStatus(text){ document.getElementById('commitStatus').textContent=text; }
-function downloadBackup(){
-  const blob=new Blob([JSON.stringify(state.data,null,2)],{type:'application/json'});
-  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
-  a.download=`findbestai-backup-${new Date().toISOString().slice(0,10)}.json`; a.click();
-}
-function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); }
-
-// Init
-init();
+/* ===== AUTO-LOGIN FROM SESSION ===== */
+(function(){
+  const tok=sessionStorage.getItem('fbai_pat');
+  if(tok){document.getElementById('loginPat').value=tok;document.getElementById('loginUser').value=sessionStorage.getItem('fbai_user')||'';doLogin({preventDefault(){}})}
+})();
 </script>
 </body>
 </html>
