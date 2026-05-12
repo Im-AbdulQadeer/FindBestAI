@@ -3,1404 +3,282 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FindBestAI — Super Admin</title>
+<title>FindBestAI — Admin</title>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#0a0c12;--bg2:#11141e;--bg3:#181c28;--card:#141720;--hover:#1e2235;--input:#0e1018;
-  --border:#252a3a;--text:#e4e8f4;--mute:#7a84a0;--dim:#4a5270;
-  --acc:#5b8def;--acc2:#7ba5ff;--ok:#22d3a0;--warn:#f59e0b;--err:#f43f5e;--info:#60a5fa;
-  --purple:#8b5cf6;--r:10px;--sidebar-w:260px;
+  --bg:#0f1117;--bg2:#1a1d27;--bg3:#242836;--card:#1e2230;--hover:#2a2f40;--input:#161922;
+  --border:#2d3348;--text:#e8eaf0;--mute:#9ca3b8;--dim:#6b7280;
+  --acc:#6c5ce7;--acc2:#a29bfe;--ok:#00cec9;--warn:#fdcb6e;--err:#ff6b6b;--info:#74b9ff;
+  --r:10px;
 }
-html,body{height:100%;font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.55}
-::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:3px}
-button,input,select,textarea{font:inherit;color:inherit}a{color:var(--acc2);text-decoration:none}.hidden{display:none!important}
-.login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 25% 25%,rgba(91,141,239,.12),transparent 60%),var(--bg);z-index:50}
-.login-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:40px;width:420px;max-width:94vw;box-shadow:0 30px 80px rgba(0,0,0,.7)}
-.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:6px}
-.login-logo .dot{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--acc),var(--purple));display:grid;place-items:center;font-size:18px;flex-shrink:0}
-.login-logo h1{font-size:20px;font-weight:700;background:linear-gradient(135deg,var(--acc2),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.login-card>p{color:var(--mute);font-size:13px;margin-bottom:24px;padding-left:50px}
+html,body{height:100%}
+body{font-family:'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.5;overflow:hidden}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:4px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--acc2);text-decoration:none}
+.hidden{display:none!important}
+
+/* ===== LOGIN ===== */
+.login{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 30% 20%,rgba(108,92,231,.15),transparent 60%),var(--bg);z-index:50}
+.login-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px;width:380px;max-width:92vw;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.login-card h1{font-size:22px;margin-bottom:6px;background:linear-gradient(135deg,#a29bfe,#74b9ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.login-card p{color:var(--mute);font-size:13px;margin-bottom:22px}
 .field{margin-bottom:14px}
-.field label{display:block;font-size:11.5px;color:var(--mute);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
-.field input,.field select,.field textarea{width:100%;background:var(--input);border:1px solid var(--border);border-radius:8px;padding:10px 13px;outline:none;transition:border-color .15s}
+.field label{display:block;font-size:12px;color:var(--mute);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.field input,.field select,.field textarea{width:100%;background:var(--input);border:1px solid var(--border);border-radius:8px;padding:10px 12px;outline:none;transition:border-color .15s}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--acc)}
-.field input[type=color]{padding:4px 6px;height:40px;cursor:pointer}
-.field textarea{resize:vertical;font-family:'Consolas','Courier New',monospace;font-size:12.5px;line-height:1.55}
-.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border:1px solid var(--border);background:var(--bg3);color:var(--text);border-radius:8px;cursor:pointer;font-weight:500;transition:.15s;white-space:nowrap;font-size:13px}
-.btn:hover{background:var(--hover);border-color:var(--acc)}
-.btn-primary{background:linear-gradient(135deg,var(--acc),var(--purple));border-color:transparent;color:#fff;font-weight:600}
-.btn-primary:hover{opacity:.88;border-color:transparent}
-.btn-danger{background:transparent;border-color:var(--err);color:var(--err)}.btn-danger:hover{background:var(--err);color:#fff}
-.btn-ok{background:transparent;border-color:var(--ok);color:var(--ok)}.btn-ok:hover{background:var(--ok);color:#000}
-.btn-ghost{background:transparent;border-color:transparent}.btn-ghost:hover{background:var(--hover);border-color:var(--border)}
-.btn-sm{padding:5px 10px;font-size:12px}.btn:disabled{opacity:.45;cursor:not-allowed}.btn-block{width:100%;justify-content:center}
-.err-msg{background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.3);color:var(--err);padding:10px 13px;border-radius:8px;font-size:13px;margin-bottom:14px}
-.hint{font-size:11.5px;color:var(--dim);margin-top:5px;line-height:1.5}
-kbd{background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11px;border:1px solid var(--border)}
-.app{display:grid;grid-template-columns:var(--sidebar-w) 1fr;height:100vh;overflow:hidden}
+.field textarea{resize:vertical;font-family:'JetBrains Mono','Courier New',monospace;font-size:12.5px;line-height:1.55}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:1px solid var(--border);background:var(--bg3);color:var(--text);border-radius:8px;cursor:pointer;font-weight:500;transition:.15s}
+.btn:hover{background:var(--hover)}
+.btn-primary{background:var(--acc);border-color:var(--acc);color:#fff}
+.btn-primary:hover{background:#7c6ff7}
+.btn-danger{background:transparent;border-color:var(--err);color:var(--err)}
+.btn-danger:hover{background:var(--err);color:#fff}
+.btn-ghost{background:transparent}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn-block{width:100%;justify-content:center}
+.err-msg{background:rgba(255,107,107,.12);border:1px solid rgba(255,107,107,.3);color:var(--err);padding:10px;border-radius:8px;font-size:13px;margin-bottom:14px}
+.hint{font-size:11.5px;color:var(--dim);margin-top:6px;line-height:1.5}
+
+/* ===== APP LAYOUT ===== */
+.app{display:grid;grid-template-columns:240px 1fr;height:100vh}
 .sidebar{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
-.brand{padding:18px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:11px;font-weight:700;font-size:15px}
-.brand-dot{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--acc),var(--purple));display:grid;place-items:center;font-size:16px;flex-shrink:0}
-.brand-sub{font-size:10px;font-weight:400;color:var(--mute);letter-spacing:.04em}
-.nav{flex:1;overflow-y:auto;padding:10px 8px}
-.nav-section{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--dim);padding:14px 12px 5px;font-weight:700}
-.nav-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;cursor:pointer;color:var(--mute);margin-bottom:1px;font-size:13px;user-select:none;transition:.13s}
-.nav-item:hover{background:var(--hover);color:var(--text)}.nav-item.active{background:rgba(91,141,239,.15);color:var(--acc2);font-weight:600}
-.ni{font-size:15px;width:20px;text-align:center;flex-shrink:0}
-.nav-item .badge{margin-left:auto;background:var(--bg3);color:var(--mute);font-size:10.5px;padding:2px 7px;border-radius:10px;font-weight:600}
+.brand{padding:20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
+.brand-dot{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;font-size:14px}
+.nav{flex:1;overflow-y:auto;padding:12px 8px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;color:var(--mute);margin-bottom:2px;font-size:13.5px;user-select:none}
+.nav-item:hover{background:var(--hover);color:var(--text)}
+.nav-item.active{background:rgba(108,92,231,.15);color:var(--acc2);font-weight:600}
+.nav-item .badge{margin-left:auto;background:var(--bg3);color:var(--mute);font-size:11px;padding:2px 7px;border-radius:10px}
 .nav-item.active .badge{background:var(--acc);color:#fff}
+.nav-section{font-size:10.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);padding:14px 14px 6px}
 .sidebar-foot{padding:12px;border-top:1px solid var(--border);font-size:12px;color:var(--mute)}
-.sidebar-user{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.avatar{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--acc),var(--purple));display:grid;place-items:center;font-size:13px;flex-shrink:0}
-.main{display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.topbar{height:52px;display:flex;align-items:center;gap:12px;padding:0 22px;border-bottom:1px solid var(--border);background:var(--bg2);flex-shrink:0}
-.status{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mute)}
-.dot-s{width:7px;height:7px;border-radius:50%;background:var(--mute)}
-.dot-s.ok{background:var(--ok);box-shadow:0 0 5px var(--ok)}.dot-s.sync{background:var(--warn);animation:pulse 1s infinite}.dot-s.err{background:var(--err)}
-@keyframes pulse{50%{opacity:.3}}
-.spacer{flex:1}
-.repo-badge{background:var(--bg3);border:1px solid var(--border);padding:3px 10px;border-radius:6px;font-size:11.5px;color:var(--mute);font-family:monospace}
+
+.main{display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:54px;display:flex;align-items:center;gap:12px;padding:0 22px;border-bottom:1px solid var(--border);background:var(--bg2)}
+.topbar .status{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--mute)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mute)}
+.dot.ok{background:var(--ok);box-shadow:0 0 6px var(--ok)}
+.dot.sync{background:var(--warn);animation:pulse 1.2s infinite}
+.dot.err{background:var(--err)}
+@keyframes pulse{50%{opacity:.4}}
+.topbar .spacer{flex:1}
+
 .content{flex:1;overflow-y:auto;padding:22px;background:var(--bg)}
-.section{display:none;animation:fade .2s ease}.section.active{display:block}
-@keyframes fade{from{opacity:0;transform:translateY(4px)}}
-.section-head{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.section-head h2{font-size:21px;font-weight:700}.section-head .sub{color:var(--mute);font-size:13px}.section-head .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:13px;margin-bottom:22px}
-.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;transition:.15s}
-.stat:hover{border-color:var(--acc)}.stat .lbl{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
-.stat .val{font-size:28px;font-weight:800;margin-top:3px;background:linear-gradient(135deg,var(--acc2),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.stat .hint{margin-top:3px;font-size:12px;color:var(--mute)}.stat .icon{font-size:24px;margin-bottom:6px}
+.section{display:none}
+.section.active{display:block}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.section-head h2{font-size:22px;font-weight:700}
+.section-head .sub{color:var(--mute);font-size:13px;margin-left:4px}
+.section-head .actions{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px}
+.stat .lbl{font-size:11.5px;color:var(--mute);text-transform:uppercase;letter-spacing:.06em}
+.stat .val{font-size:26px;font-weight:700;margin-top:4px}
+.stat .hint{margin-top:4px}
+
 .panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
-.panel-h{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:600;font-size:14px}
-.panel-h .actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
-.panel-b{padding:16px 18px}.panel-b.compact{padding:0}
-.tbl-wrap{overflow-x:auto}
+.panel-h{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:600}
+.panel-h .actions{margin-left:auto;display:flex;gap:6px}
+.panel-b{padding:14px 18px}
+
 table{width:100%;border-collapse:collapse}
 th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
-th{background:var(--bg3);color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;position:sticky;top:0;z-index:1}
-tr:hover td{background:rgba(255,255,255,.015)}tr:last-child td{border-bottom:none}
-.row-actions{display:flex;gap:5px;justify-content:flex-end}
-.tag{display:inline-block;background:var(--bg3);color:var(--mute);padding:2px 8px;border-radius:10px;font-size:11px;margin:1px 2px;border:1px solid var(--border)}
-.tag.cat-tag{background:rgba(91,141,239,.1);color:var(--acc2);border-color:rgba(91,141,239,.2)}
-.tag.warn-tag{background:rgba(245,158,11,.1);color:var(--warn);border-color:rgba(245,158,11,.2)}
-.swatch{display:inline-block;width:18px;height:18px;border-radius:5px;vertical-align:middle;margin-right:5px;border:1px solid var(--border)}
-.truncate{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mini-logo{width:24px;height:24px;object-fit:contain;vertical-align:middle;border-radius:5px;background:#fff1;padding:2px}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
-.toolbar input{flex:1;min-width:180px;background:var(--input);border:1px solid var(--border);border-radius:8px;padding:8px 12px;outline:none}
-.toolbar input:focus{border-color:var(--acc)}.toolbar select{background:var(--input);border:1px solid var(--border);border-radius:8px;padding:8px 12px;outline:none}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:24px 16px;z-index:200;overflow-y:auto}
+th{background:var(--bg3);color:var(--mute);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;font-weight:600;position:sticky;top:0}
+tr:hover td{background:rgba(255,255,255,.02)}
+td .row-actions{display:flex;gap:6px;justify-content:flex-end}
+td .row-actions .btn{padding:5px 10px;font-size:12px}
+.tag{display:inline-block;background:var(--bg3);color:var(--mute);padding:2px 8px;border-radius:10px;font-size:11px;margin:1px 2px}
+.swatch{display:inline-block;width:20px;height:20px;border-radius:6px;vertical-align:middle;margin-right:6px;border:1px solid var(--border)}
+.emoji-cell{font-size:18px}
+
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.toolbar input,.toolbar select{background:var(--input);border:1px solid var(--border);border-radius:8px;padding:8px 12px;outline:none}
+.toolbar input{flex:1;min-width:200px}
+
+/* ===== MODAL ===== */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);display:none;align-items:flex-start;justify-content:center;padding:30px 20px;z-index:100;overflow-y:auto}
 .modal.open{display:flex}
-.modal-card{background:var(--card);border:1px solid var(--border);border-radius:16px;width:100%;max-width:860px;box-shadow:0 40px 100px rgba(0,0,0,.7);margin:auto 0}
-.modal-h{padding:16px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
-.modal-h .x{margin-left:auto;cursor:pointer;color:var(--mute);font-size:24px;width:32px;height:32px;display:grid;place-items:center;border-radius:6px;transition:.1s}
-.modal-h .x:hover{background:var(--hover);color:var(--text)}
-.modal-b{padding:20px 22px;max-height:calc(100vh - 200px);overflow-y:auto}
-.modal-f{padding:14px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px;background:var(--bg2);border-radius:0 0 16px 16px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
-.col2{grid-column:span 2}
-@media(max-width:700px){.grid2,.grid3,.grid4{grid-template-columns:1fr}.app{grid-template-columns:1fr}.sidebar{position:fixed;z-index:100;height:100vh;transform:translateX(-100%)}.col2{grid-column:span 1}}
-.toasts{position:fixed;bottom:18px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:500}
-.toast{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--acc);padding:10px 16px;border-radius:9px;font-size:13px;min-width:260px;box-shadow:0 10px 40px rgba(0,0,0,.6);animation:slide .22s ease}
-.toast.ok{border-left-color:var(--ok)}.toast.err{border-left-color:var(--err)}.toast.warn{border-left-color:var(--warn)}
-@keyframes slide{from{transform:translateX(24px);opacity:0}}
-.banner{padding:10px 14px;border-radius:8px;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);color:var(--info);font-size:13px;margin-bottom:14px;line-height:1.5}
-.banner.ok{background:rgba(34,211,160,.08);border-color:rgba(34,211,160,.2);color:var(--ok)}
-.banner.warn{background:rgba(245,158,11,.08);border-color:rgba(245,158,11,.2);color:var(--warn)}
-.banner.err{background:rgba(244,63,94,.08);border-color:rgba(244,63,94,.2);color:var(--err)}
-.empty{text-align:center;padding:48px 20px;color:var(--dim)}.empty .big{font-size:42px;margin-bottom:10px}
-.tabs{display:flex;gap:3px;border-bottom:1px solid var(--border);margin-bottom:16px;overflow-x:auto}
-.tab{padding:9px 16px;cursor:pointer;color:var(--mute);font-size:13px;font-weight:500;border-bottom:2px solid transparent;white-space:nowrap;transition:.13s;margin-bottom:-1px}
-.tab:hover{color:var(--text)}.tab.active{color:var(--acc2);border-bottom-color:var(--acc);font-weight:600}
-.up-preview img{max-height:60px;max-width:140px;border-radius:6px;margin-top:6px;display:block}
-.up-status{font-size:11.5px;color:var(--mute);margin-top:5px}
-.analytics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:18px}
-.analytics-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:18px}
-.ac-label{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--mute);font-weight:700}
-.ac-val{font-size:26px;font-weight:800;color:var(--text)}.ac-sub{font-size:12px;color:var(--ok)}.ac-icon{font-size:26px;margin-bottom:4px}
-.grad-preview{height:38px;border-radius:8px;border:1px solid var(--border);transition:.3s;margin-top:6px}
-.pill{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
-.pill.best{background:rgba(245,158,11,.15);color:var(--warn);border:1px solid rgba(245,158,11,.3)}
-.pill.new{background:rgba(34,211,160,.12);color:var(--ok);border:1px solid rgba(34,211,160,.25)}
-.pill.open{background:rgba(96,165,250,.12);color:var(--info);border:1px solid rgba(96,165,250,.25)}
-.pill.hot{background:rgba(244,63,94,.12);color:var(--err);border:1px solid rgba(244,63,94,.25)}
-.pill.popular{background:rgba(139,92,246,.12);color:var(--purple);border:1px solid rgba(139,92,246,.25)}
-.rt-bar{display:flex;gap:4px;flex-wrap:wrap;background:var(--bg3);padding:6px 8px;border:1px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0}
-.rt-bar button{padding:4px 9px;font-size:12px;border-radius:5px;background:transparent;border:1px solid transparent;cursor:pointer;color:var(--mute);transition:.1s}
-.rt-bar button:hover{background:var(--hover);color:var(--text);border-color:var(--border)}
-.rt-area{border-radius:0 0 8px 8px!important;border-top:none!important;min-height:260px}
-.seo-bar{height:6px;border-radius:3px;background:var(--bg3);margin-top:4px;overflow:hidden}
-.seo-fill{height:100%;border-radius:3px;transition:width .4s}
-.qa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;margin-bottom:22px}
-.qa-btn{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:16px;cursor:pointer;transition:.15s;text-align:left;display:flex;flex-direction:column;gap:6px}
-.qa-btn:hover{background:var(--hover);border-color:var(--acc);transform:translateY(-1px)}
-.qa-icon{font-size:22px}.qa-title{font-weight:600;font-size:13.5px}.qa-desc{font-size:11.5px;color:var(--mute)}
-.int-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
-.int-row:last-child{border-bottom:none}.int-icon{font-size:26px;width:40px;text-align:center;flex-shrink:0}
-.int-info{flex:1;min-width:0}.int-title{font-weight:600;font-size:14px}.int-desc{font-size:12px;color:var(--mute);margin-top:2px}
-.int-status{font-size:11.5px;font-weight:600;padding:3px 10px;border-radius:20px}
-.is-connected{background:rgba(34,211,160,.12);color:var(--ok);border:1px solid rgba(34,211,160,.25)}
-.is-off{background:rgba(116,120,140,.08);color:var(--mute);border:1px solid var(--border)}
-.mono{font-family:'Consolas','Courier New',monospace!important;font-size:12.5px!important}
+.modal-card{background:var(--card);border:1px solid var(--border);border-radius:14px;width:100%;max-width:780px;box-shadow:0 30px 80px rgba(0,0,0,.6);margin:auto 0}
+.modal-h{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;font-weight:600}
+.modal-h .x{margin-left:auto;cursor:pointer;color:var(--mute);font-size:22px;line-height:1}
+.modal-h .x:hover{color:var(--text)}
+.modal-b{padding:18px 20px;max-height:calc(100vh - 200px);overflow-y:auto}
+.modal-f{padding:14px 20px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.grid2,.grid3{grid-template-columns:1fr}.app{grid-template-columns:1fr}.sidebar{display:none}}
+
+/* ===== TOAST ===== */
+.toasts{position:fixed;bottom:18px;right:18px;display:flex;flex-direction:column;gap:8px;z-index:200}
+.toast{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--acc);padding:10px 14px;border-radius:8px;font-size:13px;min-width:240px;box-shadow:0 8px 30px rgba(0,0,0,.5);animation:slide .25s ease}
+.toast.ok{border-left-color:var(--ok)}
+.toast.err{border-left-color:var(--err)}
+.toast.warn{border-left-color:var(--warn)}
+@keyframes slide{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+.banner{padding:10px 14px;border-radius:8px;background:rgba(116,185,255,.1);border:1px solid rgba(116,185,255,.3);color:var(--info);font-size:13px;margin-bottom:14px;display:flex;gap:10px;align-items:center}
+.banner.ok{background:rgba(0,206,201,.1);border-color:rgba(0,206,201,.3);color:var(--ok)}
+.banner.err{background:rgba(255,107,107,.1);border-color:rgba(255,107,107,.3);color:var(--err)}
+
+.empty{text-align:center;padding:40px 20px;color:var(--mute)}
+.empty .big{font-size:38px;margin-bottom:8px}
+
+.kbd{font-family:'JetBrains Mono','Courier New',monospace;background:var(--bg3);padding:1px 6px;border-radius:4px;font-size:11.5px;color:var(--text)}
+
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:14px;overflow-x:auto}
+.tab{padding:9px 14px;border-radius:8px 8px 0 0;cursor:pointer;color:var(--mute);font-size:13px;font-weight:500;border-bottom:2px solid transparent;white-space:nowrap}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--acc2);border-bottom-color:var(--acc)}
+
+.codebox{background:var(--input);border:1px solid var(--border);border-radius:8px;padding:10px 12px;font-family:'JetBrains Mono','Courier New',monospace;font-size:12px;color:var(--mute);overflow-x:auto;white-space:pre-wrap;word-break:break-word}
 </style>
 </head>
 <body>
-<!-- LOGIN -->
+
+<!-- ============ LOGIN ============ -->
 <div class="login" id="login">
   <div class="login-card">
-    <div class="login-logo">
-      <div class="dot">🤖</div>
-      <div><h1>FindBestAI Super Admin</h1><div style="font-size:11px;color:var(--mute);margin-top:2px">Full-control dashboard — every text, every element</div></div>
-    </div>
-    <p>Sign in with your GitHub Personal Access Token to manage everything.</p>
+    <h1>🔐 FindBestAI Admin</h1>
+    <p>Sign in with your GitHub Personal Access Token.</p>
     <div id="loginErr" class="err-msg hidden"></div>
-    <div class="field"><label>GitHub Username (optional)</label><input id="loginUser" type="text" placeholder="Im-AbdulQadeer" autocomplete="username"></div>
-    <div class="field">
-      <label>GitHub Personal Access Token</label>
-      <input id="loginPat" type="password" placeholder="ghp_••••••••••••••••••••••" required>
-      <div class="hint">Needs <kbd>repo</kbd> scope. Stored in session only (never the repo).<br>
-      Create at: <a href="https://github.com/settings/tokens/new?scopes=repo&description=FindBestAI+Admin" target="_blank">github.com/settings/tokens</a></div>
-    </div>
-    <button class="btn btn-primary btn-block" id="loginBtn" onclick="doLogin()">🔑 Sign In</button>
+    <form onsubmit="return doLogin(event)">
+      <div class="field">
+        <label>GitHub username (optional)</label>
+        <input id="loginUser" type="text" placeholder="Im-AbdulQadeer" autocomplete="username">
+      </div>
+      <div class="field">
+        <label>GitHub Personal Access Token</label>
+        <input id="loginPat" type="password" placeholder="ghp_••••••••••••••••••••••" autocomplete="current-password" required>
+        <div class="hint">Needs <span class="kbd">repo</span> scope. Stored only in this browser session.</div>
+      </div>
+      <button class="btn btn-primary btn-block" id="loginBtn" type="submit">Sign In</button>
+    </form>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ============ APP ============ -->
 <div class="app hidden" id="app">
-  <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-dot" id="navEmoji">🤖</div>
-      <div><div id="siteNameLabel">FindBestAI</div><div class="brand-sub">Super Admin</div></div>
-    </div>
-    <div class="nav">
-      <div class="nav-section">Overview</div>
-      <div class="nav-item active" data-go="dashboard"><span class="ni">📊</span> Dashboard</div>
-      <div class="nav-item" data-go="analytics"><span class="ni">📈</span> Analytics</div>
+    <div class="brand"><div class="brand-dot">A</div> FindBestAI Admin</div>
+    <nav class="nav">
+      <div class="nav-item active" data-go="dash">🏠 Dashboard</div>
       <div class="nav-section">Content</div>
-      <div class="nav-item" data-go="tools"><span class="ni">🛠️</span> Tools <span class="badge" id="b-tools">0</span></div>
-      <div class="nav-item" data-go="categories"><span class="ni">🏷️</span> Categories <span class="badge" id="b-cats">0</span></div>
-      <div class="nav-item" data-go="badges"><span class="ni">🎖️</span> Badges &amp; Tags</div>
-      <div class="nav-item" data-go="trending"><span class="ni">🔥</span> Trending <span class="badge" id="b-trend">0</span></div>
-      <div class="nav-item" data-go="comparisons"><span class="ni">⚖️</span> Comparisons</div>
-      <div class="nav-section">Blog</div>
-      <div class="nav-item" data-go="articles"><span class="ni">📰</span> Articles <span class="badge" id="b-arts">0</span></div>
-      <div class="nav-item" data-go="blog-settings"><span class="ni">📝</span> Blog Settings</div>
-      <div class="nav-section">Site</div>
-      <div class="nav-item" data-go="site-identity"><span class="ni">🎨</span> Site Identity</div>
-      <div class="nav-item" data-go="navigation"><span class="ni">🧭</span> Nav &amp; Footer</div>
-      <div class="nav-item" data-go="seo-meta"><span class="ni">🔍</span> SEO &amp; Meta</div>
-      <div class="nav-item" data-go="homepage"><span class="ni">🏠</span> Homepage Text</div>
-      <div class="nav-item" data-go="pages"><span class="ni">📄</span> Pages <span class="badge" id="b-pages">0</span></div>
-      <div class="nav-section">Integrations</div>
-      <div class="nav-item" data-go="integrations"><span class="ni">🔗</span> Google Integrations</div>
-      <div class="nav-item" data-go="email-templates"><span class="ni">📧</span> Email Templates</div>
+      <div class="nav-item" data-go="tools">🔧 Tools <span class="badge" id="b-tools">0</span></div>
+      <div class="nav-item" data-go="cats">📁 Categories <span class="badge" id="b-cats">0</span></div>
+      <div class="nav-item" data-go="arts">📝 Articles <span class="badge" id="b-arts">0</span></div>
+      <div class="nav-item" data-go="trend">🔥 Trending <span class="badge" id="b-trend">0</span></div>
+      <div class="nav-item" data-go="cmp">⚖️ Comparisons</div>
       <div class="nav-section">System</div>
-      <div class="nav-item" data-go="settings"><span class="ni">⚙️</span> Settings</div>
-      <div class="nav-item" data-go="commits"><span class="ni">📜</span> Commit History</div>
-      <div class="nav-item" onclick="window.open('https://findbestai.pages.dev/','_blank')"><span class="ni">🌐</span> View Live Site ↗</div>
-    </div>
+      <div class="nav-item" data-go="settings">⚙️ Site Settings</div>
+      <div class="nav-item" data-go="pages">📄 Static Pages <span class="badge" id="b-pages">0</span></div>
+      <div class="nav-item" data-go="commits">📜 Commit History</div>
+    </nav>
     <div class="sidebar-foot">
-      <div class="sidebar-user">
-        <div class="avatar">👤</div>
-        <div><div style="font-weight:600;font-size:12.5px" id="meUser">…</div><div style="font-size:11px;color:var(--dim)">github</div></div>
-      </div>
-      <button class="btn btn-ghost btn-block btn-sm" onclick="logout()">↩ Sign out</button>
+      <div style="margin-bottom:8px">Signed in as <strong id="meUser">...</strong></div>
+      <button class="btn btn-block btn-ghost" onclick="logout()">Logout</button>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main">
-    <div class="topbar">
-      <div class="status"><span class="dot-s" id="syncDot"></span><span id="syncTxt">Idle</span></div>
-      <span class="repo-badge">Im-AbdulQadeer/FindBestAI@main</span>
+    <header class="topbar">
+      <div class="status"><div class="dot" id="syncDot"></div> <span id="syncText">Syncing…</span></div>
       <div class="spacer"></div>
-      <button class="btn btn-sm" onclick="loadAll()">🔄 Sync</button>
-    </div>
+      <button class="btn btn-primary" id="globalCommitBtn" onclick="commitAll()">🚀 Commit Changes</button>
+    </header>
 
     <div class="content">
-
-<!-- ══════════ DASHBOARD ══════════ -->
-<section class="section active" id="s-dashboard">
-  <div class="section-head"><h2>📊 Dashboard</h2><div class="sub">FindBestAI Super Admin</div>
-    <div class="actions"><button class="btn" onclick="loadAll()">🔄 Refresh All</button></div>
-  </div>
-  <div class="stats-grid">
-    <div class="stat"><div class="icon">🛠️</div><div class="lbl">Tools</div><div class="val" id="st-tools">0</div><div class="hint">in directory</div></div>
-    <div class="stat"><div class="icon">🏷️</div><div class="lbl">Categories</div><div class="val" id="st-cats">0</div></div>
-    <div class="stat"><div class="icon">📰</div><div class="lbl">Articles</div><div class="val" id="st-arts">0</div></div>
-    <div class="stat"><div class="icon">🔥</div><div class="lbl">Trending</div><div class="val" id="st-trend">0</div></div>
-    <div class="stat"><div class="icon">📄</div><div class="lbl">Pages</div><div class="val" id="st-pages">0</div></div>
-    <div class="stat"><div class="icon">📜</div><div class="lbl">Commits</div><div class="val" id="st-commits">0</div></div>
-  </div>
-  <div class="qa-grid">
-    <button class="qa-btn" onclick="go('tools');editTool(null)"><div class="qa-icon">➕</div><div class="qa-title">Add Tool</div><div class="qa-desc">Add to directory</div></button>
-    <button class="qa-btn" onclick="go('articles');editArt(null)"><div class="qa-icon">✍️</div><div class="qa-title">Write Article</div><div class="qa-desc">Publish to blog</div></button>
-    <button class="qa-btn" onclick="go('site-identity')"><div class="qa-icon">🎨</div><div class="qa-title">Edit Branding</div><div class="qa-desc">Logo, name, colors</div></button>
-    <button class="qa-btn" onclick="go('seo-meta')"><div class="qa-icon">🔍</div><div class="qa-title">SEO Settings</div><div class="qa-desc">Meta, sitemap</div></button>
-    <button class="qa-btn" onclick="go('integrations')"><div class="qa-icon">📊</div><div class="qa-title">Analytics</div><div class="qa-desc">GA4, AdSense, GSC</div></button>
-    <button class="qa-btn" onclick="go('pages');newPage()"><div class="qa-icon">📄</div><div class="qa-title">New Page</div><div class="qa-desc">Create HTML page</div></button>
-    <button class="qa-btn" onclick="go('homepage')"><div class="qa-icon">🏠</div><div class="qa-title">Homepage Text</div><div class="qa-desc">Headings, CTAs</div></button>
-    <button class="qa-btn" onclick="go('navigation')"><div class="qa-icon">🧭</div><div class="qa-title">Nav &amp; Footer</div><div class="qa-desc">Links, copyright</div></button>
-  </div>
-  <div class="panel">
-    <div class="panel-h">📜 Recent Commits<div class="actions"><button class="btn btn-sm" onclick="go('commits')">View all</button></div></div>
-    <div class="panel-b compact" id="dashCommits"><div class="empty"><div class="big">⏳</div>Loading…</div></div>
-  </div>
-</section>
-
-<!-- ══════════ ANALYTICS ══════════ -->
-<section class="section" id="s-analytics">
-  <div class="section-head"><h2>📈 Analytics</h2><div class="sub">Stats from connected services</div></div>
-  <div class="banner warn">⚠️ Connect Google Analytics in <a href="#" onclick="go('integrations')">Integrations</a> to see real data.</div>
-  <div class="analytics-grid">
-    <div class="analytics-card"><div class="ac-icon">👁️</div><div class="ac-label">Page Views (30d)</div><div class="ac-val">—</div><div class="ac-sub">Connect GA4</div></div>
-    <div class="analytics-card"><div class="ac-icon">👤</div><div class="ac-label">Unique Visitors</div><div class="ac-val">—</div><div class="ac-sub">Connect GA4</div></div>
-    <div class="analytics-card"><div class="ac-icon">⏱️</div><div class="ac-label">Avg Session</div><div class="ac-val">—</div><div class="ac-sub">Connect GA4</div></div>
-    <div class="analytics-card"><div class="ac-icon">📉</div><div class="ac-label">Bounce Rate</div><div class="ac-val">—</div><div class="ac-sub">Connect GA4</div></div>
-  </div>
-  <div class="panel"><div class="panel-h">🔍 Search Console Performance</div><div class="panel-b">
-    <div class="banner">Connect Google Search Console in <a href="#" onclick="go('integrations')">Integrations</a> to view clicks, impressions, and avg position.</div>
-    <div class="grid2">
-      <div><div style="color:var(--mute);font-size:12px;margin-bottom:4px">Total Clicks (28d)</div><div style="font-size:22px;font-weight:700">—</div></div>
-      <div><div style="color:var(--mute);font-size:12px;margin-bottom:4px">Impressions</div><div style="font-size:22px;font-weight:700">—</div></div>
-      <div><div style="color:var(--mute);font-size:12px;margin-bottom:4px">Avg Position</div><div style="font-size:22px;font-weight:700">—</div></div>
-      <div><div style="color:var(--mute);font-size:12px;margin-bottom:4px">CTR</div><div style="font-size:22px;font-weight:700">—</div></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">💰 AdSense Revenue</div><div class="panel-b">
-    <div class="banner">Connect Google AdSense in <a href="#" onclick="go('integrations')">Integrations</a> to view revenue and ad performance.</div>
-  </div></div>
-</section>
-
-<!-- ══════════ TOOLS ══════════ -->
-<section class="section" id="s-tools">
-  <div class="section-head"><h2>🛠️ Tools</h2><div class="sub">Manage the AI tools directory</div>
-    <div class="actions">
-      <button class="btn btn-primary" onclick="editTool(null)">➕ Add Tool</button>
-      <button class="btn btn-ok" onclick="commitArr('TOOLS','Update TOOLS')">💾 Commit Changes</button>
-    </div>
-  </div>
-  <div class="toolbar">
-    <input id="toolSearch" placeholder="🔍 Search tools…" oninput="renderTools()">
-    <select id="toolFilterCat" onchange="renderTools()"><option value="">All categories</option></select>
-    <select id="toolFilterBadge" onchange="renderTools()"><option value="">All badges</option><option>best</option><option>popular</option><option>new</option><option>hot</option><option>open</option></select>
-    <select id="toolFilterPricing" onchange="renderTools()"><option value="">All pricing</option><option>free</option><option>freemium</option><option>paid</option></select>
-  </div>
-  <div class="panel panel-b compact"><div class="tbl-wrap"><table>
-    <thead><tr><th>#</th><th>Tool</th><th>Category</th><th>Badge</th><th>Pricing</th><th>Rating</th><th style="text-align:right">Actions</th></tr></thead>
-    <tbody id="tbl-tools"><tr><td colspan="7"><div class="empty"><div class="big">⏳</div></div></td></tr></tbody>
-  </table></div></div>
-</section>
-
-<!-- ══════════ CATEGORIES ══════════ -->
-<section class="section" id="s-categories">
-  <div class="section-head"><h2>🏷️ Categories</h2><div class="sub">Tool categories &amp; icons</div>
-    <div class="actions">
-      <button class="btn btn-primary" onclick="editCat(null)">➕ Add Category</button>
-      <button class="btn btn-ok" onclick="commitArr('CATS','Update CATS')">💾 Commit</button>
-    </div>
-  </div>
-  <div class="panel panel-b compact"><div class="tbl-wrap"><table>
-    <thead><tr><th>Icon</th><th>Name</th><th>Count</th><th>Live Tools</th><th style="text-align:right">Actions</th></tr></thead>
-    <tbody id="tbl-cats"></tbody>
-  </table></div></div>
-</section>
-
-<!-- ══════════ BADGES & TAGS ══════════ -->
-<section class="section" id="s-badges">
-  <div class="section-head"><h2>🎖️ Badges &amp; Tags</h2></div>
-  <div class="panel"><div class="panel-h">🎖️ Badge Types</div><div class="panel-b">
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px">
-      <span class="pill best">best</span><span class="pill popular">popular</span><span class="pill new">new</span><span class="pill hot">hot</span><span class="pill open">open</span><span class="tag">(none)</span>
-    </div>
-    <p style="font-size:12.5px;color:var(--mute)">Badges are assigned per tool. To add a new badge type, update <code>assets/css/main.css</code> and re-deploy.</p>
-  </div></div>
-  <div class="panel"><div class="panel-h">🏷️ All Tags <span id="total-tags-count" class="badge" style="margin-left:8px"></span>
-    <div class="actions"><button class="btn btn-sm" onclick="renderTagCloud()">🔄 Refresh</button></div>
-  </div><div class="panel-b">
-    <p style="font-size:12.5px;color:var(--mute);margin-bottom:12px">Click a tag to filter tools by that tag.</p>
-    <div id="tag-cloud" style="display:flex;flex-wrap:wrap;gap:7px"></div>
-  </div></div>
-  <div class="panel"><div class="panel-h">📊 Badge Distribution</div><div class="panel-b">
-    <div id="badge-dist" style="display:flex;flex-wrap:wrap;gap:12px"></div>
-  </div></div>
-</section>
-
-<!-- ══════════ TRENDING ══════════ -->
-<section class="section" id="s-trending">
-  <div class="section-head"><h2>🔥 Trending</h2><div class="sub">Hot tools on the homepage</div>
-    <div class="actions">
-      <button class="btn btn-primary" onclick="editTrend(null)">➕ Add</button>
-      <button class="btn btn-ok" onclick="commitArr('TRENDING','Update TRENDING')">💾 Commit</button>
-    </div>
-  </div>
-  <div class="panel panel-b compact"><div class="tbl-wrap"><table>
-    <thead><tr><th>#</th><th>Tool Name</th><th>Category</th><th>Growth</th><th>Color</th><th style="text-align:right">Actions</th></tr></thead>
-    <tbody id="tbl-trend"></tbody>
-  </table></div></div>
-</section>
-
-<!-- ══════════ COMPARISONS ══════════ -->
-<section class="section" id="s-comparisons">
-  <div class="section-head"><h2>⚖️ Comparisons</h2><div class="sub">Comparison tables on the compare page</div>
-    <div class="actions">
-      <button class="btn btn-primary" onclick="addCmpRow()">➕ Add Row</button>
-      <button class="btn btn-ok" id="cmpCommitBtn">💾 Commit</button>
-    </div>
-  </div>
-  <div class="tabs" id="cmp-tabs">
-    <div class="tab active" data-cmp="COMPARE_DATA">General</div>
-    <div class="tab" data-cmp="WRITING_COMPARE">Writing</div>
-    <div class="tab" data-cmp="VIDEO_COMPARE">Video</div>
-  </div>
-  <div class="panel panel-b compact"><div class="tbl-wrap"><table id="tbl-cmp"><tbody><tr><td><div class="empty">Loading…</div></td></tr></tbody></table></div></div>
-</section>
-
-<!-- ══════════ ARTICLES ══════════ -->
-<section class="section" id="s-articles">
-  <div class="section-head"><h2>📰 Articles</h2><div class="sub">Blog posts and guides</div>
-    <div class="actions">
-      <button class="btn btn-primary" onclick="editArt(null)">➕ New Article</button>
-      <button class="btn btn-ok" onclick="commitArr('ARTICLES','Update ARTICLES')">💾 Commit</button>
-    </div>
-  </div>
-  <div class="toolbar">
-    <input id="artSearch" placeholder="🔍 Search articles…" oninput="renderArts()">
-    <select id="artFilterCat" onchange="renderArts()"><option value="">All categories</option></select>
-  </div>
-  <div class="panel panel-b compact"><div class="tbl-wrap"><table>
-    <thead><tr><th>Title</th><th>Slug</th><th>Category</th><th>Date</th><th>Author</th><th style="text-align:right">Actions</th></tr></thead>
-    <tbody id="tbl-arts"></tbody>
-  </table></div></div>
-</section>
-
-<!-- ══════════ BLOG SETTINGS ══════════ -->
-<section class="section" id="s-blog-settings">
-  <div class="section-head"><h2>📝 Blog Settings</h2><div class="sub">Global blog configuration</div></div>
-  <div class="panel"><div class="panel-h">📝 Configuration</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Blog Title</label><input id="bs_title" value="FindBestAI Blog"></div>
-      <div class="field"><label>Blog Subtitle</label><input id="bs_subtitle" value="AI insights, reviews &amp; guides"></div>
-      <div class="field"><label>Default Author Name</label><input id="bs_author" value="AI Prime Hub Editorial"></div>
-      <div class="field"><label>Default Author Role</label><input id="bs_author_role" value="Editorial Team"></div>
-      <div class="field"><label>Articles Per Page</label><input id="bs_per_page" type="number" value="10"></div>
-      <div class="field"><label>Blog URL Prefix</label><input id="bs_prefix" value="/blog/"></div>
-    </div>
-    <div class="field"><label>Blog Meta Description</label><textarea id="bs_meta" rows="2">The best AI tool reviews, comparisons, and guides. Stay updated with the latest in artificial intelligence.</textarea></div>
-    <div class="field"><label>Article Categories (comma separated)</label><input id="bs_cats" value="GUIDE, ROUNDUP, COMPARISON, REVIEW, NEWS, TUTORIAL"></div>
-    <div class="banner warn" style="margin-top:12px">Apply these settings by editing the blog page HTML via the Pages editor.</div>
-  </div></div>
-</section>
-
-<!-- ══════════ SITE IDENTITY ══════════ -->
-<section class="section" id="s-site-identity">
-  <div class="section-head"><h2>🎨 Site Identity</h2><div class="sub">Logo, name, colors, typography</div>
-    <div class="actions"><button class="btn btn-ok" onclick="saveSiteIdentity()">💾 Save &amp; Commit index.html</button></div>
-  </div>
-  <div class="panel"><div class="panel-h">🏷️ Site Name &amp; Info</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Site Name</label><input id="si_name" value="FindBestAI" oninput="document.getElementById('siteNameLabel').textContent=this.value"></div>
-      <div class="field"><label>Tagline / Short Description</label><input id="si_tagline" value="Find the Best AI Tools"></div>
-      <div class="field"><label>Site URL</label><input id="si_url" value="https://findbestai.pages.dev"></div>
-      <div class="field"><label>Contact Email</label><input id="si_email" value="admin@findbestai.com" type="email"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🖼️ Logo &amp; Favicon</div><div class="panel-b">
-    <div class="grid2">
-      <div>
-        <div class="field"><label>Logo Path (in repo)</label><input id="si_logo_path" value="/logo.webp"></div>
-        <div class="field"><label>Upload New Logo</label>
-          <input type="file" accept="image/*" onchange="uploadLogo(this)">
-          <div class="up-status" id="logo-upload-status"></div>
+      <!-- DASHBOARD -->
+      <section class="section active" id="s-dash">
+        <div class="section-head"><h2>Dashboard</h2><span class="sub">Overview & Activity</span></div>
+        <div class="cards">
+          <div class="stat"><div class="lbl">Tools</div><div class="val" id="st-tools">0</div></div>
+          <div class="stat"><div class="lbl">Categories</div><div class="val" id="st-cats">0</div></div>
+          <div class="stat"><div class="lbl">Articles</div><div class="val" id="st-arts">0</div></div>
+          <div class="stat"><div class="lbl">Trending</div><div class="val" id="st-trend">0</div></div>
         </div>
-        <div class="hint">Square image, WebP/PNG recommended, min 200×200px</div>
-      </div>
-      <div>
-        <div class="field"><label>Favicon Path</label><input id="si_favicon" value="/logo.webp"></div>
-        <div class="field"><label>Apple Touch Icon</label><input id="si_apple_icon" placeholder="/apple-touch-icon.png"></div>
-        <div class="field"><label>Nav Emoji Fallback</label><input id="si_nav_emoji" value="🤖" maxlength="4" style="font-size:20px;width:80px" oninput="document.getElementById('navEmoji').textContent=this.value"></div>
-      </div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🎨 Brand Colors</div><div class="panel-b">
-    <div class="grid4">
-      <div class="field"><label>Primary Accent</label><input id="si_acc" type="color" value="#5b8def"></div>
-      <div class="field"><label>Secondary Accent</label><input id="si_acc2" type="color" value="#7ba5ff"></div>
-      <div class="field"><label>Success / OK</label><input id="si_ok" type="color" value="#22d3a0"></div>
-      <div class="field"><label>Warning</label><input id="si_warn" type="color" value="#f59e0b"></div>
-      <div class="field"><label>Error / Danger</label><input id="si_err" type="color" value="#f43f5e"></div>
-      <div class="field"><label>Background</label><input id="si_bg" type="color" value="#0a0c12"></div>
-      <div class="field"><label>Card Background</label><input id="si_card" type="color" value="#141720"></div>
-      <div class="field"><label>Text Color</label><input id="si_text" type="color" value="#e4e8f4"></div>
-    </div>
-    <div class="field" style="margin-top:8px"><label>Hero Gradient (CSS)</label>
-      <input id="si_hero_gradient" value="linear-gradient(135deg,#0a0c12,#141720,#0a0c12)" oninput="document.getElementById('si-gp').style.background=this.value">
-    </div>
-    <div class="grad-preview" id="si-gp" style="background:linear-gradient(135deg,#0a0c12,#141720,#0a0c12)"></div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🔤 Typography</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Primary Font (CSS font-family)</label><input id="si_font" value="'Segoe UI',-apple-system,BlinkMacSystemFont,sans-serif"></div>
-      <div class="field"><label>Monospace Font</label><input id="si_font_mono" value="'Consolas','Courier New',monospace"></div>
-      <div class="field"><label>Base Font Size</label><input id="si_font_size" value="15px"></div>
-      <div class="field"><label>Heading Weight</label><input id="si_heading_weight" value="700"></div>
-    </div>
-  </div></div>
-</section>
+        <div class="panel">
+          <div class="panel-h">Recent Commits</div>
+          <div id="dashCommits"></div>
+        </div>
+      </section>
 
-<!-- ══════════ NAVIGATION & FOOTER ══════════ -->
-<section class="section" id="s-navigation">
-  <div class="section-head"><h2>🧭 Nav &amp; Footer</h2><div class="sub">Navigation links, footer, social media</div>
-    <div class="actions"><button class="btn btn-ok" onclick="saveNavFooter()">💾 Save &amp; Commit</button></div>
-  </div>
-  <div class="panel"><div class="panel-h">🧭 Navigation Links</div><div class="panel-b">
-    <div class="banner">Format: <code>Label|/url</code> — one per line</div>
-    <div class="field"><label>Nav Links (Label|/url — one per line)</label>
-      <textarea id="nf_nav" rows="8" class="mono">Home|/
-Tools|/tools/
-Compare|/compare/
-Blog|/blog/
-About|/about/
-Contact|/contact/</textarea>
-    </div>
-    <div class="grid2">
-      <div class="field"><label>CTA Button Text</label><input id="nf_cta_text" value="Subscribe Free"></div>
-      <div class="field"><label>CTA Button URL</label><input id="nf_cta_url" value="#newsletter"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🦶 Footer Content</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Copyright Text</label><input id="nf_copyright" value="© 2026 FindBestAI. All rights reserved."></div>
-      <div class="field"><label>Footer Tagline</label><input id="nf_footer_tagline" value="The #1 directory for AI tools"></div>
-    </div>
-    <div class="field"><label>Footer Links (Label|/url — one per line)</label>
-      <textarea id="nf_footer_links" rows="5" class="mono">Privacy Policy|/privacy/
-Terms of Service|/terms/
-Cookie Policy|/cookies/
-About Us|/about/
-Contact|/contact/</textarea>
-    </div>
-    <div class="field"><label>Social Links (Platform|URL — one per line)</label>
-      <textarea id="nf_social" rows="4" class="mono">Twitter|https://twitter.com/findbestai
-LinkedIn|https://linkedin.com/company/findbestai
-GitHub|https://github.com/Im-AbdulQadeer</textarea>
-    </div>
-    <div class="grid2">
-      <div class="field"><label>Newsletter Section Heading</label><input id="nf_nl_heading" value="Stay Ahead with AI"></div>
-      <div class="field"><label>Newsletter Subtext</label><input id="nf_nl_sub" value="Get the best AI tools &amp; news — free, weekly."></div>
-    </div>
-  </div></div>
-</section>
+      <!-- TOOLS -->
+      <section class="section" id="s-tools">
+        <div class="section-head">
+          <h2>AI Tools</h2>
+          <div class="actions"><button class="btn btn-primary" onclick="editTool()">＋ Add Tool</button></div>
+        </div>
+        <div class="toolbar">
+          <input type="text" id="toolSearch" placeholder="Search tools..." oninput="renderTools()">
+          <select id="toolFilterCat" onchange="renderTools()"><option value="">All categories</option></select>
+        </div>
+        <div class="panel">
+          <table>
+            <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Pricing</th><th>Rating</th><th></th></tr></thead>
+            <tbody id="tbl-tools"></tbody>
+          </table>
+        </div>
+      </section>
 
-<!-- ══════════ SEO & META ══════════ -->
-<section class="section" id="s-seo-meta">
-  <div class="section-head"><h2>🔍 SEO &amp; Meta</h2><div class="sub">Titles, descriptions, OG, structured data, robots, sitemap</div>
-    <div class="actions"><button class="btn btn-ok" onclick="saveSeoToIndex()">💾 Save to index.html</button></div>
-  </div>
-  <div class="panel"><div class="panel-h">🔍 Site-Wide SEO</div><div class="panel-b">
-    <div class="field"><label>Meta Title (homepage)</label><input id="seo_title" value="FindBestAI — Discover the Best AI Tools in 2026" oninput="updateSeoBar('seo-title-bar',this.value,50,60)"></div>
-    <div class="seo-bar" id="seo-title-bar"><div class="seo-fill" style="background:var(--ok);width:70%"></div></div>
-    <div style="font-size:11px;color:var(--mute);margin-bottom:12px">Ideal: 50–60 characters</div>
-    <div class="field"><label>Meta Description</label><textarea id="seo_desc" rows="2" oninput="updateSeoBar('seo-desc-bar',this.value,150,160)">Discover, compare and review the best AI tools of 2026. From ChatGPT to Midjourney — find the right AI tool for every task, free or paid.</textarea></div>
-    <div class="seo-bar" id="seo-desc-bar"><div class="seo-fill" style="background:var(--ok);width:82%"></div></div>
-    <div style="font-size:11px;color:var(--mute);margin-bottom:12px">Ideal: 150–160 characters</div>
-    <div class="grid2">
-      <div class="field"><label>Keywords (comma separated)</label><input id="seo_keywords" value="best AI tools, AI tools 2026, free AI tools, AI directory"></div>
-      <div class="field"><label>Canonical Base URL</label><input id="seo_canonical" value="https://findbestai.pages.dev"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">📊 Open Graph &amp; Social Sharing</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>OG Title</label><input id="seo_og_title" value="FindBestAI — Best AI Tools Directory 2026"></div>
-      <div class="field"><label>OG Description</label><input id="seo_og_desc" value="Discover the best AI tools for every task. Compare pricing, features &amp; reviews."></div>
-      <div class="field"><label>OG Image URL (1200×630px)</label><input id="seo_og_image" value="https://findbestai.pages.dev/logo.webp"></div>
-      <div class="field"><label>Twitter Card Type</label><select id="seo_twitter_card"><option>summary_large_image</option><option>summary</option></select></div>
-      <div class="field"><label>Twitter Handle</label><input id="seo_twitter_site" value="@findbestai"></div>
-      <div class="field"><label>OG Locale</label><input id="seo_og_locale" value="en_US"></div>
-      <div class="field"><label>OG Site Name</label><input id="seo_og_sitename" value="FindBestAI"></div>
-      <div class="field"><label>OG Type</label><input id="seo_og_type" value="website"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🏗️ JSON-LD Structured Data</div><div class="panel-b">
-    <div class="field"><label>Organization Schema (JSON-LD)</label><textarea id="seo_jsonld" rows="12" class="mono">{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "FindBestAI",
-  "url": "https://findbestai.pages.dev",
-  "logo": "https://findbestai.pages.dev/logo.webp",
-  "description": "The best AI tools directory",
-  "sameAs": [
-    "https://twitter.com/findbestai",
-    "https://linkedin.com/company/findbestai"
-  ]
-}</textarea></div>
-    <div class="banner" style="margin-top:8px">Validate at <a href="https://search.google.com/test/rich-results" target="_blank">search.google.com/test/rich-results</a></div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🗺️ sitemap.xml</div><div class="panel-b">
-    <div class="field"><label>sitemap.xml Content</label><textarea id="seo_sitemap_content" rows="12" class="mono">Click "Load" to fetch from GitHub…</textarea></div>
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button class="btn" onclick="loadFile('sitemap.xml','seo_sitemap_content','_sitemapSha')">🔄 Load from GitHub</button>
-      <button class="btn btn-ok" onclick="commitFile('sitemap.xml','seo_sitemap_content','_sitemapSha','Update sitemap.xml')">💾 Commit sitemap.xml</button>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🤖 robots.txt</div><div class="panel-b">
-    <div class="field"><label>robots.txt Content</label><textarea id="robots_content" rows="6" class="mono">Click "Load" to fetch…</textarea></div>
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button class="btn" onclick="loadFile('robots.txt','robots_content','_robotsSha')">🔄 Load</button>
-      <button class="btn btn-ok" onclick="commitFile('robots.txt','robots_content','_robotsSha','Update robots.txt')">💾 Commit robots.txt</button>
-    </div>
-  </div></div>
-</section>
+      <!-- CATEGORIES -->
+      <section class="section" id="s-cats">
+        <div class="section-head">
+          <h2>Categories</h2>
+          <div class="actions"><button class="btn btn-primary" onclick="editCat()">＋ Add Category</button></div>
+        </div>
+        <div class="panel">
+          <table>
+            <thead><tr><th>Icon</th><th>Name</th><th>Target Count</th><th>Current Live</th><th></th></tr></thead>
+            <tbody id="tbl-cats"></tbody>
+          </table>
+        </div>
+      </section>
 
-<!-- ══════════ HOMEPAGE TEXT ══════════ -->
-<section class="section" id="s-homepage">
-  <div class="section-head"><h2>🏠 Homepage Text</h2><div class="sub">Every heading, subheading, CTA button and label on the homepage</div>
-    <div class="actions"><button class="btn btn-ok" onclick="saveHomepageText()">💾 Save &amp; Commit index.html</button></div>
-  </div>
-  <div class="panel"><div class="panel-h">🦸 Hero Section</div><div class="panel-b">
-    <div class="field"><label>Main Heading (H1) — the biggest text on the page</label><input id="hp_h1" value="Find the Best AI Tools"></div>
-    <div class="field"><label>Subheading — text below the H1</label><textarea id="hp_sub" rows="2">Discover, compare and review the best AI tools of 2026. From ChatGPT to Midjourney — find the right tool for every task.</textarea></div>
-    <div class="grid2">
-      <div class="field"><label>Primary CTA Button Text</label><input id="hp_cta1" value="Explore All Tools"></div>
-      <div class="field"><label>Primary CTA URL</label><input id="hp_cta1_url" value="/tools/"></div>
-      <div class="field"><label>Secondary CTA Button Text</label><input id="hp_cta2" value="Compare Top AI"></div>
-      <div class="field"><label>Secondary CTA URL</label><input id="hp_cta2_url" value="/compare/"></div>
-      <div class="field"><label>Search Box Placeholder</label><input id="hp_search_ph" value="Search 500+ AI tools…"></div>
-      <div class="field"><label>Trust / Stats Badge Text</label><input id="hp_trust" value="500+ Tools · 20 Categories · Updated Daily"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">📂 Categories Section</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Section Heading</label><input id="hp_cats_h" value="Browse by Category"></div>
-      <div class="field"><label>Section Subheading</label><input id="hp_cats_sub" value="Explore AI tools organized by use case"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🔥 Trending Section</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Section Heading</label><input id="hp_trend_h" value="🔥 Trending This Week"></div>
-      <div class="field"><label>Section Subheading</label><input id="hp_trend_sub" value="The fastest-growing AI tools right now"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🛠️ Featured Tools Section</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Section Heading</label><input id="hp_tools_h" value="Top AI Tools of 2026"></div>
-      <div class="field"><label>Section Subheading</label><input id="hp_tools_sub" value="Hand-picked, tested and reviewed by our team"></div>
-      <div class="field"><label>"View All" Button Text</label><input id="hp_tools_viewall" value="View All Tools →"></div>
-      <div class="field"><label>"View All" Button URL</label><input id="hp_tools_viewall_url" value="/tools/"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">📰 Blog / Articles Section</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Section Heading</label><input id="hp_blog_h" value="Latest From the Blog"></div>
-      <div class="field"><label>Section Subheading</label><input id="hp_blog_sub" value="In-depth AI tool reviews, guides, and comparisons"></div>
-      <div class="field"><label>"Read More" Link Text</label><input id="hp_blog_rm" value="Read Article →"></div>
-      <div class="field"><label>"View All Posts" Link Text</label><input id="hp_blog_all" value="View All Posts →"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">⚖️ Comparison Section</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Section Heading</label><input id="hp_cmp_h" value="Compare AI Tools Side by Side"></div>
-      <div class="field"><label>Section Subheading</label><input id="hp_cmp_sub" value="Find out which AI tool wins for your specific use case"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">📧 Newsletter Section</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Heading</label><input id="hp_nl_h" value="Stay Ahead with AI"></div>
-      <div class="field"><label>Subscribe Button Text</label><input id="hp_nl_btn" value="Subscribe Free →"></div>
-      <div class="field"><label>Email Input Placeholder</label><input id="hp_nl_ph" value="Enter your email address…"></div>
-      <div class="field"><label>Privacy / GDPR Note</label><input id="hp_nl_privacy" value="No spam. Unsubscribe any time."></div>
-    </div>
-    <div class="field"><label>Subheading / Description</label><textarea id="hp_nl_sub" rows="2">Get the best AI tools, reviews and news — free, every week. Join 12,000+ subscribers.</textarea></div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🌐 Page Footer Banner (if any)</div><div class="panel-b">
-    <div class="field"><label>Announcement Bar Text (top of page)</label><input id="hp_announce" placeholder="e.g. 🎉 500+ AI tools now listed! Explore the directory →"></div>
-    <div class="field"><label>Announcement Bar URL</label><input id="hp_announce_url" placeholder="/tools/"></div>
-  </div></div>
-</section>
+      <!-- ARTICLES -->
+      <section class="section" id="s-arts">
+        <div class="section-head">
+          <h2>Articles</h2>
+          <div class="actions"><button class="btn btn-primary" onclick="editArt()">＋ Add Article</button></div>
+        </div>
+        <div class="panel">
+          <table>
+            <thead><tr><th>Title</th><th>Slug</th><th>Category</th><th>Date</th><th></th></tr></thead>
+            <tbody id="tbl-arts"></tbody>
+          </table>
+        </div>
+      </section>
 
-<!-- ══════════ PAGES ══════════ -->
-<section class="section" id="s-pages">
-  <div class="section-head"><h2>📄 Pages</h2><div class="sub">Raw HTML page editor — edit any page on the site</div>
-    <div class="actions"><button class="btn btn-primary" onclick="newPage()">➕ New Page</button></div>
-  </div>
-  <div class="panel panel-b compact"><div class="tbl-wrap"><table>
-    <thead><tr><th>Path</th><th>Size</th><th style="text-align:right">Actions</th></tr></thead>
-    <tbody id="tbl-pages"></tbody>
-  </table></div></div>
-</section>
+      <!-- TRENDING -->
+      <section class="section" id="s-trend">
+        <div class="section-head">
+          <h2>Trending Now</h2>
+          <div class="actions"><button class="btn btn-primary" onclick="editTrend()">＋ Add Trending</button></div>
+        </div>
+        <div class="panel">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Category</th><th>Change</th><th>Color</th><th></th></tr></thead>
+            <tbody id="tbl-trend"></tbody>
+          </table>
+        </div>
+      </section>
 
-<!-- ══════════ INTEGRATIONS ══════════ -->
-<section class="section" id="s-integrations">
-  <div class="section-head"><h2>🔗 Google Integrations</h2><div class="sub">Analytics, Search Console, AdSense, Tag Manager</div>
-    <div class="actions"><button class="btn btn-ok" onclick="saveIntegrations()">💾 Inject into index.html &amp; Commit</button></div>
-  </div>
-  <div class="panel"><div class="panel-h">📊 Google Analytics 4 (GA4)</div><div class="panel-b">
-    <div class="int-row">
-      <div class="int-icon">📊</div>
-      <div class="int-info"><div class="int-title">Google Analytics 4</div><div class="int-desc">Track page views, sessions, user journeys, events</div></div>
-      <span class="int-status is-off" id="ga-status">Not configured</span>
-    </div>
-    <div class="field" style="margin-top:14px"><label>Measurement ID</label><input id="int_ga4_id" placeholder="G-XXXXXXXXXX" oninput="setIntStatus('ga-status',this.value)"></div>
-    <div class="field"><label>Full gtag.js Script (paste from Google Analytics)</label>
-      <textarea id="int_ga4_script" rows="8" class="mono" placeholder="&lt;!-- Google tag (gtag.js) --&gt;&#10;&lt;script async src=&quot;https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX&quot;&gt;&lt;/script&gt;&#10;&lt;script&gt;&#10;  window.dataLayer = window.dataLayer || [];&#10;  function gtag(){dataLayer.push(arguments);}&#10;  gtag('js', new Date());&#10;  gtag('config', 'G-XXXXXXXX');&#10;&lt;/script&gt;"></textarea>
-    </div>
-    <div class="banner">This snippet injects into index.html &lt;head&gt; when you click "Inject &amp; Commit" above.</div>
-  </div></div>
-
-  <div class="panel"><div class="panel-h">🔍 Google Search Console</div><div class="panel-b">
-    <div class="int-row">
-      <div class="int-icon">🔍</div>
-      <div class="int-info"><div class="int-title">Google Search Console</div><div class="int-desc">Monitor rankings, crawl errors, index coverage</div></div>
-      <span class="int-status is-off" id="gsc-status">Not verified</span>
-    </div>
-    <div class="field" style="margin-top:14px"><label>Meta Verification Tag (full tag)</label>
-      <input id="int_gsc_meta" class="mono" placeholder='&lt;meta name="google-site-verification" content="XXXXXXXXX"&gt;' oninput="setIntStatus('gsc-status',this.value)">
-    </div>
-    <div class="banner">After adding, deploy and then verify at <a href="https://search.google.com/search-console" target="_blank">search.google.com/search-console</a></div>
-  </div></div>
-
-  <div class="panel"><div class="panel-h">💰 Google AdSense</div><div class="panel-b">
-    <div class="int-row">
-      <div class="int-icon">💰</div>
-      <div class="int-info"><div class="int-title">Google AdSense</div><div class="int-desc">Monetize with display ads. Requires AdSense account approval.</div></div>
-      <span class="int-status is-off" id="adsense-status">Not configured</span>
-    </div>
-    <div class="field" style="margin-top:14px"><label>Publisher ID</label><input id="int_adsense_pub" placeholder="pub-XXXXXXXXXXXXXXXX" oninput="setIntStatus('adsense-status',this.value)"></div>
-    <div class="field"><label>AdSense Auto Ads Script</label>
-      <textarea id="int_adsense_script" rows="4" class="mono" placeholder='&lt;script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX" crossorigin="anonymous"&gt;&lt;/script&gt;'></textarea>
-    </div>
-    <div class="field"><label>Manual Ad Unit Code (for specific placements)</label>
-      <textarea id="int_adsense_unit" rows="5" class="mono" placeholder="&lt;ins class='adsbygoogle' style='display:block' data-ad-client='ca-pub-XXXXXXXX' data-ad-slot='XXXXXXXXXX' data-ad-format='auto' data-full-width-responsive='true'&gt;&lt;/ins&gt;&#10;&lt;script&gt;(adsbygoogle = window.adsbygoogle || []).push({});&lt;/script&gt;"></textarea>
-    </div>
-  </div></div>
-
-  <div class="panel"><div class="panel-h">🏷️ Google Tag Manager (GTM)</div><div class="panel-b">
-    <div class="int-row">
-      <div class="int-icon">🏷️</div>
-      <div class="int-info"><div class="int-title">Google Tag Manager</div><div class="int-desc">Manage all tracking tags from one place, no code deploy needed</div></div>
-      <span class="int-status is-off" id="gtm-status">Not configured</span>
-    </div>
-    <div class="field" style="margin-top:14px"><label>Container ID</label><input id="int_gtm_id" placeholder="GTM-XXXXXXX" oninput="setIntStatus('gtm-status',this.value)"></div>
-    <div class="field"><label>GTM Head Snippet (in &lt;head&gt;)</label><textarea id="int_gtm_head" rows="5" class="mono" placeholder="&lt;!-- Google Tag Manager head snippet --&gt;"></textarea></div>
-    <div class="field"><label>GTM Body Snippet (immediately after &lt;body&gt;)</label><textarea id="int_gtm_body" rows="5" class="mono" placeholder="&lt;!-- Google Tag Manager body snippet --&gt;"></textarea></div>
-  </div></div>
-
-  <div class="panel"><div class="panel-h">🔧 Custom Scripts &amp; Tags</div><div class="panel-b">
-    <div class="field"><label>Custom &lt;head&gt; Code (scripts, pixels, verification tags)</label>
-      <textarea id="int_custom_head" rows="7" class="mono" placeholder="&lt;!-- Paste any custom scripts, meta tags, or pixels here --&gt;&#10;&lt;!-- e.g. Hotjar, Clarity, Facebook Pixel, Intercom, etc. --&gt;"></textarea>
-    </div>
-    <div class="field"><label>Custom &lt;/body&gt; End Scripts</label>
-      <textarea id="int_custom_body" rows="5" class="mono" placeholder="&lt;!-- Scripts to inject before closing &lt;/body&gt; tag --&gt;"></textarea>
-    </div>
-    <div class="banner warn">⚠️ All scripts above will be injected into index.html when you click "Inject &amp; Commit". Make sure they are correct before saving.</div>
-  </div></div>
-</section>
-
-<!-- ══════════ EMAIL TEMPLATES ══════════ -->
-<section class="section" id="s-email-templates">
-  <div class="section-head"><h2>📧 Email Templates</h2><div class="sub">Welcome email and weekly digest HTML</div></div>
-  <div class="tabs" id="email-tabs">
-    <div class="tab active" data-etab="welcome">Welcome Email</div>
-    <div class="tab" data-etab="digest">Weekly Digest</div>
-  </div>
-  <div id="et-welcome">
-    <div class="panel"><div class="panel-h">📧 Welcome Email — email-welcome.html
-      <div class="actions">
-        <button class="btn btn-sm" onclick="loadFile('email-welcome.html','et_welcome_html','_emailWelcomeSha')">🔄 Load</button>
-        <button class="btn btn-ok btn-sm" onclick="commitFile('email-welcome.html','et_welcome_html','_emailWelcomeSha','Update email-welcome.html')">💾 Commit</button>
-      </div>
-    </div><div class="panel-b">
-      <div class="field"><label>HTML Source</label><textarea id="et_welcome_html" rows="24" class="mono" style="min-height:450px">Click "Load" to fetch from GitHub…</textarea></div>
-    </div></div>
-  </div>
-  <div id="et-digest" class="hidden">
-    <div class="panel"><div class="panel-h">📰 Weekly Digest — email-weekly-digest.html
-      <div class="actions">
-        <button class="btn btn-sm" onclick="loadFile('email-weekly-digest.html','et_digest_html','_emailDigestSha')">🔄 Load</button>
-        <button class="btn btn-ok btn-sm" onclick="commitFile('email-weekly-digest.html','et_digest_html','_emailDigestSha','Update email-weekly-digest.html')">💾 Commit</button>
-      </div>
-    </div><div class="panel-b">
-      <div class="field"><label>HTML Source</label><textarea id="et_digest_html" rows="24" class="mono" style="min-height:450px">Click "Load" to fetch from GitHub…</textarea></div>
-    </div></div>
-  </div>
-</section>
-
-<!-- ══════════ SETTINGS ══════════ -->
-<section class="section" id="s-settings">
-  <div class="section-head"><h2>⚙️ Settings</h2></div>
-  <div class="panel"><div class="panel-h">🔧 GitHub Configuration</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Repository (read-only)</label><input value="Im-AbdulQadeer/FindBestAI" readonly style="opacity:.6"></div>
-      <div class="field"><label>Branch</label><input id="setBranch" value="main"></div>
-      <div class="field"><label>Commit Author Name</label><input id="setName" value="FindBestAI Admin"></div>
-      <div class="field"><label>Commit Author Email</label><input id="setEmail" value="admin@findbestai.com"></div>
-    </div>
-    <div class="banner ok" style="margin-top:4px">📂 Source of truth: <code>assets/js/data.js</code> — parsed block-by-block. Each save commits one file. Cloudflare Pages auto-deploys in ~30s.</div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🌐 Site Configuration</div><div class="panel-b">
-    <div class="grid2">
-      <div class="field"><label>Live Site URL</label><input id="cfg_live_url" value="https://findbestai.pages.dev"></div>
-      <div class="field"><label>Cloudflare Pages Project Name</label><input id="cfg_cf_project" value="findbestai"></div>
-    </div>
-  </div></div>
-  <div class="panel"><div class="panel-h">🛡️ Security</div><div class="panel-b">
-    <div class="banner warn">⚠️ Your GitHub token is stored only in the current browser session. It is cleared on sign-out or tab close. <strong>Never</strong> commit tokens to the repository.</div>
-    <button class="btn btn-danger" onclick="logout()" style="margin-top:10px">↩ Sign Out &amp; Clear Session</button>
-  </div></div>
-</section>
-
-<!-- ══════════ COMMITS ══════════ -->
-<section class="section" id="s-commits">
-  <div class="section-head"><h2>📜 Commit History</h2>
-    <div class="actions"><button class="btn btn-sm" onclick="loadCommits()">🔄 Refresh</button></div>
-  </div>
-  <div class="panel panel-b compact"><div class="tbl-wrap"><table>
-    <thead><tr><th>Message</th><th>Author</th><th>Date</th><th>SHA</th></tr></thead>
-    <tbody id="commitsList"></tbody>
-  </table></div></div>
-</section>
-
-    </div><!-- /content -->
-  </main>
-</div><!-- /app -->
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-  <div class="modal-card">
-    <div class="modal-h"><span id="modalTitle">Edit</span><span class="x" onclick="closeModal()">×</span></div>
-    <div class="modal-b" id="modalBody"></div>
-    <div class="modal-f" id="modalFoot"></div>
-  </div>
-</div>
-<div class="toasts" id="toasts"></div>
-<script>
-/* ── CONFIG ── */
-const CFG={owner:'Im-AbdulQadeer',repo:'FindBestAI',branch:'main',dataPath:'assets/js/data.js',token:''};
-const API=()=>`https://api.github.com/repos/${CFG.owner}/${CFG.repo}`;
-const S={raw:'',sha:'',parsed:{TOOLS:[],CATS:[],ARTICLES:[],COMPARE_DATA:[],WRITING_COMPARE:[],VIDEO_COMPARE:[],TRENDING:[]},pages:[],commits:[],activeCmp:'COMPARE_DATA'};
-
-/* ── UI HELPERS ── */
-function toast(msg,type=''){
-  const t=document.createElement('div');t.className='toast '+(type||'');t.textContent=msg;
-  document.getElementById('toasts').appendChild(t);
-  setTimeout(()=>{t.style.opacity='0';t.style.transition='.3s';setTimeout(()=>t.remove(),300)},3800);
-}
-function openModal(title,body,foot){
-  document.getElementById('modalTitle').textContent=title;
-  document.getElementById('modalBody').innerHTML=body;
-  document.getElementById('modalFoot').innerHTML=foot||'';
-  document.getElementById('modal').classList.add('open');
-}
-function closeModal(){document.getElementById('modal').classList.remove('open')}
-function setSync(s,t){document.getElementById('syncDot').className='dot-s '+s;document.getElementById('syncTxt').textContent=t}
-function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-
-/* ── GITHUB API ── */
-async function gh(path,opts={}){
-  const url=path.startsWith('http')?path:API()+path;
-  const h={'Authorization':`Bearer ${CFG.token}`,'Accept':'application/vnd.github+json',...(opts.headers||{})};
-  const r=await fetch(url,{...opts,headers:h});
-  if(r.status===204)return null;
-  const j=await r.json().catch(()=>({}));
-  if(!r.ok)throw new Error((j&&j.message)||'HTTP '+r.status);
-  return j;
-}
-const b64e=s=>btoa(unescape(encodeURIComponent(s)));
-const b64d=s=>decodeURIComponent(escape(atob(s.replace(/\n/g,''))));
-
-async function getFile(path){
-  const j=await gh(`/contents/${path}?ref=${CFG.branch}`);
-  return{sha:j.sha,text:b64d(j.content),path};
-}
-async function putFile(path,text,msg,sha){
-  const body={message:msg,content:b64e(text),branch:CFG.branch,
-    committer:{name:gv('setName')||'FindBestAI Admin',email:gv('setEmail')||'admin@findbestai.com'}};
-  if(sha)body.sha=sha;
-  return gh(`/contents/${path}`,{method:'PUT',body:JSON.stringify(body)});
-}
-async function delFile(path,msg,sha){
-  return gh(`/contents/${path}`,{method:'DELETE',body:JSON.stringify({message:msg,sha,branch:CFG.branch,
-    committer:{name:gv('setName')||'Admin',email:gv('setEmail')||'admin@findbestai.com'}})});
-}
-function gv(id){const el=document.getElementById(id);return el?el.value:''}
-
-/* ── IMAGE UPLOAD ── */
-async function uploadImg(file,prefix){
-  if(!file)return '';
-  const ext=(file.name.split('.').pop()||'png').toLowerCase().replace(/[^a-z0-9]/g,'')||'png';
-  const safe=(prefix||'img').replace(/[^a-z0-9-]/gi,'').toLowerCase().slice(0,28)||'img';
-  const path='assets/uploads/'+safe+'-'+Date.now()+'.'+ext;
-  const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(String(r.result).split(',')[1]||'');r.onerror=rej;r.readAsDataURL(file)});
-  await gh(`/contents/${path}`,{method:'PUT',body:JSON.stringify({message:'Upload '+path,content:b64,branch:CFG.branch,
-    committer:{name:gv('setName')||'Admin',email:gv('setEmail')||'admin@findbestai.com'}})});
-  return '/'+path;
-}
-async function uploadLogo(input){
-  const s=document.getElementById('logo-upload-status');s.textContent='⏳ Uploading…';
-  try{const url=await uploadImg(input.files[0],'logo');document.getElementById('si_logo_path').value=url;s.innerHTML='✅ Uploaded: <code>'+url+'</code>';toast('Logo uploaded','ok')}
-  catch(e){s.textContent='❌ '+e.message;toast(e.message,'err')}
-}
-function imgField(label,inputId,cur,prefix){
-  return `<div class="field"><label>${label}</label>
-    <input type="hidden" id="${inputId}" value="${esc(cur||'')}">
-    <input type="file" accept="image/*" onchange="(async function(el){const s=el.parentNode.querySelector('.up-status');s.textContent='⏳ Uploading…';try{const url=await uploadImg(el.files[0],'${prefix}');document.getElementById('${inputId}').value=url;s.innerHTML='✅ <code>'+url+'</code><div class=up-preview><img src=\\''+url+'\\'></div>';toast('Uploaded','ok')}catch(e){s.textContent='❌ '+e.message}})(this)">
-    <div class="up-status up-preview">${cur?`<img src="${esc(cur)}">`:''}</div>
-  </div>`;
-}
-
-/* ── data.js PARSER ── */
-function findBlock(src,name){
-  const re=new RegExp('(^|\\n)\\s*const\\s+'+name+'\\s*=\\s*','g'),m=re.exec(src);
-  if(!m)return null;
-  const start=m.index+m[0].length,open=src[start],close=open==='['?']':(open==='{'?'}':null);
-  if(!close)return null;
-  let i=start,depth=0,inStr=null,inTpl=false,es=false,iL=false,iB=false;
-  for(;i<src.length;i++){
-    const c=src[i],n=src[i+1];
-    if(es){es=false;continue}
-    if(inStr){if(c==='\\'){es=true;continue}if(c===inStr)inStr=null;continue}
-    if(inTpl){if(c==='\\'){es=true;continue}if(c==='`')inTpl=false;continue}
-    if(iL){if(c==='\n')iL=false;continue}
-    if(iB){if(c==='*'&&n=='/'){iB=false;i++}continue}
-    if(c==='/'&&n=='/'){iL=true;i++;continue}
-    if(c==='/'&&n==='*'){iB=true;i++;continue}
-    if(c==="'"||c==='"'){inStr=c;continue}
-    if(c==='`'){inTpl=true;continue}
-    if(c==='['||c==='{'||c==='('){depth++;continue}
-    if(c===']'||c==='}'||c===')'){depth--;if(depth===0){i++;break}}
-  }
-  return{start:m.index+(m[1]?1:0),literalStart:start,literalEnd:i};
-}
-function parseBlock(src,name){const b=findBlock(src,name);if(!b)return null;try{return Function('"use strict";return ('+src.slice(b.literalStart,b.literalEnd)+')')()}catch(e){return null}}
-function strLit(s){
-  if(/\n/.test(s)||(s.length>100&&/[<>]/.test(s)))return '`'+s.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$\{/g,'\\${')+'`';
-  return "'"+s.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\n/g,'\\n').replace(/\r/g,'')+"'";
-}
-function keyLit(k){return /^[A-Za-z_$][\w$]*$/.test(k)?k:strLit(k)}
-function serJS(v,d){
-  d=d||0;const p=n=>'  '.repeat(n);
-  if(v===null||v===undefined)return 'null';
-  if(typeof v==='number'||typeof v==='boolean')return String(v);
-  if(typeof v==='string')return strLit(v);
-  if(Array.isArray(v)){if(!v.length)return '[]';return '[\n'+v.map(x=>p(d+1)+serJS(x,d+1)).join(',\n')+'\n'+p(d)+']'}
-  if(typeof v==='object'){
-    const ks=Object.keys(v);if(!ks.length)return '{}';
-    const il=ks.every(k=>typeof v[k]!=='object'||v[k]===null)&&ks.length<=8;
-    if(il)return '{'+ks.map(k=>keyLit(k)+':'+serJS(v[k],d+1)).join(',')+'}';
-    return '{\n'+ks.map(k=>p(d+1)+keyLit(k)+': '+serJS(v[k],d+1)).join(',\n')+'\n'+p(d)+'}';
-  }
-  return 'null';
-}
-function spliceBlock(src,name,val){
-  const b=findBlock(src,name);if(!b)throw new Error('Block '+name+' not found');
-  return src.slice(0,b.literalStart)+serJS(val,0)+';'+src.slice(b.literalEnd+(src[b.literalEnd]===';'?1:0));
-}
-
-/* ── AUTH ── */
-async function doLogin(){
-  const pat=gv('loginPat').trim(),user=gv('loginUser').trim();
-  if(!pat)return showErr('Token required.');
-  const btn=document.getElementById('loginBtn');btn.disabled=true;btn.textContent='Connecting…';
-  CFG.token=pat;
-  try{
-    await gh('');
-    const me=await gh('https://api.github.com/user').catch(()=>null);
-    sessionStorage.setItem('fbai_pat',pat);if(user)sessionStorage.setItem('fbai_user',user);
-    document.getElementById('login').classList.add('hidden');
-    document.getElementById('app').classList.remove('hidden');
-    document.getElementById('meUser').textContent=(me&&me.login)||user||'github';
-    document.getElementById('setName').value=(me&&me.name)||user||'FindBestAI Admin';
-    await loadAll();
-  }catch(e){btn.disabled=false;btn.textContent='🔑 Sign In';showErr('Login failed: '+e.message)}
-}
-function showErr(m){const e=document.getElementById('loginErr');e.textContent=m;e.classList.remove('hidden')}
-function logout(){sessionStorage.clear();location.reload()}
-
-/* ── LOAD ALL ── */
-async function loadAll(){
-  setSync('sync','Loading data.js…');
-  try{
-    const f=await getFile(CFG.dataPath);S.raw=f.text;S.sha=f.sha;
-    for(const k of Object.keys(S.parsed)){const v=parseBlock(S.raw,k);S.parsed[k]=Array.isArray(v)?v:(v||[])}
-    setSync('sync','Listing pages…');
-    const tree=await gh(`/git/trees/${CFG.branch}?recursive=1`);
-    S.pages=(tree.tree||[]).filter(t=>t.type==='blob'&&/\.html$/i.test(t.path)&&!t.path.startsWith('admin/')).map(t=>({path:t.path,size:t.size,sha:t.sha}));
-    setSync('sync','Loading commits…');
-    S.commits=await gh('/commits?per_page=30').catch(()=>[]);
-    setSync('ok','Synced '+new Date().toLocaleTimeString());
-    renderAll();
-    toast('Loaded '+S.parsed.TOOLS.length+' tools, '+S.parsed.CATS.length+' cats, '+S.parsed.ARTICLES.length+' articles, '+S.pages.length+' pages','ok');
-  }catch(e){setSync('err','Sync failed');toast('Load failed: '+e.message,'err')}
-}
-
-/* ── COMMIT ARRAY ── */
-async function commitArr(blockName,msg){
-  if(!confirm('Commit changes to '+blockName+'?'))return;
-  setSync('sync','Committing…');
-  try{
-    const newSrc=spliceBlock(S.raw,blockName,S.parsed[blockName]);
-    const r=await putFile(CFG.dataPath,newSrc,msg,S.sha);
-    S.raw=newSrc;S.sha=r.content.sha;
-    setSync('ok','Committed '+new Date().toLocaleTimeString());
-    toast('✅ '+msg+' — deploying…','ok');loadCommits();
-  }catch(e){setSync('err','Commit failed');toast('Commit failed: '+e.message,'err')}
-}
-
-/* ── GENERIC FILE HELPERS ── */
-async function loadFile(path,elId,shaKey){
-  setSync('sync','Loading '+path+'…');
-  try{const f=await getFile(path);document.getElementById(elId).value=f.text;window[shaKey]=f.sha;setSync('ok','Loaded');toast('Loaded '+path,'ok')}
-  catch(e){setSync('err','Failed');toast('Load failed: '+e.message,'err')}
-}
-async function commitFile(path,elId,shaKey,msg){
-  const txt=document.getElementById(elId).value;
-  setSync('sync','Committing…');
-  try{const r=await putFile(path,txt,msg,window[shaKey]);window[shaKey]=r.content.sha;setSync('ok','Done');toast('✅ '+path+' committed','ok')}
-  catch(e){setSync('err','Failed');toast('Commit failed: '+e.message,'err')}
-}
-
-/* ── NAV ── */
-function go(page){
-  document.querySelectorAll('.nav-item[data-go]').forEach(n=>n.classList.toggle('active',n.dataset.go===page));
-  document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active',s.id==='s-'+page));
-}
-document.addEventListener('click',e=>{
-  const ni=e.target.closest('.nav-item[data-go]');if(ni)go(ni.dataset.go);
-  const ct=e.target.closest('#cmp-tabs .tab[data-cmp]');
-  if(ct){S.activeCmp=ct.dataset.cmp;document.querySelectorAll('#cmp-tabs .tab').forEach(x=>x.classList.toggle('active',x===ct));renderCmp()}
-  const et=e.target.closest('#email-tabs .tab[data-etab]');
-  if(et){const tab=et.dataset.etab;document.querySelectorAll('#email-tabs .tab').forEach(x=>x.classList.toggle('active',x===et));
-    document.getElementById('et-welcome').classList.toggle('hidden',tab!=='welcome');
-    document.getElementById('et-digest').classList.toggle('hidden',tab!=='digest')}
-});
-
-/* ── RENDER ALL ── */
-function renderAll(){renderDash();renderTools();renderCats();renderArts();renderCmp();renderTrend();renderPages();renderCommits();renderTagCloud();renderBadgeDist()}
-
-function renderDash(){
-  const cnt={tools:S.parsed.TOOLS.length,cats:S.parsed.CATS.length,arts:S.parsed.ARTICLES.length,trend:S.parsed.TRENDING.length,pages:S.pages.length};
-  ['tools','cats','arts','trend','pages'].forEach(k=>{const el=document.getElementById('st-'+k);if(el)el.textContent=cnt[k]});
-  ['tools','cats','arts','trend','pages'].forEach(k=>{const el=document.getElementById('b-'+k);if(el)el.textContent=cnt[k]});
-  document.getElementById('st-commits').textContent=S.commits.length;
-  const c=document.getElementById('dashCommits');
-  if(!S.commits.length){c.innerHTML='<div class="empty"><div class="big">📭</div>No commits.</div>';return}
-  c.innerHTML='<table><thead><tr><th>Message</th><th>Author</th><th>Date</th><th>SHA</th></tr></thead><tbody>'+
-    S.commits.slice(0,8).map(x=>`<tr><td><a href="${x.html_url}" target="_blank">${esc(x.commit.message.split('\n')[0])}</a></td><td>${esc(x.commit.author.name)}</td><td style="white-space:nowrap">${new Date(x.commit.author.date).toLocaleString()}</td><td><code>${x.sha.slice(0,7)}</code></td></tr>`).join('')+'</tbody></table>';
-}
-
-function loadCommits(){gh('/commits?per_page=30').then(c=>{S.commits=c||[];renderCommits();renderDash()}).catch(()=>{})}
-function renderCommits(){
-  const tb=document.getElementById('commitsList');
-  if(!S.commits.length){tb.innerHTML='<tr><td colspan="4"><div class="empty"><div class="big">📭</div>No commits.</div></td></tr>';return}
-  tb.innerHTML=S.commits.map(x=>`<tr><td><a href="${x.html_url}" target="_blank">${esc(x.commit.message.split('\n')[0])}</a></td><td>${esc(x.commit.author.name)}</td><td style="white-space:nowrap">${new Date(x.commit.author.date).toLocaleString()}</td><td><code>${x.sha.slice(0,7)}</code></td></tr>`).join('');
-}
-
-/* ── TOOLS ── */
-function renderTools(){
-  const sel=document.getElementById('toolFilterCat');
-  const cats=[...new Set(S.parsed.TOOLS.map(t=>t.cat))].sort();
-  if(sel.options.length-1!==cats.length)sel.innerHTML='<option value="">All categories</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join('');
-  const q=gv('toolSearch').toLowerCase(),fc=sel.value,fb=gv('toolFilterBadge'),fp=gv('toolFilterPricing');
-  const rows=S.parsed.TOOLS.filter(t=>(!fc||t.cat===fc)&&(!fb||(t.badge||'')===fb)&&(!fp||(t.pricing||'')===fp)&&(!q||(t.name+' '+t.desc+' '+(t.tags||[]).join(' ')).toLowerCase().includes(q)));
-  const tb=document.getElementById('tbl-tools');
-  if(!rows.length){tb.innerHTML='<tr><td colspan="7"><div class="empty"><div class="big">🔍</div>No tools match.</div></td></tr>';return}
-  tb.innerHTML=rows.map(t=>{
-    const idx=S.parsed.TOOLS.indexOf(t);
-    const logo=t.logo&&/^\//.test(t.logo)?`<img class="mini-logo" src="${esc(t.logo)}" alt="">`:t.logo&&/\./.test(t.logo)?`<img class="mini-logo" src="https://logo.clearbit.com/${esc(t.logo)}" onerror="this.style.display='none'" alt="">`:`<span style="font-size:16px">${esc(t.emoji||'🔧')}</span>`;
-    const badge=t.badge?`<span class="pill ${esc(t.badge)}">${esc(t.badge)}</span>`:'<span style="color:var(--dim);font-size:11px">—</span>';
-    return`<tr><td style="color:var(--mute);font-size:12px">${t.id||''}</td><td>${logo} <strong>${esc(t.name)}</strong><div class="truncate" style="color:var(--mute);font-size:11.5px">${esc(t.desc||'')}</div></td><td><span class="tag cat-tag">${esc(t.cat)}</span></td><td>${badge}</td><td><span class="tag">${esc(t.pricing||'')}</span></td><td style="white-space:nowrap">⭐${t.rating||''} <span style="color:var(--mute);font-size:11px">(${esc(t.reviews||'')})</span></td><td><div class="row-actions"><button class="btn btn-sm" onclick="editTool(${idx})">Edit</button><button class="btn btn-sm btn-danger" onclick="delItem('TOOLS',${idx},'${esc(t.name)}')">×</button></div></td></tr>`;
-  }).join('');
-}
-function editTool(idx){
-  const isNew=idx==null;
-  const t=isNew?{id:Math.max(0,...S.parsed.TOOLS.map(x=>x.id||0))+1,name:'',cat:S.parsed.CATS[0]?S.parsed.CATS[0].name:'',emoji:'🔧',logo:'',brand:'#000000',bg:'linear-gradient(135deg,#7c3aed,#4f46e5)',pricing:'freemium',badge:'',url:'',desc:'',rating:4.5,reviews:'0',tags:[],features:[],alts:[],price:'',freeAlt:''}:{...S.parsed.TOOLS[idx]};
-  const cats=S.parsed.CATS.map(c=>c.name);
-  const badgeOpts=['','best','popular','new','hot','open'].map(b=>`<option value="${b}" ${(t.badge||'')===b?'selected':''}>${b||'(none)'}</option>`).join('');
-  const pricingOpts=['free','freemium','paid'].map(p=>`<option ${t.pricing===p?'selected':''}>${p}</option>`).join('');
-  openModal(isNew?'➕ New Tool':'✏️ Edit: '+t.name,`
-    <div class="tabs" style="margin-bottom:14px">
-      <div class="tab active" onclick="switchTab('ttab','basic',this)">Basic Info</div>
-      <div class="tab" onclick="switchTab('ttab','features',this)">Features &amp; Alts</div>
-      <div class="tab" onclick="switchTab('ttab','seo',this)">Tags &amp; SEO</div>
-      <div class="tab" onclick="switchTab('ttab','display',this)">Display</div>
-    </div>
-    <div id="ttab-basic">
-      <div class="grid2">
-        <div class="field"><label>Tool ID</label><input id="f_id" type="number" value="${t.id||0}"></div>
-        <div class="field"><label>Tool Name *</label><input id="f_name" value="${esc(t.name)}" placeholder="e.g. ChatGPT"></div>
-        <div class="field"><label>Category *</label><select id="f_cat">${cats.map(c=>`<option ${c===t.cat?'selected':''}>${esc(c)}</option>`).join('')}</select></div>
-        <div class="field"><label>Website URL</label><input id="f_url" value="${esc(t.url||'')}"></div>
-        <div class="field"><label>Pricing Model</label><select id="f_pricing">${pricingOpts}</select></div>
-        <div class="field"><label>Badge</label><select id="f_badge">${badgeOpts}</select></div>
-        <div class="field"><label>Star Rating (0–5)</label><input id="f_rating" type="number" step="0.1" min="0" max="5" value="${t.rating||4.5}"></div>
-        <div class="field"><label>Review Count (e.g. 12.4k)</label><input id="f_reviews" value="${esc(t.reviews||'')}"></div>
-        <div class="field"><label>Price Text</label><input id="f_price" value="${esc(t.price||'')}" placeholder="Free · Pro $20/mo"></div>
-        <div class="field"><label>Free Alternative Name</label><input id="f_freeAlt" value="${esc(t.freeAlt||'')}"></div>
-      </div>
-      <div class="field"><label>Short Description *</label><textarea id="f_desc" rows="3" placeholder="2–3 sentence tool description…">${esc(t.desc||'')}</textarea></div>
-    </div>
-    <div id="ttab-features" class="hidden">
-      <div class="field"><label>Key Features (one per line)</label><textarea id="f_features" rows="7" placeholder="Feature 1&#10;Feature 2&#10;…">${esc((t.features||[]).join('\n'))}</textarea></div>
-      <div class="field"><label>Alternatives — Name|Pricing, one per line</label><textarea id="f_alts" rows="4" placeholder="ChatGPT|Freemium&#10;Gemini|Free">${esc((t.alts||[]).map(a=>(a.n||'')+'|'+(a.t||'')).join('\n'))}</textarea></div>
-      <div class="field"><label>Brand Color (used in UI accents)</label><input id="f_brand" type="color" value="${t.brand||'#000000'}"></div>
-    </div>
-    <div id="ttab-seo" class="hidden">
-      <div class="field"><label>Tags / Keywords (comma separated)</label><input id="f_tags" value="${esc((t.tags||[]).join(', '))}"></div>
-      <div class="hint">Tags shown on card, used for filtering. Include all relevant keywords like: "ai writing", "gpt", "content", "free"</div>
-    </div>
-    <div id="ttab-display" class="hidden">
-      <div class="field"><label>Emoji Icon (fallback when no logo)</label><input id="f_emoji" value="${esc(t.emoji||'🔧')}" style="font-size:20px;width:80px"></div>
-      ${imgField('Logo Image (upload to GitHub repo)','f_logo',t.logo||'','tool-'+(t.name||'').toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,20))}
-      <div class="field"><label>Background Gradient (CSS value)</label><input id="f_bg" value="${esc(t.bg||'linear-gradient(135deg,#7c3aed,#4f46e5)')}" oninput="document.getElementById('tgp').style.background=this.value"></div>
-      <div class="grad-preview" id="tgp" style="background:${esc(t.bg||'')}"></div>
-    </div>
-  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-ok" onclick="saveTool(${isNew?-1:idx})">💾 Save Tool</button>`);
-}
-function switchTab(prefix,name,el){
-  document.querySelectorAll(`#modal [id^=${prefix}-]`).forEach(d=>d.classList.add('hidden'));
-  document.getElementById(prefix+'-'+name).classList.remove('hidden');
-  document.querySelectorAll('#modal .tab').forEach(t=>t.classList.toggle('active',t===el));
-}
-function saveTool(idx){
-  const v=k=>{const el=document.getElementById('f_'+k);return el?el.value:''};
-  const obj={id:Number(v('id'))||0,name:v('name').trim(),cat:v('cat'),emoji:v('emoji'),logo:v('logo'),
-    bg:v('bg'),brand:v('brand'),pricing:v('pricing'),badge:v('badge'),url:v('url').trim(),
-    desc:v('desc').trim(),rating:Number(v('rating'))||0,reviews:v('reviews'),
-    tags:v('tags').split(',').map(s=>s.trim()).filter(Boolean),
-    features:v('features').split('\n').map(s=>s.trim()).filter(Boolean),
-    alts:v('alts').split('\n').map(s=>s.trim()).filter(Boolean).map(l=>{const[n,t]=l.split('|');return{n:(n||'').trim(),t:(t||'').trim()}}),
-    price:v('price'),freeAlt:v('freeAlt')};
-  if(!obj.name)return toast('Tool name required','err');
-  if(idx<0)S.parsed.TOOLS.push(obj);else S.parsed.TOOLS[idx]=obj;
-  closeModal();renderTools();renderDash();toast('Saved locally — click Commit to push','warn');
-}
-
-/* ── CATEGORIES ── */
-function renderCats(){
-  const tb=document.getElementById('tbl-cats');
-  if(!S.parsed.CATS.length){tb.innerHTML='<tr><td colspan="5"><div class="empty">No categories.</div></td></tr>';return}
-  tb.innerHTML=S.parsed.CATS.map((c,i)=>{
-    const live=S.parsed.TOOLS.filter(t=>t.cat===c.name).length;
-    return`<tr><td><span style="font-size:20px">${esc(c.icon||'')}</span></td><td><strong>${esc(c.name)}</strong></td><td>${c.count||0}</td><td><span class="tag cat-tag">${live} tools</span></td><td><div class="row-actions"><button class="btn btn-sm" onclick="editCat(${i})">Edit</button><button class="btn btn-sm btn-danger" onclick="delItem('CATS',${i},'${esc(c.name)}')">×</button></div></td></tr>`;
-  }).join('');
-}
-function editCat(idx){
-  const isNew=idx==null,c=isNew?{icon:'🆕',name:'',count:0}:{...S.parsed.CATS[idx]};
-  openModal(isNew?'➕ New Category':'✏️ Edit Category: '+c.name,`
-    <div class="grid2">
-      <div class="field"><label>Icon (emoji) *</label><input id="c_icon" value="${esc(c.icon||'')}" style="font-size:22px;width:70px"></div>
-      <div class="field"><label>Category Name *</label><input id="c_name" value="${esc(c.name)}" placeholder="e.g. Writing AI"></div>
-      <div class="field"><label>Tool Count (shown on card)</label><input id="c_count" type="number" value="${c.count||0}"></div>
-      <div class="field"><label>Slug (auto, optional)</label><input id="c_slug" value="${esc(c.slug||c.name.toLowerCase().replace(/[^a-z0-9]+/g,'-'))}"></div>
-    </div>
-  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-ok" onclick="saveCat(${isNew?-1:idx})">💾 Save</button>`);
-}
-function saveCat(idx){
-  const obj={icon:gv('c_icon'),name:gv('c_name').trim(),count:Number(gv('c_count'))||0};
-  if(!obj.name)return toast('Name required','err');
-  if(idx<0)S.parsed.CATS.push(obj);else S.parsed.CATS[idx]=obj;
-  closeModal();renderCats();renderDash();renderTools();toast('Saved locally','warn');
-}
-
-/* ── BADGES & TAGS ── */
-function renderTagCloud(){
-  const all={};S.parsed.TOOLS.forEach(t=>(t.tags||[]).forEach(tag=>{if(tag)all[tag]=(all[tag]||0)+1}));
-  const sorted=Object.entries(all).sort((a,b)=>b[1]-a[1]);
-  document.getElementById('total-tags-count').textContent=sorted.length;
-  document.getElementById('tag-cloud').innerHTML=sorted.map(([tag,count])=>
-    `<span class="tag" style="cursor:pointer;font-size:${Math.min(14,10.5+count*0.22)}px" onclick="filterByTag('${esc(tag)}')" title="${count} tools">${esc(tag)} <span style="color:var(--dim)">${count}</span></span>`
-  ).join('');
-}
-function filterByTag(tag){go('tools');document.getElementById('toolSearch').value=tag;renderTools()}
-function renderBadgeDist(){
-  const dist={};S.parsed.TOOLS.forEach(t=>{const b=t.badge||'(none)';dist[b]=(dist[b]||0)+1});
-  document.getElementById('badge-dist').innerHTML=Object.entries(dist).sort((a,b)=>b[1]-a[1]).map(([b,c])=>
-    `<div style="display:flex;align-items:center;gap:8px"><span class="${b==='(none)'?'tag':('pill '+b)}">${esc(b)}</span><span style="color:var(--mute);font-size:12px">${c} tool${c!==1?'s':''}</span></div>`
-  ).join('');
-}
-
-/* ── ARTICLES ── */
-function renderArts(){
-  const cats=[...new Set(S.parsed.ARTICLES.map(a=>a.cat||'').filter(Boolean))].sort();
-  const sel=document.getElementById('artFilterCat');
-  if(sel.options.length-1!==cats.length)sel.innerHTML='<option value="">All categories</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join('');
-  const q=gv('artSearch').toLowerCase(),fc=sel.value;
-  const rows=S.parsed.ARTICLES.filter(a=>(!fc||a.cat===fc)&&(!q||(a.title+' '+(a.slug||'')+(a.author||'')).toLowerCase().includes(q)));
-  const tb=document.getElementById('tbl-arts');
-  if(!rows.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="big">📭</div>No articles.</div></td></tr>';return}
-  tb.innerHTML=rows.map(a=>{
-    const idx=S.parsed.ARTICLES.indexOf(a);
-    const icon=a.image?`<img class="mini-logo" src="${esc(a.image)}" alt="">`:a.emoji?`<span style="font-size:17px">${esc(a.emoji)}</span>`:'📝';
-    return`<tr><td>${icon} <strong>${esc(a.title)}</strong></td><td><code style="font-size:11px">${esc(a.slug||'')}</code></td><td><span class="tag warn-tag">${esc(a.cat||'')}</span></td><td style="color:var(--mute);white-space:nowrap">${esc(a.date||'')}</td><td style="color:var(--mute)">${esc(a.author||'')}</td><td><div class="row-actions"><button class="btn btn-sm" onclick="editArt(${idx})">Edit</button><button class="btn btn-sm btn-danger" onclick="delItem('ARTICLES',${idx},'${esc(a.title)}')">×</button></div></td></tr>`;
-  }).join('');
-}
-function editArt(idx){
-  const isNew=idx==null;
-  const a=isNew?{slug:'',emoji:'📝',thumb:'linear-gradient(135deg,#0a0020,#1a0050)',cat:'GUIDE',date:new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}),title:'',excerpt:'',keywords:'',readTime:'5 MIN READ',author:'AI Prime Hub Editorial',authorRole:'Editorial',authorEmoji:'📝',tags:[],fullContent:'<p class="article-lead">Start writing here…</p>',image:''}:{...S.parsed.ARTICLES[idx]};
-  const catOpts=['GUIDE','ROUNDUP','COMPARISON','REVIEW','NEWS','TUTORIAL'].map(c=>`<option ${c===(a.cat||'')?'selected':''}>${c}</option>`).join('');
-  openModal(isNew?'➕ New Article':'✏️ Edit: '+a.title,`
-    <div class="tabs" style="margin-bottom:14px">
-      <div class="tab active" onclick="switchTab('atab','meta',this)">Meta</div>
-      <div class="tab" onclick="switchTab('atab','seo',this)">SEO &amp; Tags</div>
-      <div class="tab" onclick="switchTab('atab','author',this)">Author</div>
-      <div class="tab" onclick="switchTab('atab','content',this)">Content (HTML)</div>
-      <div class="tab" onclick="switchTab('atab','display',this)">Display</div>
-    </div>
-    <div id="atab-meta">
-      <div class="grid2">
-        <div class="field col2"><label>Article Title *</label><input id="a_title" value="${esc(a.title||'')}" placeholder="Your headline…"></div>
-        <div class="field"><label>Slug (URL path) *</label><input id="a_slug" value="${esc(a.slug||'')}" placeholder="my-article-slug"></div>
-        <div class="field"><label>Category</label><select id="a_cat">${catOpts}</select></div>
-        <div class="field"><label>Publish Date</label><input id="a_date" value="${esc(a.date||'')}"></div>
-        <div class="field"><label>Read Time</label><input id="a_readTime" value="${esc(a.readTime||'5 MIN READ')}"></div>
-      </div>
-      <div class="field"><label>Excerpt / Summary</label><textarea id="a_excerpt" rows="3" placeholder="Short summary shown in article cards…">${esc(a.excerpt||'')}</textarea></div>
-    </div>
-    <div id="atab-seo" class="hidden">
-      <div class="field"><label>SEO Keywords (comma separated)</label><input id="a_keywords" value="${esc(a.keywords||'')}"></div>
-      <div class="field"><label>Article Tags (comma separated)</label><input id="a_tags" value="${esc((a.tags||[]).join(', '))}"></div>
-    </div>
-    <div id="atab-author" class="hidden">
-      <div class="grid2">
-        <div class="field"><label>Author Name</label><input id="a_author" value="${esc(a.author||'')}"></div>
-        <div class="field"><label>Author Role / Title</label><input id="a_authorRole" value="${esc(a.authorRole||'')}"></div>
-        <div class="field"><label>Author Emoji</label><input id="a_authorEmoji" value="${esc(a.authorEmoji||'📝')}" style="font-size:20px;width:70px"></div>
-      </div>
-    </div>
-    <div id="atab-content" class="hidden">
-      <div class="rt-bar">
-        <button onclick="aw('h2')"><b>H2</b></button><button onclick="aw('h3')">H3</button><button onclick="aw('p')">¶</button>
-        <button onclick="aw('strong')"><b>Bold</b></button><button onclick="aw('em')"><i>Italic</i></button>
-        <button onclick="ai('&lt;ul&gt;\\n&lt;li&gt;Item 1&lt;/li&gt;\\n&lt;li&gt;Item 2&lt;/li&gt;\\n&lt;/ul&gt;')">UL</button>
-        <button onclick="ai('&lt;ol&gt;\\n&lt;li&gt;Step 1&lt;/li&gt;\\n&lt;li&gt;Step 2&lt;/li&gt;\\n&lt;/ol&gt;')">OL</button>
-        <button onclick="ai('&lt;div class=\&quot;article-callout\&quot;&gt;&lt;p&gt;💡 Callout here&lt;/p&gt;&lt;/div&gt;')">Callout</button>
-        <button onclick="ai('&lt;table&gt;\\n&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Col 1&lt;/th&gt;&lt;th&gt;Col 2&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;\\n&lt;tbody&gt;&lt;tr&gt;&lt;td&gt;A&lt;/td&gt;&lt;td&gt;B&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;\\n&lt;/table&gt;')">Table</button>
-        <button onclick="ai('&lt;hr&gt;')">HR</button>
-        <button onclick="ai('&lt;blockquote&gt;&lt;p&gt;Quote here&lt;/p&gt;&lt;/blockquote&gt;')">Quote</button>
-        <button onclick="ai('&lt;img src=\&quot;URL\&quot; alt=\&quot;desc\&quot; style=\&quot;max-width:100%;border-radius:8px;margin:14px 0\&quot;&gt;')">IMG</button>
-        <button onclick="ai('&lt;a href=\&quot;URL\&quot;&gt;Link text&lt;/a&gt;')">Link</button>
-        <button onclick="ai('&lt;code&gt;code here&lt;/code&gt;')">Code</button>
-      </div>
-      <textarea id="a_fullContent" rows="18" class="mono rt-area">${esc(a.fullContent||'')}</textarea>
-    </div>
-    <div id="atab-display" class="hidden">
-      <div class="field"><label>Emoji (fallback icon)</label><input id="a_emoji" value="${esc(a.emoji||'📝')}" style="font-size:22px;width:70px"></div>
-      ${imgField('Article Image (upload to repo)','a_image',a.image||'','article-'+(a.slug||'').slice(0,20))}
-      <div class="field"><label>Thumbnail Gradient (CSS)</label><input id="a_thumb" value="${esc(a.thumb||'')}" oninput="document.getElementById('agp').style.background=this.value"></div>
-      <div class="grad-preview" id="agp" style="background:${esc(a.thumb||'')}"></div>
-    </div>
-  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-ok" onclick="saveArt(${isNew?-1:idx})">💾 Save Article</button>`);
-}
-function aw(tag){const ta=document.getElementById('a_fullContent');const s=ta.selectionStart,e=ta.selectionEnd,v=ta.value;const sel=v.slice(s,e)||'Content';ta.value=v.slice(0,s)+`<${tag}>${sel}</${tag}>`+v.slice(e)}
-function ai(html){const ta=document.getElementById('a_fullContent');const s=ta.selectionStart;ta.value=ta.value.slice(0,s)+'\n'+html.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"')+'\n'+ta.value.slice(s)}
-function saveArt(idx){
-  const v=k=>{const el=document.getElementById('a_'+k);return el?el.value:''};
-  const obj={slug:v('slug').trim(),emoji:v('emoji')||'📝',image:v('image'),thumb:v('thumb'),cat:v('cat'),date:v('date'),title:v('title').trim(),excerpt:v('excerpt'),keywords:v('keywords'),readTime:v('readTime'),author:v('author'),authorRole:v('authorRole'),authorEmoji:v('authorEmoji')||'📝',tags:v('tags').split(',').map(s=>s.trim()).filter(Boolean),fullContent:v('fullContent')};
-  if(!obj.title||!obj.slug)return toast('Title and slug required','err');
-  if(idx<0)S.parsed.ARTICLES.push(obj);else S.parsed.ARTICLES[idx]=obj;
-  closeModal();renderArts();renderDash();toast('Saved locally','warn');
-}
-
-/* ── COMPARISONS ── */
-function renderCmp(){
-  const data=S.parsed[S.activeCmp]||[],tbl=document.getElementById('tbl-cmp');
-  document.getElementById('cmpCommitBtn').onclick=()=>commitArr(S.activeCmp,'Update '+S.activeCmp);
-  if(!data.length){tbl.innerHTML='<tbody><tr><td><div class="empty">Empty. Add a row.</div></td></tr></tbody>';return}
-  const cols=[...new Set(data.flatMap(r=>Object.keys(r)))];
-  let h='<thead><tr>'+cols.map(c=>`<th>${esc(c)}</th>`).join('')+'<th></th></tr></thead><tbody>';
-  h+=data.map((r,i)=>'<tr>'+cols.map(c=>`<td><input data-ci="${i}" data-ck="${c}" value="${esc(String(r[c]==null?'':r[c]))}" style="background:transparent;border:1px solid transparent;padding:4px 6px;width:100%;min-width:80px;border-radius:4px" onfocus="this.style.borderColor='var(--border)'" onblur="this.style.borderColor='transparent';cmpSet(this)"></td>`).join('')+`<td><div class="row-actions"><button class="btn btn-sm btn-danger" onclick="delCmpRow(${i})">×</button></div></td></tr>`).join('');
-  tbl.innerHTML=h+'</tbody>';
-}
-function cmpSet(inp){const i=+inp.dataset.ci,k=inp.dataset.ck;let v=inp.value;const cur=S.parsed[S.activeCmp][i][k];if(typeof cur==='boolean')v=v==='true';else if(typeof cur==='number'&&!isNaN(+v))v=+v;S.parsed[S.activeCmp][i][k]=v}
-function addCmpRow(){const arr=S.parsed[S.activeCmp];const tpl=arr[0]?Object.fromEntries(Object.keys(arr[0]).map(k=>[k,''])):{name:'',rating:'4.5'};arr.push(tpl);renderCmp()}
-
-function delCmpRow(i){if(!confirm('Delete row?'))return;S.parsed[S.activeCmp].splice(i,1);renderCmp()}
-
-/* ── TRENDING ── */
-function renderTrend(){
-  const tb=document.getElementById('tbl-trend');
-  if(!S.parsed.TRENDING.length){tb.innerHTML='<tr><td colspan="6"><div class="empty"><div class="big">📭</div>Empty.</div></td></tr>';return}
-  tb.innerHTML=S.parsed.TRENDING.map((t,i)=>`<tr><td><strong style="font-family:monospace">${esc(t.num||'')}</strong></td><td><strong>${esc(t.name||'')}</strong></td><td><span class="tag cat-tag">${esc(t.cat||'')}</span></td><td style="color:var(--ok);font-weight:600">${esc(t.up||'')}</td><td><div style="display:flex;align-items:center;gap:8px"><div class="swatch" style="background:${esc(t.color||'#888')}"></div><code style="font-size:11px">${esc(t.color||'')}</code></div></td><td><div class="row-actions"><button class="btn btn-sm" onclick="editTrend(${i})">Edit</button><button class="btn btn-sm btn-danger" onclick="delItem('TRENDING',${i},'${esc(t.name||'')}')">×</button></div></td></tr>`).join('');
-}
-function editTrend(idx){
-  const isNew=idx==null,t=isNew?{num:String(S.parsed.TRENDING.length+1).padStart(2,'0'),name:'',cat:'',up:'+0%',color:'#7c3aed'}:{...S.parsed.TRENDING[idx]};
-  openModal(isNew?'➕ New Trending':'✏️ Edit Trending',`
-    <div class="grid2">
-      <div class="field"><label>Rank # (e.g. 01)</label><input id="t_num" value="${esc(t.num||'')}"></div>
-      <div class="field"><label>Tool Name *</label><input id="t_name" value="${esc(t.name||'')}"></div>
-      <div class="field"><label>Category Label</label><input id="t_cat" value="${esc(t.cat||'')}"></div>
-      <div class="field"><label>Growth % (e.g. +120%)</label><input id="t_up" value="${esc(t.up||'')}"></div>
-      <div class="field"><label>Accent Color</label><input id="t_color" type="color" value="${esc(t.color||'#7c3aed')}"></div>
-      <div class="field"><label>Linked Tool ID (optional)</label><input id="t_id" type="number" value="${t.id||''}"></div>
-    </div>
-  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-ok" onclick="saveTrend(${isNew?-1:idx})">💾 Save</button>`);
-}
-function saveTrend(idx){
-  const obj={num:gv('t_num'),name:gv('t_name').trim(),cat:gv('t_cat'),up:gv('t_up'),color:gv('t_color')};
-  const tid=Number(gv('t_id'));if(tid)obj.id=tid;
-  if(!obj.name)return toast('Name required','err');
-  if(idx<0)S.parsed.TRENDING.push(obj);else S.parsed.TRENDING[idx]=obj;
-  closeModal();renderTrend();renderDash();toast('Saved locally','warn');
-}
-
-/* ── DELETE ── */
-function delItem(block,idx,name){
-  if(!confirm(`Delete "${name}" from ${block}?\n(Local — Commit to push.)`))return;
-  S.parsed[block].splice(idx,1);renderAll();toast('Removed locally','warn');
-}
-
-/* ── PAGES ── */
-function renderPages(){
-  const tb=document.getElementById('tbl-pages');
-  if(!S.pages.length){tb.innerHTML='<tr><td colspan="3"><div class="empty"><div class="big">📭</div>No pages found.</div></td></tr>';return}
-  tb.innerHTML=S.pages.map(p=>`<tr><td><strong>${esc(p.path)}</strong></td><td style="color:var(--mute)">${(p.size/1024).toFixed(1)} KB</td><td><div class="row-actions"><button class="btn btn-sm" onclick="window.open('https://findbestai.pages.dev/${p.path==='index.html'?'':p.path.replace(/index\.html$/,'')}','_blank')">↗ View</button><button class="btn btn-sm" onclick="editPage('${esc(p.path)}')">Edit HTML</button><button class="btn btn-sm btn-danger" onclick="deletePage('${esc(p.path)}','${p.sha}')">× Delete</button></div></td></tr>`).join('');
-}
-async function editPage(path){
-  setSync('sync','Loading '+path+'…');
-  try{
-    const f=await getFile(path);setSync('ok','Loaded');
-    openModal('📄 Edit: '+path,`
-      <div class="banner warn">⚠️ Raw HTML editor — incorrect HTML will break the page.</div>
-      <div class="field"><label>Commit Message</label><input id="p_msg" value="Update ${esc(path)}"></div>
-      <div class="field"><label>HTML Content</label><textarea id="p_body" style="min-height:520px;font-family:monospace;font-size:12px">${esc(f.text)}</textarea></div>
-    `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-ok" onclick="savePageDirect('${esc(path)}','${f.sha}')">💾 Commit Page</button>`);
-  }catch(e){setSync('err','Load failed');toast('Load failed: '+e.message,'err')}
-}
-async function savePageDirect(path,sha){
-  const body=gv('p_body'),msg=gv('p_msg')||'Update '+path;
-  setSync('sync','Committing…');
-  try{await putFile(path,body,msg,sha);setSync('ok','Committed');closeModal();toast('✅ '+path+' committed','ok');loadCommits()}
-  catch(e){setSync('err','Commit failed');toast('Commit failed: '+e.message,'err')}
-}
-function newPage(){
-  openModal('➕ New Page',`
-    <div class="grid2">
-      <div class="field"><label>Slug (folder) *</label><input id="np_slug" placeholder="faq"></div>
-      <div class="field"><label>Page Title *</label><input id="np_title" placeholder="FAQ Page"></div>
-    </div>
-    <div class="field"><label>Meta Description (SEO)</label><input id="np_meta" placeholder="Short SEO description…"></div>
-    <div class="field"><label>Body HTML</label><textarea id="np_body" rows="6">&lt;h1&gt;Page Title&lt;/h1&gt;&#10;&lt;p&gt;Edit me in the Pages editor…&lt;/p&gt;</textarea></div>
-  `,`<button class="btn" onclick="closeModal()">Cancel</button><button class="btn btn-ok" onclick="createPage()">Create &amp; Commit</button>`);
-}
-async function createPage(){
-  const slug=gv('np_slug').trim().replace(/[^\w-]/g,''),title=gv('np_title').trim()||slug,meta=gv('np_meta'),body=gv('np_body');
-  if(!slug)return toast('Slug required','err');
-  const path=slug+'/index.html';
-  const html=`<!DOCTYPE html>\n<html lang="en" data-theme="dark">\n<head>\n<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>${esc(title)} — FindBestAI</title>\n<meta name="description" content="${esc(meta||title)}">\n<link rel="stylesheet" href="/assets/css/main.css">\n<link rel="icon" type="image/webp" href="/logo.webp">\n</head>\n<body>\n<div id="nav-root"></div>\n<main style="max-width:900px;margin:40px auto;padding:0 20px">\n${body}\n</main>\n<script src="/assets/js/data.js"><\\/script>\n<script src="/assets/js/nav.js"><\\/script>\n<script src="/assets/js/app.js"><\\/script>\n</body>\n</html>`;
-  setSync('sync','Creating…');
-  try{await putFile(path,html,'Create page /'+slug+'/',null);setSync('ok','Created');closeModal();toast('✅ Created /'+slug+'/','ok');loadAll()}
-  catch(e){setSync('err','Failed');toast('Create failed: '+e.message,'err')}
-}
-async function deletePage(path,sha){
-  if(!confirm('Delete '+path+' permanently from repo? This cannot be undone.'))return;
-  setSync('sync','Deleting…');
-  try{await delFile(path,'Delete '+path,sha);setSync('ok','Deleted');toast('Deleted '+path,'ok');loadAll()}
-  catch(e){setSync('err','Failed');toast('Delete failed: '+e.message,'err')}
-}
-
-/* ── INTEGRATIONS ── */
-function setIntStatus(id,val){const el=document.getElementById(id);if(el){el.textContent=val.trim()?'Configured ✅':'Not configured';el.className='int-status '+(val.trim()?'is-connected':'is-off')}}
-async function saveIntegrations(){
-  if(!confirm('This will update index.html with script tags from the fields below. Continue?'))return;
-  const ga4=gv('int_ga4_script'),gscMeta=gv('int_gsc_meta'),adsense=gv('int_adsense_script'),gtmHead=gv('int_gtm_head'),gtmBody=gv('int_gtm_body'),customHead=gv('int_custom_head'),customBody=gv('int_custom_body');
-  try{
-    const f=await getFile('index.html');let html=f.text;
-    const headBlock=[gscMeta,ga4,gtmHead,customHead].filter(Boolean).join('\n');
-    if(headBlock){
-      if(html.includes('<!-- ADMIN_HEAD -->'))html=html.replace(/<!-- ADMIN_HEAD -->[\s\S]*?<!-- \/ADMIN_HEAD -->/,'<!-- ADMIN_HEAD -->\n'+headBlock+'\n<!-- /ADMIN_HEAD -->');
-      else html=html.replace('</head>','<!-- ADMIN_HEAD -->\n'+headBlock+'\n<!-- /ADMIN_HEAD -->\n</head>');
-    }
-    const bodyBlock=[gtmBody,adsense,customBody].filter(Boolean).join('\n');
-    if(bodyBlock){
-      if(html.includes('<!-- ADMIN_BODY -->'))html=html.replace(/<!-- ADMIN_BODY -->[\s\S]*?<!-- \/ADMIN_BODY -->/,'<!-- ADMIN_BODY -->\n'+bodyBlock+'\n<!-- /ADMIN_BODY -->');
-      else html=html.replace('</body>','<!-- ADMIN_BODY -->\n'+bodyBlock+'\n<!-- /ADMIN_BODY -->\n</body>');
-    }
-    await putFile('index.html',html,'Inject integration scripts',f.sha);
-    toast('✅ Integration scripts injected into index.html','ok');loadCommits();
-  }catch(e){toast('Failed: '+e.message,'err')}
-}
-
-/* ── SITE IDENTITY SAVE ── */
-async function saveSiteIdentity(){
-  const name=gv('si_name')||'FindBestAI',tagline=gv('si_tagline')||'Find the Best AI Tools';
-  document.getElementById('siteNameLabel').textContent=name;
-  if(!confirm('Update index.html title tag with "'+name+' — '+tagline+'"?'))return;
-  try{
-    const f=await getFile('index.html');
-    let html=f.text;
-    html=html.replace(/<title>[^<]*<\/title>/,`<title>${esc(name)} — ${esc(tagline)}</title>`);
-    const acc=gv('si_acc'),acc2=gv('si_acc2');
-    if(acc)html=html.replace(/--acc:#[0-9a-f]{3,6}/gi,`--acc:${acc}`);
-    if(acc2)html=html.replace(/--acc2:#[0-9a-f]{3,6}/gi,`--acc2:${acc2}`);
-    await putFile('index.html',html,'Update site identity: '+name,f.sha);
-    toast('✅ Site identity updated in index.html','ok');loadCommits();
-  }catch(e){toast('Failed: '+e.message,'err')}
-}
-
-/* ── NAV & FOOTER SAVE ── */
-async function saveNavFooter(){
-  if(!confirm('Commit nav/footer text changes to index.html?'))return;
-  try{
-    const f=await getFile('index.html');let html=f.text;
-    const copyright=gv('nf_copyright');
-    if(copyright)html=html.replace(/©\s*\d{4}[^<]*/,copyright);
-    await putFile('index.html',html,'Update nav & footer text',f.sha);
-    toast('✅ Nav/footer updated','ok');loadCommits();
-  }catch(e){toast('Apply via Pages editor instead: '+e.message,'warn')}
-}
-
-/* ── SEO SAVE ── */
-async function saveSeoToIndex(){
-  if(!confirm('Update index.html meta tags?'))return;
-  try{
-    const f=await getFile('index.html');let html=f.text;
-    const title=gv('seo_title'),desc=gv('seo_desc'),ogTitle=gv('seo_og_title'),ogDesc=gv('seo_og_desc'),ogImg=gv('seo_og_image'),twitter=gv('seo_twitter_site');
-    if(title)html=html.replace(/<title>[^<]*<\/title>/,`<title>${esc(title)}</title>`);
-    if(desc)html=html.replace(/(<meta\s+name="description"\s+content=")[^"]*(")/i,`$1${esc(desc)}$2`);
-    if(ogTitle)html=html.replace(/(<meta\s+property="og:title"\s+content=")[^"]*(")/i,`$1${esc(ogTitle)}$2`);
-    if(ogDesc)html=html.replace(/(<meta\s+property="og:description"\s+content=")[^"]*(")/i,`$1${esc(ogDesc)}$2`);
-    if(ogImg)html=html.replace(/(<meta\s+property="og:image"\s+content=")[^"]*(")/i,`$1${esc(ogImg)}$2`);
-    const jsonld=gv('seo_jsonld');
-    if(jsonld){
-      if(html.includes('"@context"'))html=html.replace(/<script\s+type="application\/ld\+json">[^<]*<\/script>/i,`<script type="application/ld+json">\n${jsonld}\n<\/script>`);
-      else html=html.replace('</head>',`<script type="application/ld+json">\n${jsonld}\n<\/script>\n</head>`);
-    }
-    await putFile('index.html',html,'Update SEO meta tags',f.sha);
-    toast('✅ SEO meta tags updated in index.html','ok');loadCommits();
-  }catch(e){toast('Failed: '+e.message,'err')}
-}
-
-/* ── HOMEPAGE TEXT SAVE ── */
-async function saveHomepageText(){
-  if(!confirm('Update index.html with new homepage text?'))return;
-  try{
-    const f=await getFile('index.html');let html=f.text;
-    const h1=gv('hp_h1');
-    if(h1){
-      // Try to replace common heading patterns
-      html=html.replace(/(<h1[^>]*class="[^"]*hero[^"]*"[^>]*>)[^<]*/i,`$1${esc(h1)}`);
-      html=html.replace(/(<h1[^>]*>)[^<]*(Find[^<]*AI[^<]*)<\/h1>/i,`$1${esc(h1)}</h1>`);
-    }
-    await putFile('index.html',html,'Update homepage text',f.sha);
-    toast('✅ Homepage text updated','ok');loadCommits();
-  }catch(e){toast('Some fields may need manual editing via Pages editor: '+e.message,'warn')}
-}
-
-/* ── SEO CHAR COUNTER ── */
-function updateSeoBar(barId,val,min,max){
-  const bar=document.getElementById(barId);if(!bar)return;
-  const fill=bar.querySelector('.seo-fill');if(!fill)return;
-  const len=val.length,pct=Math.min(100,Math.round(len/max*100));
-  fill.style.width=pct+'%';
-  fill.style.background=len<min?'var(--warn)':len<=max?'var(--ok)':'var(--err)';
-}
-
-/* ── AUTO LOGIN ── */
-(function(){const tok=sessionStorage.getItem('fbai_pat');if(tok){document.getElementById('loginPat').value=tok;document.getElementById('loginUser').value=sessionStorage.getItem('fbai_user')||'';doLogin()}})();
-</script>
-</body>
-</html>
+      <!-- COMPARISONS -->
+      <section class="section" id="s-cmp">
+        <div class="section-head">
+          <h2>Comparisons</h2>
+          <div class="actions">
+            <button class="btn btn-primary" onclick="addCmpRow()">＋ Add Row</button>
+          </div>
+        </div>
+        <div class="tabs">
+          <div class="tab active" data-cmp="COMPARE_DATA">Image AI</div>
+          <div class="tab" data-cmp="WRITING_COMPARE">Writing AI</div>
+          <div class="tab" data-cmp="VIDEO_COMPARE">Video AI</div>
+        </div>
+        <div class="panel">
+          <table id="tbl-cmp"></table>
+        </div>
+      </section>
