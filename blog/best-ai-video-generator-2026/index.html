@@ -264,11 +264,12 @@ ul { list-style: none; }
 
 /* TOOL CARDS */
 .tool-review-card {
-  background: var(--surface); border: 1px solid var(--border);
+  background: var(--surface); border: 1px solid var(--border-md);
   border-radius: 18px; padding: 28px; margin: 28px 0;
-  transition: all 0.25s ease;
+  transition: all 0.28s ease;
   position: relative; overflow: hidden;
   animation: fadeUp 0.5s ease both;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.18);
 }
 .tool-review-card::before {
   content: ''; position: absolute; inset: -1px; border-radius: 19px; 
@@ -279,16 +280,17 @@ ul { list-style: none; }
   opacity: 0; transition: opacity 0.35s;
   pointer-events: none;
 }
-.tool-review-card:hover { border-color: var(--border-md); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 0 40px var(--glow2); }
+.tool-review-card:hover { border-color: var(--border-hi); transform: translateY(-4px); box-shadow: 0 0 0 1px var(--border-hi), 0 20px 56px rgba(0,0,0,0.45), 0 0 48px var(--glow), 0 0 80px var(--glow2); }
 .tool-review-card:hover::before { opacity: 1; }
 .tool-card-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
 .tool-card-logo {
-  width: 52px; height: 52px; border-radius: 12px;
-  background: var(--surface3); border: 1px solid var(--border-md);
-  display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  width: 56px; height: 56px; border-radius: 14px;
+  background: #111; border: 1px solid var(--border-md);
+  display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.35); overflow: hidden;
+  transition: background 0.2s;
 }
-.tool-card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 8px; border-radius: 8px; }
+.tool-card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
 .tool-card-info { flex: 1; min-width: 0; }
 .tool-card-name { font-size: 1.15rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; }
 .tool-card-tagline { font-size: 0.82rem; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
@@ -399,9 +401,9 @@ ul { list-style: none; }
   transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
 }
 .related-links-box:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   border-color: var(--border-hi);
-  box-shadow: 0 0 28px var(--glow), 0 0 56px var(--glow2), 0 12px 32px rgba(0,0,0,0.3);
+  box-shadow: 0 0 32px var(--glow), 0 0 64px var(--glow2), 0 16px 40px rgba(0,0,0,0.35);
 }
 .related-links-label { font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; color: var(--accent); letter-spacing: 0.1em; margin-bottom: 10px; }
 .related-links-box p { color: var(--text2); font-size: 0.9rem; margin-bottom: 14px; }
@@ -658,7 +660,7 @@ footer {
       <div class="tool-card-header">
         <div class="tool-rank-medal">🥇</div>
         <div class="tool-card-logo">
-          <img src="https://logo.clearbit.com/sora.com?size=120" alt="Sora logo" onerror="this.parentElement.textContent='🚀'">
+          <img src="https://img.logo.dev/sora.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Sora logo" data-srcs="https://img.logo.dev/sora.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/openai.com?size=120|https://www.google.com/s2/favicons?domain=sora.com&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🌐';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
         </div>
         <div class="tool-card-info">
           <div class="tool-card-name">Sora by OpenAI</div>
@@ -733,7 +735,7 @@ footer {
       <div class="tool-card-header">
         <div class="tool-rank-medal">🥈</div>
         <div class="tool-card-logo">
-          <img src="https://logo.clearbit.com/runwayml.com?size=120" alt="RunwayML logo" onerror="this.parentElement.textContent='🎬'">
+          <img src="https://img.logo.dev/runwayml.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="RunwayML logo" data-srcs="https://img.logo.dev/runwayml.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/runwayml.com?size=120|https://www.google.com/s2/favicons?domain=runwayml.com&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎬';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
         </div>
         <div class="tool-card-info">
           <div class="tool-card-name">RunwayML Gen-3 Alpha</div>
@@ -807,7 +809,7 @@ footer {
       <div class="tool-card-header">
         <div class="tool-rank-medal">🥉</div>
         <div class="tool-card-logo">
-          <img src="https://logo.clearbit.com/klingai.com?size=120" alt="Kling AI logo" onerror="this.parentElement.textContent='🎞️'">
+          <img src="https://img.logo.dev/klingai.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Kling AI logo" data-srcs="https://img.logo.dev/klingai.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/klingai.com?size=120|https://www.google.com/s2/favicons?domain=klingai.com&sz=128" data-src-idx="0" data-brand="#0a0a0a" onload="this.parentNode.style.background='#0a0a0a';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎞️';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
         </div>
         <div class="tool-card-info">
           <div class="tool-card-name">Kling AI 2.0</div>
@@ -881,7 +883,7 @@ footer {
       <div class="tool-card-header">
         <div class="tool-rank-medal" style="font-size:1.4rem">4️⃣</div>
         <div class="tool-card-logo">
-          <img src="https://logo.clearbit.com/pika.art?size=120" alt="Pika Labs logo" onerror="this.parentElement.textContent='⚡'">
+          <img src="https://img.logo.dev/pika.art?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Pika Labs logo" data-srcs="https://img.logo.dev/pika.art?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/pika.art?size=120|https://www.google.com/s2/favicons?domain=pika.art&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='⚡';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
         </div>
         <div class="tool-card-info">
           <div class="tool-card-name">Pika Labs 2.0</div>
@@ -937,7 +939,7 @@ footer {
       <div class="tool-card-header">
         <div class="tool-rank-medal" style="font-size:1.4rem">5️⃣</div>
         <div class="tool-card-logo">
-          <img src="https://logo.clearbit.com/synthesia.io?size=120" alt="Synthesia logo" onerror="this.parentElement.textContent='🎭'">
+          <img src="https://img.logo.dev/synthesia.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Synthesia logo" data-srcs="https://img.logo.dev/synthesia.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/synthesia.io?size=120|https://www.google.com/s2/favicons?domain=synthesia.io&sz=128" data-src-idx="0" data-brand="#ffffff" onload="this.parentNode.style.background='#ffffff';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎭';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
         </div>
         <div class="tool-card-info">
           <div class="tool-card-name">Synthesia</div>
@@ -993,7 +995,7 @@ footer {
       <div class="tool-card-header">
         <div class="tool-rank-medal" style="font-size:1.4rem">6️⃣</div>
         <div class="tool-card-logo">
-          <img src="https://logo.clearbit.com/invideo.io?size=120" alt="InVideo AI logo" onerror="this.parentElement.textContent='📱'">
+          <img src="https://img.logo.dev/invideo.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="InVideo AI logo" data-srcs="https://img.logo.dev/invideo.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/invideo.io?size=120|https://www.google.com/s2/favicons?domain=invideo.io&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🪄';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
         </div>
         <div class="tool-card-info">
           <div class="tool-card-name">InVideo AI</div>
@@ -1048,7 +1050,7 @@ footer {
       <div class="tool-card-header">
         <div class="tool-rank-medal" style="font-size:1.4rem">7️⃣</div>
         <div class="tool-card-logo">
-          <img src="https://logo.clearbit.com/lumalabs.ai?size=120" alt="Luma Dream Machine logo" onerror="this.parentElement.textContent='🌙'">
+          <img src="https://img.logo.dev/lumalabs.ai?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Luma Dream Machine logo" data-srcs="https://img.logo.dev/lumalabs.ai?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/lumalabs.ai?size=120|https://www.google.com/s2/favicons?domain=lumalabs.ai&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🌙';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
         </div>
         <div class="tool-card-info">
           <div class="tool-card-name">Luma Dream Machine</div>
@@ -1116,7 +1118,7 @@ footer {
         </thead>
         <tbody>
           <tr>
-            <td class="td-tool">🚀 Sora</td>
+            <td class="td-tool"><img src="https://img.logo.dev/sora.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Sora logo" data-srcs="https://img.logo.dev/sora.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/openai.com?size=120|https://www.google.com/s2/favicons?domain=sora.com&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🌐';sp.style.cssText='font-size:1em';el.parentNode.insertBefore(sp,el.nextSibling);}})  (this)" style="display:inline-block;width:22px;height:22px;object-fit:contain;border-radius:5px;vertical-align:middle;margin-right:8px;background:#000000;">Sora</td>
             <td class="td-free-no">Limited</td>
             <td class="td-price">$20/mo</td>
             <td class="td-best">Cinematic quality</td>
@@ -1124,7 +1126,7 @@ footer {
             <td class="td-rating">⭐⭐⭐⭐⭐</td>
           </tr>
           <tr>
-            <td class="td-tool">🎬 RunwayML</td>
+            <td class="td-tool"><img src="https://img.logo.dev/runwayml.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="RunwayML logo" data-srcs="https://img.logo.dev/runwayml.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/runwayml.com?size=120|https://www.google.com/s2/favicons?domain=runwayml.com&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎬';sp.style.cssText='font-size:1em';el.parentNode.insertBefore(sp,el.nextSibling);}})  (this)" style="display:inline-block;width:22px;height:22px;object-fit:contain;border-radius:5px;vertical-align:middle;margin-right:8px;background:#000000;">RunwayML</td>
             <td class="td-free-yes">✓ 525 credits</td>
             <td class="td-price">$15/mo</td>
             <td class="td-best">Creators / filmmakers</td>
@@ -1132,7 +1134,7 @@ footer {
             <td class="td-rating">⭐⭐⭐⭐⭐</td>
           </tr>
           <tr>
-            <td class="td-tool">🎞️ Kling AI 2.0</td>
+            <td class="td-tool"><img src="https://img.logo.dev/klingai.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Kling AI logo" data-srcs="https://img.logo.dev/klingai.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/klingai.com?size=120|https://www.google.com/s2/favicons?domain=klingai.com&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎞️';sp.style.cssText='font-size:1em';el.parentNode.insertBefore(sp,el.nextSibling);}})  (this)" style="display:inline-block;width:22px;height:22px;object-fit:contain;border-radius:5px;vertical-align:middle;margin-right:8px;background:#0a0a0a;">Kling AI</td>
             <td class="td-free-yes">✓ 66 cr/day</td>
             <td class="td-price">$8/mo</td>
             <td class="td-best">Best free option</td>
@@ -1140,7 +1142,7 @@ footer {
             <td class="td-rating">⭐⭐⭐⭐½</td>
           </tr>
           <tr>
-            <td class="td-tool">⚡ Pika Labs</td>
+            <td class="td-tool"><img src="https://img.logo.dev/pika.art?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Pika Labs logo" data-srcs="https://img.logo.dev/pika.art?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/pika.art?size=120|https://www.google.com/s2/favicons?domain=pika.art&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='⚡';sp.style.cssText='font-size:1em';el.parentNode.insertBefore(sp,el.nextSibling);}})  (this)" style="display:inline-block;width:22px;height:22px;object-fit:contain;border-radius:5px;vertical-align:middle;margin-right:8px;background:#000000;">Pika Labs</td>
             <td class="td-free-yes">✓ Yes</td>
             <td class="td-price">$8/mo</td>
             <td class="td-best">Social media clips</td>
@@ -1148,7 +1150,7 @@ footer {
             <td class="td-rating">⭐⭐⭐⭐</td>
           </tr>
           <tr>
-            <td class="td-tool">🎭 Synthesia</td>
+            <td class="td-tool"><img src="https://img.logo.dev/synthesia.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Synthesia logo" data-srcs="https://img.logo.dev/synthesia.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/synthesia.io?size=120|https://www.google.com/s2/favicons?domain=synthesia.io&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎭';sp.style.cssText='font-size:1em';el.parentNode.insertBefore(sp,el.nextSibling);}})  (this)" style="display:inline-block;width:22px;height:22px;object-fit:contain;border-radius:5px;vertical-align:middle;margin-right:8px;background:#ffffff;">Synthesia</td>
             <td class="td-free-yes">✓ 1 video</td>
             <td class="td-price">$22/mo</td>
             <td class="td-best">Business training</td>
@@ -1156,7 +1158,7 @@ footer {
             <td class="td-rating">⭐⭐⭐⭐</td>
           </tr>
           <tr>
-            <td class="td-tool">📱 InVideo AI</td>
+            <td class="td-tool"><img src="https://img.logo.dev/invideo.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="InVideo AI logo" data-srcs="https://img.logo.dev/invideo.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/invideo.io?size=120|https://www.google.com/s2/favicons?domain=invideo.io&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🪄';sp.style.cssText='font-size:1em';el.parentNode.insertBefore(sp,el.nextSibling);}})  (this)" style="display:inline-block;width:22px;height:22px;object-fit:contain;border-radius:5px;vertical-align:middle;margin-right:8px;background:#000000;">InVideo AI</td>
             <td class="td-free-yes">✓ Watermark</td>
             <td class="td-price">$25/mo</td>
             <td class="td-best">YouTube channels</td>
@@ -1164,7 +1166,7 @@ footer {
             <td class="td-rating">⭐⭐⭐⭐</td>
           </tr>
           <tr>
-            <td class="td-tool">🌙 Luma Dream</td>
+            <td class="td-tool"><img src="https://img.logo.dev/lumalabs.ai?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Luma Dream Machine logo" data-srcs="https://img.logo.dev/lumalabs.ai?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/lumalabs.ai?size=120|https://www.google.com/s2/favicons?domain=lumalabs.ai&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🌙';sp.style.cssText='font-size:1em';el.parentNode.insertBefore(sp,el.nextSibling);}})  (this)" style="display:inline-block;width:22px;height:22px;object-fit:contain;border-radius:5px;vertical-align:middle;margin-right:8px;background:#000000;">Luma</td>
             <td class="td-free-yes">✓ 30/mo</td>
             <td class="td-price">$29.99/mo</td>
             <td class="td-best">Product videos</td>
