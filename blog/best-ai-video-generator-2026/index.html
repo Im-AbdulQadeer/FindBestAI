@@ -423,14 +423,14 @@ ul { list-style: none; }
 
 /* TAGS */
 .article-tags-row { 
-  display: flex; flex-wrap: nowrap; gap: 8px; margin-top: 36px; padding-top: 28px; 
-  border-top: 1px solid var(--border); overflow-x: hidden; align-items: center;
+  display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; padding-top: 28px; 
+  border-top: 1px solid var(--border); align-items: center;
 }
 .tag {
   padding: 5px 13px; border-radius: 100px; border: 1px solid var(--border-md);
   font-size: 0.72rem; color: var(--text2); background: var(--surface);
   font-family: 'JetBrains Mono', monospace; transition: all 0.2s; cursor: default;
-  white-space: nowrap; flex-shrink: 0; line-height: 1.4;
+  white-space: nowrap; line-height: 1.4;
 }
 .tag:hover { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
 
