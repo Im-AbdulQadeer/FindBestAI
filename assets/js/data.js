@@ -286,7 +286,7 @@ const ARTICLES = [
     cat: 'ROUNDUP',
     date: 'May 1, 2026',
     title: 'Best AI Video Generator Tools in 2026, Free & Paid Compared',
-    excerpt: 'AI video generation has exploded. We tested Sora, RunwayML, Kling AI, Pika, Synthesia, InVideo AI and Luma Dream Machine so you know exactly which one to use — and which to skip.',
+    excerpt: 'AI video generation has exploded. We tested Sora, RunwayML, Kling AI, Pika, Synthesia, InVideo AI and Luma Dream Machine so you know exactly which one to use and which to skip.',
     keywords: 'best AI video generator 2026, AI video generator free, text to video AI',
     readTime: '9 MIN READ',
     author: 'Find Best AI Editorial',
