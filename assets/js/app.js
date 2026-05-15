@@ -153,7 +153,7 @@ function toolLogo(t, size){
   // If logo is a URL or absolute path (uploaded image), render directly
   if(/^(https?:|\/)/.test(t.logo)){
     const emoji=(t.emoji||'').replace(/'/g,"\\'");
-    return `<img src="${t.logo}" alt="${(t.name||'').replace(/"/g,'&quot;')} logo" onerror="this.onerror=null;this.style.display='none';var sp=document.createElement('span');sp.textContent='${emoji}';sp.style.cssText='font-size:1.3em;line-height:1';this.parentNode.appendChild(sp);" style="display:block;width:100%;height:100%;object-fit:contain;">`;
+    return `<img src="${t.logo}" alt="${(t.name||'').replace(/"/g,'&quot;')} logo" loading="lazy" width="52" height="52" onerror="this.onerror=null;this.style.display='none';var sp=document.createElement('span');sp.textContent='${emoji}';sp.style.cssText='font-size:1.3em;line-height:1';this.parentNode.appendChild(sp);" style="display:block;width:100%;height:100%;object-fit:contain;">`;
   }
   const domain  = t.logo;
   const emoji   = (t.emoji || '').replace(/'/g, "\\'");
@@ -170,7 +170,7 @@ function toolLogo(t, size){
     ? `this.parentNode.style.background='${brand}';this.parentNode.style.border='none';`
     : '';
 
-  return `<img src="${firstSrc}" alt="${name} logo" data-srcs="${unique}" data-src-idx="0" data-brand="${brand}" onload="${onload}" onerror="(function(el){var i=parseInt(el.getAttribute('data-src-idx'))||0,s=el.getAttribute('data-srcs').split('|');i++;if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='${emoji}';sp.style.cssText='font-size:1.3em;line-height:1';el.parentNode.appendChild(sp);}})(this)" style="display:block;width:100%;height:100%;object-fit:contain;">`;
+  return `<img src="${firstSrc}" alt="${name} logo" data-srcs="${unique}" data-src-idx="0" data-brand="${brand}" loading="lazy" width="52" height="52" onload="${onload}" onerror="(function(el){var i=parseInt(el.getAttribute('data-src-idx'))||0,s=el.getAttribute('data-srcs').split('|');i++;if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='${emoji}';sp.style.cssText='font-size:1.3em;line-height:1';el.parentNode.appendChild(sp);}})(this)" style="display:block;width:100%;height:100%;object-fit:contain;">`;
 }
 
 /* ── SEARCH ── */
@@ -655,6 +655,19 @@ function populateCompareCatFilter(){
 function initCommonUI(){
   initReveal();
   triggerReveal();
-  const mutObs=new MutationObserver(initReveal);
-  mutObs.observe(document.body,{childList:true,subtree:true});
+  /* MutationObserver removed — was re-querying all .reveal on every DOM change, causing mobile jank */
+  initRingPause();
+}
+
+/* ── RING GLOW PAUSE — pause ::before animations on cards out of viewport ── */
+function initRingPause(){
+  /* Only run on desktop where ringGlow is active */
+  if(window.matchMedia('(max-width:768px)').matches) return;
+  const ringObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      /* Toggle a class that pauses the animation via CSS */
+      e.target.classList.toggle('ring-paused', !e.isIntersecting);
+    });
+  },{rootMargin:'200px 0px 200px 0px'});
+  document.querySelectorAll('.card,.trend-card,.article-card').forEach(el=>ringObs.observe(el));
 }

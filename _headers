@@ -5,6 +5,23 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
 
+# Cache static assets for 1 year — browser won't re-download on repeat visits
+/assets/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/js/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/uploads/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/logo.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML pages — cache for 1 hour, revalidate (so content updates show quickly)
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+
 /admin/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store, no-cache, must-revalidate, private

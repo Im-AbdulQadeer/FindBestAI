@@ -14,7 +14,10 @@
 <title>All AI Tools — Find Best AI | 500+ Tools Compared</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://logo.clearbit.com">
+<link rel="preconnect" href="https://upload.wikimedia.org">
+<link rel="preconnect" href="https://img.logo.dev">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/main.css">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"CollectionPage","name":"All AI Tools","url":"https://findbestai.pages.dev/tools/","description":"Browse 500+ AI tools across 20 categories."}
@@ -25,7 +28,6 @@
 <div class="bg-orb orb-a"></div>
 <div class="bg-orb orb-b"></div>
 <div class="bg-orb orb-c"></div>
-<div class="scan-line"></div>
 
 <nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
 <div class="mobile-menu" id="mobileMenu" role="menu"></div>
@@ -97,9 +99,9 @@
   <span id="toastMsg"></span>
 </div>
 
-<script src="/assets/js/data.js"></script>
-<script src="/assets/js/app.js"></script>
-<script src="/assets/js/nav.js"></script>
+<script src="/assets/js/data.js" defer></script>
+<script src="/assets/js/app.js" defer></script>
+<script src="/assets/js/nav.js" defer></script>
 <script>
 /* ── TOOLS PAGE ── */
 let activeCat = '';
@@ -161,6 +163,7 @@ function updateToolsCount(count){
 
   initCommonUI();
 })();
+}); // DOMContentLoaded
 </script>
 </body>
 </html>

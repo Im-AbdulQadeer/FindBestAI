@@ -105,25 +105,19 @@ ul{list-style:none}
   pointer-events:none;z-index:0;
   transition:var(--transition-theme);
 }
-.orb-a{width:700px;height:700px;background:var(--orb1);top:-250px;left:-200px;animation:drift 25s ease-in-out infinite}
-.orb-b{width:600px;height:600px;background:var(--orb2);bottom:-200px;right:-150px;animation:drift 30s ease-in-out infinite reverse}
-.orb-c{width:400px;height:400px;background:var(--orb1);top:45%;left:55%;animation:drift 20s ease-in-out infinite 5s}
+.orb-a{width:700px;height:700px;background:var(--orb1);top:-250px;left:-200px;animation:drift 25s ease-in-out infinite;will-change:transform}
+.orb-b{width:600px;height:600px;background:var(--orb2);bottom:-200px;right:-150px;animation:drift 30s ease-in-out infinite reverse;will-change:transform}
+.orb-c{width:400px;height:400px;background:var(--orb1);top:45%;left:55%;animation:drift 20s ease-in-out infinite 5s;will-change:transform}
 @keyframes drift{
   0%,100%{transform:translate(0,0) scale(1)}
   33%{transform:translate(50px,-40px) scale(1.06)}
   66%{transform:translate(-30px,50px) scale(0.94)}
 }
-
-/* ═══════════════════════════════════════
-   SCAN LINE
-═══════════════════════════════════════ */
-.scan-line{
-  position:fixed;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,var(--accent),transparent);
-  opacity:0.15;pointer-events:none;z-index:999;
-  animation:scan 10s linear infinite;
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}
 }
-@keyframes scan{0%{top:-2px}100%{top:100vh}}
+
+/* scan-line removed for performance */
 
 /* ═══════════════════════════════════════
    NAVIGATION
@@ -293,6 +287,7 @@ ul{list-style:none}
   background-size:300% 300%;
   animation:ringGlow 5s ease infinite;
   box-shadow:0 0 50px var(--glow),0 0 100px var(--glow2);
+  will-change:background-position;
 }
 @keyframes ringGlow{
   0%{background-position:0% 50%}
@@ -1008,6 +1003,8 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
 .stagger-1{transition-delay:0.08s}
 .stagger-2{transition-delay:0.16s}
 .stagger-3{transition-delay:0.24s}
+/* Pause ringGlow on cards outside viewport — toggled by IntersectionObserver */
+.ring-paused::before{animation-play-state:paused!important}
 
 /* ═══════════════════════════════════════
    RESPONSIVE
@@ -1204,6 +1201,18 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:56
 
   /* ── ADS — hide all on mobile ── */
   .ad-unit{display:none!important}
+
+  /* ── PERFORMANCE: hide heavy GPU effects on mobile ── */
+  .bg-orb{display:none!important}
+  #topnav{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:var(--bg)!important}
+  .mobile-menu{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:var(--bg)!important}
+  .search-dropdown{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  .modal-bg{backdrop-filter:none!important;-webkit-backdrop-filter:none!important;background:rgba(0,0,0,0.85)!important}
+  /* Pause continuous ringGlow animations on mobile to save GPU */
+  .search-ring,.card::before,.trend-card::before,.article-card::before,
+  .compare-wrap::before,.newsletter-inner::before,.modal-ring::before,
+  .compare-result::before,.compare-builder::before,
+  .theme-btn::before,.btn-outline::before{animation-play-state:paused!important}
 }
 
 @media(max-width:480px){

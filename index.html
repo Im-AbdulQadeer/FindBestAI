@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta name="google-site-verification" content="HcnOuCSvGeAevy8BMMmVCVB4_OyutzGo690LvAkUlE4" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-6Y8QJJMK9R"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6Y8QJJMK9R');</script>
 <meta charset="UTF-8">
 <link rel="icon" type="image/webp" href="/logo.webp">
 <link rel="apple-touch-icon" href="/logo.webp">
@@ -24,9 +20,16 @@
 <meta name="twitter:description" content="Compare 500+ AI tools. Find free alternatives, expert reviews, and the perfect AI tool for every task.">
 <link rel="canonical" href="https://findbestai.pages.dev">
 <title>Find the best AI tools for any task. Compare 500+ AI tools, find free alternatives.</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75DVR989Q7"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-75DVR989Q7');</script>
+<meta name="google-site-verification" content="uf96bfq_Fwc75GVVWbOizgnwParPoYfDTil0nTiUA98" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://logo.clearbit.com">
+<link rel="preconnect" href="https://upload.wikimedia.org">
+<link rel="preconnect" href="https://img.logo.dev">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/main.css">
 <script type="application/ld+json">
 {
@@ -42,25 +45,13 @@
   ]
 }
 </script>
-<!-- ADMIN_HEAD -->
-<meta name="google-site-verification" content="uf96bfq_Fwc75GVVWbOizgnwParPoYfDTil0nTiUA98" />
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-75DVR989Q7"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-75DVR989Q7');
-</script>
-<!-- /ADMIN_HEAD -->
 </head>
 <body>
 <div class="bg-grid"></div>
 <div class="bg-orb orb-a"></div>
 <div class="bg-orb orb-b"></div>
 <div class="bg-orb orb-c"></div>
-<div class="scan-line"></div>
 
 <nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
 <div class="mobile-menu" id="mobileMenu" role="menu"></div>
@@ -204,12 +195,12 @@
   <span id="toastMsg"></span>
 </div>
 
-<script src="/assets/js/data.js"></script>
-<script src="/assets/js/app.js"></script>
-<script src="/assets/js/nav.js"></script>
-<script>
+<script src="/assets/js/data.js" defer></script>
+<script src="/assets/js/app.js" defer></script>
+<script src="/assets/js/nav.js" defer></script>
+<script defer>
 /* ── HOME PAGE INIT ── */
-(function(){
+document.addEventListener('DOMContentLoaded', function(){
   /* Categories */
   renderCats('homeCats', cat => {
     window.location = '/tools/?cat=' + encodeURIComponent(cat.name);
@@ -233,7 +224,7 @@
   renderArticleCards('homeArticles', 6);
 
   initCommonUI();
-})();
+});
 </script>
 </body>
 </html>
