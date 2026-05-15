@@ -422,11 +422,15 @@ ul { list-style: none; }
 .related-link-btn:hover { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface3)); }
 
 /* TAGS */
-.article-tags-row { display: flex; flex-wrap: nowrap; gap: 8px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--border); overflow: hidden; justify-content: flex-start; }
+.article-tags-row { 
+  display: flex; flex-wrap: nowrap; gap: 8px; margin-top: 36px; padding-top: 28px; 
+  border-top: 1px solid var(--border); overflow-x: hidden; align-items: center;
+}
 .tag {
-  padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border-md);
-  font-size: 0.73rem; color: var(--text2); background: var(--surface);
+  padding: 5px 13px; border-radius: 100px; border: 1px solid var(--border-md);
+  font-size: 0.72rem; color: var(--text2); background: var(--surface);
   font-family: 'JetBrains Mono', monospace; transition: all 0.2s; cursor: default;
+  white-space: nowrap; flex-shrink: 0; line-height: 1.4;
 }
 .tag:hover { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--surface)); }
 
@@ -458,7 +462,7 @@ ul { list-style: none; }
 
 /* STICKY TOC */
 .sticky-toc-btn {
-  position: fixed; bottom: 32px; left: 32px; z-index: 100;
+  position: fixed; bottom: 32px; right: 32px; left: auto; z-index: 100;
   width: 44px; height: 44px; border-radius: 12px;
   background: var(--surface2); border: 1px solid var(--border-md);
   color: var(--accent); font-size: 1.1rem;
@@ -466,8 +470,8 @@ ul { list-style: none; }
   box-shadow: var(--shadow); transition: all 0.2s; cursor: pointer;
   opacity: 0; transform: translateY(8px); pointer-events: none;
 }
-.sticky-toc-btn.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
-.sticky-toc-btn:hover { background: var(--surface3); box-shadow: 0 0 24px var(--glow); border-color: var(--accent); }
+.sticky-toc-btn.visible { opacity: 0.45; transform: translateY(0); pointer-events: all; }
+.sticky-toc-btn:hover { opacity: 1; background: var(--surface3); box-shadow: 0 0 24px var(--glow); border-color: var(--accent); }
 
 /* MODAL */
 .modal-bg { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:800;align-items:center;justify-content:center;backdrop-filter:blur(6px); }
@@ -531,7 +535,7 @@ footer {
   .related-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .reading-progress { top: 56px; }
-  .sticky-toc-btn { left: 16px; bottom: 20px; }
+  .sticky-toc-btn { right: 16px; left: auto; bottom: 20px; }
   .tool-verdict-row { flex-direction: column; }
   .pick-guide { padding: 18px 20px; }
   /* Original tool logos: keep tidy and prevent badges from overlapping */
@@ -563,13 +567,14 @@ footer {
 
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
 
-  /* Comparison table: wrap text properly so it stays readable */
-  .compare-table { font-size: 0.74rem; }
+  /* Comparison table: force horizontal scroll, one clean row per tool */
+  .compare-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .compare-table { font-size: 0.78rem; min-width: 520px; }
   .compare-table th, .compare-table td {
-    padding: 9px 8px; white-space: normal; word-break: break-word; line-height: 1.35;
+    padding: 11px 12px; white-space: nowrap; word-break: normal; line-height: 1.4;
   }
-  .compare-table th { font-size: 0.6rem; }
-  .td-tool { white-space: normal; }
+  .compare-table th { font-size: 0.62rem; }
+  .td-tool { white-space: nowrap; }
 }
 </style>
 </head>
