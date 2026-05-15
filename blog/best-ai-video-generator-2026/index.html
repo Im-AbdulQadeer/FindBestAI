@@ -508,6 +508,9 @@ footer {
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* RESPONSIVE */
+/* Per-tool thumbnail: visible only on mobile */
+.tool-card-thumb { display: none; }
+
 @media(max-width: 768px) {
   #topnav { padding: 0 14px; height: 56px; }
   .nav-links, .nav-actions { display: none; }
@@ -519,19 +522,58 @@ footer {
   .article-full h1 { font-size: 1.65rem; }
   .tool-review-card { padding: 20px 16px; }
   .score-grid { grid-template-columns: 1fr; }
-  .tool-card-header { gap: 12px; }
+  .tool-card-header { gap: 12px; align-items: center; }
   .related-grid { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .reading-progress { top: 56px; }
   .sticky-toc-btn { left: 16px; bottom: 20px; }
   .tool-verdict-row { flex-direction: column; }
   .pick-guide { padding: 18px 20px; }
+
+  /* Per-tool hero thumbnail */
+  .tool-card-thumb {
+    display: block; width: 100%; aspect-ratio: 16/9;
+    border-radius: 12px; overflow: hidden; margin: -4px 0 16px;
+    border: 1px solid var(--border);
+  }
+  .tool-card-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* Original tool logos: keep tidy and prevent badges from overlapping */
+  .tool-card-logo { width: 48px; height: 48px; border-radius: 12px; }
+  .tool-card-info { flex: 1 1 0; min-width: 0; }
+  .tool-card-name { font-size: 1.05rem; }
+
+  /* Badges: force a single row, scrollable if needed, no overlap on logo */
+  .tool-card-badges {
+    display: flex; flex-wrap: nowrap; gap: 6px;
+    width: 100%; flex-basis: 100%; margin-top: 12px;
+    overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .tool-card-badges::-webkit-scrollbar { display: none; }
+  .tool-card-badges .badge {
+    flex: 0 0 auto; padding: 4px 9px; font-size: 0.62rem; letter-spacing: 0.04em;
+  }
 }
+
 @media(max-width: 480px) {
-  .tool-card-meta-row { flex-direction: column; gap: 12px; }
+  /* Details: 2 columns x 2 rows */
+  .tool-card-meta-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px 18px;
+    padding: 14px 0;
+  }
+  .tool-meta-item { min-width: 0; }
+  .tool-meta-value { font-size: 0.84rem; word-break: break-word; }
+
   .footer-grid { grid-template-columns: 1fr; gap: 28px; }
-  .compare-table { font-size: 0.78rem; }
-  .compare-table td, .compare-table th { padding: 10px 10px; }
+
+  /* Comparison table: wrap text properly so it stays readable */
+  .compare-table { font-size: 0.74rem; }
+  .compare-table th, .compare-table td {
+    padding: 9px 8px; white-space: normal; word-break: break-word; line-height: 1.35;
+  }
+  .compare-table th { font-size: 0.6rem; }
+  .td-tool { white-space: normal; }
 }
 </style>
 </head>
@@ -653,6 +695,7 @@ footer {
 
     <!-- TOOL 1: SORA -->
     <div class="tool-review-card reveal" id="tool-sora">
+      <div class="tool-card-thumb"><img src="/assets/uploads/Best_AI_Video_generator_in_2026.webp" alt="AI video generator tools 2026" loading="lazy"></div>
       <div class="tool-card-header">
         <div class="tool-rank-medal">🥇</div>
         <div class="tool-card-logo">
@@ -728,6 +771,7 @@ footer {
 
     <!-- TOOL 2: RUNWAY -->
     <div class="tool-review-card reveal" id="tool-runway">
+      <div class="tool-card-thumb"><img src="/assets/uploads/Best_AI_Video_generator_in_2026.webp" alt="AI video generator tools 2026" loading="lazy"></div>
       <div class="tool-card-header">
         <div class="tool-rank-medal">🥈</div>
         <div class="tool-card-logo">
@@ -802,6 +846,7 @@ footer {
 
     <!-- TOOL 3: KLING -->
     <div class="tool-review-card reveal" id="tool-kling">
+      <div class="tool-card-thumb"><img src="/assets/uploads/Best_AI_Video_generator_in_2026.webp" alt="AI video generator tools 2026" loading="lazy"></div>
       <div class="tool-card-header">
         <div class="tool-rank-medal">🥉</div>
         <div class="tool-card-logo">
@@ -876,6 +921,7 @@ footer {
 
     <!-- TOOL 4: PIKA -->
     <div class="tool-review-card reveal" id="tool-pika">
+      <div class="tool-card-thumb"><img src="/assets/uploads/Best_AI_Video_generator_in_2026.webp" alt="AI video generator tools 2026" loading="lazy"></div>
       <div class="tool-card-header">
         <div class="tool-rank-medal" style="font-size:1.4rem">4️⃣</div>
         <div class="tool-card-logo">
@@ -932,6 +978,7 @@ footer {
 
     <!-- TOOL 5: SYNTHESIA -->
     <div class="tool-review-card reveal" id="tool-synthesia">
+      <div class="tool-card-thumb"><img src="/assets/uploads/Best_AI_Video_generator_in_2026.webp" alt="AI video generator tools 2026" loading="lazy"></div>
       <div class="tool-card-header">
         <div class="tool-rank-medal" style="font-size:1.4rem">5️⃣</div>
         <div class="tool-card-logo">
@@ -988,6 +1035,7 @@ footer {
 
     <!-- TOOL 6: INVIDEO -->
     <div class="tool-review-card reveal" id="tool-invideo">
+      <div class="tool-card-thumb"><img src="/assets/uploads/Best_AI_Video_generator_in_2026.webp" alt="AI video generator tools 2026" loading="lazy"></div>
       <div class="tool-card-header">
         <div class="tool-rank-medal" style="font-size:1.4rem">6️⃣</div>
         <div class="tool-card-logo">
@@ -1043,6 +1091,7 @@ footer {
 
     <!-- TOOL 7: LUMA -->
     <div class="tool-review-card reveal" id="tool-luma">
+      <div class="tool-card-thumb"><img src="/assets/uploads/Best_AI_Video_generator_in_2026.webp" alt="AI video generator tools 2026" loading="lazy"></div>
       <div class="tool-card-header">
         <div class="tool-rank-medal" style="font-size:1.4rem">7️⃣</div>
         <div class="tool-card-logo">
