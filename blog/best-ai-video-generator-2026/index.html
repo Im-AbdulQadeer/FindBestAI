@@ -281,15 +281,23 @@ ul { list-style: none; }
 .tool-review-card:hover::before { opacity: 1; }
 .tool-card-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px; flex-wrap: wrap; }
 .tool-card-logo {
-  width: 56px; height: 56px; border-radius: 14px;
+  width: 48px; height: 48px; border-radius: 12px;
   background: #111; border: 1px solid var(--border-md);
-  display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0;
   box-shadow: 0 4px 20px rgba(0,0,0,0.35); overflow: hidden;
   transition: background 0.2s;
 }
-.tool-card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+.tool-card-logo img { width: 100%; height: 100%; object-fit: contain; padding: 7px; }
 .tool-card-info { flex: 1; min-width: 0; }
-.tool-card-name { font-size: 1.15rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; }
+.tool-card-name { font-size: 1.15rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+.tool-card-name .inline-medal { font-size: 1.3rem; line-height: 1; flex-shrink: 0; }
+.tool-card-name .inline-logo {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0;
+  background: #111; border: 1px solid var(--border-md);
+  display: flex; align-items: center; justify-content: center; font-size: 1rem;
+  overflow: hidden;
+}
+.tool-card-name .inline-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
 .tool-card-tagline { font-size: 0.82rem; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
 .tool-card-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .badge {
@@ -348,7 +356,7 @@ ul { list-style: none; }
   border-bottom: 1px solid var(--border-md);
   white-space: nowrap;
 }
-.compare-table td { padding: 13px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.compare-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: middle; white-space: nowrap; }
 .compare-table tbody tr:last-child td { border-bottom: none; }
 .compare-table tbody tr { transition: background 0.2s; }
 .compare-table tbody tr:hover { background: var(--surface2); }
@@ -373,8 +381,8 @@ ul { list-style: none; }
 .pick-row:hover { background: color-mix(in srgb, var(--accent) 4%, transparent); padding-left: 6px; }
 .pick-cond { font-size: 0.88rem; color: var(--text2); flex: 1; }
 .pick-cond strong { color: var(--text); }
-.pick-arrow { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; flex-shrink: 0; }
 .pick-tool { font-size: 0.85rem; font-weight: 700; color: var(--accent2); white-space: nowrap; }
+.pick-arrow { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; flex-shrink: 0; margin-left: auto; opacity: 0.35; order: 3; }
 
 /* VERDICT BOX */
 .verdict-box {
@@ -414,7 +422,7 @@ ul { list-style: none; }
 .related-link-btn:hover { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface3)); }
 
 /* TAGS */
-.article-tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--border); }
+.article-tags-row { display: flex; flex-wrap: nowrap; gap: 8px; margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--border); overflow: hidden; justify-content: flex-start; }
 .tag {
   padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border-md);
   font-size: 0.73rem; color: var(--text2); background: var(--surface);
@@ -684,12 +692,8 @@ footer {
     <!-- TOOL 1: SORA -->
     <div class="tool-review-card reveal" id="tool-sora">
       <div class="tool-card-header">
-        <div class="tool-rank-medal">🥇</div>
-        <div class="tool-card-logo">
-          <img src="https://img.logo.dev/sora.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Sora logo" data-srcs="https://img.logo.dev/sora.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/openai.com?size=120|https://www.google.com/s2/favicons?domain=sora.com&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🌐';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
-        </div>
         <div class="tool-card-info">
-          <div class="tool-card-name">Sora by OpenAI</div>
+          <div class="tool-card-name"><span class="inline-medal">🥇</span><span class="inline-logo" style="background:#000"><img src="https://img.logo.dev/sora.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Sora logo" data-srcs="https://img.logo.dev/sora.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/openai.com?size=120|https://www.google.com/s2/favicons?domain=sora.com&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🌐';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;"></span>Sora by OpenAI</div>
           <div class="tool-card-tagline">// Best Overall Quality</div>
           <div class="tool-card-badges">
             <span class="badge badge-best">BEST QUALITY</span>
@@ -759,12 +763,8 @@ footer {
     <!-- TOOL 2: RUNWAY -->
     <div class="tool-review-card reveal" id="tool-runway">
       <div class="tool-card-header">
-        <div class="tool-rank-medal">🥈</div>
-        <div class="tool-card-logo">
-          <img src="https://img.logo.dev/runwayml.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="RunwayML logo" data-srcs="https://img.logo.dev/runwayml.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/runwayml.com?size=120|https://www.google.com/s2/favicons?domain=runwayml.com&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎬';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
-        </div>
         <div class="tool-card-info">
-          <div class="tool-card-name">RunwayML Gen-3 Alpha</div>
+          <div class="tool-card-name"><span class="inline-medal">🥈</span><span class="inline-logo" style="background:#000"><img src="https://img.logo.dev/runwayml.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="RunwayML logo" data-srcs="https://img.logo.dev/runwayml.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/runwayml.com?size=120|https://www.google.com/s2/favicons?domain=runwayml.com&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎬';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;"></span>RunwayML Gen-3 Alpha</div>
           <div class="tool-card-tagline">// Best for Creators</div>
           <div class="tool-card-badges">
             <span class="badge badge-best">CREATOR PICK</span>
@@ -833,12 +833,8 @@ footer {
     <!-- TOOL 3: KLING -->
     <div class="tool-review-card reveal" id="tool-kling">
       <div class="tool-card-header">
-        <div class="tool-rank-medal">🥉</div>
-        <div class="tool-card-logo">
-          <img src="https://img.logo.dev/klingai.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Kling AI logo" data-srcs="https://img.logo.dev/klingai.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/klingai.com?size=120|https://www.google.com/s2/favicons?domain=klingai.com&sz=128" data-src-idx="0" data-brand="#0a0a0a" onload="this.parentNode.style.background='#0a0a0a';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎞️';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
-        </div>
         <div class="tool-card-info">
-          <div class="tool-card-name">Kling AI 2.0</div>
+          <div class="tool-card-name"><span class="inline-medal">🥉</span><span class="inline-logo" style="background:#0a0a0a"><img src="https://img.logo.dev/klingai.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Kling AI logo" data-srcs="https://img.logo.dev/klingai.com?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/klingai.com?size=120|https://www.google.com/s2/favicons?domain=klingai.com&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎞️';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;"></span>Kling AI 2.0</div>
           <div class="tool-card-tagline">// Best Free Option in 2026</div>
           <div class="tool-card-badges">
             <span class="badge badge-free">66 FREE CREDITS/DAY</span>
@@ -907,12 +903,8 @@ footer {
     <!-- TOOL 4: PIKA -->
     <div class="tool-review-card reveal" id="tool-pika">
       <div class="tool-card-header">
-        <div class="tool-rank-medal" style="font-size:1.4rem">4️⃣</div>
-        <div class="tool-card-logo">
-          <img src="https://img.logo.dev/pika.art?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Pika Labs logo" data-srcs="https://img.logo.dev/pika.art?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/pika.art?size=120|https://www.google.com/s2/favicons?domain=pika.art&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='⚡';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
-        </div>
         <div class="tool-card-info">
-          <div class="tool-card-name">Pika Labs 2.0</div>
+          <div class="tool-card-name"><span class="inline-medal" style="font-size:1.1rem">4️⃣</span><span class="inline-logo" style="background:#000"><img src="https://img.logo.dev/pika.art?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Pika Labs logo" data-srcs="https://img.logo.dev/pika.art?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/pika.art?size=120|https://www.google.com/s2/favicons?domain=pika.art&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='⚡';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;"></span>Pika Labs 2.0</div>
           <div class="tool-card-tagline">// Best for Social Media</div>
           <div class="tool-card-badges">
             <span class="badge badge-free">FREE PLAN</span>
@@ -963,12 +955,8 @@ footer {
     <!-- TOOL 5: SYNTHESIA -->
     <div class="tool-review-card reveal" id="tool-synthesia">
       <div class="tool-card-header">
-        <div class="tool-rank-medal" style="font-size:1.4rem">5️⃣</div>
-        <div class="tool-card-logo">
-          <img src="https://img.logo.dev/synthesia.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Synthesia logo" data-srcs="https://img.logo.dev/synthesia.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/synthesia.io?size=120|https://www.google.com/s2/favicons?domain=synthesia.io&sz=128" data-src-idx="0" data-brand="#ffffff" onload="this.parentNode.style.background='#ffffff';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎭';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
-        </div>
         <div class="tool-card-info">
-          <div class="tool-card-name">Synthesia</div>
+          <div class="tool-card-name"><span class="inline-medal" style="font-size:1.1rem">5️⃣</span><span class="inline-logo" style="background:#fff"><img src="https://img.logo.dev/synthesia.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Synthesia logo" data-srcs="https://img.logo.dev/synthesia.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/synthesia.io?size=120|https://www.google.com/s2/favicons?domain=synthesia.io&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🎭';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;"></span>Synthesia</div>
           <div class="tool-card-tagline">// Best for Business Video</div>
           <div class="tool-card-badges">
             <span class="badge badge-free">1 FREE VIDEO</span>
@@ -1019,12 +1007,8 @@ footer {
     <!-- TOOL 6: INVIDEO -->
     <div class="tool-review-card reveal" id="tool-invideo">
       <div class="tool-card-header">
-        <div class="tool-rank-medal" style="font-size:1.4rem">6️⃣</div>
-        <div class="tool-card-logo">
-          <img src="https://img.logo.dev/invideo.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="InVideo AI logo" data-srcs="https://img.logo.dev/invideo.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/invideo.io?size=120|https://www.google.com/s2/favicons?domain=invideo.io&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🪄';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
-        </div>
         <div class="tool-card-info">
-          <div class="tool-card-name">InVideo AI</div>
+          <div class="tool-card-name"><span class="inline-medal" style="font-size:1.1rem">6️⃣</span><span class="inline-logo" style="background:#6c2bd9"><img src="https://logo.clearbit.com/invideo.io?size=120" alt="InVideo AI logo" data-srcs="https://logo.clearbit.com/invideo.io?size=120|https://img.logo.dev/invideo.io?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://www.google.com/s2/favicons?domain=invideo.io&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🪄';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;filter:brightness(1.4) contrast(1.2);"></span>InVideo AI</div>
           <div class="tool-card-tagline">// Best for YouTube Channels</div>
           <div class="tool-card-badges">
             <span class="badge badge-free">FREE (WATERMARK)</span>
@@ -1074,12 +1058,8 @@ footer {
     <!-- TOOL 7: LUMA -->
     <div class="tool-review-card reveal" id="tool-luma">
       <div class="tool-card-header">
-        <div class="tool-rank-medal" style="font-size:1.4rem">7️⃣</div>
-        <div class="tool-card-logo">
-          <img src="https://img.logo.dev/lumalabs.ai?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120" alt="Luma Dream Machine logo" data-srcs="https://img.logo.dev/lumalabs.ai?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://logo.clearbit.com/lumalabs.ai?size=120|https://www.google.com/s2/favicons?domain=lumalabs.ai&sz=128" data-src-idx="0" data-brand="#000000" onload="this.parentNode.style.background='#000000';this.parentNode.style.border='none';" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🌙';sp.style.cssText='font-size:1.5em;line-height:1';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;">
-        </div>
         <div class="tool-card-info">
-          <div class="tool-card-name">Luma Dream Machine</div>
+          <div class="tool-card-name"><span class="inline-medal" style="font-size:1.1rem">7️⃣</span><span class="inline-logo" style="background:#1a1a2e"><img src="https://logo.clearbit.com/lumalabs.ai?size=120" alt="Luma Dream Machine logo" data-srcs="https://logo.clearbit.com/lumalabs.ai?size=120|https://img.logo.dev/lumalabs.ai?token=pk_X7dkNxoKQHa2RfwzKpIGJg&size=120|https://www.google.com/s2/favicons?domain=lumalabs.ai&sz=128" data-src-idx="0" onerror="(function(el){var i=(parseInt(el.getAttribute('data-src-idx'))||0)+1,s=el.getAttribute('data-srcs').split('|');if(i<s.length){el.setAttribute('data-src-idx',i);el.src=s[i];}else{el.onerror=null;el.style.display='none';var sp=document.createElement('span');sp.textContent='🌙';el.parentNode.appendChild(sp);}})  (this)" style="display:block;width:100%;height:100%;object-fit:contain;filter:brightness(1.5) contrast(1.2);"></span>Luma Dream Machine</div>
           <div class="tool-card-tagline">// Best for Product Videos</div>
           <div class="tool-card-badges">
             <span class="badge badge-free">30 FREE/MONTH</span>
