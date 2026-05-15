@@ -198,9 +198,9 @@
 <script src="/assets/js/data.js" defer></script>
 <script src="/assets/js/app.js" defer></script>
 <script src="/assets/js/nav.js" defer></script>
-<script defer>
+<script>
 /* ── HOME PAGE INIT ── */
-document.addEventListener('DOMContentLoaded', function(){
+(function(){
   /* Categories */
   renderCats('homeCats', cat => {
     window.location = '/tools/?cat=' + encodeURIComponent(cat.name);
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function(){
   renderArticleCards('homeArticles', 6);
 
   initCommonUI();
-});
+})();
 </script>
 </body>
 </html>

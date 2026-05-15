@@ -119,8 +119,8 @@
 <script src="/assets/js/data.js" defer></script>
 <script src="/assets/js/app.js" defer></script>
 <script src="/assets/js/nav.js" defer></script>
-<script defer>
-document.addEventListener(\'DOMContentLoaded\', function(){
+<script>
+(function(){
   const rg=document.getElementById('relatedArticles');
   ARTICLES.slice(0,4).forEach(a=>{
     const card=document.createElement('div');card.className='related-card';
@@ -128,7 +128,7 @@ document.addEventListener(\'DOMContentLoaded\', function(){
     card.addEventListener('click',()=>window.location='/blog/'+a.slug+'/');rg.appendChild(card);
   });
   initCommonUI();
-});
+})();
 </script>
 </body>
 </html>

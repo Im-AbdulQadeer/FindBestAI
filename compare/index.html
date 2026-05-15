@@ -137,8 +137,8 @@
 <script src="/assets/js/data.js" defer></script>
 <script src="/assets/js/app.js" defer></script>
 <script src="/assets/js/nav.js" defer></script>
-<script defer>
-document.addEventListener(\'DOMContentLoaded\', function(){
+<script>
+(function(){
   populateCompareCatFilter();
   renderToolSelector();
   updateSelectionCount();
@@ -148,7 +148,7 @@ document.addEventListener(\'DOMContentLoaded\', function(){
   renderCompareTable('videoCompareBody', VIDEO_COMPARE, [], row=>[row.quality,row.len,row.res]);
 
   initCommonUI();
-});
+})();
 </script>
 </body>
 </html>
