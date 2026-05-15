@@ -19,6 +19,20 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Blog","name":"Find Best AI Blog","url":"https://findbestai.pages.dev/blog/","description":"Expert reviews, comparisons, and guides on the best AI tools."}
 </script>
+<style>
+  /* Featured thumbnail: cap size so it isn't huge on desktop */
+  .featured-thumb{aspect-ratio:21/9!important;max-height:340px}
+  @media(max-width:768px){
+    .featured-thumb{aspect-ratio:16/9!important;max-height:220px}
+  }
+  /* Soften overpowering bottom shadow on article card thumbnails so titles stay readable */
+  .article-card .thumb::after,
+  .article-card .card-thumb::after,
+  .article-card [class*="thumb"]::after{
+    height:30%!important;
+    background:linear-gradient(to bottom,transparent,color-mix(in oklab,var(--surface) 70%,transparent))!important;
+  }
+</style>
 </head>
 <body>
 <div class="bg-grid"></div>
@@ -94,8 +108,9 @@
   const a = ARTICLES[0];
   const fa = document.getElementById('featuredArticle');
   fa.innerHTML = `
-    <div style="aspect-ratio:16/9;width:100%;position:relative;overflow:hidden;background:${a.thumb}">
+    <div class="featured-thumb" style="width:100%;position:relative;overflow:hidden;background:${a.thumb};aspect-ratio:21/9;max-height:340px">
       ${a.image ? `<img src="${a.image}" alt="${a.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block">` : `<div style="height:100%;display:flex;align-items:center;justify-content:center;font-size:5rem">${a.emoji}</div>`}
+      <div style="position:absolute;inset:auto 0 0 0;height:35%;background:linear-gradient(to bottom,transparent,color-mix(in oklab,var(--surface) 75%,transparent));pointer-events:none"></div>
     </div>
     <div style="padding:32px 40px 36px">
       <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px">
