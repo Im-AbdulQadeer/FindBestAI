@@ -201,7 +201,7 @@ tr:hover td{background:rgba(255,255,255,.015)}tr:last-child td{border-bottom:non
       <div class="nav-section">System</div>
       <div class="nav-item" data-go="settings"><span class="ni">⚙️</span> Settings</div>
       <div class="nav-item" data-go="commits"><span class="ni">📜</span> Commit History</div>
-      <div class="nav-item" onclick="window.open('https://findbestai.pages.dev/','_blank')"><span class="ni">🌐</span> View Live Site ↗</div>
+      <div class="nav-item" onclick="window.open('https://findbestai.app/','_blank')"><span class="ni">🌐</span> View Live Site ↗</div>
     </div>
     <div class="sidebar-foot">
       <div class="sidebar-user">
@@ -405,7 +405,7 @@ tr:hover td{background:rgba(255,255,255,.015)}tr:last-child td{border-bottom:non
     <div class="grid2">
       <div class="field"><label>Site Name</label><input id="si_name" value="FindBestAI" oninput="document.getElementById('siteNameLabel').textContent=this.value"></div>
       <div class="field"><label>Tagline / Short Description</label><input id="si_tagline" value="Find the Best AI Tools"></div>
-      <div class="field"><label>Site URL</label><input id="si_url" value="https://findbestai.pages.dev"></div>
+      <div class="field"><label>Site URL</label><input id="si_url" value="https://findbestai.app"></div>
       <div class="field"><label>Contact Email</label><input id="si_email" value="admin@findbestai.com" type="email"></div>
     </div>
   </div></div>
@@ -510,14 +510,14 @@ GitHub|https://github.com/Im-AbdulQadeer</textarea>
     <div style="font-size:11px;color:var(--mute);margin-bottom:12px">Ideal: 150–160 characters</div>
     <div class="grid2">
       <div class="field"><label>Keywords (comma separated)</label><input id="seo_keywords" value="best AI tools, AI tools 2026, free AI tools, AI directory"></div>
-      <div class="field"><label>Canonical Base URL</label><input id="seo_canonical" value="https://findbestai.pages.dev"></div>
+      <div class="field"><label>Canonical Base URL</label><input id="seo_canonical" value="https://findbestai.app"></div>
     </div>
   </div></div>
   <div class="panel"><div class="panel-h">📊 Open Graph &amp; Social Sharing</div><div class="panel-b">
     <div class="grid2">
       <div class="field"><label>OG Title</label><input id="seo_og_title" value="FindBestAI — Best AI Tools Directory 2026"></div>
       <div class="field"><label>OG Description</label><input id="seo_og_desc" value="Discover the best AI tools for every task. Compare pricing, features &amp; reviews."></div>
-      <div class="field"><label>OG Image URL (1200×630px)</label><input id="seo_og_image" value="https://findbestai.pages.dev/logo.webp"></div>
+      <div class="field"><label>OG Image URL (1200×630px)</label><input id="seo_og_image" value="https://findbestai.app/logo.webp"></div>
       <div class="field"><label>Twitter Card Type</label><select id="seo_twitter_card"><option>summary_large_image</option><option>summary</option></select></div>
       <div class="field"><label>Twitter Handle</label><input id="seo_twitter_site" value="@findbestai"></div>
       <div class="field"><label>OG Locale</label><input id="seo_og_locale" value="en_US"></div>
@@ -530,8 +530,8 @@ GitHub|https://github.com/Im-AbdulQadeer</textarea>
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "FindBestAI",
-  "url": "https://findbestai.pages.dev",
-  "logo": "https://findbestai.pages.dev/logo.webp",
+  "url": "https://findbestai.app",
+  "logo": "https://findbestai.app/logo.webp",
   "description": "The best AI tools directory",
   "sameAs": [
     "https://twitter.com/findbestai",
@@ -743,7 +743,7 @@ GitHub|https://github.com/Im-AbdulQadeer</textarea>
   </div></div>
   <div class="panel"><div class="panel-h">🌐 Site Configuration</div><div class="panel-b">
     <div class="grid2">
-      <div class="field"><label>Live Site URL</label><input id="cfg_live_url" value="https://findbestai.pages.dev"></div>
+      <div class="field"><label>Live Site URL</label><input id="cfg_live_url" value="https://findbestai.app"></div>
       <div class="field"><label>Cloudflare Pages Project Name</label><input id="cfg_cf_project" value="findbestai"></div>
     </div>
   </div></div>
@@ -1257,7 +1257,7 @@ function delItem(block,idx,name){
 function renderPages(){
   const tb=document.getElementById('tbl-pages');
   if(!S.pages.length){tb.innerHTML='<tr><td colspan="3"><div class="empty"><div class="big">📭</div>No pages found.</div></td></tr>';return}
-  tb.innerHTML=S.pages.map(p=>`<tr><td><strong>${esc(p.path)}</strong></td><td style="color:var(--mute)">${(p.size/1024).toFixed(1)} KB</td><td><div class="row-actions"><button class="btn btn-sm" onclick="window.open('https://findbestai.pages.dev/${p.path==='index.html'?'':p.path.replace(/index\.html$/,'')}','_blank')">↗ View</button><button class="btn btn-sm" onclick="editPage('${esc(p.path)}')">Edit HTML</button><button class="btn btn-sm btn-danger" onclick="deletePage('${esc(p.path)}','${p.sha}')">× Delete</button></div></td></tr>`).join('');
+  tb.innerHTML=S.pages.map(p=>`<tr><td><strong>${esc(p.path)}</strong></td><td style="color:var(--mute)">${(p.size/1024).toFixed(1)} KB</td><td><div class="row-actions"><button class="btn btn-sm" onclick="window.open('https://findbestai.app/${p.path==='index.html'?'':p.path.replace(/index\.html$/,'')}','_blank')">↗ View</button><button class="btn btn-sm" onclick="editPage('${esc(p.path)}')">Edit HTML</button><button class="btn btn-sm btn-danger" onclick="deletePage('${esc(p.path)}','${p.sha}')">× Delete</button></div></td></tr>`).join('');
 }
 async function editPage(path){
   setSync('sync','Loading '+path+'…');

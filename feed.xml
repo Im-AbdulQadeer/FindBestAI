@@ -2,49 +2,49 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Find Best AI — Blog</title>
-    <link>https://findbestai.pages.dev/blog/</link>
+    <link>https://findbestai.app/blog/</link>
     <description>AI tools reviews, comparisons, and guides — updated weekly.</description>
     <language>en-us</language>
-    <atom:link href="https://findbestai.pages.dev/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="https://findbestai.app/feed.xml" rel="self" type="application/rss+xml"/>
 
     <item>
       <title>Best AI Video Generator Tools in 2026 — Free &amp; Paid Compared</title>
-      <link>https://findbestai.pages.dev/blog/best-ai-video-generator-2026/</link>
+      <link>https://findbestai.app/blog/best-ai-video-generator-2026/</link>
       <description>We tested Sora, RunwayML, Kling AI, Pika Labs, Synthesia, InVideo AI and Luma. Here are the honest results.</description>
       <pubDate>Thu, 01 May 2026 08:00:00 +0000</pubDate>
-      <guid>https://findbestai.pages.dev/blog/best-ai-video-generator-2026/</guid>
+      <guid>https://findbestai.app/blog/best-ai-video-generator-2026/</guid>
     </item>
 
     <item>
       <title>Midjourney vs DALL-E 3 vs Adobe Firefly: 2025 Image AI Showdown</title>
-      <link>https://findbestai.pages.dev/blog/midjourney-vs-dalle-vs-firefly/</link>
+      <link>https://findbestai.app/blog/midjourney-vs-dalle-vs-firefly/</link>
       <description>We tested all three on 50 identical prompts. The results will surprise you — especially on pricing.</description>
       <pubDate>Tue, 28 Jan 2025 08:00:00 +0000</pubDate>
-      <guid>https://findbestai.pages.dev/blog/midjourney-vs-dalle-vs-firefly/</guid>
+      <guid>https://findbestai.app/blog/midjourney-vs-dalle-vs-firefly/</guid>
     </item>
 
     <item>
       <title>10 Free AI Tools That Replace Expensive Software</title>
-      <link>https://findbestai.pages.dev/blog/10-free-ai-tools-replace-expensive-software/</link>
+      <link>https://findbestai.app/blog/10-free-ai-tools-replace-expensive-software/</link>
       <description>Free alternatives to Photoshop, Premiere Pro, and more — all powered by AI and available right now.</description>
       <pubDate>Sat, 25 Jan 2025 08:00:00 +0000</pubDate>
-      <guid>https://findbestai.pages.dev/blog/10-free-ai-tools-replace-expensive-software/</guid>
+      <guid>https://findbestai.app/blog/10-free-ai-tools-replace-expensive-software/</guid>
     </item>
 
     <item>
       <title>Cursor AI Deep Dive Review — 30 Days as Our Primary IDE</title>
-      <link>https://findbestai.pages.dev/blog/cursor-ai-deep-dive/</link>
+      <link>https://findbestai.app/blog/cursor-ai-deep-dive/</link>
       <description>We used Cursor as our main IDE for a full month. Honest review — what's great, what's broken, and who it's really for.</description>
       <pubDate>Wed, 22 Jan 2025 08:00:00 +0000</pubDate>
-      <guid>https://findbestai.pages.dev/blog/cursor-ai-deep-dive/</guid>
+      <guid>https://findbestai.app/blog/cursor-ai-deep-dive/</guid>
     </item>
 
     <item>
       <title>AI Prompt Engineering 101 — Get Dramatically Better Results</title>
-      <link>https://findbestai.pages.dev/blog/ai-prompt-engineering-101/</link>
+      <link>https://findbestai.app/blog/ai-prompt-engineering-101/</link>
       <description>The exact techniques that separate mediocre AI output from professional-quality results. With real before/after examples.</description>
       <pubDate>Tue, 07 Jan 2025 08:00:00 +0000</pubDate>
-      <guid>https://findbestai.pages.dev/blog/ai-prompt-engineering-101/</guid>
+      <guid>https://findbestai.app/blog/ai-prompt-engineering-101/</guid>
     </item>
 
   </channel>
