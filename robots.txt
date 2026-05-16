@@ -3,4 +3,4 @@ Allow: /
 
 Disallow: /admin/
 
-Sitemap: https://findbestai.pages.dev/sitemap.xml
+Sitemap: https://findbestai.app/sitemap.xml
