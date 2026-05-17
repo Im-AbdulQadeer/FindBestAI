@@ -4,6 +4,3 @@ Allow: /
 Disallow: /admin/
 
 Sitemap: https://findbestai.app/sitemap.xml
-
-# Crawl-delay (optional, be friendly to bots)
-Crawl-delay: 1
