@@ -424,7 +424,8 @@ ul { list-style: none; }
   overflow: hidden; cursor: pointer; transition: all 0.25s;
 }
 .related-card:hover { border-color: var(--border-hi); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px var(--glow); }
-.related-thumb { height: 80px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+.related-thumb { aspect-ratio: 16/9; width: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; overflow: hidden; }
+.related-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .related-body { padding: 12px 14px 14px; }
 .related-title { font-size: 0.83rem; font-weight: 600; color: var(--text); line-height: 1.45; }
 
@@ -611,7 +612,7 @@ footer {
   <h1 itemprop="headline">Top 7 Free Midjourney Alternatives in 2026</h1>
 
   <div class="article-byline">
-    <div class="author-av">🎨</div>
+    <div class="author-av" style="background:none;padding:0;overflow:hidden;"><img src="/logo.webp" alt="Find Best AI" style="width:40px;height:40px;border-radius:50%;object-fit:cover;display:block;" onerror="this.onerror=null;this.src='/logo.png'"></div>
     <div>
       <div class="author-name">Find Best AI Editorial</div>
       <div class="author-role">// Image AI Research Team</div>
@@ -1435,8 +1436,8 @@ footer {
         <div class="related-body"><div class="related-title">Midjourney vs DALL-E 3 vs Firefly: Which AI Image Generator Wins?</div></div>
       </div>
       <div class="related-card" onclick="window.location='/blog/best-ai-video-generator-2026/'">
-        <div class="related-thumb" style="background:linear-gradient(135deg,#001a3d,#003380);padding:0;overflow:hidden;">
-          <img src="/assets/uploads/article-best-ai-video-genera-1778516131092.png" alt="Best AI Video Generator 2026" style="width:100%;height:80px;object-fit:cover;display:block;" onerror="this.style.display='none';this.parentElement.innerHTML='🎬'">
+        <div class="related-thumb" style="background:linear-gradient(135deg,#001a3d,#003380)">
+          <img src="/assets/uploads/article-best-ai-video-genera-1778516131092.png" alt="Best AI Video Generator 2026" onerror="this.style.display='none'">
         </div>
         <div class="related-body"><div class="related-title">Best AI Video Generator Tools in 2026: Free and Paid Compared</div></div>
       </div>
