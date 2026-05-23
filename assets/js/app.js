@@ -429,10 +429,11 @@ function renderTrending(containerId){
   });
 }
 
-function renderArticleCards(containerId, limit){
+function renderArticleCards(containerId, limit, startFrom){
   const g = document.getElementById(containerId);
   if(!g) return;
-  const list = limit ? ARTICLES.slice(0, limit) : ARTICLES;
+  const start = startFrom || 0;
+  const list = limit ? ARTICLES.slice(start, start + limit) : ARTICLES.slice(start);
   list.forEach(a=>{
     const card = document.createElement('div');
     card.className='article-card reveal';
