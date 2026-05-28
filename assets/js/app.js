@@ -288,31 +288,43 @@ function makeCard(t, featured=false){
   div.className = 'card' + (featured ? ' featured' : '') + ' reveal';
   div.setAttribute('role','article');
   div.setAttribute('aria-label', t.name + ' - ' + t.cat);
+  const fullStars = Math.floor(t.rating);
+  const half = t.rating - fullStars >= 0.5;
+  const starStr = '★'.repeat(fullStars) + (half ? '½' : '') + '★'.repeat(Math.max(0, 5-fullStars-(half?1:0))).replace(/★/g,'☆');
   div.innerHTML = `
     ${featured ? '<div class="featured-mark">⭐ EDITOR\'S PICK</div>' : ''}
-    <div class="card-top">
-      <div style="display:flex;flex-direction:column;gap:8px">
-        <div class="tool-icon" style="background:${t.brand||t.bg}">${toolLogo(t,52)}</div>
-        <div class="tool-name">${t.name}</div>
-        <div class="tool-cat">${t.cat.toUpperCase()}</div>
-      </div>
-      <div class="badges">${mkBadges(t)}</div>
+    <div class="card-mc-top">
+      <div class="tool-icon" style="background:${t.brand||t.bg}">${toolLogo(t,52)}</div>
+      <div class="badges-row">${mkBadges(t)}</div>
     </div>
+    <div class="tool-name">${t.name}</div>
+    <div class="tool-cat">${t.cat.toUpperCase()}</div>
     <div class="tool-desc">${t.desc}</div>
     <div class="stars-row">
-      <span class="stars">${'★'.repeat(Math.floor(t.rating))}${'☆'.repeat(5-Math.floor(t.rating))}</span>
-      <span class="stars-num">${t.rating} (${t.reviews} reviews)</span>
+      <span class="stars">${'★'.repeat(fullStars)}${half?'½':''}</span>
+      <span class="stars-num">${t.rating}</span>
     </div>
-    <div class="tags-row">${t.tags.map(tg=>`<span class="tag">${tg}</span>`).join('')}</div>
+    <div class="mc-divider"></div>
     <div class="card-footer">
-      <div class="alt-hint">🔀 Free alt: <span>${t.freeAlt}</span></div>
-      <button class="card-btn" onclick="openModal(${t.id})" aria-label="View ${t.name} details">Details →</button>
+      <a class="card-btn" href="/tool/${toolSlug(t.name)}/" aria-label="View ${t.name} details">View Details →</a>
     </div>
   `;
   return div;
 }
 
 /* ── MODAL ── */
+
+function toolSlug(name){
+  return name.toLowerCase()
+    .replace(/[().,!]/g,'')
+    .replace(/\//g,'-')
+    .replace(/&/g,'and')
+    .replace(/'/g,'')
+    .replace(/\s+/g,'-')
+    .replace(/-+/g,'-')
+    .replace(/^-|-$/g,'');
+}
+
 function openModal(id){
   const tool = TOOLS.find(t=>t.id===id);
   if(!tool) return;
@@ -422,8 +434,8 @@ function renderTrending(containerId){
       <div class="trend-up">▲ ${t.up}</div>
     `;
     if(t.id){
-      card.addEventListener('click', ()=>{ if(typeof openModal==='function') openModal(t.id); });
-      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(typeof openModal==='function') openModal(t.id);} });
+      card.addEventListener('click', ()=>{ window.location='/tool/'+toolSlug(t.name)+'/'; });
+      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); window.location='/tool/'+toolSlug(t.name)+'/';} });
     }
     g.appendChild(card);
   });

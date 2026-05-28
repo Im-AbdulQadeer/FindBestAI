@@ -126,7 +126,7 @@
     <div><div class="section-label">// EDITOR'S PICK</div><h2 class="section-title">Featured Tools</h2></div>
     <a href="/tools/" class="see-all">See all →</a>
   </div>
-  <div class="tools-grid featured-layout reveal" id="featuredTools"></div>
+  <div class="tools-grid featured-single-col reveal" id="featuredTools"></div>
 </section>
 
 <section class="section" aria-label="All AI tools">
@@ -134,7 +134,7 @@
     <div><div class="section-label">// EXPLORE ALL</div><h2 class="section-title">Popular Tools</h2></div>
     <a href="/tools/" class="see-all">Browse all 500+ →</a>
   </div>
-  <div class="tools-grid reveal" id="homeTools"></div>
+  <div class="tools-grid home-two-col reveal" id="homeTools"></div>
   <div style="text-align:center;margin-top:40px">
     <a href="/tools/" class="btn-primary" style="display:inline-block;padding:14px 40px;font-size:1rem;border-radius:14px;text-decoration:none">Browse All 500+ AI Tools →</a>
   </div>
@@ -219,13 +219,14 @@
     window.location = '/tools/?cat=' + encodeURIComponent(cat.name);
   });
 
-  /* Featured tools (first 3, first one featured) */
+  /* Featured tools (first 4, skipping Copilot at index 3, first one featured) */
   const fg = document.getElementById('featuredTools');
-  TOOLS.slice(0,3).forEach((t,i) => fg.appendChild(makeCard(t, i===0)));
+  const featuredList = [...TOOLS.slice(0,3), ...TOOLS.slice(4,5)];
+  featuredList.forEach((t,i) => fg.appendChild(makeCard(t, i===0)));
 
   /* Home tools (next 6) */
   const hg = document.getElementById('homeTools');
-  TOOLS.slice(3,11).forEach(t => hg.appendChild(makeCard(t)));
+  TOOLS.slice(5,13).forEach(t => hg.appendChild(makeCard(t)));
 
   /* Compare table */
   renderCompareTable('compareTableBody', COMPARE_DATA, [], row=>[row.quality,row.speed,row.api,row.commercial]);
@@ -237,6 +238,25 @@
   renderArticleCards('homeArticles', 6);
 
   initCommonUI();
+
+  /* ── SYNCED PULSE on .see-all links (all letters together) ── */
+  (function(){
+    document.querySelectorAll('a.see-all').forEach(link => {
+      const text = link.textContent;
+      link.textContent = '';
+      for(let i = 0; i < text.length; i++){
+        const ch = text[i];
+        if(ch === ' '){
+          link.appendChild(document.createTextNode('\u00a0'));
+        } else {
+          const span = document.createElement('span');
+          span.className = 'see-all-letter';
+          span.textContent = ch;
+          link.appendChild(span);
+        }
+      }
+    });
+  })();
 })();
 </script>
 </body>
