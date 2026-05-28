@@ -1,4 +1,3 @@
-function toolSlug(n){return String(n).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 /* ════════════════════════════════════════
    AI HUB — SHARED APP LOGIC
 ════════════════════════════════════════ */
@@ -307,7 +306,7 @@ function makeCard(t, featured=false){
     </div>
     <div class="mc-divider"></div>
     <div class="card-footer">
-      <a class="card-btn" href="/tool/${toolSlug(t.name)}/" aria-label="View ${t.name} details" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">View Details →</a>
+      <button class="card-btn" onclick="openModal(${t.id})" aria-label="View ${t.name} details">View Details →</button>
     </div>
   `;
   return div;
