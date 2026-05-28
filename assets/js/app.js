@@ -3,14 +3,39 @@
 ════════════════════════════════════════ */
 
 /* ── SLUG HELPER (View Details now opens /tool/{slug}/) ── */
+/* ── SLUG OVERRIDES — maps computed slug to actual SEO folder name ── */
+const SLUG_OVERRIDES = {
+  'adobe-photoshop-ai':'photoshop-ai','amazon-codewhisperer':'codewhisperer',
+  'bolt-new':'bolt','contents-com':'contents','devin-ai':'devin','evoto-ai':'evoto',
+  'filechat-io':'filechat','fireflies-ai':'fireflies','frase-io':'frase',
+  'gamma-ai':'gamma','getimg-ai':'getimg','google-dialogflow':'dialogflow',
+  'hubspot-ai':'hubspot','humata-ai':'humata','hyperwrite-ai':'hyperwrite',
+  'instantly-ai':'instantly','intercom-fin':'fin-ai','invideo-ai':'invideo',
+  'jasper-ai':'jasper','julius-ai':'julius','kling-ai':'kling','krea-ai':'krea',
+  'lalal-ai':'lalal','leena-ai':'leena','leonardo-ai':'leonardo','loom-ai':'loom',
+  'lovo-ai':'lovo','luma-dream-machine':'luma','magnific-ai':'magnific',
+  'meshy-ai':'meshy','microsoft-copilot':'copilot','mistral-ai':'mistral',
+  'murf-ai':'murf','nightcafe-creator':'nightcafe','notably-ai':'notably',
+  'otter-ai':'otter','outranking-io':'outranking','perplexity-ai':'perplexity',
+  'pika-labs':'pika','pixelmator-pro':'pixelmator','regie-ai':'regie',
+  'reka-core':'reka','replit-ai':'replit','resemble-ai':'resemble',
+  'runway-gen-3':'runway','scite-ai':'scite','seaart-ai':'seaart',
+  'semrush-ai':'semrush','sharly-ai':'sharly','smartlead-ai':'smartlead',
+  'sourcegraph-cody':'cody','spline-ai':'spline','suno-ai':'suno',
+  'tableau-ai':'tableau','topaz-photo-ai':'topaz','tray-io':'tray',
+  'v0-by-vercel':'v0','veed-io':'veed','wellsaid-labs':'wellsaid',
+  'wondershare-filmora':'filmora','yepic-ai':'yepic','youcam-enhance':'youcam',
+  'zapier-ai':'zapier'
+};
 function toolSlug(t){
   if(!t) return '';
   const name = (typeof t === 'string') ? t : (t.name || '');
-  return name.toLowerCase()
+  const raw = name.toLowerCase()
     .replace(/\([^)]*\)/g,'')
     .replace(/&/g,'and')
     .replace(/[^a-z0-9]+/g,'-')
     .replace(/^-+|-+$/g,'');
+  return SLUG_OVERRIDES[raw] || raw;
 }
 function toolHref(t){ return '/tool/' + toolSlug(t) + '/'; }
 function openTool(id){
