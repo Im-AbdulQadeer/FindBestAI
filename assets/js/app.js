@@ -1,12 +1,8 @@
+function toolSlug(n){return String(n).toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
 /* ════════════════════════════════════════
    AI HUB — SHARED APP LOGIC
 ════════════════════════════════════════ */
 
-
-/* ── TOOL SLUG HELPER ── */
-function toolSlug(name){
-  return name.toLowerCase().replace(/[()]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').replace(/--+/g,'-');
-}
 /* ── THEME ── */
 let isDark = true;
 const themeBtn = document.getElementById('themeBtn');
@@ -214,7 +210,7 @@ function runSearch(q){
         <div><div class="sd-name" style="color:var(--green)">Browse All Free AI Tools</div><div class="sd-cat">${TOOLS.filter(t=>t.pricing==='free').length}+ free tools in directory</div></div>
       </div>
       ${hits.map(h=>`
-        <div class="sd-item" onclick="window.location='/tool/'+toolSlug(h.name)+'/'" style="cursor:pointer" role="option" tabindex="0">
+        <div class="sd-item" onclick="openModal(${h.id})" role="option" tabindex="0">
           <div class="sd-icon" style="background:${h.brand||h.bg}">${toolLogo(h,38)}</div>
           <div>
             <div class="sd-name">${h.name}</div>
@@ -238,7 +234,7 @@ function runSearch(q){
     searchDropdown.innerHTML=`<div class="sd-empty">No results for "<strong>${q}</strong>" — <a href="/tools/" style="color:var(--accent)">Browse all tools →</a></div>`;
   } else {
     searchDropdown.innerHTML = hits.map(h=>`
-      <div class="sd-item" onclick="${h.id ? `window.location='/tool/'+toolSlug(h.name)+'/';` : `window.location='/tools/'`}" role="option" tabindex="0">
+      <div class="sd-item" onclick="${h.id ? `openModal(${h.id})` : `window.location='/tools/'`}" role="option" tabindex="0">
         <div class="sd-icon" style="background:${h.brand||h.bg}">${toolLogo(h,38)}</div>
         <div><div class="sd-name">${h.name}</div><div class="sd-cat">${h.cat}</div></div>
       </div>
@@ -311,7 +307,7 @@ function makeCard(t, featured=false){
     </div>
     <div class="mc-divider"></div>
     <div class="card-footer">
-      <a class="card-btn" href="/tool/${toolSlug(t.name)}/" aria-label="View ${t.name} details" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px">View Details →</a>
+      <a class="card-btn" href="/tool/${toolSlug(t.name)}/" aria-label="View ${t.name} details" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">View Details →</a>
     </div>
   `;
   return div;
@@ -427,8 +423,8 @@ function renderTrending(containerId){
       <div class="trend-up">▲ ${t.up}</div>
     `;
     if(t.id){
-      card.addEventListener('click', ()=>{ window.location='/tool/'+toolSlug(t.name)+'/'; });
-      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); window.location='/tool/'+toolSlug(t.name)+'/'; } });
+      card.addEventListener('click', ()=>{ if(typeof openModal==='function') openModal(t.id); });
+      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(typeof openModal==='function') openModal(t.id);} });
     }
     g.appendChild(card);
   });
