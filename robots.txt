@@ -1,9 +1,57 @@
 User-agent: *
 Allow: /
 
+# Block admin panel from all bots
 Disallow: /admin/
 
-Sitemap: https://findbestai.app/sitemap.xml
+# Block Netlify/Cloudflare function endpoints
+Disallow: /functions/
 
-# Crawl-delay (optional, be friendly to bots)
-Crawl-delay: 1
+# Block internal assets that don't need indexing
+Disallow: /assets/uploads/
+
+# Allow major search engine bots explicitly
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Block AI training crawlers
+User-agent: GPTBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: omgilibot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+Sitemap: https://findbestai.app/sitemap.xml
