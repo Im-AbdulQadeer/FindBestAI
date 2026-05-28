@@ -2,6 +2,22 @@
    AI HUB — SHARED APP LOGIC
 ════════════════════════════════════════ */
 
+/* ── SLUG HELPER (View Details now opens /tool/{slug}/) ── */
+function toolSlug(t){
+  if(!t) return '';
+  const name = (typeof t === 'string') ? t : (t.name || '');
+  return name.toLowerCase()
+    .replace(/\([^)]*\)/g,'')
+    .replace(/&/g,'and')
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-+|-+$/g,'');
+}
+function toolHref(t){ return '/tool/' + toolSlug(t) + '/'; }
+function openTool(id){
+  const tool = (typeof TOOLS !== 'undefined') ? TOOLS.find(t => t.id === id) : null;
+  if(tool) window.location.href = toolHref(tool);
+}
+
 /* ── THEME ── */
 let isDark = true;
 const themeBtn = document.getElementById('themeBtn');
@@ -209,7 +225,7 @@ function runSearch(q){
         <div><div class="sd-name" style="color:var(--green)">Browse All Free AI Tools</div><div class="sd-cat">${TOOLS.filter(t=>t.pricing==='free').length}+ free tools in directory</div></div>
       </div>
       ${hits.map(h=>`
-        <div class="sd-item" onclick="openModal(${h.id})" role="option" tabindex="0">
+        <div class="sd-item" onclick="openTool(${h.id})" role="option" tabindex="0">
           <div class="sd-icon" style="background:${h.brand||h.bg}">${toolLogo(h,38)}</div>
           <div>
             <div class="sd-name">${h.name}</div>
@@ -233,7 +249,7 @@ function runSearch(q){
     searchDropdown.innerHTML=`<div class="sd-empty">No results for "<strong>${q}</strong>" — <a href="/tools/" style="color:var(--accent)">Browse all tools →</a></div>`;
   } else {
     searchDropdown.innerHTML = hits.map(h=>`
-      <div class="sd-item" onclick="${h.id ? `openModal(${h.id})` : `window.location='/tools/'`}" role="option" tabindex="0">
+      <div class="sd-item" onclick="${h.id ? `openTool(${h.id})` : `window.location='/tools/'`}" role="option" tabindex="0">
         <div class="sd-icon" style="background:${h.brand||h.bg}">${toolLogo(h,38)}</div>
         <div><div class="sd-name">${h.name}</div><div class="sd-cat">${h.cat}</div></div>
       </div>
@@ -306,7 +322,7 @@ function makeCard(t, featured=false){
     </div>
     <div class="mc-divider"></div>
     <div class="card-footer">
-      <button class="card-btn" onclick="openModal(${t.id})" aria-label="View ${t.name} details">View Details →</button>
+      <a class="card-btn" href="${toolHref(t)}" aria-label="View ${t.name} details" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center">View Details →</a>
     </div>
   `;
   return div;
@@ -422,8 +438,8 @@ function renderTrending(containerId){
       <div class="trend-up">▲ ${t.up}</div>
     `;
     if(t.id){
-      card.addEventListener('click', ()=>{ if(typeof openModal==='function') openModal(t.id); });
-      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); if(typeof openModal==='function') openModal(t.id);} });
+      card.addEventListener('click', ()=>openTool(t.id));
+      card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openTool(t.id);} });
     }
     g.appendChild(card);
   });
