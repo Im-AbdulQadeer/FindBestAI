@@ -618,41 +618,113 @@
   .podium-section,.cat-grid-section,.cat-faq,.compare-section,
   .specialty-section,.free-section,.stats-section,
   .related-cats-section{padding-left:14px;padding-right:14px;}
-  .cat-hero{padding-top:18px;}
-  .cat-hero-grid{padding:24px 20px;gap:18px;border-radius:18px;}
-  .cat-icon-box{width:68px;height:68px;font-size:1.9rem;border-radius:16px;}
-  .cat-hero-h1{font-size:1.85rem;line-height:1.1;}
-  .cat-hero-desc{font-size:.92rem;}
-  .hero-chip{font-size:.74rem;padding:7px 13px;}
-  .section-label-line{flex-wrap:wrap;gap:10px;}
-  .section-label-line .lbl{font-size:1.25rem;}
-  .section-action-btn{font-size:.78rem;padding:9px 14px;}
-  .cat-filter-inner{grid-template-columns:1fr;gap:10px;}
-  .custom-dd-btn,.filter-count{width:100%;justify-content:center;}
-  .custom-dd-btn{min-width:auto;}
-  .sort-pills{justify-content:flex-start;}
-  .sort-pill{flex:1;text-align:center;}
+
+  /* ── i. HERO ── tighter, no wasted space */
+  .cat-hero{padding-top:14px;}
+  .cat-hero-grid{
+    grid-template-columns:1fr;
+    padding:20px 16px;gap:14px;border-radius:16px;
+  }
+  .cat-icon-box{
+    width:52px;height:52px;font-size:1.5rem;border-radius:12px;
+    /* move icon inline with title */
+    display:inline-flex;margin-bottom:0;
+  }
+  /* wrap icon + body in a single row on mobile */
+  .cat-hero-grid{display:flex;flex-direction:column;}
+  .cat-hero-top-row{display:flex;align-items:center;gap:12px;}
+  .cat-hero-h1{font-size:1.6rem;line-height:1.1;margin-bottom:10px;}
+  .cat-hero-desc{font-size:.85rem;line-height:1.6;margin-bottom:14px;}
+  .hero-chip{font-size:.72rem;padding:6px 11px;gap:5px;}
+  .cat-hero-chips{gap:7px;}
+  /* chips: 2 per row */
+  .cat-hero-chips{display:grid;grid-template-columns:1fr 1fr;}
+
+  /* ── ii. FILTER BAR ── stacked, full-width controls */
+  .cat-filter-bar{padding-top:32px;}
+  .section-label-line{flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+  .section-label-line .lbl{font-size:1.15rem;}
+  .section-action-btn{font-size:.76rem;padding:8px 12px;}
+  .cat-filter-inner{
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .cat-search-wrap input{
+    font-size:.85rem;padding:12px 14px 12px 42px;
+  }
+  .custom-dd-btn{min-width:auto;width:100%;justify-content:space-between;padding:12px 14px;}
+  .sort-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+  .sort-pill{text-align:center;padding:10px 8px;font-size:.78rem;}
+  .filter-count{width:100%;justify-content:center;padding:10px 14px;}
+
+  /* ── iii. FREE BOX ── 2-col grid, tighter */
   .podium-section,.compare-section,.specialty-section,
-  .free-section,.stats-section,.cat-faq,.related-cats-section{padding-top:44px;}
-  .free-box{padding:24px 20px;}
-  .free-header{flex-direction:column;align-items:flex-start;}
-  .free-title{font-size:1.4rem;}
-  .free-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .specialty-grid{grid-template-columns:1fr;gap:12px;}
-  .stats-box{padding:24px 18px;}
-  .stats-title{font-size:1.2rem;}
-  .stat-bar-row{grid-template-columns:1fr;gap:6px;}
-  .stat-bar-label{width:100%;}
-  .stat-bar-val{text-align:left;}
+  .free-section,.stats-section,.cat-faq,.related-cats-section{padding-top:40px;}
+  .free-box{padding:20px 16px;}
+  .free-header{flex-direction:row;align-items:center;justify-content:space-between;flex-wrap:nowrap;margin-bottom:10px;}
+  .free-title{font-size:1.25rem;}
+  .free-desc{font-size:.82rem;margin-bottom:16px;}
+  .free-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .free-card{padding:10px;gap:9px;border-radius:11px;}
+  .free-logo{width:34px;height:34px;border-radius:9px;flex-shrink:0;}
+  .free-name{font-size:.82rem;}
+  .free-meta{font-size:.62rem;}
+
+  /* ── iv. BAR GRAPH ── score on right of label, not below bar ── */
+  .stats-box{padding:20px 14px;}
+  .stats-title{font-size:1.15rem;}
+  .stats-bars{gap:14px;}
+  /* Each row: [logo + name + SCORE] on one line, then bar below */
+  .stat-bar-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    grid-template-rows:auto auto;
+    gap:4px 10px;
+    align-items:center;
+  }
+  .stat-bar-label{
+    grid-column:1;grid-row:1;
+    font-size:.82rem;gap:8px;
+  }
+  .stat-bar-val{
+    grid-column:2;grid-row:1;
+    text-align:right;font-size:.82rem;
+    color:var(--accent);white-space:nowrap;
+  }
+  .stat-bar-track{
+    grid-column:1 / -1;grid-row:2;
+  }
+
+  /* other sections */
+  .specialty-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .specialty-card{padding:16px 14px;}
+  .specialty-title{font-size:.9rem;}
   .compare-table thead th{font-size:.66rem;padding:11px 10px;}
   .compare-table tbody td{padding:12px 10px;font-size:.8rem;}
   .rel-cats-grid{grid-template-columns:1fr 1fr;gap:10px;}
   .rel-cat-card{padding:14px;}
   .rcat-info .rcat-name{font-size:.8rem;}
-  .faq-q{font-size:.93rem;padding:18px;}
-  .faq-a{padding:0 18px 20px 52px;font-size:.85rem;}
+  .faq-q{font-size:.9rem;padding:16px;}
+  .faq-a{padding:0 16px 18px 48px;font-size:.84rem;}
   .faq-q-num{width:26px;height:26px;font-size:.72rem;}
-  .newsletter-block{margin-top:64px !important;}
+  .newsletter-block{margin-top:56px !important;}
+  .stats-intro{font-size:.82rem;margin-bottom:14px;}
+}
+
+/* ═══ LOGO BG REMOVAL — transparent for all sections except Browse grid ═══ */
+.podium-logo,
+.compare-tool-logo,
+.sw-logo,
+.free-logo,
+.sbl-logo {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.podium-logo img,
+.compare-tool-logo img,
+.sw-logo img,
+.free-logo img,
+.sbl-logo img {
+  padding: 0 !important;
 }
 </style>
 </head>
@@ -809,11 +881,11 @@
   <div class="stats-box">
     <div class="stats-header">
       <div class="stats-head-left">
-        <div class="stats-title">AI Assistant Value Index</div>
-        <div class="stats-subtitle">// OVERALL VALUE SCORE · OUT OF 100%</div>
+        <div class="stats-title">AI Power Index</div>
+        <div class="stats-subtitle">// OUTPUT QUALITY · CAPABILITY · REASONING · OUT OF 100%</div>
       </div>
     </div>
-    <p class="stats-intro">Each AI assistant is scored out of 100% based on its overall value: the strength of its core features, the fairness of its pricing model, and the generosity of its free tier. A higher score means you get more capability for less cost.</p>
+    <p class="stats-intro">Each AI assistant is scored out of 100% based on raw capability: the quality of its outputs, reasoning depth, coding ability, multimodal strength, and overall performance on real-world benchmarks. A higher score means a more powerful, capable model.</p>
     <div class="stats-bars" id="statsBars"></div>
   </div>
 </div>
@@ -1056,14 +1128,10 @@
   /* BY USE CASE — 8 cards */
   function buildSpecialty(){
     const sections = [
-      {emoji:'💻', title:'Best for Coding',         sub:'// DEVELOPER TOOLS',    picks:[['Claude','200K ctx'],['DeepSeek','free'],['ChatGPT','o1 model'],['Copilot','VS Code']]},
-      {emoji:'✍️', title:'Best for Writing',         sub:'// CONTENT CREATION',   picks:[['Claude','natural tone'],['ChatGPT','versatile'],['Gemini','free pro'],['Mistral','EU privacy']]},
-      {emoji:'🔬', title:'Best for Research',        sub:'// ANALYSIS CITATIONS', picks:[['Perplexity','live web'],['Gemini','deep research'],['ChatGPT','deep research'],['Claude','accuracy']]},
-      {emoji:'📚', title:'Best for Long Documents',  sub:'// PDFS AND ANALYSIS',  picks:[['Gemini','1M ctx'],['Claude','200K ctx'],['NotebookLM','free'],['ChatGPT','vision']]},
-      {emoji:'🆓', title:'Best Free AI Assistant',   sub:'// NO CREDIT CARD',     picks:[['Gemini','unlimited'],['DeepSeek','no limits'],['Meta AI','Llama 4'],['Gemma','open source']]},
-      {emoji:'💼', title:'Best for Business',        sub:'// TEAMS ENTERPRISE',   picks:[['ChatGPT','workspace'],['Copilot','M365 native'],['Claude','privacy'],['Gemini','admin tools']]},
-      {emoji:'🗣️', title:'Best for Conversation',    sub:'// VOICE AND CHAT',     picks:[['ChatGPT','voice mode'],['Pi','friendly tone'],['Gemini','Live API'],['Claude','memory']]},
-      {emoji:'🧮', title:'Best for Reasoning',       sub:'// MATH AND LOGIC',     picks:[['ChatGPT','o1 model'],['Claude','step by step'],['DeepSeek','R1 reasoning'],['Gemini','Thinking']]}
+      {emoji:'💻', title:'Best for Coding',     sub:'// DEVELOPER TOOLS',    picks:[['Claude','200K ctx'],['DeepSeek','free'],['ChatGPT','o1 model'],['Copilot','VS Code']]},
+      {emoji:'✍️', title:'Best for Writing',     sub:'// CONTENT CREATION',   picks:[['Claude','natural tone'],['ChatGPT','versatile'],['Gemini','free pro'],['Mistral','EU privacy']]},
+      {emoji:'🔬', title:'Best for Research',    sub:'// ANALYSIS CITATIONS', picks:[['Perplexity','live web'],['Gemini','deep research'],['ChatGPT','deep research'],['Claude','accuracy']]},
+      {emoji:'🧮', title:'Best for Reasoning',   sub:'// MATH AND LOGIC',     picks:[['ChatGPT','o1 model'],['Claude','step by step'],['DeepSeek','R1 reasoning'],['Gemini','Thinking']]}
     ];
     const grid = document.getElementById('specialtyGrid');
     grid.innerHTML = '';
@@ -1107,16 +1175,16 @@
     });
   }
 
-  /* VALUE INDEX BAR GRAPH — 7 tools scored on features + pricing + free tier */
+  /* POWER INDEX BAR GRAPH — 7 tools scored on raw capability + output quality */
   function buildStats(){
     const stats = [
-      {name:'Gemini',    score:95},  // free + 1M ctx + strong features
-      {name:'DeepSeek',  score:93},  // free + open + coding
-      {name:'Claude',    score:90},  // freemium + best reasoning
-      {name:'ChatGPT',   score:88},  // freemium + widest features
-      {name:'Perplexity',score:85},  // freemium + live web
-      {name:'Copilot',   score:80},  // freemium + M365 native
-      {name:'Grok',      score:68}   // paid only + niche
+      {name:'ChatGPT',   score:98},  // o1/o3 + widest capabilities + multimodal leader
+      {name:'Claude',    score:95},  // best reasoning + long ctx + coding excellence
+      {name:'Gemini',    score:92},  // 1M ctx + multimodal + Google integration
+      {name:'DeepSeek',  score:87},  // R1 reasoning + strong coding benchmarks
+      {name:'Grok',      score:82},  // xAI power + real-time data access
+      {name:'Perplexity',score:78},  // live web + citations + fast answers
+      {name:'Copilot',   score:74}   // M365 native + solid productivity tasks
     ];
     const wrap = document.getElementById('statsBars');
     wrap.innerHTML = '';
