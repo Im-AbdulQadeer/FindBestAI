@@ -491,6 +491,13 @@
 .stats-head-left{flex:1;min-width:0;}
 .stats-title{font-size:1.55rem;font-weight:900;letter-spacing:-.025em;margin-bottom:6px;}
 .stats-subtitle{font-size:.78rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.stats-intro{
+  color:var(--text2);font-size:.92rem;line-height:1.7;
+  margin:0 0 24px;max-width:760px;
+}
+@media(max-width:680px){
+  .stats-intro{font-size:.85rem;margin-bottom:18px;}
+}
 .stats-bars{display:flex;flex-direction:column;gap:20px;}
 .stat-bar-row{display:grid;grid-template-columns:170px 1fr 72px;align-items:center;gap:14px;}
 .stat-bar-label{display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:700;color:var(--text);}
@@ -688,12 +695,11 @@
   </div>
 </div>
 
-<!-- TOP 3 PODIUM -->
+<!-- TOP 3 PODIUM — button removed -->
 <div class="podium-section reveal stagger-1">
   <div class="section-label-line">
     <span class="lbl">Editor's <span class="accent-text">Top Picks</span></span>
     <span class="ln"></span>
-    <a href="/tools/" class="section-action-btn">View More Categories <span class="arr">→</span></a>
   </div>
   <div class="podium-grid" id="podiumGrid"></div>
 </div>
@@ -753,11 +759,12 @@
   </div>
 </div>
 
-<!-- COMPARE TABLE -->
+<!-- COMPARE TABLE — button added on the right -->
 <div class="compare-section reveal" id="compareTop">
   <div class="section-label-line">
     <span class="lbl">Side by Side <span class="accent-text">Comparison</span></span>
     <span class="ln"></span>
+    <a href="/compare/" class="section-action-btn">Full Compare <span class="arr">→</span></a>
   </div>
   <p class="compare-intro">Quickly see how the top 7 AI assistants stack up on pricing, context window, ideal use case, speed, free tier availability, and user ratings. We refresh this AI chatbot comparison table every month so you always see the latest numbers.</p>
   <div class="compare-table-wrap">
@@ -797,16 +804,16 @@
   </div>
 </div>
 
-<!-- POWER BAR GRAPH -->
+<!-- VALUE INDEX BAR GRAPH — button removed, retitled -->
 <div class="stats-section reveal">
   <div class="stats-box">
     <div class="stats-header">
       <div class="stats-head-left">
-        <div class="stats-title">AI Assistant Power Index</div>
-        <div class="stats-subtitle">// OVERALL CAPABILITY SCORE · 2026</div>
+        <div class="stats-title">AI Assistant Value Index</div>
+        <div class="stats-subtitle">// OVERALL VALUE SCORE · OUT OF 100%</div>
       </div>
-      <a href="#compareTop" class="section-action-btn">Full Compare <span class="arr">→</span></a>
     </div>
+    <p class="stats-intro">Each AI assistant is scored out of 100% based on its overall value: the strength of its core features, the fairness of its pricing model, and the generosity of its free tier. A higher score means you get more capability for less cost.</p>
     <div class="stats-bars" id="statsBars"></div>
   </div>
 </div>
@@ -932,7 +939,7 @@
 
   const FALLBACK_BRANDS = {
     'ChatGPT':'linear-gradient(135deg,#10a37f,#0d8a6a)',
-    'Claude':'linear-gradient(135deg,#d97757,#b85a3e)',
+    'Claude':'#000',
     'Gemini':'linear-gradient(135deg,#4285f4,#1a73e8)',
     'DeepSeek':'linear-gradient(135deg,#4d6bfe,#3a4fcc)',
     'Perplexity':'linear-gradient(135deg,#20808d,#175963)',
@@ -944,6 +951,11 @@
     'Gemma':'linear-gradient(135deg,#34a853,#1e8e3e)',
     'Phi 4':'linear-gradient(135deg,#0078d4,#005a9e)',
     'NotebookLM':'linear-gradient(135deg,#4285f4,#1a73e8)'
+  };
+
+  /* Force override for tools whose logos clash with brand colors */
+  const LOGO_BG_OVERRIDE = {
+    'Claude':'#000'
   };
 
   /* Safe logo with onerror image fallback to letter */
@@ -966,18 +978,19 @@
   }
 
   function getToolMeta(name){
+    const override = LOGO_BG_OVERRIDE[name];
     const t = lookupTool(name);
     if(t){
       return {
         href: (typeof toolHref==='function') ? toolHref(t) : '#',
-        bg: t.brand || t.bg || FALLBACK_BRANDS[name] || FALLBACK_BRANDS[t.name] || '#222',
+        bg: override || t.brand || t.bg || FALLBACK_BRANDS[name] || FALLBACK_BRANDS[t.name] || '#222',
         logo: safeLogo(t, 40, name),
         rating: t.rating, reviews: t.reviews, pricing: t.pricing
       };
     }
     return {
       href:'#',
-      bg: FALLBACK_BRANDS[name] || 'linear-gradient(135deg,#666,#444)',
+      bg: override || FALLBACK_BRANDS[name] || 'linear-gradient(135deg,#666,#444)',
       logo: `<span class="fl">${name.charAt(0).toUpperCase()}</span>`,
       rating:null, reviews:null, pricing:null
     };
@@ -995,7 +1008,7 @@
       wrap.className = `podium-card ${rankClass[i]} reveal stagger-${i+1}`;
       wrap.onclick = ()=>{ window.location.href = toolHref(t); };
       const logoHTML = safeLogo(t, 48, t.name);
-      const bg = t.brand || t.bg || FALLBACK_BRANDS[t.name] || '#222';
+      const bg = LOGO_BG_OVERRIDE[t.name] || t.brand || t.bg || FALLBACK_BRANDS[t.name] || '#222';
       wrap.innerHTML = `
         <div class="rank-badge">${rankEmoji[i]}</div>
         <div class="podium-logo" style="background:${bg}">${logoHTML}</div>
@@ -1094,16 +1107,16 @@
     });
   }
 
-  /* POWER BAR GRAPH */
+  /* VALUE INDEX BAR GRAPH — 7 tools scored on features + pricing + free tier */
   function buildStats(){
     const stats = [
-      {name:'ChatGPT',   score:'98',  w:98},
-      {name:'Claude',    score:'96',  w:96},
-      {name:'Gemini',    score:'92',  w:92},
-      {name:'DeepSeek',  score:'88',  w:88},
-      {name:'Perplexity',score:'82',  w:82},
-      {name:'Copilot',   score:'78',  w:78},
-      {name:'Grok',      score:'74',  w:74}
+      {name:'Gemini',    score:95},  // free + 1M ctx + strong features
+      {name:'DeepSeek',  score:93},  // free + open + coding
+      {name:'Claude',    score:90},  // freemium + best reasoning
+      {name:'ChatGPT',   score:88},  // freemium + widest features
+      {name:'Perplexity',score:85},  // freemium + live web
+      {name:'Copilot',   score:80},  // freemium + M365 native
+      {name:'Grok',      score:68}   // paid only + niche
     ];
     const wrap = document.getElementById('statsBars');
     wrap.innerHTML = '';
@@ -1112,8 +1125,8 @@
       wrap.innerHTML += `
         <div class="stat-bar-row">
           <div class="stat-bar-label"><div class="sbl-logo" style="background:${m.bg}">${m.logo}</div>${s.name}</div>
-          <div class="stat-bar-track"><div class="stat-bar-fill" data-w="${s.w}" style="width:0%"></div></div>
-          <div class="stat-bar-val">${s.score}/100</div>
+          <div class="stat-bar-track"><div class="stat-bar-fill" data-w="${s.score}" style="width:0%"></div></div>
+          <div class="stat-bar-val">${s.score}%</div>
         </div>`;
     });
   }
