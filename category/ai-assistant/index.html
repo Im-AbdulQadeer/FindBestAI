@@ -81,15 +81,15 @@
 /* top-row uses display:contents so icon+title-block become direct grid children */
 .cat-hero-top-row{display:contents;}
 
-/* col 1, row 1 ONLY: the brain icon box — same row as title */
+/* col 1, row 1: the brain icon box — aligned with title */
 .cat-icon-box{
   grid-column:1;
   grid-row:1;
-  width:72px;height:72px;min-height:72px;border-radius:18px;flex-shrink:0;align-self:center;
+  width:68px;height:68px;min-height:68px;border-radius:16px;flex-shrink:0;align-self:start;
   background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--surface2)),var(--surface3));
   border:1px solid var(--border-md);
   display:flex;align-items:center;justify-content:center;
-  font-size:2rem;
+  font-size:1.9rem;
   box-shadow:0 0 40px var(--glow),0 0 80px var(--glow2),inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
@@ -710,12 +710,20 @@
     display:flex;flex-direction:column;
     padding:16px 14px;gap:14px;border-radius:16px;
   }
-  /* breadcrumb: force single line, truncate if needed */
+  /* breadcrumb: single line on mobile with smaller font */
   .breadcrumb{
-    flex-wrap:nowrap;white-space:nowrap;overflow:hidden;
-    padding:16px 12px 0;
+    flex-wrap:nowrap;
+    padding:14px 12px 0;
+    font-size:0.68rem;
+    gap:5px;
   }
-  .breadcrumb .bc-cur{overflow:hidden;text-overflow:ellipsis;min-width:0;}
+  .breadcrumb .bc-cur{
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    min-width:0;
+    flex-shrink:1;
+  }
   /* top row: icon + title side by side, equal height */
   .cat-hero-top-row{
     display:flex;align-items:stretch;gap:12px;
@@ -761,8 +769,8 @@
   .his-block:nth-child(n+5){border-bottom:none;}
   .his-label{font-size:.52rem;}
   .his-val{font-size:.8rem;}
-  /* more space above description */
-  .cat-hero-desc{font-size:.83rem;line-height:1.55;margin-bottom:0;margin-top:4px;}
+  /* proper spacing above description paragraph */
+  .cat-hero-desc{font-size:.83rem;line-height:1.6;margin-bottom:0;margin-top:14px;padding-top:14px;border-top:1px solid var(--border);}
   .cat-hero-stats{display:none !important;}
 
   /* ── ii. FILTER BAR — search full width, DD + count beside ── */
@@ -1030,7 +1038,7 @@
 <nav class="breadcrumb" aria-label="Breadcrumb">
   <a href="/">Home</a><span class="sep">/</span>
   <a href="/tools/">All Tools</a><span class="sep">/</span>
-  <span class="bc-cur">🧠 Best AI Assistants 2026</span>
+  <span class="bc-cur">🧠 AI Assistants</span>
 </nav>
 
 <!-- HERO -->
