@@ -130,6 +130,19 @@
 <script src="/assets/js/nav.js"></script>
 <script>
 (function(){
+  /* ── Inject new article at the front so it's featured ── */
+  ARTICLES.unshift({
+    slug:     'chatgpt-vs-claude-vs-gemini-vs-deepseek',
+    title:    'ChatGPT vs Claude vs Gemini vs DeepSeek (2026): Which AI Chatbot Actually Wins?',
+    cat:      'Comparison',
+    date:     'May 28, 2026',
+    readTime: '12 MIN READ',
+    excerpt:  'We tested ChatGPT, Claude, Gemini and DeepSeek side-by-side across writing, coding, reasoning, research and price. Here\'s the honest 2026 winner for every use case.',
+    image:    'https://findbestai.app/assets/uploads/chatgpt-vs-claude-vs-gemini-vs-deepseek.jpg',
+    thumb:    'linear-gradient(135deg,#0b0e1a,#1a0f2e)',
+    emoji:    '⚔️'
+  });
+
   /* Featured article (first) */
   const a = ARTICLES[0];
   const fa = document.getElementById('featuredArticle');
