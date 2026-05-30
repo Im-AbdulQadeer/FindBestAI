@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -50,11 +49,15 @@
 .breadcrumb .bc-cur{color:var(--text2);font-weight:600;}
 
 /* ═══════════════════════════════════
-   HERO — original bg, tool-box ring ALWAYS visible
+   HERO — desktop: 3-column (icon | content | stats), mobile: card layout
 ═══════════════════════════════════ */
 .cat-hero{padding:40px 32px 0;max-width:1380px;margin:0 auto;position:relative;z-index:10;}
 .cat-hero-grid{
-  display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;gap:32px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  grid-template-rows:auto auto;
+  align-items:start;
+  gap:0 32px;
   padding:44px 48px;
   background:var(--surface);
   border:1px solid var(--border);
@@ -75,7 +78,13 @@
 }
 .cat-hero-grid>*{position:relative;z-index:1;}
 
+/* top-row uses display:contents so icon+title-block become direct grid children */
+.cat-hero-top-row{display:contents;}
+
+/* col 1, rows 1-2: the brain icon box */
 .cat-icon-box{
+  grid-column:1;
+  grid-row:1 / 3;
   width:96px;height:auto;min-height:96px;border-radius:22px;flex-shrink:0;align-self:stretch;
   background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--surface2)),var(--surface3));
   border:1px solid var(--border-md);
@@ -84,19 +93,41 @@
   box-shadow:0 0 40px var(--glow),0 0 80px var(--glow2),inset 0 1px 0 rgba(255,255,255,0.05);
 }
 
-.cat-hero-body{min-width:0;}
+/* col 2, row 1: title + meta badges */
+.cat-hero-title-block{
+  grid-column:2;
+  grid-row:1;
+  min-width:0;
+  padding-bottom:14px;
+}
+
+/* col 2, row 2: description + chips */
+.cat-hero-body{
+  grid-column:2;
+  grid-row:2;
+  min-width:0;
+}
+
+/* col 3, rows 1-2: stat bubbles */
+.cat-hero-stats{
+  grid-column:3;
+  grid-row:1 / 3;
+  display:flex;flex-direction:column;gap:12px;align-items:stretch;flex-shrink:0;width:160px;align-self:stretch;justify-content:space-between;
+}
+
 .cat-hero-h1{
   font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:900;
-  letter-spacing:-.045em;line-height:1.05;margin-bottom:16px;
+  letter-spacing:-.045em;line-height:1.05;margin-bottom:10px;
 }
 .cat-hero-h1 em{
   font-style:normal;
   background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 55%,var(--accent3) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.cat-hero-desc{color:var(--text2);font-size:1rem;line-height:1.7;max-width:620px;margin-bottom:22px;}
+.cat-hero-desc{color:var(--text2);font-size:1rem;line-height:1.7;max-width:620px;margin-bottom:0;}
 
-.cat-hero-chips{display:flex;flex-wrap:wrap;gap:10px;}
+/* Base default: chips hidden until desktop media query enables them */
+.cat-hero-chips{display:none;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
 .hero-chip{
   display:inline-flex;align-items:center;gap:7px;
   padding:9px 18px;border-radius:11px;
@@ -107,7 +138,6 @@
 }
 .hero-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);}
 
-.cat-hero-stats{display:flex;flex-direction:column;gap:12px;align-items:stretch;flex-shrink:0;width:160px;align-self:stretch;justify-content:space-between;}
 .stat-bubble{
   text-align:right;padding:16px 22px;flex:1;
   background:var(--surface2);
@@ -120,6 +150,50 @@
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
 .stat-bubble .sl{font-size:.62rem;font-weight:700;color:var(--text3);letter-spacing:.12em;font-family:'JetBrains Mono',monospace;margin-top:3px;}
+
+/* Base: inline stats visible (shown on mobile) */
+.cat-hero-stats-inline{
+  display:flex;align-items:center;gap:0;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:12px;padding:0;
+  margin-bottom:18px;overflow:hidden;
+}
+.his-block{
+  display:flex;flex-direction:column;align-items:center;
+  padding:12px 20px;flex:1;
+}
+.his-label{
+  font-size:.6rem;font-weight:700;color:var(--text3);
+  font-family:'JetBrains Mono',monospace;letter-spacing:.1em;margin-bottom:3px;
+}
+.his-val{
+  font-size:.92rem;font-weight:800;color:var(--text);
+}
+.his-divider{width:1px;background:var(--border);align-self:stretch;flex-shrink:0;}
+
+/* Base: meta-row (FREEMIUM/Popular) visible by default */
+.cat-hero-meta-row{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;
+}
+.hero-cat-tag{
+  font-size:.7rem;font-weight:700;color:var(--text3);
+  font-family:'JetBrains Mono',monospace;letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.hero-badge-freemium{
+  display:inline-flex;padding:3px 10px;border-radius:6px;
+  background:color-mix(in srgb,var(--accent) 18%,transparent);
+  border:1px solid var(--accent);
+  color:var(--accent);font-size:.68rem;font-weight:800;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.06em;
+}
+.hero-badge-popular{
+  display:inline-flex;padding:3px 10px;border-radius:6px;
+  background:color-mix(in srgb,var(--orange) 18%,transparent);
+  border:1px solid var(--orange);
+  color:var(--orange);font-size:.68rem;font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+}
 
 /* SECTION LABEL */
 .section-label-line{display:flex;align-items:center;gap:18px;margin-bottom:22px;}
@@ -609,8 +683,10 @@
   .sort-pills{grid-column:1/-1;}
 }
 @media(max-width:900px){
-  .cat-hero-grid{grid-template-columns:auto 1fr;gap:24px;padding:32px 28px;}
-  .cat-hero-stats{display:none;}
+  .cat-hero-grid{gap:20px 24px;padding:32px 28px;}
+  .cat-hero-stats{width:130px;}
+  .stat-bubble{padding:12px 14px;}
+  .stat-bubble .sn{font-size:1.5rem;}
   .podium-grid{grid-template-columns:1fr;}
   .stat-bar-row{grid-template-columns:130px 1fr 60px;gap:10px;}
 }
@@ -641,17 +717,28 @@
   .cat-icon-box{
     width:64px;min-height:64px;font-size:1.8rem;border-radius:14px;
     flex-shrink:0;align-self:stretch;
+    grid-column:unset;grid-row:unset;
   }
-  .cat-hero-title-block{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;}
+  .cat-hero-title-block{
+    flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;
+    grid-column:unset;grid-row:unset;padding-bottom:0;
+  }
+  .cat-hero-body{
+    width:100%;
+    grid-column:unset;grid-row:unset;
+  }
   .cat-hero-h1{font-size:1.25rem;line-height:1.1;margin-bottom:4px;}
-  /* tags: hide "AI ASSISTANTS" text tag, keep FREEMIUM + Popular on ONE line */
+  /* tags: show FREEMIUM + Popular on mobile (hidden on desktop) */
   .cat-hero-meta-row{
+    display:flex !important;
     gap:5px;margin-top:4px;
-    flex-wrap:nowrap;overflow:hidden;
+    flex-wrap:nowrap;overflow:hidden;align-items:center;
   }
   .hero-cat-tag{display:none;}
   .hero-badge-freemium,.hero-badge-popular{white-space:nowrap;font-size:.64rem;padding:3px 8px;}
-  /* stats inline: 2 rows × 2 cols */
+  /* hide desktop chip badges on mobile */
+  .cat-hero-chips{display:none !important;}
+  /* stats inline: 2 rows × 2 cols — show on mobile */
   .cat-hero-stats-inline{
     margin-bottom:10px;border-radius:10px;
     display:grid !important;
@@ -668,9 +755,8 @@
   .his-block:nth-child(n+5){border-bottom:none;}
   .his-label{font-size:.52rem;}
   .his-val{font-size:.8rem;}
-  .cat-hero-body{width:100%;}
   .cat-hero-desc{font-size:.83rem;line-height:1.55;margin-bottom:0;}
-  .cat-hero-stats{display:none;}
+  .cat-hero-stats{display:none !important;}
 
   /* ── ii. FILTER BAR — search full width, DD + count beside ── */
   .cat-filter-bar{padding-top:28px;}
@@ -795,20 +881,17 @@
 }
 
 /* ═══════════════════════════════════
-   HERO — detail-page style new elements
+   HERO — desktop-only overrides (min 681px)
 ═══════════════════════════════════ */
+@media(min-width:681px){
+/* cat-hero-top-row uses display:contents on desktop so icon + title-block become direct grid items */
 .cat-hero-top-row{
-  display:flex;align-items:center;gap:20px;
-  grid-column:1 / -1;
+  display:contents;
 }
-.cat-hero-title-block{flex:1;min-width:0;}
+.cat-hero-title-block{min-width:0;}
+/* Desktop: hide FREEMIUM/Popular badges (only shown on mobile per Image 2) */
 .cat-hero-meta-row{
-  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;
-}
-.hero-cat-tag{
-  font-size:.7rem;font-weight:700;color:var(--text3);
-  font-family:'JetBrains Mono',monospace;letter-spacing:.08em;
-  text-transform:uppercase;
+  display:none;
 }
 .hero-badge-freemium{
   display:inline-flex;padding:3px 10px;border-radius:6px;
@@ -825,28 +908,17 @@
   font-family:'JetBrains Mono',monospace;
 }
 
-/* Inline stats row under title (visible on all, replaces chips) */
+/* Inline stats row — HIDDEN on desktop (shown only on mobile) */
 .cat-hero-stats-inline{
-  display:flex;align-items:center;gap:0;
-  background:var(--surface2);border:1px solid var(--border);
-  border-radius:12px;padding:0;
-  margin-bottom:18px;overflow:hidden;
+  display:none;
 }
-.his-block{
-  display:flex;flex-direction:column;align-items:center;
-  padding:12px 20px;flex:1;
-}
-.his-label{
-  font-size:.6rem;font-weight:700;color:var(--text3);
-  font-family:'JetBrains Mono',monospace;letter-spacing:.1em;margin-bottom:3px;
-}
-.his-val{
-  font-size:.92rem;font-weight:800;color:var(--text);
-}
-.his-divider{width:1px;background:var(--border);align-self:stretch;flex-shrink:0;}
 
-/* Keep old chips hidden (we use stats-inline now) */
-.cat-hero-chips{display:none;}
+/* Desktop: show chip badges row */
+.cat-hero-chips{
+  display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;
+}
+} /* end @media(min-width:681px) */
+
 
 /* FILTER ROW2 — pricing DD + count side by side */
 .cat-filter-row2{
@@ -969,6 +1041,14 @@
       </div>
     </div>
     <div class="cat-hero-body">
+      <!-- Desktop chips (Image 1 style) -->
+      <div class="cat-hero-chips">
+        <span class="hero-chip"><span class="dot"></span>24 Tools Reviewed</span>
+        <span class="hero-chip">🟦 15 Free Plans</span>
+        <span class="hero-chip">⭐ 4.7 Avg Rating</span>
+        <span class="hero-chip">📅 Updated Daily</span>
+      </div>
+      <!-- Mobile inline stats (Image 2 style) -->
       <div class="cat-hero-stats-inline">
         <div class="his-block"><span class="his-label">TOOLS</span><span class="his-val">24</span></div>
         <div class="his-divider"></div>
