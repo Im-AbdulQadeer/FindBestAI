@@ -840,14 +840,24 @@
   .free-glow-badge .fg-dot{width:5px !important;height:5px !important;}
   /* paragraph: slightly smaller, comfortable margin */
   .free-desc{font-size:.78rem;line-height:1.55;margin-bottom:12px;}
-  /* 2×2 card grid */
-  .free-grid{grid-template-columns:1fr 1fr !important;gap:6px;margin-top:18px;}
-  /* compact pill-style cards like upper tool boxes */
-  .free-card{padding:6px 8px;gap:6px;border-radius:9px;}
-  .free-logo{width:22px;height:22px;border-radius:6px;flex-shrink:0;}
-  .free-logo img{padding:3px;}
-  .free-name{font-size:.7rem;}
-  .free-meta{font-size:.55rem;margin-top:1px;}
+  /* 2×2 card grid — equal columns, no blank space */
+  .free-grid{
+    grid-template-columns:1fr 1fr !important;
+    gap:8px;margin-top:18px;
+  }
+  /* compact pill-style cards — content fills column, no blank right side */
+  .free-card{
+    padding:10px 10px;gap:8px;border-radius:10px;
+    width:100%;box-sizing:border-box;
+    align-items:center;
+  }
+  .free-info{
+    flex:1;min-width:0;overflow:hidden;
+  }
+  .free-logo{width:32px;height:32px;border-radius:8px;flex-shrink:0;}
+  .free-logo img{padding:4px;}
+  .free-name{font-size:.78rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+  .free-meta{font-size:.62rem;margin-top:2px;display:block;}
 
   /* ── iv. BAR GRAPH — score on right of label ── */
   .stats-box{padding:18px 12px;}
