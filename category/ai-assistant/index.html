@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -53,7 +54,7 @@
 ═══════════════════════════════════ */
 .cat-hero{padding:40px 32px 0;max-width:1380px;margin:0 auto;position:relative;z-index:10;}
 .cat-hero-grid{
-  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:32px;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;gap:32px;
   padding:44px 48px;
   background:var(--surface);
   border:1px solid var(--border);
@@ -75,7 +76,7 @@
 .cat-hero-grid>*{position:relative;z-index:1;}
 
 .cat-icon-box{
-  width:96px;height:96px;border-radius:22px;flex-shrink:0;
+  width:96px;height:auto;min-height:96px;border-radius:22px;flex-shrink:0;align-self:stretch;
   background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 18%,var(--surface2)),var(--surface3));
   border:1px solid var(--border-md);
   display:flex;align-items:center;justify-content:center;
@@ -106,12 +107,12 @@
 }
 .hero-chip .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);}
 
-.cat-hero-stats{display:flex;flex-direction:column;gap:12px;align-items:stretch;flex-shrink:0;width:160px;}
+.cat-hero-stats{display:flex;flex-direction:column;gap:12px;align-items:stretch;flex-shrink:0;width:160px;align-self:stretch;justify-content:space-between;}
 .stat-bubble{
-  text-align:right;padding:16px 22px;
+  text-align:right;padding:16px 22px;flex:1;
   background:var(--surface2);
   border:1px solid var(--border);
-  border-radius:14px;
+  border-radius:14px;display:flex;flex-direction:column;justify-content:center;
 }
 .stat-bubble .sn{
   display:block;font-size:1.85rem;font-weight:900;letter-spacing:-.04em;
@@ -185,15 +186,15 @@
 .r2 .rank-badge{background:color-mix(in srgb,var(--text3) 18%,transparent);color:var(--text2);}
 .r3 .rank-badge{background:color-mix(in srgb,var(--orange) 15%,transparent);color:var(--orange);}
 
-/* PODIUM LOGO — same size as tool card logos */
+/* PODIUM LOGO — match tool-card logo: 44×44 */
 .podium-logo{
-  width:48px;height:48px;border-radius:13px;overflow:hidden;
+  width:44px;height:44px;border-radius:12px;overflow:hidden;
   background:#111;margin-bottom:14px;
   box-shadow:0 2px 12px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.05);
   flex-shrink:0;display:flex;align-items:center;justify-content:center;
 }
-.podium-logo img{width:100%;height:100%;object-fit:contain;padding:7px;display:block;}
-.podium-logo .fl{font-size:1.4rem;font-weight:900;color:#fff;font-family:'Outfit',sans-serif;}
+.podium-logo img{width:100%;height:100%;object-fit:contain;padding:6px;display:block;}
+.podium-logo .fl{font-size:1.3rem;font-weight:900;color:#fff;font-family:'Outfit',sans-serif;}
 .podium-name{font-size:1.15rem;font-weight:800;letter-spacing:-.025em;margin-bottom:6px;}
 .podium-desc{font-size:.83rem;color:var(--text2);line-height:1.6;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;}
 .podium-meta{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:14px;}
@@ -491,6 +492,13 @@
 .stats-head-left{flex:1;min-width:0;}
 .stats-title{font-size:1.55rem;font-weight:900;letter-spacing:-.025em;margin-bottom:6px;}
 .stats-subtitle{font-size:.78rem;color:var(--text3);font-family:'JetBrains Mono',monospace;}
+.stats-intro{
+  color:var(--text2);font-size:.92rem;line-height:1.7;
+  margin:0 0 24px;max-width:760px;
+}
+@media(max-width:680px){
+  .stats-intro{font-size:.85rem;margin-bottom:18px;}
+}
 .stats-bars{display:flex;flex-direction:column;gap:20px;}
 .stat-bar-row{display:grid;grid-template-columns:170px 1fr 72px;align-items:center;gap:14px;}
 .stat-bar-label{display:flex;align-items:center;gap:10px;font-size:.88rem;font-weight:700;color:var(--text);}
@@ -610,43 +618,323 @@
   .breadcrumb,.cat-hero,.cat-filter-bar,.active-filters,
   .podium-section,.cat-grid-section,.cat-faq,.compare-section,
   .specialty-section,.free-section,.stats-section,
-  .related-cats-section{padding-left:14px;padding-right:14px;}
-  .cat-hero{padding-top:18px;}
-  .cat-hero-grid{padding:24px 20px;gap:18px;border-radius:18px;}
-  .cat-icon-box{width:68px;height:68px;font-size:1.9rem;border-radius:16px;}
-  .cat-hero-h1{font-size:1.85rem;line-height:1.1;}
-  .cat-hero-desc{font-size:.92rem;}
-  .hero-chip{font-size:.74rem;padding:7px 13px;}
-  .section-label-line{flex-wrap:wrap;gap:10px;}
-  .section-label-line .lbl{font-size:1.25rem;}
-  .section-action-btn{font-size:.78rem;padding:9px 14px;}
-  .cat-filter-inner{grid-template-columns:1fr;gap:10px;}
-  .custom-dd-btn,.filter-count{width:100%;justify-content:center;}
-  .custom-dd-btn{min-width:auto;}
-  .sort-pills{justify-content:flex-start;}
-  .sort-pill{flex:1;text-align:center;}
+  .related-cats-section{padding-left:12px;padding-right:12px;}
+
+  /* ── podium logos on mobile: match tool-card logo size ── */
+  .podium-logo{
+    width:44px !important;height:44px !important;border-radius:12px !important;
+    margin-bottom:10px;
+  }
+  .podium-logo img{padding:5px !important;}
+  .podium-logo .fl{font-size:1.2rem !important;}
+
+  /* ── i. HERO — mobile: logo left | heading right, equal height, then stats 2×2, then desc ── */
+  .cat-hero{padding-top:12px;}
+  .cat-hero-grid{
+    display:flex;flex-direction:column;
+    padding:16px 14px;gap:12px;border-radius:16px;
+  }
+  /* top row: icon + title side by side, equal height */
+  .cat-hero-top-row{
+    display:flex;align-items:stretch;gap:12px;
+  }
+  .cat-icon-box{
+    width:64px;min-height:64px;font-size:1.8rem;border-radius:14px;
+    flex-shrink:0;align-self:stretch;
+  }
+  .cat-hero-title-block{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;}
+  .cat-hero-h1{font-size:1.25rem;line-height:1.1;margin-bottom:4px;}
+  /* tags: hide "AI ASSISTANTS" text tag, keep FREEMIUM + Popular on ONE line */
+  .cat-hero-meta-row{
+    gap:5px;margin-top:4px;
+    flex-wrap:nowrap;overflow:hidden;
+  }
+  .hero-cat-tag{display:none;}
+  .hero-badge-freemium,.hero-badge-popular{white-space:nowrap;font-size:.64rem;padding:3px 8px;}
+  /* stats inline: 2 rows × 2 cols */
+  .cat-hero-stats-inline{
+    margin-bottom:10px;border-radius:10px;
+    display:grid !important;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:auto auto;
+  }
+  .his-divider{display:none;}
+  .his-block{
+    padding:8px 10px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);
+    align-items:flex-start;
+  }
+  .his-block:nth-child(odd){border-left:none;}
+  .his-block:nth-child(even){border-right:none;}
+  .his-block:nth-child(n+5){border-bottom:none;}
+  .his-label{font-size:.52rem;}
+  .his-val{font-size:.8rem;}
+  .cat-hero-body{width:100%;}
+  .cat-hero-desc{font-size:.83rem;line-height:1.55;margin-bottom:0;}
+  .cat-hero-stats{display:none;}
+
+  /* ── ii. FILTER BAR — search full width, DD + count beside ── */
+  .cat-filter-bar{padding-top:28px;}
+  .section-label-line{flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .section-label-line .lbl{font-size:1.1rem;}
+  .section-action-btn{font-size:.74rem;padding:7px 11px;}
+  .cat-filter-inner{
+    display:flex;flex-direction:column;gap:8px;
+  }
+  /* search always full width */
+  .cat-search-wrap{width:100%;}
+  .cat-search-wrap input{
+    font-size:.82rem;padding:10px 12px 10px 38px;width:100%;
+  }
+  .cat-search-wrap .ico{left:12px;width:15px;height:15px;}
+  /* row2: Pricing left half, Results right half — equal split */
+  .cat-filter-row2{
+    display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:center;
+  }
+  .custom-dd{width:100%;}
+  .custom-dd-btn{
+    min-width:auto;width:100%;justify-content:space-between;
+    padding:9px 11px;font-size:.78rem;
+  }
+  /* make the dropdown arrow clearly visible */
+  .custom-dd-btn .dd-arr{font-size:.82rem;color:var(--text2);}
+  .custom-dd.open .custom-dd-btn .dd-arr{color:var(--accent);}
+  /* Results box: same height/padding as pricing, full width of its cell */
+  .filter-count-wrap{display:flex;width:100%;}
+  .filter-count{
+    padding:9px 11px;font-size:.76rem;white-space:nowrap;
+    width:100%;justify-content:center;text-align:center;box-sizing:border-box;
+  }
+  /* hide sort pills on mobile — keep only search + pricing + count */
+  .sort-pills{display:none;}
+
+  /* ── iii. FREE BOX — 2×2 grid, tight, paragraph kept ── */
   .podium-section,.compare-section,.specialty-section,
-  .free-section,.stats-section,.cat-faq,.related-cats-section{padding-top:44px;}
-  .free-box{padding:24px 20px;}
-  .free-header{flex-direction:column;align-items:flex-start;}
-  .free-title{font-size:1.4rem;}
-  .free-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .specialty-grid{grid-template-columns:1fr;gap:12px;}
-  .stats-box{padding:24px 18px;}
-  .stats-title{font-size:1.2rem;}
-  .stat-bar-row{grid-template-columns:1fr;gap:6px;}
-  .stat-bar-label{width:100%;}
-  .stat-bar-val{text-align:left;}
-  .compare-table thead th{font-size:.66rem;padding:11px 10px;}
-  .compare-table tbody td{padding:12px 10px;font-size:.8rem;}
-  .rel-cats-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .rel-cat-card{padding:14px;}
-  .rcat-info .rcat-name{font-size:.8rem;}
-  .faq-q{font-size:.93rem;padding:18px;}
-  .faq-a{padding:0 18px 20px 52px;font-size:.85rem;}
-  .faq-q-num{width:26px;height:26px;font-size:.72rem;}
-  .newsletter-block{margin-top:64px !important;}
+  .free-section,.stats-section,.cat-faq,.related-cats-section{padding-top:36px;}
+  .free-box{padding:18px 14px;}
+  /* header row: title left, FREE badge right — proper alignment */
+  .free-header{
+    flex-direction:row;align-items:center;justify-content:space-between;
+    flex-wrap:nowrap;margin-bottom:10px;gap:8px;
+  }
+  .free-title{font-size:1.05rem;letter-spacing:-.02em;line-height:1.2;}
+  /* shrink the FREE badge so it doesn't dominate */
+  .free-glow-badge{
+    font-size:.6rem !important;padding:4px 9px !important;
+    gap:4px !important;border-radius:6px !important;flex-shrink:0;
+  }
+  .free-glow-badge .fg-dot{width:5px !important;height:5px !important;}
+  /* paragraph: slightly smaller, comfortable margin */
+  .free-desc{font-size:.78rem;line-height:1.55;margin-bottom:12px;}
+  /* 2×2 card grid */
+  .free-grid{grid-template-columns:1fr 1fr !important;gap:9px;}
+  /* cards: comfortable padding, proper logo/text sizing */
+  .free-card{padding:12px;gap:10px;border-radius:12px;}
+  .free-logo{width:36px;height:36px;border-radius:10px;flex-shrink:0;}
+  .free-name{font-size:.83rem;}
+  .free-meta{font-size:.65rem;margin-top:3px;}
+
+  /* ── iv. BAR GRAPH — score on right of label ── */
+  .stats-box{padding:18px 12px;}
+  .stats-title{font-size:1.1rem;}
+  .stats-bars{gap:12px;}
+  .stat-bar-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    grid-template-rows:auto auto;
+    gap:3px 8px;
+    align-items:center;
+  }
+  .stat-bar-label{
+    grid-column:1;grid-row:1;
+    font-size:.8rem;gap:7px;
+  }
+  .stat-bar-val{
+    grid-column:2;grid-row:1;
+    text-align:right;font-size:.8rem;
+    color:var(--accent);white-space:nowrap;
+  }
+  .stat-bar-track{
+    grid-column:1 / -1;grid-row:2;
+  }
+
+  /* specialty — 2×2, no sw-note overflow */
+  .specialty-grid{grid-template-columns:1fr 1fr;gap:10px;}
+  .specialty-card{padding:14px 12px;}
+  .specialty-title{font-size:.85rem;}
+  .specialty-winner{overflow:hidden;}
+  .sw-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;flex:1;}
+
+  /* other */
+  .compare-table thead th{font-size:.64rem;padding:10px 8px;}
+  .compare-table tbody td{padding:11px 8px;font-size:.78rem;}
+  .rel-cats-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .rel-cat-card{padding:12px;}
+  .rcat-info .rcat-name{font-size:.78rem;}
+  .faq-q{font-size:.88rem;padding:15px;}
+  .faq-a{padding:0 15px 16px 46px;font-size:.82rem;}
+  .faq-q-num{width:25px;height:25px;font-size:.7rem;}
+  .newsletter-block{margin-top:50px !important;}
+  .stats-intro{font-size:.8rem;margin-bottom:12px;}
 }
+
+/* ═══ LOGO BG REMOVAL — transparent for all sections except Browse grid ═══ */
+.podium-logo,
+.compare-tool-logo,
+.sw-logo,
+.free-logo,
+.sbl-logo {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.podium-logo img,
+.compare-tool-logo img,
+.sw-logo img,
+.free-logo img,
+.sbl-logo img {
+  padding: 0 !important;
+}
+
+/* ═══════════════════════════════════
+   HERO — detail-page style new elements
+═══════════════════════════════════ */
+.cat-hero-top-row{
+  display:flex;align-items:center;gap:20px;
+  grid-column:1 / -1;
+}
+.cat-hero-title-block{flex:1;min-width:0;}
+.cat-hero-meta-row{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;
+}
+.hero-cat-tag{
+  font-size:.7rem;font-weight:700;color:var(--text3);
+  font-family:'JetBrains Mono',monospace;letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.hero-badge-freemium{
+  display:inline-flex;padding:3px 10px;border-radius:6px;
+  background:color-mix(in srgb,var(--accent) 18%,transparent);
+  border:1px solid var(--accent);
+  color:var(--accent);font-size:.68rem;font-weight:800;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.06em;
+}
+.hero-badge-popular{
+  display:inline-flex;padding:3px 10px;border-radius:6px;
+  background:color-mix(in srgb,var(--orange) 18%,transparent);
+  border:1px solid var(--orange);
+  color:var(--orange);font-size:.68rem;font-weight:700;
+  font-family:'JetBrains Mono',monospace;
+}
+
+/* Inline stats row under title (visible on all, replaces chips) */
+.cat-hero-stats-inline{
+  display:flex;align-items:center;gap:0;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:12px;padding:0;
+  margin-bottom:18px;overflow:hidden;
+}
+.his-block{
+  display:flex;flex-direction:column;align-items:center;
+  padding:12px 20px;flex:1;
+}
+.his-label{
+  font-size:.6rem;font-weight:700;color:var(--text3);
+  font-family:'JetBrains Mono',monospace;letter-spacing:.1em;margin-bottom:3px;
+}
+.his-val{
+  font-size:.92rem;font-weight:800;color:var(--text);
+}
+.his-divider{width:1px;background:var(--border);align-self:stretch;flex-shrink:0;}
+
+/* Keep old chips hidden (we use stats-inline now) */
+.cat-hero-chips{display:none;}
+
+/* FILTER ROW2 — pricing DD + count side by side */
+.cat-filter-row2{
+  display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;
+}
+.cat-search-full{grid-column:1/-1;}
+
+/* Desktop: restore full 4-element grid layout */
+@media(min-width:681px){
+  .cat-filter-inner{
+    display:grid;
+    grid-template-columns:1fr auto auto auto;
+    align-items:center;
+    gap:12px;
+  }
+  .cat-search-full{grid-column:1;}
+  /* unwrap row2 on desktop — display its children inline */
+  .cat-filter-row2{
+    display:contents;
+  }
+  .sort-pills{display:flex;gap:7px;}
+}
+
+/* TOOLS GRID — 2 cols on mobile (like detail page "More Tools"), equal height cards */
+@media(max-width:680px){
+  .tools-grid{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:10px !important;
+    align-items:stretch !important;
+  }
+  /* force every tool-card to fill its cell and use flex column */
+  .tools-grid > * {
+    height:100% !important;
+    display:flex !important;
+    flex-direction:column !important;
+  }
+}
+
+/* Fix 5: tool card internals — desc grows, rating+button always at bottom */
+/* Target common tool-card desc/body patterns from main.css */
+.tool-card,
+.tools-grid > a,
+.tools-grid > div {
+  display:flex;
+  flex-direction:column;
+}
+/* The description/body area grows to fill space */
+.tool-card .tool-desc,
+.tool-card .tc-desc,
+.tool-card .card-desc,
+.tools-grid > a .tool-desc,
+.tools-grid > a .tc-desc,
+.tools-grid > div .tool-desc,
+.tools-grid > div .tc-desc {
+  flex:1 !important;
+}
+/* Rating row and CTA button always stay at the bottom */
+.tool-card .tool-meta,
+.tool-card .tc-meta,
+.tool-card .tc-footer,
+.tool-card .card-footer,
+.tools-grid > a .tool-meta,
+.tools-grid > a .tc-meta,
+.tools-grid > div .tool-meta,
+.tools-grid > div .tc-meta {
+  margin-top:auto !important;
+}
+
+/* SPECIALTY — prevent horizontal scroll: constrain items, but keep name visible */
+.specialty-winner{
+  overflow:hidden;
+}
+.sw-name{
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  min-width:0;flex:1;
+}
+
+/* FREE GRID — always 4 items in 2×2, paragraph visible, cards properly spaced */
+@media(max-width:680px){
+  .free-grid{grid-template-columns:1fr 1fr !important;gap:9px;}
+  .free-desc{display:block;font-size:.78rem;line-height:1.55;margin-bottom:12px;}
+  .free-card{padding:12px;gap:10px;border-radius:12px;}
+  .free-logo{width:36px;height:36px;border-radius:10px;flex-shrink:0;}
+  .free-name{font-size:.83rem;}
+  .free-meta{font-size:.65rem;}
+}
+
 </style>
 </head>
 
@@ -669,16 +957,28 @@
 <!-- HERO -->
 <div class="cat-hero reveal">
   <div class="cat-hero-grid">
-    <div class="cat-icon-box" aria-hidden="true">🧠</div>
-    <div class="cat-hero-body">
-      <h1 class="cat-hero-h1">Best <em>AI Assistants</em> of 2026</h1>
-      <p class="cat-hero-desc">Looking for the perfect AI chatbot? We tested every major option so you don't have to. Compare 24 top AI assistants including ChatGPT, Claude, Gemini, and DeepSeek. Real user ratings, transparent pricing, honest pros and cons, updated daily for 2026.</p>
-      <div class="cat-hero-chips">
-        <span class="hero-chip"><span class="dot"></span>24 Tools Reviewed</span>
-        <span class="hero-chip">🆓 15 Free Plans</span>
-        <span class="hero-chip">⭐ 4.7 Avg Rating</span>
-        <span class="hero-chip">📅 Updated Daily</span>
+    <div class="cat-hero-top-row">
+      <div class="cat-icon-box" aria-hidden="true">🧠</div>
+      <div class="cat-hero-title-block">
+        <h1 class="cat-hero-h1">Best <em>AI Assistants</em> of 2026</h1>
+        <div class="cat-hero-meta-row">
+          <span class="hero-cat-tag">AI Assistants</span>
+          <span class="hero-badge-freemium">FREEMIUM</span>
+          <span class="hero-badge-popular">🔥 Popular</span>
+        </div>
       </div>
+    </div>
+    <div class="cat-hero-body">
+      <div class="cat-hero-stats-inline">
+        <div class="his-block"><span class="his-label">TOOLS</span><span class="his-val">24</span></div>
+        <div class="his-divider"></div>
+        <div class="his-block"><span class="his-label">FREE PLANS</span><span class="his-val">15</span></div>
+        <div class="his-divider"></div>
+        <div class="his-block"><span class="his-label">AVG RATING</span><span class="his-val">⭐ 4.7</span></div>
+        <div class="his-divider"></div>
+        <div class="his-block"><span class="his-label">UPDATED</span><span class="his-val">Daily</span></div>
+      </div>
+      <p class="cat-hero-desc">Looking for the perfect AI chatbot? We tested every major option so you don't have to. Compare 24 top AI assistants including ChatGPT, Claude, Gemini, and DeepSeek. Real user ratings, transparent pricing, honest pros and cons, updated daily for 2026.</p>
     </div>
     <div class="cat-hero-stats">
       <div class="stat-bubble"><span class="sn">24</span><div class="sl">TOOLS</div></div>
@@ -688,12 +988,11 @@
   </div>
 </div>
 
-<!-- TOP 3 PODIUM -->
+<!-- TOP 3 PODIUM — button removed -->
 <div class="podium-section reveal stagger-1">
   <div class="section-label-line">
     <span class="lbl">Editor's <span class="accent-text">Top Picks</span></span>
     <span class="ln"></span>
-    <a href="/tools/" class="section-action-btn">View More Categories <span class="arr">→</span></a>
   </div>
   <div class="podium-grid" id="podiumGrid"></div>
 </div>
@@ -705,24 +1004,30 @@
     <span class="ln"></span>
   </div>
   <div class="cat-filter-inner">
-    <div class="cat-search-wrap">
+    <div class="cat-search-wrap cat-search-full">
       <span class="ico" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
       </span>
       <input type="text" id="catSearch" placeholder="Search ChatGPT, Claude, Gemini and 21 more AI assistants..." autocomplete="off" oninput="filterCatTools()" aria-label="Search tools">
     </div>
 
-    <div class="custom-dd" id="pricingDD">
-      <button class="custom-dd-btn" type="button" onclick="toggleDD(event)">
-        <span class="dd-ico">💰</span>
-        <span class="dd-txt">All Pricing</span>
-        <span class="dd-arr">▾</span>
-      </button>
-      <div class="custom-dd-panel" role="listbox">
-        <div class="custom-dd-option active" data-val="" data-label="💰 All Pricing" onclick="selectDD(this)">💰 All Pricing</div>
-        <div class="custom-dd-option" data-val="free" data-label="🆓 Free Only" onclick="selectDD(this)">🆓 Free Only</div>
-        <div class="custom-dd-option" data-val="freemium" data-label="⚡ Freemium" onclick="selectDD(this)">⚡ Freemium</div>
-        <div class="custom-dd-option" data-val="paid" data-label="💎 Paid Only" onclick="selectDD(this)">💎 Paid Only</div>
+    <div class="cat-filter-row2">
+      <div class="custom-dd" id="pricingDD">
+        <button class="custom-dd-btn" type="button" onclick="toggleDD(event)">
+          <span class="dd-ico">💰</span>
+          <span class="dd-txt">All Pricing</span>
+          <span class="dd-arr">▾</span>
+        </button>
+        <div class="custom-dd-panel" role="listbox">
+          <div class="custom-dd-option active" data-val="" data-label="💰 All Pricing" onclick="selectDD(this)">💰 All Pricing</div>
+          <div class="custom-dd-option" data-val="free" data-label="🆓 Free Only" onclick="selectDD(this)">🆓 Free Only</div>
+          <div class="custom-dd-option" data-val="freemium" data-label="⚡ Freemium" onclick="selectDD(this)">⚡ Freemium</div>
+          <div class="custom-dd-option" data-val="paid" data-label="💎 Paid Only" onclick="selectDD(this)">💎 Paid Only</div>
+        </div>
+      </div>
+
+      <div class="filter-count-wrap">
+        <span class="filter-count">📊 <span id="filterCount">24</span> Results</span>
       </div>
     </div>
 
@@ -730,10 +1035,6 @@
       <button class="sort-pill active" id="sp-rating" onclick="sortCat('rating',this)">⭐ Top Rated</button>
       <button class="sort-pill" id="sp-name" onclick="sortCat('name',this)">A to Z</button>
       <button class="sort-pill" id="sp-reviews" onclick="sortCat('reviews',this)">🔥 Popular</button>
-    </div>
-
-    <div class="filter-count-wrap">
-      <span class="filter-count">📊 <span id="filterCount">24</span> Results</span>
     </div>
   </div>
 </div>
@@ -753,11 +1054,12 @@
   </div>
 </div>
 
-<!-- COMPARE TABLE -->
+<!-- COMPARE TABLE — button added on the right -->
 <div class="compare-section reveal" id="compareTop">
   <div class="section-label-line">
     <span class="lbl">Side by Side <span class="accent-text">Comparison</span></span>
     <span class="ln"></span>
+    <a href="/compare/" class="section-action-btn">Full Compare <span class="arr">→</span></a>
   </div>
   <p class="compare-intro">Quickly see how the top 7 AI assistants stack up on pricing, context window, ideal use case, speed, free tier availability, and user ratings. We refresh this AI chatbot comparison table every month so you always see the latest numbers.</p>
   <div class="compare-table-wrap">
@@ -797,16 +1099,16 @@
   </div>
 </div>
 
-<!-- POWER BAR GRAPH -->
+<!-- VALUE INDEX BAR GRAPH — button removed, retitled -->
 <div class="stats-section reveal">
   <div class="stats-box">
     <div class="stats-header">
       <div class="stats-head-left">
-        <div class="stats-title">AI Assistant Power Index</div>
-        <div class="stats-subtitle">// OVERALL CAPABILITY SCORE · 2026</div>
+        <div class="stats-title">AI Power Index</div>
+        <div class="stats-subtitle">// OUTPUT QUALITY · CAPABILITY · REASONING · OUT OF 100%</div>
       </div>
-      <a href="#compareTop" class="section-action-btn">Full Compare <span class="arr">→</span></a>
     </div>
+    <p class="stats-intro">Each AI assistant is scored out of 100% based on raw capability: the quality of its outputs, reasoning depth, coding ability, multimodal strength, and overall performance on real-world benchmarks. A higher score means a more powerful, capable model.</p>
     <div class="stats-bars" id="statsBars"></div>
   </div>
 </div>
@@ -932,7 +1234,7 @@
 
   const FALLBACK_BRANDS = {
     'ChatGPT':'linear-gradient(135deg,#10a37f,#0d8a6a)',
-    'Claude':'linear-gradient(135deg,#d97757,#b85a3e)',
+    'Claude':'#000',
     'Gemini':'linear-gradient(135deg,#4285f4,#1a73e8)',
     'DeepSeek':'linear-gradient(135deg,#4d6bfe,#3a4fcc)',
     'Perplexity':'linear-gradient(135deg,#20808d,#175963)',
@@ -944,6 +1246,11 @@
     'Gemma':'linear-gradient(135deg,#34a853,#1e8e3e)',
     'Phi 4':'linear-gradient(135deg,#0078d4,#005a9e)',
     'NotebookLM':'linear-gradient(135deg,#4285f4,#1a73e8)'
+  };
+
+  /* Force override for tools whose logos clash with brand colors */
+  const LOGO_BG_OVERRIDE = {
+    'Claude':'#000'
   };
 
   /* Safe logo with onerror image fallback to letter */
@@ -966,18 +1273,19 @@
   }
 
   function getToolMeta(name){
+    const override = LOGO_BG_OVERRIDE[name];
     const t = lookupTool(name);
     if(t){
       return {
         href: (typeof toolHref==='function') ? toolHref(t) : '#',
-        bg: t.brand || t.bg || FALLBACK_BRANDS[name] || FALLBACK_BRANDS[t.name] || '#222',
+        bg: override || t.brand || t.bg || FALLBACK_BRANDS[name] || FALLBACK_BRANDS[t.name] || '#222',
         logo: safeLogo(t, 40, name),
         rating: t.rating, reviews: t.reviews, pricing: t.pricing
       };
     }
     return {
       href:'#',
-      bg: FALLBACK_BRANDS[name] || 'linear-gradient(135deg,#666,#444)',
+      bg: override || FALLBACK_BRANDS[name] || 'linear-gradient(135deg,#666,#444)',
       logo: `<span class="fl">${name.charAt(0).toUpperCase()}</span>`,
       rating:null, reviews:null, pricing:null
     };
@@ -995,7 +1303,7 @@
       wrap.className = `podium-card ${rankClass[i]} reveal stagger-${i+1}`;
       wrap.onclick = ()=>{ window.location.href = toolHref(t); };
       const logoHTML = safeLogo(t, 48, t.name);
-      const bg = t.brand || t.bg || FALLBACK_BRANDS[t.name] || '#222';
+      const bg = LOGO_BG_OVERRIDE[t.name] || t.brand || t.bg || FALLBACK_BRANDS[t.name] || '#222';
       wrap.innerHTML = `
         <div class="rank-badge">${rankEmoji[i]}</div>
         <div class="podium-logo" style="background:${bg}">${logoHTML}</div>
@@ -1043,21 +1351,17 @@
   /* BY USE CASE — 8 cards */
   function buildSpecialty(){
     const sections = [
-      {emoji:'💻', title:'Best for Coding',         sub:'// DEVELOPER TOOLS',    picks:[['Claude','200K ctx'],['DeepSeek','free'],['ChatGPT','o1 model'],['Copilot','VS Code']]},
-      {emoji:'✍️', title:'Best for Writing',         sub:'// CONTENT CREATION',   picks:[['Claude','natural tone'],['ChatGPT','versatile'],['Gemini','free pro'],['Mistral','EU privacy']]},
-      {emoji:'🔬', title:'Best for Research',        sub:'// ANALYSIS CITATIONS', picks:[['Perplexity','live web'],['Gemini','deep research'],['ChatGPT','deep research'],['Claude','accuracy']]},
-      {emoji:'📚', title:'Best for Long Documents',  sub:'// PDFS AND ANALYSIS',  picks:[['Gemini','1M ctx'],['Claude','200K ctx'],['NotebookLM','free'],['ChatGPT','vision']]},
-      {emoji:'🆓', title:'Best Free AI Assistant',   sub:'// NO CREDIT CARD',     picks:[['Gemini','unlimited'],['DeepSeek','no limits'],['Meta AI','Llama 4'],['Gemma','open source']]},
-      {emoji:'💼', title:'Best for Business',        sub:'// TEAMS ENTERPRISE',   picks:[['ChatGPT','workspace'],['Copilot','M365 native'],['Claude','privacy'],['Gemini','admin tools']]},
-      {emoji:'🗣️', title:'Best for Conversation',    sub:'// VOICE AND CHAT',     picks:[['ChatGPT','voice mode'],['Pi','friendly tone'],['Gemini','Live API'],['Claude','memory']]},
-      {emoji:'🧮', title:'Best for Reasoning',       sub:'// MATH AND LOGIC',     picks:[['ChatGPT','o1 model'],['Claude','step by step'],['DeepSeek','R1 reasoning'],['Gemini','Thinking']]}
+      {emoji:'💻', title:'Best for Coding',     sub:'// DEVELOPER TOOLS',    picks:[['Claude','200K ctx'],['DeepSeek','free'],['ChatGPT','o1 model'],['Copilot','VS Code']]},
+      {emoji:'✍️', title:'Best for Writing',     sub:'// CONTENT CREATION',   picks:[['Claude','natural tone'],['ChatGPT','versatile'],['Gemini','free pro'],['Mistral','EU privacy']]},
+      {emoji:'🔬', title:'Best for Research',    sub:'// ANALYSIS CITATIONS', picks:[['Perplexity','live web'],['Gemini','deep research'],['ChatGPT','deep research'],['Claude','accuracy']]},
+      {emoji:'🧮', title:'Best for Reasoning',   sub:'// MATH AND LOGIC',     picks:[['ChatGPT','o1 model'],['Claude','step by step'],['DeepSeek','R1 reasoning'],['Gemini','Thinking']]}
     ];
     const grid = document.getElementById('specialtyGrid');
     grid.innerHTML = '';
     sections.forEach(sec=>{
       const winners = sec.picks.map(p=>{
         const m = getToolMeta(p[0]);
-        return `<a href="${m.href}" class="specialty-winner"><div class="sw-logo" style="background:${m.bg}">${m.logo}</div><span class="sw-name">${p[0]}</span><span class="sw-note">${p[1]}</span></a>`;
+        return `<a href="${m.href}" class="specialty-winner"><div class="sw-logo" style="background:${m.bg}">${m.logo}</div><span class="sw-name">${p[0]}</span></a>`;
       }).join('');
       grid.innerHTML += `
         <div class="specialty-card">
@@ -1070,14 +1374,13 @@
     });
   }
 
-  /* FREE BOX */
+  /* FREE BOX — 4 tools, rating only */
   function buildFree(){
     const free = [
-      {name:'Gemini',   rating:4.7, meta:'UNLIMITED'},
-      {name:'DeepSeek', rating:4.8, meta:'NO LIMITS'},
-      {name:'Meta AI',  rating:4.4, meta:'LLAMA 4'},
-      {name:'Gemma',    rating:4.5, meta:'OPEN SOURCE'},
-      {name:'Pi',       rating:4.5, meta:'FRIENDLY'}
+      {name:'Gemini',   rating:4.7},
+      {name:'DeepSeek', rating:4.8},
+      {name:'Meta AI',  rating:4.4},
+      {name:'Gemma',    rating:4.5}
     ];
     const grid = document.getElementById('freeGrid');
     grid.innerHTML = '';
@@ -1088,22 +1391,22 @@
           <div class="free-logo" style="background:${m.bg}">${m.logo}</div>
           <div class="free-info">
             <span class="free-name">${f.name}</span>
-            <span class="free-meta">★ ${f.rating} · ${f.meta}</span>
+            <span class="free-meta">★ ${f.rating}</span>
           </div>
         </a>`;
     });
   }
 
-  /* POWER BAR GRAPH */
+  /* POWER INDEX BAR GRAPH — 7 tools scored on raw capability + output quality */
   function buildStats(){
     const stats = [
-      {name:'ChatGPT',   score:'98',  w:98},
-      {name:'Claude',    score:'96',  w:96},
-      {name:'Gemini',    score:'92',  w:92},
-      {name:'DeepSeek',  score:'88',  w:88},
-      {name:'Perplexity',score:'82',  w:82},
-      {name:'Copilot',   score:'78',  w:78},
-      {name:'Grok',      score:'74',  w:74}
+      {name:'ChatGPT',   score:98},  // o1/o3 + widest capabilities + multimodal leader
+      {name:'Claude',    score:95},  // best reasoning + long ctx + coding excellence
+      {name:'Gemini',    score:92},  // 1M ctx + multimodal + Google integration
+      {name:'DeepSeek',  score:87},  // R1 reasoning + strong coding benchmarks
+      {name:'Grok',      score:82},  // xAI power + real-time data access
+      {name:'Perplexity',score:78},  // live web + citations + fast answers
+      {name:'Copilot',   score:74}   // M365 native + solid productivity tasks
     ];
     const wrap = document.getElementById('statsBars');
     wrap.innerHTML = '';
@@ -1112,8 +1415,8 @@
       wrap.innerHTML += `
         <div class="stat-bar-row">
           <div class="stat-bar-label"><div class="sbl-logo" style="background:${m.bg}">${m.logo}</div>${s.name}</div>
-          <div class="stat-bar-track"><div class="stat-bar-fill" data-w="${s.w}" style="width:0%"></div></div>
-          <div class="stat-bar-val">${s.score}/100</div>
+          <div class="stat-bar-track"><div class="stat-bar-fill" data-w="${s.score}" style="width:0%"></div></div>
+          <div class="stat-bar-val">${s.score}%</div>
         </div>`;
     });
   }
@@ -1241,6 +1544,40 @@
   buildStats();
   if(typeof initCommonUI==='function') initCommonUI();
   animateStatsBars();
+
+  /* Fix 5 — equal card layout: sniff rendered card structure, make desc flex-grow so
+     rating + button always sit at the bottom regardless of description length */
+  function fixCardLayout(){
+    const grid = document.getElementById('catGrid');
+    if(!grid) return;
+    const cards = grid.children;
+    if(!cards.length) return;
+    // Inspect first card to detect class names used by makeCard
+    const firstCard = cards[0];
+    // Make all direct children of grid stretch
+    Array.from(cards).forEach(card=>{
+      card.style.display = 'flex';
+      card.style.flexDirection = 'column';
+      // Find the description element — it's typically the longest text node child
+      // Try common patterns used by tool cards
+      const desc = card.querySelector('.tc-desc,.tool-desc,.card-desc,.t-desc,[class*="desc"]:not([class*="badge"]):not([class*="tag"])');
+      if(desc){ desc.style.flex = '1'; }
+      // Push rating + cta to bottom
+      const meta = card.querySelector('.tc-meta,.tool-meta,.card-meta,.tc-footer,[class*="meta"]:not([class*="label"])');
+      if(meta){ meta.style.marginTop = 'auto'; }
+      const cta = card.querySelector('.tc-cta,.tool-cta,.card-cta,a[class*="cta"],button[class*="cta"],[class*="-cta"]');
+      if(cta){ cta.style.marginTop = cta.style.marginTop || 'auto'; }
+    });
+  }
+
+  // Patch renderGrid to also run fixCardLayout
+  const _origRender = window.filterCatTools;
+  const grid = document.getElementById('catGrid');
+  if(grid){
+    const obs = new MutationObserver(()=>{ fixCardLayout(); });
+    obs.observe(grid, {childList:true});
+    fixCardLayout();
+  }
 })();
 </script>
 </body>
