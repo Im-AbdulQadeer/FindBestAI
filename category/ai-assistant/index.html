@@ -840,14 +840,14 @@
   .free-glow-badge .fg-dot{width:5px !important;height:5px !important;}
   /* paragraph: slightly smaller, comfortable margin */
   .free-desc{font-size:.78rem;line-height:1.55;margin-bottom:12px;}
-  /* 2x2 card grid - mobile only */
-  .free-grid{grid-template-columns:1fr 1fr !important;gap:8px;margin-top:14px;}
-  .free-card{padding:9px 10px;gap:8px;border-radius:10px;width:100%;box-sizing:border-box;align-items:center;}
+  /* free cards mobile - auto width, inline star+rating gold */
+  .free-grid{display:flex !important;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .free-card{padding:9px 10px;gap:8px;border-radius:10px;width:auto !important;box-sizing:border-box;align-items:center;flex-shrink:0;}
   .free-logo{width:28px;height:28px;border-radius:7px;flex-shrink:0;}
   .free-logo img{padding:3px;}
-  .free-info{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;gap:5px;flex-wrap:nowrap;}
-  .free-name{font-size:.75rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline;flex-shrink:1;min-width:0;}
-  .free-meta{font-size:.65rem;white-space:nowrap;flex-shrink:0;display:inline;margin-top:0;}
+  .free-info{display:flex;align-items:center;gap:4px;flex-wrap:nowrap;min-width:0;}
+  .free-name{font-size:.78rem;font-weight:700;white-space:nowrap;display:inline;color:var(--text);}
+  .free-meta{font-size:.72rem;font-weight:700;white-space:nowrap;display:inline;margin-top:0;color:#f5c518;letter-spacing:0;}
 
   /* ── iv. BAR GRAPH — score on right of label ── */
   .stats-box{padding:18px 12px;}
@@ -1502,7 +1502,7 @@
           <div class="free-logo" style="background:${m.bg}">${m.logo}</div>
           <div class="free-info">
             <span class="free-name">${f.name}</span>
-            <span class="free-meta">★ ${f.rating}</span>
+            <span class="free-meta">★${f.rating}</span>
           </div>
         </a>`;
     });
