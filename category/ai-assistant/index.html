@@ -541,7 +541,7 @@
   50%{opacity:.5;transform:scale(1.3);}
 }
 .free-desc{color:var(--text2);font-size:.95rem;line-height:1.7;margin-bottom:24px;max-width:720px;}
-.free-grid{display:grid;grid-template-columns:repeat(4,minmax(0,auto));gap:14px;justify-content:start;}
+.free-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
 .free-card{
   display:flex;align-items:center;gap:12px;
   padding:14px;border-radius:14px;
@@ -684,7 +684,7 @@
 @media(max-width:1200px){
   .rel-cats-grid{grid-template-columns:repeat(4,1fr);}
   .specialty-grid{grid-template-columns:repeat(2,1fr);}
-  .free-grid{grid-template-columns:repeat(2,minmax(0,auto));justify-content:start;}
+  .free-grid{grid-template-columns:repeat(3,1fr);}
 }
 @media(max-width:1100px){
   .cat-filter-inner{grid-template-columns:1fr 1fr;}
@@ -840,14 +840,14 @@
   .free-glow-badge .fg-dot{width:5px !important;height:5px !important;}
   /* paragraph: slightly smaller, comfortable margin */
   .free-desc{font-size:.78rem;line-height:1.55;margin-bottom:12px;}
-  /* 2×2 card grid */
-  .free-grid{grid-template-columns:repeat(2,minmax(0,auto)) !important;gap:8px;margin-top:14px;justify-content:start;}
-  /* compact pill-style cards like upper tool boxes */
-  .free-card{padding:10px 12px;gap:8px;border-radius:10px;width:auto;display:inline-flex;}
-  .free-logo{width:22px;height:22px;border-radius:6px;flex-shrink:0;}
+  /* 2x2 card grid - mobile only */
+  .free-grid{grid-template-columns:1fr 1fr !important;gap:8px;margin-top:14px;}
+  .free-card{padding:9px 10px;gap:8px;border-radius:10px;width:100%;box-sizing:border-box;align-items:center;}
+  .free-logo{width:28px;height:28px;border-radius:7px;flex-shrink:0;}
   .free-logo img{padding:3px;}
-  .free-name{font-size:.7rem;}
-  .free-meta{font-size:.55rem;margin-top:1px;}
+  .free-info{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;gap:5px;flex-wrap:nowrap;}
+  .free-name{font-size:.75rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:inline;flex-shrink:1;min-width:0;}
+  .free-meta{font-size:.65rem;white-space:nowrap;flex-shrink:0;display:inline;margin-top:0;}
 
   /* ── iv. BAR GRAPH — score on right of label ── */
   .stats-box{padding:18px 12px;}
@@ -1029,9 +1029,9 @@
 
 /* FREE GRID — always 4 items in 2×2, paragraph visible, cards properly spaced */
 @media(max-width:680px){
-  .free-grid{grid-template-columns:repeat(2,minmax(0,auto)) !important;gap:8px;margin-top:14px;justify-content:start;}
+  .free-grid{grid-template-columns:1fr 1fr !important;gap:6px;margin-top:18px;}
   .free-desc{display:block;font-size:.78rem;line-height:1.55;margin-bottom:12px;}
-  .free-card{padding:10px 12px;gap:8px;border-radius:10px;width:auto;display:inline-flex;}
+  .free-card{padding:6px 8px;gap:6px;border-radius:9px;}
   .free-logo{width:22px;height:22px;border-radius:6px;flex-shrink:0;}
   .free-logo img{padding:3px;}
   .free-name{font-size:.7rem;}
