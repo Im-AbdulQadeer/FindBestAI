@@ -216,7 +216,7 @@
 (function(){
   /* Categories */
   renderCats('homeCats', cat => {
-    window.location = '/tools/?cat=' + encodeURIComponent(cat.name);
+    if(cat.name==='AI Assistants'){window.location='/category/ai-assistant/';}else{window.location='/tools/?cat='+encodeURIComponent(cat.name);}
   });
 
   /* Featured tools (first 4, skipping Copilot at index 3, first one featured) */
