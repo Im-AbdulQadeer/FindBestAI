@@ -796,24 +796,29 @@
     font-size:.82rem;padding:10px 12px 10px 38px;width:100%;
   }
   .cat-search-wrap .ico{left:12px;width:15px;height:15px;}
-  /* row2: Pricing left half, Results right half — equal split */
-  .cat-filter-row2{
-    display:grid;grid-template-columns:1fr 1fr;gap:7px;align-items:center;
-  }
-  .custom-dd{width:100%;}
-  .custom-dd-btn{
-    min-width:auto;width:100%;justify-content:space-between;
-    padding:9px 11px;font-size:.78rem;
-  }
-  /* make the dropdown arrow clearly visible */
-  .custom-dd-btn .dd-arr{font-size:.82rem;color:var(--text2);}
-  .custom-dd.open .custom-dd-btn .dd-arr{color:var(--accent);}
-  /* Results box: same height/padding as pricing, full width of its cell */
-  .filter-count-wrap{display:flex;width:100%;}
-  .filter-count{
-    padding:9px 11px;font-size:.76rem;white-space:nowrap;
-    width:100%;justify-content:center;text-align:center;box-sizing:border-box;
-  }
+   /* row2: Pricing left half, Results right half — equal split, full width */
+   .cat-filter-row2{
+     display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:stretch;
+     width:100%;margin:0;
+   }
+   .custom-dd{width:100%;display:block;}
+   .custom-dd-btn{
+     min-width:0;width:100%;justify-content:space-between;
+     padding:11px 12px;font-size:.82rem;height:42px;box-sizing:border-box;
+   }
+   /* make the dropdown arrow clearly visible */
+   .custom-dd-btn .dd-arr{
+     font-size:1.05rem;line-height:1;color:var(--text2);
+     margin-left:6px;flex-shrink:0;
+   }
+   .custom-dd.open .custom-dd-btn .dd-arr{color:var(--accent);}
+   /* Results box: same height/padding as pricing, full width of its cell */
+   .filter-count-wrap{display:flex;width:100%;}
+   .filter-count{
+     padding:11px 12px;font-size:.82rem;white-space:nowrap;height:42px;
+     width:100%;justify-content:center;align-items:center;text-align:center;
+     box-sizing:border-box;display:flex;gap:6px;
+   }
   /* hide sort pills on mobile — keep only search + pricing + count */
   .sort-pills{display:none;}
 
