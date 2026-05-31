@@ -7,1064 +7,107 @@
 <link rel="apple-touch-icon" sizes="512x512" href="/logo-512.png">
 <link rel="apple-touch-icon" sizes="192x192" href="/logo-192.png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
-<!-- SEO Meta Tags -->
-<title>Best AI Tools Directory 2026 — Find Free and Premium Artificial Intelligence Software</title>
-<meta name="description" content="Browse 500 plus AI tools across 20 categories. Discover the best free AI tools, premium alternatives, and expert reviews for writing, coding, image generation, video editing, research, and more. Updated monthly.">
-<meta name="keywords" content="best AI tools, free AI tools, AI tools directory, artificial intelligence software, AI image generators, AI writing tools, AI code assistants, ChatGPT alternatives, AI productivity tools 2026">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-<meta name="author" content="FindBestAI">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="Best AI Tools Directory 2026 — Find Free and Premium Artificial Intelligence Software">
-<meta property="og:description" content="Browse 500 plus AI tools across 20 categories. Expert-curated directory of the best free and premium AI tools for writing, coding, image generation, video editing, and more.">
+<meta name="description" content="Browse the ultimate database of the best AI tools. Filter by category, pricing, and features to find the exact free or premium artificial intelligence software.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta property="og:title" content="Best AI Tools Directory - Search & Find Free AI websites">
 <meta property="og:image" content="https://findbestai.app/logo-512.png">
-<meta property="og:image:width" content="512">
-<meta property="og:image:height" content="512">
 <meta property="og:url" content="https://findbestai.app/tools/">
-<meta property="og:site_name" content="Find Best AI">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Best AI Tools Directory 2026 — Find Free and Premium AI Software">
-<meta name="twitter:description" content="Browse 500 plus expert-curated AI tools across 20 categories. Find the best free and paid AI tools for any task.">
-<meta name="twitter:image" content="https://findbestai.app/logo-512.png">
-
 <link rel="canonical" href="https://findbestai.app/tools/">
-
-<!-- Schema.org Structured Data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  "name": "Best AI Tools Directory 2026",
-  "url": "https://findbestai.app/tools/",
-  "description": "Browse 500 plus AI tools across 20 categories including AI assistants, image generation, video editing, code assistants, writing tools, research, voice, music, and more.",
-  "mainEntity": {
-    "@type": "ItemList",
-    "name": "AI Tools Directory",
-    "numberOfItems": "500",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "ChatGPT", "url": "https://findbestai.app/tool/chatgpt/"},
-      {"@type": "ListItem", "position": 2, "name": "Claude", "url": "https://findbestai.app/tool/claude/"},
-      {"@type": "ListItem", "position": 3, "name": "Midjourney", "url": "https://findbestai.app/tool/midjourney/"},
-      {"@type": "ListItem", "position": 4, "name": "GitHub Copilot", "url": "https://findbestai.app/tool/github-copilot/"}
-    ]
-  },
-  "breadcrumb": {
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://findbestai.app/"},
-      {"@type": "ListItem", "position": 2, "name": "All AI Tools", "item": "https://findbestai.app/tools/"}
-    ]
-  }
-}
-</script>
-
+<title>Best AI Tools Directory - Search & Find Free AI websites</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://logo.clearbit.com">
 <link rel="preconnect" href="https://upload.wikimedia.org">
 <link rel="preconnect" href="https://img.logo.dev">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/css/main.css">
-
 <style>
-/* ══════════════════════════════════════════════════════
-   TOOLS PAGE — FULL REDESIGN
-══════════════════════════════════════════════════════ */
-
-.tp-wrap {
-  position: relative;
-  z-index: 1;
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 32px;
+/* ═══════════════════════════════════════════════
+   FIX 2 — Smaller category pills
+═══════════════════════════════════════════════ */
+#toolsCats.cats-wrap { gap: 8px; }
+#toolsCats .cat-pill {
+  padding: 5px 12px !important;
+  font-size: 0.76rem !important;
+  gap: 5px !important;
 }
-@media (max-width: 768px) { .tp-wrap { padding: 0 16px; } }
-
-/* ══ HERO / CATEGORIES SECTION ══ */
-.tp-cats-section {
-  padding-top: 72px;
-  padding-bottom: 52px;
+#toolsCats .cat-cnt {
+  font-size: 0.6rem !important;
+  padding: 1px 5px !important;
 }
 
-.tp-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--accent);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  padding: 6px 14px;
-  background: rgba(79,163,255,0.08);
-  border: 1px solid rgba(79,163,255,0.2);
-  border-radius: 100px;
-}
-
-.tp-h1 {
-  font-size: clamp(2.4rem, 5vw, 3.8rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  margin-bottom: 14px;
-  line-height: 1.08;
-}
-.tp-h1 em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.tp-lead {
-  color: var(--text2);
-  font-size: 1.05rem;
-  width: 100%;
-  max-width: none;
-  margin-bottom: 44px;
-  line-height: 1.75;
-}
-
-/* Category Pills */
-.tp-pills-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.tp-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 18px 11px 14px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 100px;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  text-decoration: none;
-  color: var(--text);
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
-  font-family: 'Outfit', sans-serif;
-}
-.tp-pill:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(79,163,255,0.06);
-  box-shadow: 0 4px 20px var(--glow), 0 0 0 1px rgba(79,163,255,0.12);
-  transform: translateY(-2px);
-}
-.tp-pill .pill-emoji { font-size: 1.05rem; }
-.tp-pill .pill-count {
-  font-size: 0.68rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text3);
-  background: var(--surface3);
-  padding: 2px 8px;
-  border-radius: 100px;
-  transition: all 0.22s;
-  font-weight: 500;
-}
-.tp-pill:hover .pill-count { color: var(--accent); background: rgba(79,163,255,0.12); }
-.tp-pill .pill-arrow { font-size: 0.85rem; color: var(--text3); transition: all 0.22s; margin-left: 2px; }
-.tp-pill:hover .pill-arrow { color: var(--accent); transform: translateX(3px); }
-
-/* ══ SEARCH SECTION — HOMEPAGE STYLE ══ */
-.tp-search-section {
-  padding-top: 52px;
-  padding-bottom: 40px;
-  border-top: 1px solid var(--border);
-}
-
-.tp-h2 {
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  margin-bottom: 8px;
-  line-height: 1.1;
-}
-.tp-h2 em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--accent2), var(--accent3));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.tp-search-sub {
-  color: var(--text2);
-  font-size: 0.92rem;
-  margin-bottom: 28px;
-  line-height: 1.65;
-}
-
-/* Homepage-Style Search Bar */
-.tp-searchbar-wrap {
-  position: relative;
-  margin-bottom: 16px;
-  width: 100%;
-}
-
-.homepage-search {
-  display: flex;
-  align-items: center;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 100px;
-  padding: 6px 8px 6px 22px;
-  gap: 10px;
-  transition: all 0.25s;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
-}
-.homepage-search:focus-within {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(79,163,255,0.12), 0 8px 32px rgba(79,163,255,0.14);
-}
-.homepage-search .hs-icon {
-  font-size: 1rem;
-  color: var(--text3);
-  flex-shrink: 0;
-}
-.homepage-search input {
-  flex: 1;
-  background: none;
-  border: none;
-  outline: none;
-  color: var(--text);
-  font-size: 1rem;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 500;
-  padding: 10px 0;
-}
-.homepage-search input::placeholder { color: var(--text3); }
-.homepage-search .hs-clear {
-  background: none;
-  border: none;
-  color: var(--text3);
-  font-size: 1rem;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  width: 32px;
-  height: 32px;
-}
-.homepage-search .hs-clear:hover { background: var(--surface3); color: var(--text); }
-.homepage-search .hs-clear.show { display: flex; }
-.homepage-search .hs-btn {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff;
-  border: none;
-  border-radius: 100px;
-  padding: 11px 32px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  font-family: 'Outfit', sans-serif;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.homepage-search .hs-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(79,163,255,0.3);
-}
-
-/* Search + Filter combined row */
-.tp-search-filter-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: nowrap;
-  width: 100%;
-  margin-bottom: 0;
-}
-.tp-searchbar-wrap {
-  flex: 1;
-  min-width: 0;
-  margin-bottom: 0;
-}
-
-/* Filter Row — inline with search, right-aligned */
-.tp-filter-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  flex-wrap: nowrap;
-}
-
-/* Custom dropdown wrapper */
-.tp-select-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-
-/* Custom styled select with icon inside */
-.tp-select-icon {
-  position: absolute;
-  left: 14px;
-  pointer-events: none;
-  font-size: 0.9rem;
-  z-index: 2;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Custom dropdown container for enhanced dropdown */
-.tp-custom-dropdown {
-  position: relative;
-  display: inline-block;
-}
-.tp-dropdown-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 0 14px;
-  height: 52px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: 0.88rem;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  cursor: pointer;
-  outline: none;
-  white-space: nowrap;
-  min-width: 160px;
-  justify-content: space-between;
-  transition: all 0.2s;
-}
-.tp-dropdown-btn:hover,
-.tp-dropdown-btn.open {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(79,163,255,0.12);
-}
-.tp-dropdown-btn .dd-icon { font-size: 0.92rem; }
-.tp-dropdown-btn .dd-label { flex: 1; text-align: left; }
-.tp-dropdown-btn .dd-caret {
-  font-size: 0.65rem;
-  color: var(--text3);
-  transition: transform 0.2s;
-}
-.tp-dropdown-btn.open .dd-caret { transform: rotate(180deg); }
-
-.tp-dropdown-menu {
-  display: none;
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  background: var(--surface2);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  z-index: 100;
-  min-width: 100%;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
-  animation: ddFadeIn 0.15s ease;
-}
-.tp-dropdown-menu.open { display: block; }
-@keyframes ddFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.tp-dropdown-option {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 16px;
-  font-size: 0.88rem;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  color: var(--text);
-  cursor: pointer;
-  transition: background 0.15s;
-  white-space: nowrap;
-}
-.tp-dropdown-option:hover { background: rgba(79,163,255,0.08); }
-.tp-dropdown-option.selected {
-  background: rgba(79,163,255,0.1);
-  color: var(--accent);
-}
-.tp-dropdown-option .opt-icon { font-size: 0.95rem; }
-
-/* Hidden real select for accessibility fallback */
-.tp-select {
-  padding: 0 46px 0 40px;
-  height: 52px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: 0.88rem;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238899bb' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  min-width: 160px;
-  transition: all 0.2s;
-}
-.tp-select:hover, .tp-select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(79,163,255,0.12);
-}
-.tp-select option { background: var(--surface2); color: var(--text); padding: 8px; }
-
-/* Results box — hidden by default, shown only when searching */
-.tp-results-box {
-  display: none;
-  align-items: center;
-  gap: 6px;
-  padding: 0 16px;
-  height: 52px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  white-space: nowrap;
-}
-.tp-results-box.visible {
-  display: inline-flex;
-}
-.rc-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--accent);
-  min-width: 20px;
-  text-align: center;
-}
-.rc-label {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text3);
-  font-family: 'JetBrains Mono', monospace;
-}
-
-@media (max-width: 768px) {
-  .tp-search-filter-row { flex-wrap: wrap; }
-  .tp-filter-row { flex-wrap: wrap; width: 100%; }
-  .tp-dropdown-btn { min-width: 140px; }
-}
-
-/* ══ NETFLIX LAYOUT ══ */
-.tp-netflix {
-  position: relative;
-  z-index: 1;
-  padding-bottom: 0;
-}
-
-.nf-row {
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 36px 32px 28px;
-}
-@media (max-width: 768px) { .nf-row { padding: 28px 16px 20px; } }
-
-.nf-row-divider {
-  height: 1px;
-  background: var(--border);
-  max-width: 1380px;
-  margin: 0 auto;
-  opacity: 0.5;
-}
-
-/* Row Header with arrows */
-.nf-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  gap: 16px;
-}
-@media (max-width: 600px) {
-  .nf-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-}
-
-.nf-header-left { display: flex; align-items: center; gap: 12px; }
-
-.nf-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.nf-title-emoji { font-size: 1.5rem; }
-.nf-title-text { font-size: 1.2rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
-.nf-title-count {
-  font-size: 0.68rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text3);
-  background: var(--surface3);
-  padding: 3px 9px;
-  border-radius: 100px;
-  font-weight: 500;
-}
-
-.nf-header-right { display: flex; align-items: center; gap: 8px; }
-
-/* Scroll Arrow Buttons — bigger size */
+/* ═══════════════════════════════════════════════
+   FIX 3 — Circle 44px (restored), arrow glyph bigger
+   Note: this file's page doesn't have nf-arrow-btn,
+   but the rule is here for the shared CSS context
+═══════════════════════════════════════════════ */
 .nf-arrow-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  color: var(--text);
-  font-size: 1.8rem;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  flex-shrink: 0;
-  font-weight: 400;
+  width: 44px !important;
+  height: 44px !important;
+  font-size: 1.75rem !important;
+}
+
+/* ═══════════════════════════════════════════════
+   FIX 4 — Dropdown above cards + transparent arrow btns
+═══════════════════════════════════════════════ */
+/* Filter row: high stacking context */
+.tools-filter-row {
+  position: relative;
+  z-index: 50;
+}
+/* Pricing select: sits on top of everything */
+#toolsPricing {
+  position: relative;
+  z-index: 60;
+}
+/* Card grid: lower stacking context so dropdown floats over it */
+#toolsPageGrid {
+  position: relative;
+  z-index: 1;
+}
+/* Cards must NOT create new isolating stacking contexts at rest
+   (isolation:isolate + transform creates a new compositing layer
+   that traps child z-index — we remove it here) */
+#toolsPageGrid .card {
+  isolation: auto !important;
+}
+/* Keep hover effect but without a new stacking context */
+#toolsPageGrid .card:hover {
+  transform: translateY(-6px) !important;
+  z-index: 2;
+}
+/* Pseudo-elements stay behind */
+#toolsPageGrid .card::before,
+#toolsPageGrid .card::after {
+  z-index: -1 !important;
+}
+/* Arrow buttons: transparent background */
+.nf-arrow-btn {
+  background: transparent !important;
+  border-color: rgba(255,255,255,0.12) !important;
 }
 .nf-arrow-btn:hover {
-  background: rgba(79,163,255,0.1);
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: scale(1.08);
-  box-shadow: 0 0 14px rgba(79,163,255,0.2);
+  background: rgba(79,163,255,0.1) !important;
+  border-color: var(--accent) !important;
 }
 .nf-arrow-btn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
+  background: transparent !important;
+  border-color: transparent !important;
+  opacity: 0.25 !important;
 }
 
-.nf-view-all-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--accent);
-  padding: 9px 16px;
-  border: 1.5px solid rgba(79,163,255,0.25);
-  border-radius: 10px;
-  text-decoration: none;
-  transition: all 0.2s;
-  white-space: nowrap;
-  font-family: 'Outfit', sans-serif;
-  background: rgba(79,163,255,0.04);
-}
-.nf-view-all-btn:hover {
-  background: rgba(79,163,255,0.12);
-  border-color: var(--accent);
-  box-shadow: 0 0 16px var(--glow);
-  transform: translateY(-1px);
-}
-.nf-view-all-btn .btn-arrow { transition: transform 0.2s; }
-.nf-view-all-btn:hover .btn-arrow { transform: translateX(3px); }
-
-/* Scrollable card track */
-.nf-track-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-
-.nf-grid {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  padding-bottom: 4px;
-}
-.nf-grid::-webkit-scrollbar { display: none; }
-
-/* Each card has fixed width */
-.nf-card {
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 18px;
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  animation: nfCardIn 0.35s ease both;
-  text-decoration: none;
-  color: inherit;
-  flex: 0 0 270px;
-  min-width: 270px;
-}
-@media (max-width: 640px) { .nf-card { flex: 0 0 230px; min-width: 230px; } }
-
-.nf-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-4px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(79,163,255,0.12), 0 0 28px rgba(79,163,255,0.1);
-}
-
-@keyframes nfCardIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Top row: logo left + pricing badge top-right */
-.nf-card-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 16px;
-  position: relative;
-  z-index: 1;
-}
-
-/* Logo — transparent bg, clean */
-.nf-card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 1.6rem;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-}
-.nf-card-icon img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 10px;
-  background: transparent;
-}
-
-/* Pricing badge top-right */
-.nf-card-badge-wrap {
-  display: flex;
-  align-items: center;
-}
-
-.nf-card-info { 
-  margin-bottom: 8px;
-  position: relative;
-  z-index: 1;
-}
-.nf-card-name {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  margin-bottom: 5px;
-  line-height: 1.2;
-}
-.nf-card-cat {
-  font-size: 0.65rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 500;
-}
-.nf-card-badges { 
-  display: flex; 
-  gap: 4px; 
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 1;
-}
-
-.nf-card-desc {
-  font-size: 0.82rem;
-  color: var(--text2);
-  line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-  margin-bottom: 14px;
-  flex: 1;
-}
-
-.nf-card-rating {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  position: relative;
-  z-index: 1;
-  margin-bottom: 16px;
-}
-.nf-stars { color: var(--gold); font-size: 0.78rem; letter-spacing: 1.5px; }
-.nf-rating-val {
-  font-size: 0.78rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text2);
-  font-weight: 600;
-}
-.nf-reviews { font-size: 0.72rem; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
-
-/* Full-width View Details button at bottom — homepage style */
-.nf-card-footer {
-  margin-top: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.nf-pricing-tag {
-  font-size: 0.66rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 5px 12px;
-  border-radius: 7px;
-}
-.nf-pricing-tag.free     { color: var(--green); background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.25); }
-.nf-pricing-tag.freemium { color: var(--gold);  background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.25); }
-.nf-pricing-tag.paid     { color: var(--text3); background: var(--surface3); border: 1px solid var(--border); }
-
-/* View Details button — full width, homepage style */
-.nf-view-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  color: var(--text);
-  text-decoration: none;
-  padding: 10px 16px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  background: transparent;
-  transition: all 0.2s;
-  font-family: 'Outfit', sans-serif;
-  width: 100%;
-  box-sizing: border-box;
-}
-.nf-view-link:hover {
-  background: rgba(79,163,255,0.08);
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.nf-card:hover .nf-view-link {
-  border-color: rgba(79,163,255,0.4);
-}
-
-/* ══ FLAT GRID (search mode) — uses nf-card style in a proper grid ══ */
-.tp-flat-section {
-  position: relative;
-  z-index: 1;
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 32px 80px;
-}
-@media (max-width: 768px) { .tp-flat-section { padding: 0 16px 60px; } }
-
-/* Grid wrapper for search results using nf-cards */
-#flatGridEl {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 16px;
-}
-#flatGridEl .nf-card {
-  flex: unset !important;
-  min-width: unset !important;
-  width: 100%;
-}
-
-.tp-search-banner {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 13px 18px;
-  background: rgba(79,163,255,0.06);
-  border: 1px solid rgba(79,163,255,0.18);
-  border-radius: 12px;
-  margin-bottom: 24px;
-  font-size: 0.85rem;
-  color: var(--accent);
-  font-weight: 600;
-}
-.tp-search-banner .sb-label { color: var(--text2); font-weight: 500; }
-.tp-search-banner .sb-term {
-  background: rgba(79,163,255,0.12);
-  border: 1px solid rgba(79,163,255,0.25);
-  padding: 2px 10px;
-  border-radius: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-}
-.tp-clear-all {
-  margin-left: auto;
-  font-size: 0.78rem;
-  color: var(--text3);
-  cursor: pointer;
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-.tp-clear-all:hover { color: var(--text); border-color: var(--text3); }
-
-.tp-no-results {
-  text-align: center;
-  padding: 80px 20px;
-}
-.tp-no-results .nr-emoji { font-size: 3.5rem; margin-bottom: 18px; }
-.tp-no-results .nr-title { font-size: 1.15rem; font-weight: 800; color: var(--text2); margin-bottom: 8px; letter-spacing: -0.02em; }
-.tp-no-results .nr-sub { font-size: 0.88rem; color: var(--text3); }
-
-/* ══ BEST TOOLS TABLE ══ */
-.tp-best-table-section {
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 32px 80px;
-}
-@media (max-width: 768px) { .tp-best-table-section { padding: 0 16px 60px; } }
-
-.tp-best-table-section .section-header {
-  margin-bottom: 32px;
-}
-.tp-best-table-section .section-header .tp-badge { margin-bottom: 16px; }
-.tp-best-table-header-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 10px;
-}
-.tp-best-table-header-row .section-title {
-  margin-bottom: 0;
-}
-.tp-compare-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  font-family: 'Outfit', sans-serif;
-  text-decoration: none;
-  cursor: pointer;
-  transition: all 0.22s;
-  white-space: nowrap;
-  flex-shrink: 0;
-  margin-top: 4px;
-}
-.tp-compare-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(79,163,255,0.3);
-}
-.tp-compare-btn .btn-arrow { transition: transform 0.2s; }
-.tp-compare-btn:hover .btn-arrow { transform: translateX(3px); }
-.section-title {
-  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  margin-bottom: 10px;
-  line-height: 1.1;
-}
-.section-title em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.section-desc {
-  color: var(--text2);
-  font-size: 0.95rem;
-  line-height: 1.7;
-  max-width: none;
-  width: 100%;
-}
-
-.best-table-wrap {
-  overflow-x: auto;
-  border-radius: 16px;
-  border: 1.5px solid var(--border);
-  box-shadow: 0 4px 32px rgba(0,0,0,0.2);
-}
-
-.best-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Outfit', sans-serif;
-  min-width: 640px;
-}
-
-.best-table thead tr {
-  background: var(--surface2);
-  border-bottom: 1.5px solid var(--border);
-}
-
-.best-table thead th {
-  padding: 14px 18px;
-  text-align: left;
-  font-size: 0.7rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 600;
-  color: var(--text3);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  white-space: nowrap;
-}
-.best-table thead th:first-child { border-radius: 0; }
-.best-table thead th.th-center { text-align: center; }
-
-.best-table tbody tr {
-  border-bottom: 1px solid var(--border);
-  transition: background 0.18s;
-}
-.best-table tbody tr:last-child { border-bottom: none; }
-.best-table tbody tr:hover { background: rgba(79,163,255,0.04); }
-
-.best-table td {
-  padding: 14px 18px;
-  font-size: 0.88rem;
-  color: var(--text2);
-  vertical-align: middle;
-}
-
-.bt-cat-col {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.bt-cat-emoji { font-size: 1.1rem; }
-.bt-cat-name {
-  font-weight: 700;
-  color: var(--text);
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.bt-tool-col {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.bt-tool-logo {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: 1px solid var(--border);
-  flex-shrink: 0;
-  padding: 2px;
-}
-.bt-tool-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.bt-tool-name {
-  font-weight: 700;
-  color: var(--text);
-  text-decoration: none;
-  font-size: 0.88rem;
-  transition: color 0.18s;
-}
-.bt-tool-name:hover { color: var(--accent); }
-
-.bt-pricing {
-  display: inline-block;
-  font-size: 0.65rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  text-transform: uppercase;
-  padding: 3px 9px;
-  border-radius: 100px;
-  white-space: nowrap;
-}
-.bt-pricing.free     { color: var(--green); background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
-.bt-pricing.freemium { color: var(--gold);  background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); }
-.bt-pricing.paid     { color: var(--text3); background: var(--surface3); border: 1px solid var(--border); }
-
-.bt-stars { color: var(--gold); font-size: 0.7rem; letter-spacing: 2px; }
-
-.bt-rating-val {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-left: 4px;
-}
-
-.bt-view-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--accent);
-  text-decoration: none;
-  padding: 5px 12px;
-  border: 1px solid rgba(79,163,255,0.2);
-  border-radius: 8px;
-  background: rgba(79,163,255,0.05);
-  transition: all 0.18s;
-  font-family: 'Outfit', sans-serif;
-}
-.bt-view-btn:hover {
-  background: rgba(79,163,255,0.14);
-  border-color: var(--accent);
-}
-
-/* ══ DIVIDER ══ */
-.section-divider {
-  height: 1px;
-  background: var(--border);
-  max-width: 1380px;
-  margin: 0 auto 60px;
-  opacity: 0.5;
-}
-
+/* ═══════════════════════════════════════════════
+   FIX 5 — Tighten gap between search bar and first category
+═══════════════════════════════════════════════ */
+#toolsCats { margin-bottom: 14px; }
+.tools-filter-row { margin-bottom: 12px !important; }
+#toolsPageGrid { margin-top: 0; }
 </style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"CollectionPage","name":"All AI Tools","url":"https://findbestai.app/tools/","description":"Browse 500+ AI tools across 20 categories."}
+</script>
 </head>
 <body>
-
 <div class="bg-grid"></div>
 <div class="bg-orb orb-a"></div>
 <div class="bg-orb orb-b"></div>
@@ -1073,203 +116,59 @@
 <nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
 <div class="mobile-menu" id="mobileMenu" role="menu"></div>
 
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 1 — ALL AI CATEGORIES                  ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div class="tp-wrap tp-cats-section">
-
-  <span class="tp-badge">// AI TOOLS DIRECTORY 2026</span>
-
-  <h1 class="tp-h1">Discover the <em>Best AI Tools</em></h1>
-
-  <p class="tp-lead">
-    Explore over 500 artificial intelligence tools across 20 curated categories. From AI assistants and image generators to code assistants and research tools, find the perfect AI software for every creative, business, and technical workflow. Updated monthly with expert reviews and ratings.
-  </p>
-
-  <div class="tp-pills-grid" id="catPillsContainer" role="list" aria-label="Browse AI tool categories"></div>
-
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-badge">// AI TOOLS DIRECTORY</div>
+  <h1 style="font-size:clamp(2rem,4vw,3.2rem);font-weight:900;letter-spacing:-0.04em;color:var(--text);margin-bottom:12px">All <em style="font-style:normal;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">AI Tools</em></h1>
+  <p style="color:var(--text2);font-size:0.95rem;max-width:540px">Browse 500+ AI tools across 20 categories. Filter by category, pricing, and more.</p>
 </div>
 
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 2 — SEARCH & FILTERS                   ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div class="tp-wrap tp-search-section">
-
-  <h2 class="tp-h2">Search <em>All AI Tools</em></h2>
-  <p class="tp-search-sub">Find any AI tool by name, category, or feature. Filter by pricing model and sort by ranking or alphabetically.</p>
-
-  <!-- Search + Filters in one row -->
-  <div class="tp-search-filter-row">
-    <!-- Homepage-Style Search Bar -->
-    <div class="tp-searchbar-wrap">
-      <div class="homepage-search">
-        <span class="hs-icon">🔍</span>
-        <input
-          type="text"
-          id="toolsSearch"
-          placeholder="Search ChatGPT, Midjourney, Runway, Notion AI..."
-          oninput="handleFilter()"
-          autocomplete="off"
-          spellcheck="false"
-          aria-label="Search AI tools by name, category or description"
-        >
-        <button class="hs-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">✕</button>
-        <button class="hs-btn" onclick="handleFilter()">Search</button>
-      </div>
-    </div>
-
-    <!-- Filter Row — inline right of search -->
-    <div class="tp-filter-row">
-      <!-- Custom Pricing Dropdown -->
-      <div class="tp-custom-dropdown" id="pricingDropdown">
-        <button class="tp-dropdown-btn" id="pricingBtn" onclick="toggleDropdown('pricingDropdown')" aria-label="Filter by pricing model">
-          <span class="dd-icon">💰</span>
-          <span class="dd-label" id="pricingLabel">All Pricing</span>
-          <span class="dd-caret">▾</span>
-        </button>
-        <div class="tp-dropdown-menu" id="pricingMenu">
-          <div class="tp-dropdown-option selected" data-value="" onclick="selectDropdown('pricingDropdown', '', '💰 All Pricing', '💰')">
-            <span class="opt-icon">💰</span> All Pricing
-          </div>
-          <div class="tp-dropdown-option" data-value="free" onclick="selectDropdown('pricingDropdown', 'free', '🆓 Free Only', '🆓')">
-            <span class="opt-icon">🆓</span> Free Only
-          </div>
-          <div class="tp-dropdown-option" data-value="freemium" onclick="selectDropdown('pricingDropdown', 'freemium', '⚡ Freemium', '⚡')">
-            <span class="opt-icon">⚡</span> Freemium
-          </div>
-          <div class="tp-dropdown-option" data-value="paid" onclick="selectDropdown('pricingDropdown', 'paid', '💎 Paid Only', '💎')">
-            <span class="opt-icon">💎</span> Paid Only
-          </div>
-        </div>
-        <!-- Hidden real select for form submission -->
-        <select id="toolsPricing" style="display:none" onchange="handleFilter()" aria-label="Filter by pricing model">
-          <option value="">All Pricing</option>
-          <option value="free">Free Only</option>
-          <option value="freemium">Freemium</option>
-          <option value="paid">Paid Only</option>
-        </select>
-      </div>
-
-      <!-- Sort Dropdown -->
-      <div class="tp-custom-dropdown" id="sortDropdown">
-        <button class="tp-dropdown-btn" id="sortBtn" onclick="toggleDropdown('sortDropdown')" aria-label="Sort AI tools">
-          <span class="dd-icon">📊</span>
-          <span class="dd-label" id="sortLabel">By Ranking</span>
-          <span class="dd-caret">▾</span>
-        </button>
-        <div class="tp-dropdown-menu" id="sortMenu">
-          <div class="tp-dropdown-option selected" data-value="rank" onclick="selectDropdown('sortDropdown', 'rank', '📊 By Ranking', '📊')">
-            <span class="opt-icon">📊</span> By Ranking
-          </div>
-          <div class="tp-dropdown-option" data-value="az" onclick="selectDropdown('sortDropdown', 'az', '🔤 A to Z', '🔤')">
-            <span class="opt-icon">🔤</span> A to Z
-          </div>
-        </div>
-        <select id="toolsSort" style="display:none" onchange="handleFilter()" aria-label="Sort AI tools">
-          <option value="rank">By Ranking</option>
-          <option value="az">A to Z</option>
-        </select>
-      </div>
-
-      <!-- Results count — only shown when filtering/searching -->
-      <div class="tp-results-box" id="resultsBox" aria-live="polite" aria-label="Number of AI tools found">
-        <span>📋</span>
-        <span class="rc-num" id="resultsNum">0</span>
-        <span class="rc-label">Tools</span>
-      </div>
-    </div>
-  </div>
-
+<!-- AD TOP -->
+<div style="padding:24px 32px 0;max-width:1380px;margin:0 auto">
 </div>
 
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 3a — NETFLIX ROWS (default view)       ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div id="netflixLayout" class="tp-netflix" aria-label="AI tools organized by category" role="main"></div>
-
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 3b — FLAT GRID (search / filter mode)  ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div id="flatSection" style="display:none" aria-label="Filtered AI tools search results">
-  <div class="tp-flat-section">
-    <div class="tp-search-banner" id="searchBanner" style="display:none">
-      <span class="sb-label">Showing results for</span>
-      <span class="sb-term" id="bannerQuery"></span>
-      <button class="tp-clear-all" onclick="clearAll()" aria-label="Clear all filters">Clear all</button>
-    </div>
-    <div class="tools-grid" id="flatGridEl"></div>
-    <div class="tp-no-results" id="noResultsEl" style="display:none">
-      <div class="nr-emoji">🤔</div>
-      <div class="nr-title">No AI tools found</div>
-      <div class="nr-sub">Try a different search term or remove some filters to see more results</div>
-    </div>
-  </div>
-</div>
-
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 4 — BEST TOOL PER CATEGORY TABLE       ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div class="section-divider"></div>
-
-<section class="tp-best-table-section" aria-labelledby="bestTableTitle">
-  <div class="section-header">
-    <span class="tp-badge">// EXPERT PICKS</span>
-    <div class="tp-best-table-header-row">
-      <h2 class="section-title" id="bestTableTitle">The <em>Top Rated AI Tool</em> in Every Category</h2>
-      <a href="/compare/" class="tp-compare-btn" aria-label="Go to Compare AI Tools page">
-        Compare Tools <span class="btn-arrow">→</span>
-      </a>
-    </div>
-    <p class="section-desc">Our experts tested hundreds of AI tools across every category. These are the highest rated picks based on performance, features, ease of use, and value, updated for 2026.</p>
-  </div>
-
-  <div class="best-table-wrap" role="region" aria-label="Best AI tools by category table">
-    <table class="best-table">
-      <thead>
-        <tr>
-          <th>Category</th>
-          <th>Best AI Tool</th>
-          <th class="th-center">Rating</th>
-          <th class="th-center">Pricing</th>
-          <th class="th-center">Action</th>
-        </tr>
-      </thead>
-      <tbody id="bestTableBody">
-        <!-- Filled by JS -->
-      </tbody>
-    </table>
+<!-- FILTERS -->
+<section class="section" style="padding-bottom:0">
+  <div class="cats-wrap" id="toolsCats" role="list" aria-label="Category filters" style="margin-bottom:14px"></div>
+  <div class="tools-filter-row" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:center;position:relative;z-index:50">
+    <input type="text" id="toolsSearch" class="form-input" style="max-width:280px;padding:10px 16px" placeholder="🔍 Search tools…" oninput="filterTools()">
+    <select id="toolsPricing" class="form-input" style="max-width:180px;padding:10px 16px;position:relative;z-index:60" onchange="filterTools()">
+      <option value="">All Pricing</option>
+      <option value="free">Free</option>
+      <option value="freemium">Freemium</option>
+      <option value="paid">Paid</option>
+    </select>
+    <div style="margin-left:auto;font-size:0.78rem;font-family:'JetBrains Mono',monospace;color:var(--text3)" id="toolsCount"></div>
   </div>
 </section>
 
-<div class="section-divider"></div>
+<!-- TOOLS GRID -->
+<section class="section" style="padding-top:4px;position:relative;z-index:1" aria-label="All AI tools">
+  <div class="tools-grid" id="toolsPageGrid"></div>
+  <div id="noToolsMsg" style="display:none;text-align:center;padding:60px 20px;color:var(--text3)">
+    <div style="font-size:2rem;margin-bottom:12px">🤔</div>
+    <div style="font-size:1rem;font-weight:600;color:var(--text2)">No tools found</div>
+    <div style="font-size:0.85rem;margin-top:6px">Try a different search or category</div>
+  </div>
+</section>
 
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 5 — NEWSLETTER (homepage style)        ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div class="newsletter-block" style="padding-bottom: 100px;">
+<!-- NEWSLETTER -->
+<div class="newsletter-block reveal">
   <div class="newsletter-inner">
     <div class="newsletter-glow"></div>
     <h2>Stay Ahead of the AI Curve</h2>
     <p>Weekly digest of the best new AI tools, free alternatives, and expert reviews — straight to your inbox.</p>
     <div class="nl-form">
-      <input type="email" id="nlEmail" placeholder="your@email.com" aria-label="Email address for newsletter"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();subscribeNewsletter(this.nextElementSibling);}">
+      <input type="email" placeholder="your@email.com" aria-label="Email address" onkeydown="if(event.key===&apos;Enter&apos;){event.preventDefault();subscribeNewsletter(this);}">
       <button class="btn-primary" onclick="subscribeNewsletter(this)">Subscribe</button>
     </div>
   </div>
 </div>
 
-
 <footer id="site-footer" role="contentinfo"></footer>
 
 <!-- MODAL -->
-<div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-label="Tool details">
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true">
   <div class="modal-ring">
     <div class="modal-box" id="modalBox">
       <button class="modal-close" aria-label="Close modal">✕</button>
@@ -1283,530 +182,70 @@
   <span id="toastMsg"></span>
 </div>
 
-<!-- DATA + SHARED APP LOGIC -->
 <script src="/assets/js/data.js"></script>
 <script src="/assets/js/app.js"></script>
 <script src="/assets/js/nav.js"></script>
-
-<!-- ══════════════════════════════════════════════════
-     TOOLS PAGE — REDESIGNED LOGIC
-══════════════════════════════════════════════════ -->
 <script>
+/* ── TOOLS PAGE ── */
+let activeCat = '';
+let allToolsRendered = false;
 
-/* ── BADGE HELPER ── */
-function nfBadge(t) {
-  let b = '';
-  if (t.badge === 'best')    b += '<span class="badge b-best">✦ BEST</span>';
-  else if (t.badge === 'new') b += '<span class="badge b-new">NEW</span>';
-  else if (t.badge === 'hot') b += '<span class="badge b-hot">🌶 HOT</span>';
-  else if (t.badge === 'popular') b += '<span class="badge b-popular">🔥</span>';
-  return b;
+function renderAllTools(){
+  const grid = document.getElementById('toolsPageGrid');
+  if(allToolsRendered) return;
+  TOOLS.forEach(t => grid.appendChild(makeCard(t)));
+  allToolsRendered = true;
+  updateToolsCount();
 }
 
-/* ── LOGO with transparent background (no colored bg) ── */
-function nfLogo(t, size) {
-  const sz = size || 50;
-  if (t.logo) {
-    const sources = [
-      `https://logo.clearbit.com/${t.logo}?size=${sz * 2}`,
-      `https://img.logo.dev/${t.logo}?token=pk_X7XFM29MQK6aCpNKbdKkRA&size=${sz * 2}`,
-      `https://www.google.com/s2/favicons?domain=${t.logo}&sz=64`
-    ];
-    return `<img 
-      src="${sources[0]}" 
-      alt="${t.name} logo"
-      loading="lazy"
-      onerror="this._try=(this._try||0)+1;if(this._try<${sources.length-1})this.src='${sources[1]}';else{this.style.display='none';this.parentElement.innerHTML='<span style=\\'font-size:1.4rem\\'>${t.emoji||'🤖'}</span>';}"
-      style="background:transparent;mix-blend-mode:normal;"
-    >`;
-  }
-  return `<span style="font-size:1.4rem">${t.emoji || '🤖'}</span>`;
-}
-
-/* ── BUILD A NETFLIX CARD — homepage card style ── */
-function makeNfCard(t, delay) {
-  const div = document.createElement('a');
-  div.className = 'nf-card';
-  div.href = toolHref(t);
-  div.setAttribute('role', 'article');
-  div.setAttribute('aria-label', `${t.name} — ${t.cat} AI tool, rated ${t.rating} out of 5`);
-  if (delay) div.style.animationDelay = delay + 'ms';
-
-  const fullStars = Math.floor(t.rating);
-  const hasHalf = (t.rating - fullStars) >= 0.5;
-  let starsHtml = '★'.repeat(fullStars);
-  if (hasHalf) starsHtml += '½';
-  const pricingClass = t.pricing || 'paid';
-  const pricingLabel = t.pricing === 'free' ? 'FREE' : t.pricing === 'freemium' ? 'FREEMIUM' : 'PAID';
-
-  div.innerHTML = `
-    <div class="nf-card-top">
-      <div class="nf-card-icon">${nfLogo(t, 52)}</div>
-      <div class="nf-card-badge-wrap">
-        <span class="nf-pricing-tag ${pricingClass}">${pricingLabel}</span>
-      </div>
-    </div>
-    <div class="nf-card-info">
-      <div class="nf-card-name">${t.name}</div>
-      <div class="nf-card-cat">${t.cat}</div>
-    </div>
-    <div class="nf-card-badges">${nfBadge(t)}</div>
-    <div class="nf-card-desc">${t.desc}</div>
-    <div class="nf-card-rating">
-      <span class="nf-stars" aria-label="${t.rating} stars">${starsHtml}</span>
-      <span class="nf-rating-val">${t.rating}</span>
-      <span class="nf-reviews">· ${t.reviews} reviews</span>
-    </div>
-    <div class="nf-card-footer">
-      <span class="nf-view-link">View Details →</span>
-    </div>
-  `;
-
-  return div;
-}
-
-/* ── SMALL LOGO for table ── */
-function btLogo(t) {
-  if (t.logo) {
-    return `<img src="https://logo.clearbit.com/${t.logo}?size=56" alt="${t.name} logo" loading="lazy" style="background:transparent;" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\\'font-size:0.95rem\\'>${t.emoji||'🤖'}</span>';">`;
-  }
-  return `<span style="font-size:0.95rem">${t.emoji || '🤖'}</span>`;
-}
-
-/* ── CATEGORY SLUG ── */
-function catSlug(name) {
-  return name.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '-');
-}
-
-/* ── CATEGORY PAGE URLS ── */
-const CAT_URL_MAP = {
-  'AI Assistants': 'https://findbestai.app/category/ai-assistant/',
-  'Image Generation': '/category/image-generation/',
-  'Video Editing': '/category/video-editing/',
-  'Code Assistant': '/category/code-assistant/',
-  'Writing & Copy': '/category/writing-copy/',
-  'Research': '/category/research/',
-  'Voice & Speech': '/category/voice-speech/',
-  'Audio & Music': '/category/audio-music/',
-  'Graphic Design': '/category/graphic-design/',
-  'PDF & Docs': '/category/pdf-docs/',
-  'Notes & PKM': '/category/notes-pkm/',
-  'Data Analysis': '/category/data-analysis/',
-  'Chatbots': '/category/chatbots/',
-  'SEO & Marketing': '/category/seo-marketing/',
-  'Automation': '/category/automation/',
-  'Photo Editing': '/category/photo-editing/',
-  'Email & Outreach': '/category/email-outreach/',
-  'Video Avatars': '/category/video-avatars/',
-  'Productivity': '/category/productivity/',
-  '3D & AR': '/category/3d-ar/'
-};
-
-function getCatUrl(catName) {
-  return CAT_URL_MAP[catName] || `/category/${catSlug(catName)}/`;
-}
-
-/* ── RENDER CATEGORY PILLS — with links to category pages ── */
-function renderCatPills() {
-  const container = document.getElementById('catPillsContainer');
-  if (!container || typeof CATS === 'undefined') return;
-
-  CATS.forEach(cat => {
-    const pill = document.createElement('a');
-    pill.className = 'tp-pill';
-    pill.href = getCatUrl(cat.name);
-    pill.setAttribute('role', 'listitem');
-    pill.setAttribute('aria-label', `${cat.name} AI tools — ${cat.count} tools available`);
-    pill.innerHTML = `
-      <span class="pill-emoji">${cat.icon}</span>
-      <span class="pill-name">${cat.name}</span>
-      <span class="pill-count">${cat.count}</span>
-      <span class="pill-arrow">→</span>
-    `;
-    /* Click on pill scrolls to section, but link still works for SEO */
-    pill.addEventListener('click', (e) => {
-      e.preventDefault();
-      scrollToRow(cat.name);
-    });
-    container.appendChild(pill);
-  });
-}
-
-/* ── RENDER NETFLIX ROWS WITH SCROLL ARROWS ── */
-function renderNetflix() {
-  const layout = document.getElementById('netflixLayout');
-  if (!layout || typeof CATS === 'undefined' || typeof TOOLS === 'undefined') return;
-  layout.innerHTML = '';
-
-  CATS.forEach((cat, idx) => {
-    const catTools = TOOLS.filter(t => t.cat === cat.name);
-    if (!catTools.length) return;
-
-    const slug = catSlug(cat.name);
-    const catUrl = getCatUrl(cat.name);
-
-    const row = document.createElement('div');
-    row.className = 'nf-row';
-    row.id = 'nf-row-' + slug;
-
-    const gridId = `nf-grid-${idx}`;
-
-    row.innerHTML = `
-      <div class="nf-header">
-        <div class="nf-header-left">
-          <a class="nf-title" href="${catUrl}" aria-label="${cat.name} AI tools category page" style="text-decoration:none;color:inherit;">
-            <span class="nf-title-emoji">${cat.icon}</span>
-            <span class="nf-title-text">${cat.name}</span>
-          </a>
-          <span class="nf-title-count">${cat.count} tools</span>
-        </div>
-        <div class="nf-header-right">
-          <button class="nf-arrow-btn" id="arr-left-${idx}" onclick="scrollRow('${gridId}', -1)" aria-label="Scroll left in ${cat.name}" title="Scroll left">‹</button>
-          <button class="nf-arrow-btn" id="arr-right-${idx}" onclick="scrollRow('${gridId}', 1)" aria-label="Scroll right in ${cat.name}" title="Scroll right">›</button>
-          <a class="nf-view-all-btn" href="${catUrl}" aria-label="View all ${cat.name} tools on FindBestAI">
-            View All <span class="btn-arrow">→</span>
-          </a>
-        </div>
-      </div>
-      <div class="nf-track-wrapper">
-        <div class="nf-grid" id="${gridId}" onscroll="updateArrows(${idx}, '${gridId}')"></div>
-      </div>
-    `;
-
-    layout.appendChild(row);
-
-    if (idx < CATS.length - 1) {
-      const sep = document.createElement('div');
-      sep.className = 'nf-row-divider';
-      layout.appendChild(sep);
-    }
-
-    const grid = row.querySelector(`#${gridId}`);
-    catTools.forEach((t, i) => {
-      grid.appendChild(makeNfCard(t, i * 40));
-    });
-
-    /* Init arrow state */
-    setTimeout(() => updateArrows(idx, gridId), 100);
-  });
-}
-
-/* ── SCROLL ROW ── */
-function scrollRow(gridId, dir) {
-  const grid = document.getElementById(gridId);
-  if (!grid) return;
-  const cardW = 276; /* card 260 + gap 16 */
-  const scrollAmt = cardW * 3;
-  grid.scrollBy({ left: dir * scrollAmt, behavior: 'smooth' });
-}
-
-/* ── UPDATE ARROW STATES ── */
-function updateArrows(idx, gridId) {
-  const grid = document.getElementById(gridId);
-  const leftBtn  = document.getElementById(`arr-left-${idx}`);
-  const rightBtn = document.getElementById(`arr-right-${idx}`);
-  if (!grid || !leftBtn || !rightBtn) return;
-  leftBtn.disabled  = grid.scrollLeft <= 0;
-  rightBtn.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 4;
-}
-
-/* ── RENDER BEST TOOLS TABLE ── */
-function renderBestTable() {
-  const tbody = document.getElementById('bestTableBody');
-  if (!tbody || typeof CATS === 'undefined' || typeof TOOLS === 'undefined') return;
-  tbody.innerHTML = '';
-
-  CATS.forEach(cat => {
-    const catTools = TOOLS.filter(t => t.cat === cat.name);
-    if (!catTools.length) return;
-
-    /* Pick top-rated */
-    const best = catTools.reduce((a, b) => (b.rating > a.rating || (b.rating === a.rating && (b.badge === 'best' || b.reviews > a.reviews))) ? b : a, catTools[0]);
-
-    const fullStars = Math.floor(best.rating);
-    const starsHtml = '★'.repeat(fullStars) + (best.rating % 1 >= 0.5 ? '½' : '');
-    const pricingClass = best.pricing || 'paid';
-    const pricingLabel = best.pricing === 'free' ? 'Free' : best.pricing === 'freemium' ? 'Freemium' : 'Paid';
-    const catUrl = getCatUrl(cat.name);
-
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>
-        <div class="bt-cat-col">
-          <span class="bt-cat-emoji">${cat.icon}</span>
-          <a class="bt-cat-name" href="${catUrl}" style="text-decoration:none;color:inherit;" aria-label="View all ${cat.name} tools">${cat.name}</a>
-        </div>
-      </td>
-      <td>
-        <div class="bt-tool-col">
-          <div class="bt-tool-logo">${btLogo(best)}</div>
-          <a class="bt-tool-name" href="${toolHref(best)}" aria-label="View ${best.name} details">${best.name}</a>
-        </div>
-      </td>
-      <td style="text-align:center;">
-        <span class="bt-stars" aria-label="${best.rating} stars">${starsHtml}</span>
-        <span class="bt-rating-val">${best.rating}</span>
-      </td>
-      <td style="text-align:center;">
-        <span class="bt-pricing ${pricingClass}">${pricingLabel}</span>
-      </td>
-      <td style="text-align:center;">
-        <a class="bt-view-btn" href="${toolHref(best)}" aria-label="View ${best.name} details and alternatives">View →</a>
-      </td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-/* ── SCROLL TO CATEGORY ROW ── */
-function scrollToRow(catName) {
-  const slug = catSlug(catName);
-  const el = document.getElementById('nf-row-' + slug);
-  if (!el) return;
-  showNetflix();
-  setTimeout(() => {
-    const offset = 80;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: 'smooth' });
-    el.style.transition = 'outline 0.3s';
-    el.style.outline = '2px solid rgba(79,163,255,0.45)';
-    el.style.borderRadius = '12px';
-    setTimeout(() => { el.style.outline = ''; el.style.borderRadius = ''; }, 2200);
-  }, 80);
-}
-
-/* ── SHOW / HIDE MODES ── */
-function showNetflix() {
-  document.getElementById('netflixLayout').style.display = '';
-  document.getElementById('flatSection').style.display = 'none';
-}
-function showFlat() {
-  document.getElementById('netflixLayout').style.display = 'none';
-  document.getElementById('flatSection').style.display = '';
-}
-
-/* ── UPDATE RESULTS COUNT ── */
-function setCount(n) {
-  const el = document.getElementById('resultsNum');
-  if (el) el.textContent = n;
-}
-
-/* ── MAIN FILTER ── */
-function handleFilter() {
-  const q       = (document.getElementById('toolsSearch')?.value || '').toLowerCase().trim();
+function filterTools(){
+  const q = (document.getElementById('toolsSearch')?.value || '').toLowerCase().trim();
   const pricing = document.getElementById('toolsPricing')?.value || '';
-  const sort    = document.getElementById('toolsSort')?.value || 'rank';
-
-  const clearBtn = document.getElementById('searchClear');
-  if (clearBtn) clearBtn.classList.toggle('show', q.length > 0);
-
-  const isFiltered = q.length > 0 || pricing !== '' || sort !== 'rank';
-
-  // Show/hide results box
-  const resultsBox = document.getElementById('resultsBox');
-  if (resultsBox) {
-    if (isFiltered) {
-      resultsBox.classList.add('visible');
-    } else {
-      resultsBox.classList.remove('visible');
-    }
-  }
-
-  if (!isFiltered) {
-    showNetflix();
-    setCount(typeof TOOLS !== 'undefined' ? TOOLS.length : 0);
-    hideBanner();
-    return;
-  }
-
-  showFlat();
-
-  let matches = (typeof TOOLS !== 'undefined' ? TOOLS : []).filter(t => {
-    const matchQ = !q || (
-      t.name.toLowerCase().includes(q) ||
-      t.desc.toLowerCase().includes(q) ||
-      t.cat.toLowerCase().includes(q) ||
-      (t.tags || []).some(tag => tag.toLowerCase().includes(q))
-    );
+  const cards = document.querySelectorAll('#toolsPageGrid .card');
+  let visible = 0;
+  cards.forEach(card => {
+    const id = parseInt(card.querySelector('.card-btn')?.getAttribute('onclick')?.match(/\d+/)?.[0]);
+    const t = TOOLS.find(x=>x.id===id);
+    if(!t){ card.style.display=''; return; }
+    const matchCat = !activeCat || t.cat === activeCat;
+    const matchQ = !q || t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.cat.toLowerCase().includes(q);
     const matchPrice = !pricing || t.pricing === pricing;
-    return matchQ && matchPrice;
+    const show = matchCat && matchQ && matchPrice;
+    card.style.display = show ? '' : 'none';
+    if(show) visible++;
+  });
+  document.getElementById('noToolsMsg').style.display = visible === 0 ? 'block' : 'none';
+  updateToolsCount(visible);
+}
+
+function updateToolsCount(count){
+  const el = document.getElementById('toolsCount');
+  if(el) el.textContent = (count !== undefined ? count : TOOLS.length) + ' tools';
+}
+
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const urlCat = params.get('cat');
+  const urlPricing = params.get('pricing');
+  if(urlCat) activeCat = urlCat;
+
+  renderCats('toolsCats', cat => {
+    activeCat = activeCat === cat.name ? '' : cat.name;
+    filterTools();
   });
 
-  if (sort === 'az') {
-    matches = [...matches].sort((a, b) => a.name.localeCompare(b.name));
+  /* Pre-fill pricing filter from URL */
+  if(urlPricing){
+    const pricingSel = document.getElementById('toolsPricing');
+    if(pricingSel) pricingSel.value = urlPricing;
   }
 
-  renderFlatGrid(matches);
-  setCount(matches.length);
-  showBanner(q, pricing, sort);
-}
+  renderAllTools();
 
-/* ── RENDER FLAT GRID ── */
-function renderFlatGrid(tools) {
-  const container = document.getElementById('flatGridEl');
-  const noResults = document.getElementById('noResultsEl');
-  if (!container) return;
-  container.innerHTML = '';
+  if(activeCat || urlPricing) filterTools();
 
-  if (!tools.length) {
-    container.style.display = 'none';
-    if (noResults) noResults.style.display = '';
-    return;
-  }
-
-  container.style.display = '';
-  if (noResults) noResults.style.display = 'none';
-
-  // Use makeNfCard — same card design as the Netflix rows (homepage style)
-  tools.forEach((t, i) => {
-    const card = makeNfCard(t, i * 20);
-    // Override flex-shrink so it wraps in grid properly
-    card.style.flex = '';
-    card.style.minWidth = '';
-    container.appendChild(card);
-  });
-}
-
-/* ── BANNER ── */
-function showBanner(q, pricing, sort) {
-  const banner = document.getElementById('searchBanner');
-  const term   = document.getElementById('bannerQuery');
-  if (!banner || !term) return;
-  const parts = [];
-  if (q)       parts.push('"' + q + '"');
-  if (pricing) parts.push(pricing.charAt(0).toUpperCase() + pricing.slice(1));
-  if (sort === 'az') parts.push('A to Z');
-  if (parts.length) {
-    term.textContent = parts.join(' · ');
-    banner.style.display = '';
-  } else {
-    banner.style.display = 'none';
-  }
-}
-function hideBanner() {
-  const banner = document.getElementById('searchBanner');
-  if (banner) banner.style.display = 'none';
-}
-
-/* ── CLEAR ACTIONS ── */
-function clearSearch() {
-  const input = document.getElementById('toolsSearch');
-  if (input) input.value = '';
-  const clearBtn = document.getElementById('searchClear');
-  if (clearBtn) clearBtn.classList.remove('show');
-  handleFilter();
-}
-function clearAll() {
-  const input   = document.getElementById('toolsSearch');
-  const pricing = document.getElementById('toolsPricing');
-  const sort    = document.getElementById('toolsSort');
-  if (input)   input.value = '';
-  if (pricing) pricing.value = '';
-  if (sort)    sort.value = 'rank';
-  const clearBtn = document.getElementById('searchClear');
-  if (clearBtn) clearBtn.classList.remove('show');
-  handleFilter();
-}
-
-/* ── KEYBOARD ── */
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    const input = document.getElementById('toolsSearch');
-    if (input && document.activeElement === input) {
-      clearSearch();
-      input.blur();
-    }
-  }
-});
-
-/* ── NEWSLETTER SUBSCRIBE ── */
-function subscribeNewsletter(btn) {
-  const emailInput = document.getElementById('nlEmail');
-  const email = emailInput ? emailInput.value.trim() : '';
-  if (!email || !email.includes('@')) {
-    if (typeof showToast === 'function') showToast('❌', 'Please enter a valid email address');
-    return;
-  }
-  if (typeof subscribeNewsletter !== 'undefined' && typeof showToast === 'function') {
-    showToast('✅', 'You are subscribed! Welcome aboard.');
-    if (emailInput) emailInput.value = '';
-  }
-}
-
-/* ── CUSTOM DROPDOWN LOGIC ── */
-function toggleDropdown(id) {
-  const dd = document.getElementById(id);
-  if (!dd) return;
-  const btn  = dd.querySelector('.tp-dropdown-btn');
-  const menu = dd.querySelector('.tp-dropdown-menu');
-  const isOpen = menu.classList.contains('open');
-  // Close all dropdowns first
-  document.querySelectorAll('.tp-dropdown-menu').forEach(m => m.classList.remove('open'));
-  document.querySelectorAll('.tp-dropdown-btn').forEach(b => b.classList.remove('open'));
-  if (!isOpen) {
-    menu.classList.add('open');
-    btn.classList.add('open');
-  }
-}
-
-function selectDropdown(ddId, value, labelText, icon) {
-  const dd = document.getElementById(ddId);
-  if (!dd) return;
-  // Update label
-  const labelEl = dd.querySelector('.dd-label');
-  if (labelEl) labelEl.textContent = labelText;
-  const iconEl = dd.querySelector('.dd-icon');
-  if (iconEl) iconEl.textContent = icon;
-  // Update selected state in options
-  dd.querySelectorAll('.tp-dropdown-option').forEach(opt => {
-    opt.classList.toggle('selected', opt.dataset.value === value);
-  });
-  // Update hidden select
-  const select = dd.querySelector('select');
-  if (select) { select.value = value; }
-  // Close dropdown
-  dd.querySelector('.tp-dropdown-menu').classList.remove('open');
-  dd.querySelector('.tp-dropdown-btn').classList.remove('open');
-  // Trigger filter
-  handleFilter();
-}
-
-// Close dropdowns when clicking outside
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.tp-custom-dropdown')) {
-    document.querySelectorAll('.tp-dropdown-menu').forEach(m => m.classList.remove('open'));
-    document.querySelectorAll('.tp-dropdown-btn').forEach(b => b.classList.remove('open'));
-  }
-});
-
-/* ── INIT ── */
-document.addEventListener('DOMContentLoaded', () => {
-  renderCatPills();
-  renderNetflix();
-  renderBestTable();
-
-  if (typeof TOOLS !== 'undefined') setCount(TOOLS.length);
-
-  const params   = new URLSearchParams(window.location.search);
-  const urlCat   = params.get('cat');
-  const urlPrice = params.get('pricing');
-  const urlSort  = params.get('sort');
-
-  if (urlPrice) {
-    const sel = document.getElementById('toolsPricing');
-    if (sel) sel.value = urlPrice;
-  }
-  if (urlSort) {
-    const sel = document.getElementById('toolsSort');
-    if (sel) sel.value = urlSort;
-  }
-  if (urlPrice || urlSort) handleFilter();
-
-  if (urlCat) {
-    setTimeout(() => scrollToRow(urlCat), 500);
-  }
-});
+  initCommonUI();
+})();
 </script>
-
 </body>
 </html>
