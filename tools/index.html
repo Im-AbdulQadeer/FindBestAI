@@ -1159,22 +1159,22 @@
       <!-- Custom Pricing Dropdown -->
       <div class="tp-custom-dropdown" id="pricingDropdown">
         <button class="tp-dropdown-btn" id="pricingBtn" onclick="toggleDropdown('pricingDropdown')" aria-label="Filter by pricing model">
-          <span class="dd-icon">💰</span>
+          <span class="dd-icon"></span>
           <span class="dd-label" id="pricingLabel">All Pricing</span>
           <span class="dd-caret">▾</span>
         </button>
         <div class="tp-dropdown-menu" id="pricingMenu">
-          <div class="tp-dropdown-option selected" data-value="" onclick="selectDropdown('pricingDropdown', '', '💰 All Pricing', '💰')">
-            <span class="opt-icon">💰</span> All Pricing
+          <div class="tp-dropdown-option selected" data-value="" onclick="selectDropdown('pricingDropdown', '', 'All Pricing', '')">
+            All Pricing
           </div>
-          <div class="tp-dropdown-option" data-value="free" onclick="selectDropdown('pricingDropdown', 'free', '🆓 Free Only', '🆓')">
-            <span class="opt-icon">🆓</span> Free Only
+          <div class="tp-dropdown-option" data-value="free" onclick="selectDropdown('pricingDropdown', 'free', 'Free Only', '')">
+            Free Only
           </div>
-          <div class="tp-dropdown-option" data-value="freemium" onclick="selectDropdown('pricingDropdown', 'freemium', '⚡ Freemium', '⚡')">
-            <span class="opt-icon">⚡</span> Freemium
+          <div class="tp-dropdown-option" data-value="freemium" onclick="selectDropdown('pricingDropdown', 'freemium', 'Freemium', '')">
+            Freemium
           </div>
-          <div class="tp-dropdown-option" data-value="paid" onclick="selectDropdown('pricingDropdown', 'paid', '💎 Paid Only', '💎')">
-            <span class="opt-icon">💎</span> Paid Only
+          <div class="tp-dropdown-option" data-value="paid" onclick="selectDropdown('pricingDropdown', 'paid', 'Paid Only', '')">
+            Paid Only
           </div>
         </div>
         <!-- Hidden real select for form submission -->
@@ -1189,16 +1189,16 @@
       <!-- Sort Dropdown -->
       <div class="tp-custom-dropdown" id="sortDropdown">
         <button class="tp-dropdown-btn" id="sortBtn" onclick="toggleDropdown('sortDropdown')" aria-label="Sort AI tools">
-          <span class="dd-icon">📊</span>
+          <span class="dd-icon"></span>
           <span class="dd-label" id="sortLabel">By Ranking</span>
           <span class="dd-caret">▾</span>
         </button>
         <div class="tp-dropdown-menu" id="sortMenu">
-          <div class="tp-dropdown-option selected" data-value="rank" onclick="selectDropdown('sortDropdown', 'rank', '📊 By Ranking', '📊')">
-            <span class="opt-icon">📊</span> By Ranking
+          <div class="tp-dropdown-option selected" data-value="rank" onclick="selectDropdown('sortDropdown', 'rank', 'By Ranking', '')">
+            By Ranking
           </div>
-          <div class="tp-dropdown-option" data-value="az" onclick="selectDropdown('sortDropdown', 'az', '🔤 A to Z', '🔤')">
-            <span class="opt-icon">🔤</span> A to Z
+          <div class="tp-dropdown-option" data-value="az" onclick="selectDropdown('sortDropdown', 'az', 'A to Z', '')">
+            A to Z
           </div>
         </div>
         <select id="toolsSort" style="display:none" onchange="handleFilter()" aria-label="Sort AI tools">
@@ -1644,7 +1644,7 @@ function handleFilter() {
     }
   }
 
-  // Flat grid triggers when: search text OR pricing filter OR A to Z sort selected
+  // Flat grid triggers when: search text OR pricing filter OR A to Z selected
   const isFiltered = q.length > 0 || pricing !== '' || sort === 'az';
 
   if (!isFiltered) {
