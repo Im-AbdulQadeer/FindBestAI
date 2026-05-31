@@ -359,8 +359,8 @@
 .tp-dropdown-btn .dd-icon { font-size: 0.92rem; }
 .tp-dropdown-btn .dd-label { flex: 1; text-align: left; }
 .tp-dropdown-btn .dd-caret {
-  font-size: 1rem;
-  color: var(--text2);
+  font-size: 0.65rem;
+  color: var(--text3);
   transition: transform 0.2s;
 }
 .tp-dropdown-btn.open .dd-caret { transform: rotate(180deg); }
@@ -466,24 +466,29 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
+/* Compare button visibility — desktop shows in header, mobile shows below table */
+.tp-compare-btn-mobile { display: none; }
+.tp-compare-btn-desktop { display: inline-flex; }
+
 @media (max-width: 768px) {
 
   /* ── HEADINGS ── */
-  .tp-h1 { font-size: 1.9rem; }
-  .tp-h2 { font-size: 1.45rem; }
-  .section-title { font-size: 1.35rem !important; }
-  .tp-lead { font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
+  .tp-h1 { font-size: 1.85rem; letter-spacing: -0.03em; }
+  .tp-h2 { font-size: 1.4rem; }
+  .section-title { font-size: 1.3rem !important; }
+  .tp-lead { font-size: 0.9rem; margin-bottom: 22px; line-height: 1.6; }
   .tp-search-sub { font-size: 0.82rem; margin-bottom: 12px; }
+  .section-desc { font-size: 0.84rem; line-height: 1.6; }
 
   /* ── HERO SECTION ── */
-  .tp-cats-section { padding-top: 32px; padding-bottom: 26px; }
+  .tp-cats-section { padding-top: 30px; padding-bottom: 24px; }
   .tp-search-section { padding-top: 20px; padding-bottom: 10px; }
 
   /* ── CATEGORY PILLS ── */
   .tp-pills-grid { gap: 6px; }
-  .tp-pill { font-size: 0.73rem; padding: 5px 9px 5px 8px; gap: 5px; }
-  .tp-pill .pill-emoji { font-size: 0.82rem; }
-  .tp-pill .pill-count { font-size: 0.58rem; padding: 1px 5px; }
+  .tp-pill { font-size: 0.72rem; padding: 5px 8px 5px 7px; gap: 5px; }
+  .tp-pill .pill-emoji { font-size: 0.8rem; }
+  .tp-pill .pill-count { font-size: 0.57rem; padding: 1px 5px; }
   .tp-pill .pill-arrow { display: none; }
 
   /* ── SEARCH BAR ── */
@@ -498,45 +503,119 @@
   .tp-dropdown-btn { min-width: unset; width: 100%; height: 44px; font-size: 0.8rem; padding: 0 10px; }
   .tp-results-box { width: 100%; justify-content: center; }
 
+  /* ── NETFLIX LAYOUT ── */
+  /* Row spacing: more bottom padding between card track and next category */
+  .nf-row { padding: 14px 14px 32px; }
+  .tp-netflix > .nf-row:first-child { padding-top: 24px; }
+  /* Divider between categories — remove it on mobile (padding does the job) */
+  .nf-row-divider { display: none; }
+
   /* ── NETFLIX ROW HEADER ── */
-  .nf-header { flex-wrap: wrap; align-items: flex-start; gap: 6px; margin-bottom: 14px; }
-  .nf-header-left { flex: 1; min-width: 0; flex-direction: column; align-items: flex-start; gap: 4px; }
-  .nf-title-emoji { font-size: 1.1rem; }
-  .nf-title-text { font-size: 1rem; }
-  .nf-title { flex-wrap: wrap; gap: 6px; }
-  .nf-title-count { order: 3; width: 100%; display: inline-block; margin-top: 2px; }
-  .nf-header-right { flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
-  .nf-arrows-row { display: flex; gap: 6px; }
-  .nf-view-all-btn { font-size: 0.75rem; padding: 7px 12px; }
-  .nf-arrow-btn { width: 34px; height: 34px; font-size: 1.8rem; }
+  .nf-header {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  /* Left: emoji + title stacked, no gap between them */
+  .nf-header-left {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 0;
+    flex: 1;
+    min-width: 0;
+  }
+  /* Emoji: no left margin, slightly smaller */
+  .nf-title-emoji {
+    font-size: 1.05rem;
+    margin-right: 6px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  /* Title + count stacked in a column */
+  .nf-title-right {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .nf-title-text { font-size: 0.95rem; }
+  /* Count: inline, auto width — not full width */
+  .nf-title-count {
+    display: inline-block;
+    width: auto;
+    align-self: flex-start;
+    font-size: 0.6rem;
+    padding: 2px 7px;
+  }
+  /* Right: View All on top, arrows below */
+  .nf-header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+    flex-shrink: 0;
+  }
+  .nf-view-all-btn { font-size: 0.72rem; padding: 6px 10px; border-radius: 8px; }
+  .nf-arrows-row { display: flex; gap: 5px; }
+  .nf-arrow-btn { width: 30px; height: 30px; font-size: 1.6rem; }
 
   /* ── NETFLIX CARDS ── */
-  .nf-card { flex: 0 0 195px; min-width: 195px; }
-  .nf-row { padding: 12px 16px 20px; }
+  .nf-card { flex: 0 0 185px; min-width: 185px; padding: 14px; }
+  .nf-card-name { font-size: 0.88rem; }
+  .nf-card-desc { font-size: 0.76rem; }
 
-  /* ── FLAT GRID — 2 columns ── */
-  #flatGridEl { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
-  #flatGridEl .nf-card { flex: unset !important; min-width: unset !important; width: 100%; padding: 14px; }
-  .nf-card-name { font-size: 0.9rem; }
-  .nf-card-desc { font-size: 0.78rem; -webkit-line-clamp: 2; }
+  /* ── FLAT GRID — 2 columns, NO gap between cards ── */
+  #flatGridEl {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0 !important;
+  }
+  #flatGridEl .nf-card {
+    flex: unset !important;
+    min-width: unset !important;
+    width: 100%;
+    padding: 12px;
+    border-radius: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+  }
+  /* Restore right border on odd cards (right column) */
+  #flatGridEl .nf-card:nth-child(even) { border-right-width: 1.5px; }
+  /* Restore bottom border on last row */
+  #flatGridEl .nf-card:nth-last-child(-n+2) { border-bottom-width: 1.5px; }
 
   /* ── BEST TABLE SECTION ── */
-  .tp-best-table-section { padding: 0 12px 50px; }
-  .tp-best-table-section .section-header { margin-bottom: 20px; }
-  .tp-best-table-header-row { flex-direction: column; gap: 10px; align-items: flex-start; }
-  .tp-compare-btn { width: auto; align-self: flex-start; font-size: 0.78rem; padding: 8px 14px; }
-  .best-table { min-width: 520px; }
-  .best-table thead th { padding: 10px 10px; font-size: 0.6rem; letter-spacing: 0.08em; }
-  .best-table td { padding: 10px 10px; font-size: 0.78rem; }
-  .bt-cat-name { font-size: 0.78rem; }
-  .bt-cat-emoji { font-size: 0.9rem; }
-  .bt-tool-name { font-size: 0.78rem; }
-  .bt-tool-logo { width: 22px; height: 22px; }
-  .bt-stars { font-size: 0.6rem; letter-spacing: 1px; }
-  .bt-rating-val { font-size: 0.7rem; }
-  .bt-pricing { font-size: 0.58rem; padding: 2px 6px; }
-  .bt-view-btn { font-size: 0.68rem; padding: 4px 8px; white-space: nowrap; }
-  .section-desc { font-size: 0.85rem; }
+  .tp-best-table-section { padding: 0 12px 24px; }
+  .tp-best-table-section .section-header { margin-bottom: 18px; }
+  /* Hide desktop compare btn, show mobile one */
+  .tp-compare-btn-desktop { display: none; }
+  .tp-compare-btn-mobile {
+    display: inline-flex;
+    margin-top: 16px;
+    width: auto;
+    align-self: flex-start;
+    font-size: 0.78rem;
+    padding: 8px 16px;
+  }
+  .tp-best-table-header-row { flex-direction: column; gap: 6px; align-items: flex-start; }
+
+  /* Table compact + unbold content */
+  .best-table { min-width: 480px; }
+  .best-table thead th { padding: 8px 8px; font-size: 0.58rem; letter-spacing: 0.06em; }
+  .best-table td { padding: 8px 8px; font-size: 0.75rem; font-weight: 400; }
+  .bt-cat-name { font-size: 0.75rem; font-weight: 600; }
+  .bt-cat-emoji { font-size: 0.85rem; }
+  .bt-cat-col { gap: 6px; }
+  .bt-tool-col { gap: 6px; }
+  .bt-tool-name { font-size: 0.75rem; font-weight: 600; }
+  .bt-tool-logo { width: 20px; height: 20px; }
+  /* Rating — force single row, no wrap */
+  .best-table td:nth-child(3) { white-space: nowrap; }
+  .bt-stars { font-size: 0.58rem; letter-spacing: 0.5px; display: inline; }
+  .bt-rating-val { font-size: 0.68rem; font-weight: 500; display: inline; margin-left: 2px; }
+  .bt-pricing { font-size: 0.56rem; padding: 2px 5px; }
+  .bt-view-btn { font-size: 0.65rem; padding: 3px 7px; white-space: nowrap; }
 }
 
 /* ══ NETFLIX LAYOUT ══ */
@@ -552,7 +631,7 @@
   padding: 18px 32px 28px;
 }
 .tp-netflix > .nf-row:first-child { padding-top: 40px; }
-@media (max-width: 768px) { .nf-row { padding: 16px 16px 20px; } }
+/* nf-row mobile padding handled in main 768px block */
 
 .nf-row-divider {
   height: 1px;
@@ -570,16 +649,11 @@
   margin-bottom: 20px;
   gap: 16px;
 }
-/* nf-header mobile handled in main 768px block below */
+/* nf-header mobile handled in main 768px block */
 
-.nf-header-left { display: flex; align-items: center; gap: 12px; }
-
-.nf-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.nf-title-emoji { font-size: 1.5rem; }
+.nf-header-left { display: flex; align-items: center; gap: 10px; }
+.nf-title-right { display: flex; flex-direction: column; gap: 4px; }
+.nf-title-emoji { font-size: 1.5rem; flex-shrink: 0; }
 .nf-title-text { font-size: 1.2rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
 .nf-title-count {
   font-size: 0.68rem;
@@ -688,7 +762,7 @@
   flex: 0 0 270px;
   min-width: 270px;
 }
-@media (max-width: 640px) { .nf-card { flex: 0 0 230px; min-width: 230px; } }
+/* nf-card mobile size handled in main 768px block */
 
 .nf-card:hover {
   border-color: var(--accent);
@@ -1141,19 +1215,11 @@
   flex: 0 0 300px;
   min-width: 300px;
   scroll-snap-align: start;
-  /* Force visible — IntersectionObserver doesn't fire for cards
-     scrolled horizontally off-screen, so .reveal would hide them. */
   opacity: 1 !important;
   transform: none !important;
 }
-@media (max-width: 640px){
-  .nf-grid > .card,
-  .nf-grid > .tool-card,
-  .nf-grid > a.tool-card { flex: 0 0 260px; min-width: 260px; }
-}
 #flatGridEl > .card { width: 100%; opacity: 1 !important; transform: none !important; }
-}
-/* Search/flat results grid uses homepage cards too */
+/* Search/flat results grid */
 #flatGridEl {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -1225,22 +1291,22 @@
       <!-- Custom Pricing Dropdown -->
       <div class="tp-custom-dropdown" id="pricingDropdown">
         <button class="tp-dropdown-btn" id="pricingBtn" onclick="toggleDropdown('pricingDropdown')" aria-label="Filter by pricing model">
-          <span class="dd-icon"></span>
+          <span class="dd-icon">💰</span>
           <span class="dd-label" id="pricingLabel">All Pricing</span>
           <span class="dd-caret">▾</span>
         </button>
         <div class="tp-dropdown-menu" id="pricingMenu">
-          <div class="tp-dropdown-option selected" data-value="" onclick="selectDropdown('pricingDropdown', '', 'All Pricing', '')">
-            All Pricing
+          <div class="tp-dropdown-option selected" data-value="" onclick="selectDropdown('pricingDropdown', '', '💰 All Pricing', '💰')">
+            <span class="opt-icon">💰</span> All Pricing
           </div>
-          <div class="tp-dropdown-option" data-value="free" onclick="selectDropdown('pricingDropdown', 'free', 'Free Only', '')">
-            Free Only
+          <div class="tp-dropdown-option" data-value="free" onclick="selectDropdown('pricingDropdown', 'free', '🆓 Free Only', '🆓')">
+            <span class="opt-icon">🆓</span> Free Only
           </div>
-          <div class="tp-dropdown-option" data-value="freemium" onclick="selectDropdown('pricingDropdown', 'freemium', 'Freemium', '')">
-            Freemium
+          <div class="tp-dropdown-option" data-value="freemium" onclick="selectDropdown('pricingDropdown', 'freemium', '⚡ Freemium', '⚡')">
+            <span class="opt-icon">⚡</span> Freemium
           </div>
-          <div class="tp-dropdown-option" data-value="paid" onclick="selectDropdown('pricingDropdown', 'paid', 'Paid Only', '')">
-            Paid Only
+          <div class="tp-dropdown-option" data-value="paid" onclick="selectDropdown('pricingDropdown', 'paid', '💎 Paid Only', '💎')">
+            <span class="opt-icon">💎</span> Paid Only
           </div>
         </div>
         <!-- Hidden real select for form submission -->
@@ -1255,16 +1321,16 @@
       <!-- Sort Dropdown -->
       <div class="tp-custom-dropdown" id="sortDropdown">
         <button class="tp-dropdown-btn" id="sortBtn" onclick="toggleDropdown('sortDropdown')" aria-label="Sort AI tools">
-          <span class="dd-icon"></span>
+          <span class="dd-icon">📊</span>
           <span class="dd-label" id="sortLabel">By Ranking</span>
           <span class="dd-caret">▾</span>
         </button>
         <div class="tp-dropdown-menu" id="sortMenu">
-          <div class="tp-dropdown-option selected" data-value="rank" onclick="selectDropdown('sortDropdown', 'rank', 'By Ranking', '')">
-            By Ranking
+          <div class="tp-dropdown-option selected" data-value="rank" onclick="selectDropdown('sortDropdown', 'rank', '📊 By Ranking', '📊')">
+            <span class="opt-icon">📊</span> By Ranking
           </div>
-          <div class="tp-dropdown-option" data-value="az" onclick="selectDropdown('sortDropdown', 'az', 'A to Z', '')">
-            A to Z
+          <div class="tp-dropdown-option" data-value="az" onclick="selectDropdown('sortDropdown', 'az', '🔤 A to Z', '🔤')">
+            <span class="opt-icon">🔤</span> A to Z
           </div>
         </div>
         <select id="toolsSort" style="display:none" onchange="handleFilter()" aria-label="Sort AI tools">
@@ -1321,7 +1387,7 @@
     <span class="tp-badge">// EXPERT PICKS</span>
     <div class="tp-best-table-header-row">
       <h2 class="section-title" id="bestTableTitle">The <em>Top Rated AI Tool</em> in Every Category</h2>
-      <a href="/compare/" class="tp-compare-btn" aria-label="Go to Compare AI Tools page">
+      <a href="/compare/" class="tp-compare-btn tp-compare-btn-desktop" aria-label="Go to Compare AI Tools page">
         Compare Tools <span class="btn-arrow">→</span>
       </a>
     </div>
@@ -1344,6 +1410,9 @@
       </tbody>
     </table>
   </div>
+  <a href="/compare/" class="tp-compare-btn tp-compare-btn-mobile" aria-label="Go to Compare AI Tools page">
+    Compare Tools <span class="btn-arrow">→</span>
+  </a>
 </section>
 
 <div class="section-divider"></div>
@@ -1554,11 +1623,11 @@ function renderNetflix() {
     row.innerHTML = `
       <div class="nf-header">
         <div class="nf-header-left">
-          <a class="nf-title" href="${catUrl}" aria-label="${cat.name} AI tools category page" style="text-decoration:none;color:inherit;">
-            <span class="nf-title-emoji">${cat.icon}</span>
-            <span class="nf-title-text">${cat.name}</span>
-          </a>
-          <span class="nf-title-count">${cat.count} tools</span>
+          <span class="nf-title-emoji">${cat.icon}</span>
+          <div class="nf-title-right">
+            <a class="nf-title-text" href="${catUrl}" aria-label="${cat.name} AI tools category page" style="text-decoration:none;color:inherit;">${cat.name}</a>
+            <span class="nf-title-count">${cat.count} tools</span>
+          </div>
         </div>
         <div class="nf-header-right">
           <a class="nf-view-all-btn" href="${catUrl}" aria-label="View all ${cat.name} tools on FindBestAI">
@@ -1702,18 +1771,17 @@ function handleFilter() {
   const clearBtn = document.getElementById('searchClear');
   if (clearBtn) clearBtn.classList.toggle('show', q.length > 0);
 
-  // Results box ONLY shows when search bar has at least 1 character
+  const isFiltered = q.length > 0 || pricing !== '' || sort !== 'rank';
+
+  // Show/hide results box
   const resultsBox = document.getElementById('resultsBox');
   if (resultsBox) {
-    if (q.length > 0) {
+    if (isFiltered) {
       resultsBox.classList.add('visible');
     } else {
       resultsBox.classList.remove('visible');
     }
   }
-
-  // Flat grid triggers when: search text OR pricing filter OR A to Z selected
-  const isFiltered = q.length > 0 || pricing !== '' || sort === 'az';
 
   if (!isFiltered) {
     showNetflix();
@@ -1737,12 +1805,6 @@ function handleFilter() {
 
   if (sort === 'az') {
     matches = [...matches].sort((a, b) => a.name.localeCompare(b.name));
-  } else if (sort === 'rank') {
-    matches = [...matches].sort((a, b) => {
-      const ra = (a.rank !== undefined && a.rank !== null) ? a.rank : (a.rating ? -a.rating : 9999);
-      const rb = (b.rank !== undefined && b.rank !== null) ? b.rank : (b.rating ? -b.rating : 9999);
-      return ra - rb;
-    });
   }
 
   renderFlatGrid(matches);
