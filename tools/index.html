@@ -1,1115 +1,483 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<link rel="icon" type="image/png" href="/logo.png">
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="apple-touch-icon" sizes="512x512" href="/logo-512.png">
-<link rel="apple-touch-icon" sizes="192x192" href="/logo-192.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="description" content="Browse the ultimate database of the best AI tools. Filter by category, pricing, and features to find the exact free or premium artificial intelligence software.">
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-<meta property="og:title" content="Best AI Tools Directory - Search & Find Free AI websites">
-<meta property="og:image" content="https://findbestai.app/logo-512.png">
-<meta property="og:url" content="https://findbestai.app/tools/">
-<link rel="canonical" href="https://findbestai.app/tools/">
-<title>Best AI Tools Directory - Search & Find Free AI websites</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://logo.clearbit.com">
-<link rel="preconnect" href="https://upload.wikimedia.org">
-<link rel="preconnect" href="https://img.logo.dev">
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/main.css">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"CollectionPage","name":"All AI Tools","url":"https://findbestai.app/tools/","description":"Browse 500+ AI tools across 20 categories."}
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All AI Tools - Find Best AI</title>
+    <link rel="stylesheet" href="main.css">
+    <style>
+        /* =========================================
+           PAGE SPECIFIC OVERRIDES & LAYOUT
+           ========================================= */
+        
+        /* --- Section 1: Categories Header --- */
+        .cat-hero {
+            text-align: center;
+            padding: 60px 32px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .cat-hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -0.04em;
+        }
+        .cat-hero p {
+            font-size: 1.05rem;
+            color: var(--text2);
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
 
-<style>
-/* ══════════════════════════════════════════════════════
-   TOOLS PAGE — COMPLETE REDESIGN STYLES
-══════════════════════════════════════════════════════ */
+        /* Category Pills Grid */
+        .cat-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .cat-pill-lg {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 14px 24px;
+            background: var(--surface2);
+            border: 1px solid var(--border-md);
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 200px;
+            flex: 1 1 200px;
+            max-width: 260px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .cat-pill-lg:hover {
+            background: var(--surface3);
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .cat-pill-inner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .cat-pill-arrow {
+            color: var(--text3);
+            transition: transform 0.2s;
+        }
+        .cat-pill-lg:hover .cat-pill-arrow {
+            transform: translateX(4px);
+            color: var(--accent);
+        }
 
-/* ── SHARED WRAPPERS ── */
-.tp-wrap {
-  position: relative;
-  z-index: 1;
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 32px;
-}
-@media (max-width: 768px) { .tp-wrap { padding: 0 16px; } }
+        /* --- Section 2: Tools Header & Filter Bar --- */
+        .tools-header {
+            padding: 60px 32px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .tools-header h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .tools-header p {
+            color: var(--text2);
+            margin-bottom: 32px;
+        }
 
-/* ══════════════════════════════════════════════════════
-   SECTION 1 — ALL AI CATEGORIES
-══════════════════════════════════════════════════════ */
-.tp-cats-section {
-  padding-top: 72px;
-  padding-bottom: 52px;
-}
+        /* The Sticky Filter Bar */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        /* Search Box in Filter Bar */
+        .filter-search {
+            flex: 1 1 300px;
+            position: relative;
+        }
+        .filter-search input {
+            width: 100%;
+            padding: 14px 16px 14px 44px;
+            background: var(--surface2);
+            border: 1px solid var(--border-md);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .filter-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--glow);
+        }
+        .filter-search i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text3);
+        }
 
-.tp-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--accent);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  margin-bottom: 20px;
-  padding: 6px 14px;
-  background: rgba(79,163,255,0.08);
-  border: 1px solid rgba(79,163,255,0.2);
-  border-radius: 100px;
-}
+        /* Dropdowns */
+        .filter-select {
+            padding: 14px 36px 14px 16px;
+            background: var(--surface2);
+            border: 1px solid var(--border-md);
+            border-radius: 12px;
+            color: var(--text);
+            font-size: 0.95rem;
+            cursor: pointer;
+            outline: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238899bb' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            min-width: 140px;
+        }
+        .filter-select:focus {
+            border-color: var(--accent);
+        }
 
-.tp-h1 {
-  font-size: clamp(2.4rem, 5vw, 3.8rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  margin-bottom: 14px;
-  line-height: 1.08;
-}
-.tp-h1 em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+        /* Results Counter */
+        .results-counter {
+            margin-left: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text2);
+            background: var(--surface3);
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            white-space: nowrap;
+        }
+        .results-counter strong {
+            color: var(--accent);
+            font-size: 1.1rem;
+        }
 
-.tp-lead {
-  color: var(--text2);
-  font-size: 1.05rem;
-  max-width: 600px;
-  margin-bottom: 44px;
-  line-height: 1.7;
-}
+        /* --- Section 3: Netflix Style Rows --- */
+        .netflix-section {
+            padding: 0 32px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .netflix-row {
+            margin-bottom: 48px;
+        }
+        .netflix-row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding: 0 4px;
+        }
+        .netflix-row-header h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .view-all-btn {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .view-all-btn:hover {
+            text-decoration: underline;
+        }
 
-/* Category Pills Grid */
-.tp-pills-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+        /* Horizontal Scroll Container */
+        .netflix-scroll {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+            padding-bottom: 16px;
+            /* Hide scrollbar but allow scrolling */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+        .netflix-scroll::-webkit-scrollbar { display: none; }
 
-.tp-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 11px 18px 11px 14px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 100px;
-  cursor: pointer;
-  transition: all 0.22s ease;
-  text-decoration: none;
-  color: var(--text);
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
-  font-family: 'Outfit', sans-serif;
-}
-.tp-pill:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: rgba(79,163,255,0.06);
-  box-shadow: 0 4px 20px var(--glow), 0 0 0 1px rgba(79,163,255,0.12);
-  transform: translateY(-2px);
-}
-.tp-pill .pill-emoji { font-size: 1.05rem; }
-.tp-pill .pill-name { }
-.tp-pill .pill-count {
-  font-size: 0.68rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text3);
-  background: var(--surface3);
-  padding: 2px 8px;
-  border-radius: 100px;
-  transition: all 0.22s;
-  font-weight: 500;
-}
-.tp-pill:hover .pill-count {
-  color: var(--accent);
-  background: rgba(79,163,255,0.12);
-}
-.tp-pill .pill-arrow {
-  font-size: 0.85rem;
-  color: var(--text3);
-  transition: all 0.22s;
-  margin-left: 2px;
-}
-.tp-pill:hover .pill-arrow {
-  color: var(--accent);
-  transform: translateX(3px);
-}
+        /* Card sizing for horizontal row */
+        .netflix-scroll .card {
+            min-width: 280px;
+            max-width: 280px;
+            flex-shrink: 0;
+            /* Ensure hover effects don't break layout */
+            margin: 0; 
+        }
 
-/* ══════════════════════════════════════════════════════
-   SECTION 2 — SEARCH & FILTERS
-══════════════════════════════════════════════════════ */
-.tp-search-section {
-  padding-top: 52px;
-  padding-bottom: 40px;
-  border-top: 1px solid var(--border);
-}
+        /* --- Section 4: Grid Layout (Active on Search) --- */
+        .tools-grid-active {
+            display: none; /* Hidden by default */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 32px 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .tools-grid-active.show {
+            display: grid;
+        }
 
-.tp-h2 {
-  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  margin-bottom: 8px;
-  line-height: 1.1;
-}
-.tp-h2 em {
-  font-style: normal;
-  background: linear-gradient(135deg, var(--accent2), var(--accent3));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.tp-search-sub {
-  color: var(--text2);
-  font-size: 0.92rem;
-  margin-bottom: 24px;
-}
-
-/* Large Search Bar */
-.tp-searchbar-wrap {
-  position: relative;
-  margin-bottom: 14px;
-}
-.tp-searchbar-icon {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.15rem;
-  color: var(--text3);
-  pointer-events: none;
-  z-index: 2;
-}
-.tp-searchbar-clear {
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: var(--surface3);
-  border: none;
-  color: var(--text3);
-  font-size: 0.85rem;
-  cursor: pointer;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  z-index: 2;
-}
-.tp-searchbar-clear:hover { background: var(--accent); color: #fff; }
-.tp-searchbar-clear.show { display: flex; }
-
-#toolsSearch {
-  width: 100%;
-  padding: 18px 50px 18px 54px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 14px;
-  color: var(--text);
-  font-size: 1rem;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 500;
-  outline: none;
-  transition: all 0.25s;
-  position: relative;
-  z-index: 1;
-}
-#toolsSearch::placeholder { color: var(--text3); font-size: 0.95rem; }
-#toolsSearch:focus {
-  border-color: var(--accent);
-  background: var(--surface2);
-  box-shadow: 0 0 0 4px rgba(79,163,255,0.1), 0 8px 32px rgba(79,163,255,0.12);
-}
-
-/* Filter Row */
-.tp-filter-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.tp-select-wrap {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-}
-.tp-select-icon {
-  position: absolute;
-  left: 14px;
-  pointer-events: none;
-  font-size: 0.95rem;
-  z-index: 2;
-}
-.tp-select {
-  padding: 12px 44px 12px 38px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  color: var(--text2);
-  font-size: 0.88rem;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  outline: none;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238899bb' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  min-width: 158px;
-  transition: all 0.2s;
-  position: relative;
-  z-index: 1;
-}
-.tp-select:hover, .tp-select:focus {
-  border-color: var(--accent);
-  color: var(--text);
-  box-shadow: 0 0 12px rgba(79,163,255,0.15);
-}
-.tp-select option { background: var(--surface2); color: var(--text); }
-
-/* Results Count Box */
-.tp-results-box {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px 18px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  white-space: nowrap;
-}
-.rc-icon { font-size: 1rem; }
-.rc-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--accent);
-  min-width: 20px;
-  text-align: center;
-}
-.rc-label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text3);
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* ══════════════════════════════════════════════════════
-   SECTION 3a — NETFLIX LAYOUT
-══════════════════════════════════════════════════════ */
-.tp-netflix {
-  position: relative;
-  z-index: 1;
-  padding-bottom: 80px;
-}
-
-.nf-row {
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 36px 32px 28px;
-}
-@media (max-width: 768px) { .nf-row { padding: 28px 16px 20px; } }
-
-.nf-row-divider {
-  height: 1px;
-  background: var(--border);
-  max-width: 1380px;
-  margin: 0 auto;
-  opacity: 0.5;
-}
-
-/* Row Header */
-.nf-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  gap: 16px;
-}
-@media (max-width: 600px) {
-  .nf-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-}
-
-.nf-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.nf-title-emoji { font-size: 1.5rem; }
-.nf-title-text { font-size: 1.2rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
-.nf-title-count {
-  font-size: 0.68rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text3);
-  background: var(--surface3);
-  padding: 3px 9px;
-  border-radius: 100px;
-  font-weight: 500;
-}
-
-.nf-view-all-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--accent);
-  padding: 9px 16px;
-  border: 1.5px solid rgba(79,163,255,0.25);
-  border-radius: 10px;
-  text-decoration: none;
-  transition: all 0.2s;
-  white-space: nowrap;
-  font-family: 'Outfit', sans-serif;
-  background: rgba(79,163,255,0.04);
-}
-.nf-view-all-btn:hover {
-  background: rgba(79,163,255,0.12);
-  border-color: var(--accent);
-  box-shadow: 0 0 16px var(--glow);
-  transform: translateY(-1px);
-}
-.nf-view-all-btn .btn-arrow {
-  transition: transform 0.2s;
-}
-.nf-view-all-btn:hover .btn-arrow { transform: translateX(3px); }
-
-/* 4-Card Grid */
-.nf-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-}
-@media (max-width: 1100px) { .nf-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 800px)  { .nf-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px)  { .nf-grid { grid-template-columns: 1fr; } }
-
-/* Netflix Card */
-.nf-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  animation: nfCardIn 0.35s ease both;
-  text-decoration: none;
-  color: inherit;
-}
-.nf-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--card-hover-bg);
-  opacity: 0;
-  transition: opacity 0.25s;
-  pointer-events: none;
-  border-radius: inherit;
-}
-.nf-card:hover {
-  border-color: var(--border-md);
-  transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.45), 0 0 0 1px rgba(79,163,255,0.08), 0 0 28px rgba(79,163,255,0.1);
-}
-.nf-card:hover::after { opacity: 1; }
-@keyframes nfCardIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Card Header — Icon + Name + Badges */
-.nf-card-top {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  position: relative;
-  z-index: 1;
-}
-.nf-card-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 1.5rem;
-}
-.nf-card-icon img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.nf-card-info { flex: 1; min-width: 0; }
-.nf-card-name {
-  font-size: 0.96rem;
-  font-weight: 800;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  margin-bottom: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.nf-card-badges { display: flex; gap: 4px; flex-wrap: wrap; }
-
-/* Card Description */
-.nf-card-desc {
-  font-size: 0.79rem;
-  color: var(--text2);
-  line-height: 1.55;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-}
-
-/* Card Rating */
-.nf-card-rating {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  position: relative;
-  z-index: 1;
-}
-.nf-stars { color: var(--gold); font-size: 0.72rem; letter-spacing: 1.5px; }
-.nf-rating-val {
-  font-size: 0.76rem;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--text2);
-  font-weight: 500;
-}
-.nf-reviews {
-  font-size: 0.72rem;
-  color: var(--text3);
-  font-family: 'JetBrains Mono', monospace;
-}
-
-/* Card Footer */
-.nf-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: auto;
-  padding-top: 2px;
-  position: relative;
-  z-index: 1;
-}
-.nf-pricing-tag {
-  font-size: 0.68rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  padding: 3px 9px;
-  border-radius: 100px;
-}
-.nf-pricing-tag.free     { color: var(--green); background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
-.nf-pricing-tag.freemium { color: var(--gold);  background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); }
-.nf-pricing-tag.paid     { color: var(--text3); background: var(--surface3); border: 1px solid var(--border); }
-
-.nf-view-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--accent);
-  text-decoration: none;
-  padding: 6px 12px;
-  border: 1px solid rgba(79,163,255,0.2);
-  border-radius: 8px;
-  background: rgba(79,163,255,0.05);
-  transition: all 0.18s;
-  font-family: 'Outfit', sans-serif;
-}
-.nf-view-link:hover {
-  background: rgba(79,163,255,0.14);
-  border-color: var(--accent);
-  transform: translateX(1px);
-}
-
-/* ══════════════════════════════════════════════════════
-   SECTION 3b — FLAT GRID (Search / Filter mode)
-══════════════════════════════════════════════════════ */
-.tp-flat-section {
-  position: relative;
-  z-index: 1;
-  max-width: 1380px;
-  margin: 0 auto;
-  padding: 0 32px 80px;
-}
-@media (max-width: 768px) { .tp-flat-section { padding: 0 16px 60px; } }
-
-/* Search Mode Banner */
-.tp-search-banner {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding: 13px 18px;
-  background: rgba(79,163,255,0.06);
-  border: 1px solid rgba(79,163,255,0.18);
-  border-radius: 12px;
-  margin-bottom: 24px;
-  font-size: 0.85rem;
-  color: var(--accent);
-  font-weight: 600;
-}
-.tp-search-banner .sb-label { color: var(--text2); font-weight: 500; }
-.tp-search-banner .sb-term {
-  background: rgba(79,163,255,0.12);
-  border: 1px solid rgba(79,163,255,0.25);
-  padding: 2px 10px;
-  border-radius: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-}
-.tp-clear-all {
-  margin-left: auto;
-  font-size: 0.78rem;
-  color: var(--text3);
-  cursor: pointer;
-  padding: 4px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  transition: all 0.2s;
-}
-.tp-clear-all:hover { color: var(--text); border-color: var(--text3); }
-
-/* No Results */
-.tp-no-results {
-  text-align: center;
-  padding: 80px 20px;
-}
-.tp-no-results .nr-emoji { font-size: 3.5rem; margin-bottom: 18px; }
-.tp-no-results .nr-title { font-size: 1.15rem; font-weight: 800; color: var(--text2); margin-bottom: 8px; letter-spacing: -0.02em; }
-.tp-no-results .nr-sub { font-size: 0.88rem; color: var(--text3); }
-</style>
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .results-counter { margin-left: 0; text-align: center; }
+            .netflix-scroll .card { min-width: 240px; max-width: 240px; }
+            .cat-pill-lg { min-width: 100%; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="bg-grid"></div>
-<div class="bg-orb orb-a"></div>
-<div class="bg-orb orb-b"></div>
-<div class="bg-orb orb-c"></div>
+    <!-- Navigation (Assumed to be injected via nav.js) -->
+    <nav id="topnav"></nav>
+    <div id="mobileMenu"></div>
 
-<nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
-<div class="mobile-menu" id="mobileMenu" role="menu"></div>
+    <!-- MAIN CONTENT -->
+    <main>
+        
+        <!-- 1. Categories Section -->
+        <section class="cat-hero">
+            <h1>All AI Categories</h1>
+            <p>Browse 500+ tools across 20 categories. Filter by pricing, rating, and more to find exactly what you need.</p>
+            <div class="cat-grid" id="categoryPills">
+                <!-- Pills injected via JS -->
+            </div>
+        </section>
 
+        <!-- 2. Tools Header & Filter Bar -->
+        <section class="tools-header">
+            <h2>All Tools</h2>
+            <p>Discover the best AI tools for every workflow.</p>
+            
+            <div class="filter-bar">
+                <div class="filter-search">
+                    <i>🔍</i>
+                    <input type="text" id="searchInput" placeholder="Search ChatGPT, Claude, Midjourney...">
+                </div>
+                
+                <select class="filter-select" id="pricingFilter">
+                    <option value="all">All Pricing</option>
+                    <option value="free">Free</option>
+                    <option value="freemium">Freemium</option>
+                    <option value="paid">Paid</option>
+                </select>
 
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 1 — ALL AI CATEGORIES                  ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div class="tp-wrap tp-cats-section">
+                <select class="filter-select" id="sortFilter">
+                    <option value="ranking">By Ranking</option>
+                    <option value="az">A to Z</option>
+                </select>
 
-  <span class="tp-badge">// AI TOOLS DIRECTORY</span>
+                <div class="results-counter" id="resultsCounter">
+                    Showing <strong>54</strong> Tools
+                </div>
+            </div>
+        </section>
 
-  <h1 class="tp-h1">All <em>AI Categories</em></h1>
-
-  <p class="tp-lead">
-    Browse 500+ AI tools across 20 categories.<br>
-    From AI assistants to 3D generators — find the perfect tool for every creative, business, and technical workflow.
-  </p>
-
-  <div class="tp-pills-grid" id="catPillsContainer" role="list" aria-label="Browse AI tool categories"></div>
-
-</div><!-- /tp-cats-section -->
-
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 2 — SEARCH & FILTERS                   ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div class="tp-wrap tp-search-section">
-
-  <h2 class="tp-h2">Browse <em>All Tools</em></h2>
-  <p class="tp-search-sub">Search tools by name, category or description. Filter by pricing. Sort results by ranking or A to Z.</p>
-
-  <!-- Large Search Bar -->
-  <div class="tp-searchbar-wrap">
-    <span class="tp-searchbar-icon">🔍</span>
-    <input
-      type="text"
-      id="toolsSearch"
-      placeholder="Search ChatGPT, Claude, Gemini and 170+ more AI tools..."
-      oninput="handleFilter()"
-      autocomplete="off"
-      spellcheck="false"
-      aria-label="Search AI tools"
-    >
-    <button
-      class="tp-searchbar-clear"
-      id="searchClear"
-      onclick="clearSearch()"
-      aria-label="Clear search"
-      title="Clear search"
-    >✕</button>
-  </div>
-
-  <!-- Filter Row -->
-  <div class="tp-filter-row">
-
-    <!-- Pricing Dropdown -->
-    <div class="tp-select-wrap">
-      <span class="tp-select-icon">💰</span>
-      <select id="toolsPricing" class="tp-select" onchange="handleFilter()" aria-label="Filter by pricing">
-        <option value="">All Pricing</option>
-        <option value="free">Free</option>
-        <option value="freemium">Freemium</option>
-        <option value="paid">Paid</option>
-      </select>
-    </div>
-
-    <!-- Sort Dropdown -->
-    <div class="tp-select-wrap">
-      <span class="tp-select-icon">📊</span>
-      <select id="toolsSort" class="tp-select" onchange="handleFilter()" aria-label="Sort tools">
-        <option value="rank">By Ranking</option>
-        <option value="az">A to Z</option>
-      </select>
-    </div>
-
-    <!-- Results Count -->
-    <div class="tp-results-box" id="resultsBox" aria-live="polite" aria-label="Number of tools found">
-      <span class="rc-icon">📋</span>
-      <span class="rc-num" id="resultsNum">0</span>
-      <span class="rc-label">Tools</span>
-    </div>
-
-  </div>
-</div><!-- /tp-search-section -->
-
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 3a — NETFLIX CATEGORY ROWS (default)   ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div id="netflixLayout" class="tp-netflix" aria-label="AI tools by category"></div>
-
-
-<!-- ╔══════════════════════════════════════════════════╗
-     ║  SECTION 3b — FLAT GRID (search / filter mode)  ║
-     ╚══════════════════════════════════════════════════╝ -->
-<div id="flatSection" style="display:none" aria-label="Filtered AI tools">
-  <div class="tp-flat-section">
-
-    <!-- Banner showing active filters -->
-    <div class="tp-search-banner" id="searchBanner" style="display:none">
-      <span class="sb-label">Showing results for</span>
-      <span class="sb-term" id="bannerQuery"></span>
-      <button class="tp-clear-all" onclick="clearAll()" aria-label="Clear all filters">✕ Clear all</button>
-    </div>
-
-    <!-- Flat tools grid -->
-    <div class="tools-grid" id="flatGridEl"></div>
-
-    <!-- No results state -->
-    <div class="tp-no-results" id="noResultsEl" style="display:none">
-      <div class="nr-emoji">🤔</div>
-      <div class="nr-title">No tools found</div>
-      <div class="nr-sub">Try a different search term or remove some filters</div>
-    </div>
-
-  </div>
-</div>
-
-
-<!-- NEWSLETTER -->
-<div class="newsletter-block reveal">
-  <div class="newsletter-inner">
-    <div class="newsletter-glow"></div>
-    <h2>Get Weekly AI Tool Picks</h2>
-    <p>New tools and reviews delivered every Monday. No spam — unsubscribe anytime.</p>
-    <div class="nl-form">
-      <input type="email" placeholder="your@email.com" aria-label="Email address" onkeydown="if(event.key==='Enter'){event.preventDefault();subscribeNewsletter(this);}">
-      <button class="btn-primary" onclick="subscribeNewsletter(this)">Subscribe</button>
-    </div>
-  </div>
-</div>
-
-<footer id="site-footer" role="contentinfo"></footer>
-
-<!-- MODAL -->
-<div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true">
-  <div class="modal-ring">
-    <div class="modal-box" id="modalBox">
-      <button class="modal-close" aria-label="Close modal">✕</button>
-      <div id="modalContent"></div>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast" role="status" aria-live="polite">
-  <span class="toast-ic" id="toastIc"></span>
-  <span id="toastMsg"></span>
-</div>
-
-<!-- DATA + SHARED APP LOGIC -->
-<script src="/assets/js/data.js"></script>
-<script src="/assets/js/app.js"></script>
-<script src="/assets/js/nav.js"></script>
-
-<!-- ══════════════════════════════════════════════════
-     TOOLS PAGE — REDESIGNED LOGIC
-══════════════════════════════════════════════════ -->
-<script>
-/* ── NETFLIX CARD BADGE HELPER ── */
-function nfBadge(t) {
-  let b = '';
-  if (t.badge === 'best')    b += '<span class="badge b-best">✦ BEST</span>';
-  else if (t.badge === 'new') b += '<span class="badge b-new">NEW</span>';
-  else if (t.badge === 'hot') b += '<span class="badge b-hot">🌶 HOT</span>';
-  else if (t.badge === 'popular') b += '<span class="badge b-popular">🔥</span>';
-  return b;
-}
-
-/* ── BUILD A NETFLIX MINI CARD ── */
-function makeNfCard(t, delay) {
-  const div = document.createElement('div');
-  div.className = 'nf-card';
-  div.setAttribute('role', 'article');
-  div.setAttribute('aria-label', t.name + ' — ' + t.cat);
-  if (delay) div.style.animationDelay = delay + 'ms';
-
-  const stars = '★'.repeat(Math.floor(t.rating));
-  const pricingClass = t.pricing || 'paid';
-  const pricingLabel = t.pricing === 'free' ? 'Free' : t.pricing === 'freemium' ? 'Freemium' : 'Paid';
-
-  div.innerHTML = `
-    <div class="nf-card-top">
-      <div class="nf-card-icon" style="background:${t.brand || t.bg}">${toolLogo(t, 50)}</div>
-      <div class="nf-card-info">
-        <div class="nf-card-name">${t.name}</div>
-        <div class="nf-card-badges">${nfBadge(t)}</div>
-      </div>
-    </div>
-    <div class="nf-card-desc">${t.desc}</div>
-    <div class="nf-card-rating">
-      <span class="nf-stars">${stars}</span>
-      <span class="nf-rating-val">${t.rating}</span>
-      <span class="nf-reviews">· ${t.reviews} reviews</span>
-    </div>
-    <div class="nf-card-footer">
-      <span class="nf-pricing-tag ${pricingClass}">${pricingLabel}</span>
-      <a class="nf-view-link" href="${toolHref(t)}" onclick="event.stopPropagation()">View →</a>
-    </div>
-  `;
-
-  /* Clicking card body navigates to tool page */
-  div.addEventListener('click', (e) => {
-    if (!e.target.closest('.nf-view-link')) {
-      window.location.href = toolHref(t);
-    }
-  });
-
-  return div;
-}
-
-/* ── RENDER CATEGORY PILLS ── */
-function renderCatPills() {
-  const container = document.getElementById('catPillsContainer');
-  if (!container || typeof CATS === 'undefined') return;
-
-  CATS.forEach(cat => {
-    const pill = document.createElement('button');
-    pill.className = 'tp-pill';
-    pill.setAttribute('role', 'listitem');
-    pill.setAttribute('aria-label', cat.name + ' — ' + cat.count + ' tools');
-    pill.type = 'button';
-    pill.innerHTML = `
-      <span class="pill-emoji">${cat.icon}</span>
-      <span class="pill-name">${cat.name}</span>
-      <span class="pill-count">${cat.count}</span>
-      <span class="pill-arrow">→</span>
-    `;
-    pill.addEventListener('click', () => scrollToRow(cat.name));
-    container.appendChild(pill);
-  });
-}
-
-/* ── RENDER NETFLIX LAYOUT ── */
-function renderNetflix() {
-  const layout = document.getElementById('netflixLayout');
-  if (!layout || typeof CATS === 'undefined' || typeof TOOLS === 'undefined') return;
-  layout.innerHTML = '';
-
-  CATS.forEach((cat, idx) => {
-    const catTools = TOOLS.filter(t => t.cat === cat.name);
-    if (!catTools.length) return;
-
-    /* Build slug for category link */
-    const catSlug = cat.name
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, '')
-      .trim()
-      .replace(/\s+/g, '-');
-
-    /* Row wrapper */
-    const row = document.createElement('div');
-    row.className = 'nf-row';
-    row.id = 'nf-row-' + catSlug;
-
-    /* Header */
-    row.innerHTML = `
-      <div class="nf-header">
-        <div class="nf-title">
-          <span class="nf-title-emoji">${cat.icon}</span>
-          <span class="nf-title-text">${cat.name}</span>
-          <span class="nf-title-count">${cat.count} tools</span>
+        <!-- 3. Netflix Style Layout (Default) -->
+        <div id="netflixContainer" class="netflix-section">
+            <!-- Rows injected via JS -->
         </div>
-        <a class="nf-view-all-btn" href="/category/${catSlug}/" aria-label="View all ${cat.name} tools">
-          View All ${cat.name} Tools <span class="btn-arrow">→</span>
-        </a>
-      </div>
-      <div class="nf-grid" id="nf-grid-${idx}"></div>
-    `;
 
-    layout.appendChild(row);
+        <!-- 4. Grid Layout (Search/Filter Active) -->
+        <div id="gridContainer" class="tools-grid-active">
+            <!-- Cards injected via JS -->
+        </div>
 
-    /* Add separator (not after last) */
-    if (idx < CATS.length - 1) {
-      const sep = document.createElement('div');
-      sep.className = 'nf-row-divider';
-      layout.appendChild(sep);
-    }
+    </main>
 
-    /* Fill first 4 cards */
-    const grid = row.querySelector('.nf-grid');
-    catTools.slice(0, 4).forEach((t, i) => {
-      grid.appendChild(makeNfCard(t, i * 55));
-    });
-  });
-}
+    <footer id="site-footer"></footer>
 
-/* ── SCROLL TO CATEGORY ROW ── */
-function scrollToRow(catName) {
-  const slug = catName.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '-');
-  const el = document.getElementById('nf-row-' + slug);
-  if (!el) return;
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="nav.js"></script>
+    <script src="app.js"></script>
 
-  /* Make sure Netflix is visible (in case filter is active) */
-  showNetflix();
+    <!-- Page Specific Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const TOOLS = window.TOOLS || [];
+            const CATS = window.CATS || [];
+            
+            // DOM Elements
+            const searchInput = document.getElementById('searchInput');
+            const pricingFilter = document.getElementById('pricingFilter');
+            const sortFilter = document.getElementById('sortFilter');
+            const resultsCounter = document.getElementById('resultsCounter');
+            const netflixContainer = document.getElementById('netflixContainer');
+            const gridContainer = document.getElementById('gridContainer');
+            const catPillsContainer = document.getElementById('categoryPills');
 
-  setTimeout(() => {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    el.style.transition = 'outline 0.3s';
-    el.style.outline = '2px solid rgba(79,163,255,0.5)';
-    el.style.borderRadius = '16px';
-    setTimeout(() => { el.style.outline = ''; el.style.borderRadius = ''; }, 2000);
-  }, 80);
-}
+            // State
+            let currentSearch = '';
+            let currentPricing = 'all';
+            let currentSort = 'ranking';
+            let isFiltered = false;
 
-/* ── SHOW / HIDE MODES ── */
-function showNetflix() {
-  document.getElementById('netflixLayout').style.display = '';
-  document.getElementById('flatSection').style.display = 'none';
-}
+            // --- Helper: Render Card ---
+            function renderCard(tool) {
+                // Reusing the logic from your app.js but simplified for this context
+                // If you have 'makeCard' function in app.js, you can use it.
+                // For this standalone snippet, I'll generate a simple card structure.
+                const div = document.createElement('div');
+                div.className = 'card reveal';
+                div.onclick = () => window.location.href = `/tool/${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}/`;
+                
+                div.innerHTML = `
+                    <div class="card-top">
+                        <div class="tool-icon" style="background:${tool.brand||tool.bg}">
+                            ${tool.emoji || '🤖'}
+                        </div>
+                        <div class="badges">
+                            <span class="badge b-${tool.pricing}">${tool.pricing.toUpperCase()}</span>
+                        </div>
+                    </div>
+                    <div class="tool-name">${tool.name}</div>
+                    <div class="tool-desc">${tool.desc || ''}</div>
+                    <div class="stars-row">
+                        <span class="stars">${'★'.repeat(Math.floor(tool.rating))}</span>
+                        <span class="stars-num">${tool.rating}</span>
+                    </div>
+                `;
+                return div;
+            }
 
-function showFlat() {
-  document.getElementById('netflixLayout').style.display = 'none';
-  document.getElementById('flatSection').style.display = '';
-}
+            // --- 1. Render Category Pills ---
+            CATS.forEach(cat => {
+                const a = document.createElement('a');
+                a.className = 'cat-pill-lg';
+                a.href = `/tools/?category=${encodeURIComponent(cat.name)}`;
+                a.innerHTML = `
+                    <div class="cat-pill-inner">
+                        <span>${cat.icon}</span>
+                        <span>${cat.name}</span>
+                    </div>
+                    <span class="cat-pill-arrow">→</span>
+                `;
+                catPillsContainer.appendChild(a);
+            });
 
-/* ── UPDATE RESULTS COUNT ── */
-function setCount(n) {
-  const el = document.getElementById('resultsNum');
-  if (el) el.textContent = n;
-}
+            // --- 2. Render Netflix Rows ---
+            function renderNetflix() {
+                netflixContainer.innerHTML = '';
+                
+                CATS.forEach(cat => {
+                    // Get tools for this category (limit to 5 for the row)
+                    const catTools = TOOLS.filter(t => t.cat === cat.name).slice(0, 6);
+                    if (catTools.length === 0) return;
 
-/* ── MAIN FILTER HANDLER ── */
-function handleFilter() {
-  const q       = (document.getElementById('toolsSearch')?.value || '').toLowerCase().trim();
-  const pricing = document.getElementById('toolsPricing')?.value || '';
-  const sort    = document.getElementById('toolsSort')?.value || 'rank';
+                    const row = document.createElement('div');
+                    row.className = 'netflix-row';
+                    row.innerHTML = `
+                        <div class="netflix-row-header">
+                            <h3>${cat.icon} ${cat.name}</h3>
+                            <a href="/tools/?category=${encodeURIComponent(cat.name)}" class="view-all-btn">View All ${cat.name} Tools →</a>
+                        </div>
+                        <div class="netflix-scroll" id="scroll-${cat.name.replace(/\s/g, '')}">
+                            <!-- Cards -->
+                        </div>
+                    `;
+                    
+                    const scrollContainer = row.querySelector('.netflix-scroll');
+                    catTools.forEach(tool => {
+                        scrollContainer.appendChild(renderCard(tool));
+                    });
+                    
+                    netflixContainer.appendChild(row);
+                });
+            }
 
-  /* Show/hide clear button */
-  const clearBtn = document.getElementById('searchClear');
-  if (clearBtn) clearBtn.classList.toggle('show', q.length > 0);
+            // --- 3. Render Grid (Search/Filter) ---
+            function renderGrid() {
+                gridContainer.innerHTML = '';
+                
+                let filtered = TOOLS.filter(tool => {
+                    // Search Match
+                    const matchSearch = tool.name.toLowerCase().includes(currentSearch) || 
+                                        tool.cat.toLowerCase().includes(currentSearch);
+                    
+                    // Pricing Match
+                    const matchPricing = currentPricing === 'all' || tool.pricing === currentPricing;
 
-  const isFiltered = q || pricing || sort !== 'rank';
+                    return matchSearch && matchPricing;
+                });
 
-  if (!isFiltered) {
-    /* ── DEFAULT: Netflix view ── */
-    showNetflix();
-    setCount(TOOLS.length);
-    hideBanner();
-    return;
-  }
+                // Sorting
+                if (currentSort === 'az') {
+                    filtered.sort((a, b) => a.name.localeCompare(b.name));
+                } else {
+                    // Default ranking sort (by ID or rating)
+                    filtered.sort((a, b) => b.rating - a.rating);
+                }
 
-  /* ── FILTERED: Flat grid ── */
-  showFlat();
+                // Update Counter
+                resultsCounter.innerHTML = `Showing <strong>${filtered.length}</strong> Tools`;
 
-  /* Get matching tools */
-  let matches = TOOLS.filter(t => {
-    const matchQ = !q || (
-      t.name.toLowerCase().includes(q) ||
-      t.desc.toLowerCase().includes(q) ||
-      t.cat.toLowerCase().includes(q) ||
-      (t.tags || []).some(tag => tag.toLowerCase().includes(q))
-    );
-    const matchPrice = !pricing || t.pricing === pricing;
-    return matchQ && matchPrice;
-  });
+                // Render Cards
+                filtered.forEach(tool => {
+                    gridContainer.appendChild(renderCard(tool));
+                });
+            }
 
-  /* Sort */
-  if (sort === 'az') {
-    matches = [...matches].sort((a, b) => a.name.localeCompare(b.name));
-  }
-  /* 'rank' = keep natural data.js order (already by ranking) */
+            // --- Logic Controller ---
+            function updateView() {
+                const hasSearch = currentSearch.length > 0;
+                const hasFilter = currentPricing !== 'all';
+                const shouldFilter = hasSearch || hasFilter;
 
-  /* Render flat grid */
-  renderFlatGrid(matches);
-  setCount(matches.length);
+                if (shouldFilter) {
+                    netflixContainer.style.display = 'none';
+                    gridContainer.classList.add('show');
+                    renderGrid();
+                } else {
+                    netflixContainer.style.display = 'block';
+                    gridContainer.classList.remove('show');
+                    // Reset counter for default view
+                    resultsCounter.innerHTML = `Showing <strong>${TOOLS.length}</strong> Tools`;
+                }
+            }
 
-  /* Update banner */
-  showBanner(q, pricing, sort);
-}
+            // --- Event Listeners ---
+            searchInput.addEventListener('input', (e) => {
+                currentSearch = e.target.value.toLowerCase().trim();
+                updateView();
+            });
 
-/* ── RENDER FLAT GRID ── */
-function renderFlatGrid(tools) {
-  const container = document.getElementById('flatGridEl');
-  const noResults = document.getElementById('noResultsEl');
-  if (!container) return;
+            pricingFilter.addEventListener('change', (e) => {
+                currentPricing = e.target.value;
+                updateView();
+            });
 
-  container.innerHTML = '';
+            sortFilter.addEventListener('change', (e) => {
+                currentSort = e.target.value;
+                updateView();
+            });
 
-  if (!tools.length) {
-    container.style.display = 'none';
-    if (noResults) noResults.style.display = '';
-    return;
-  }
-
-  container.style.display = '';
-  if (noResults) noResults.style.display = 'none';
-
-  tools.forEach(t => {
-    const card = makeCard(t);
-    container.appendChild(card);
-  });
-
-  /* Trigger reveal animation for new cards */
-  requestAnimationFrame(() => {
-    container.querySelectorAll('.card').forEach((c, i) => {
-      c.style.animationDelay = (i * 20) + 'ms';
-      c.classList.add('reveal');
-    });
-  });
-}
-
-/* ── BANNER ── */
-function showBanner(q, pricing, sort) {
-  const banner = document.getElementById('searchBanner');
-  const term = document.getElementById('bannerQuery');
-  if (!banner || !term) return;
-
-  const parts = [];
-  if (q)       parts.push('"' + q + '"');
-  if (pricing) parts.push(pricing.charAt(0).toUpperCase() + pricing.slice(1));
-  if (sort === 'az') parts.push('A → Z');
-
-  if (parts.length) {
-    term.textContent = parts.join(' · ');
-    banner.style.display = '';
-  } else {
-    banner.style.display = 'none';
-  }
-}
-
-function hideBanner() {
-  const banner = document.getElementById('searchBanner');
-  if (banner) banner.style.display = 'none';
-}
-
-/* ── CLEAR ACTIONS ── */
-function clearSearch() {
-  const input = document.getElementById('toolsSearch');
-  if (input) input.value = '';
-  const clearBtn = document.getElementById('searchClear');
-  if (clearBtn) clearBtn.classList.remove('show');
-  handleFilter();
-}
-
-function clearAll() {
-  const input   = document.getElementById('toolsSearch');
-  const pricing = document.getElementById('toolsPricing');
-  const sort    = document.getElementById('toolsSort');
-  if (input)   input.value = '';
-  if (pricing) pricing.value = '';
-  if (sort)    sort.value = 'rank';
-  const clearBtn = document.getElementById('searchClear');
-  if (clearBtn) clearBtn.classList.remove('show');
-  handleFilter();
-}
-
-/* ── KEYBOARD: Escape clears search ── */
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    const input = document.getElementById('toolsSearch');
-    if (input && document.activeElement === input) {
-      clearSearch();
-      input.blur();
-    }
-  }
-});
-
-/* ── INIT ── */
-document.addEventListener('DOMContentLoaded', () => {
-  renderCatPills();
-  renderNetflix();
-  setCount(TOOLS.length);
-
-  /* Handle URL params (e.g. ?pricing=free or ?cat=AI+Assistants) */
-  const params  = new URLSearchParams(window.location.search);
-  const urlCat  = params.get('cat');
-  const urlPrice = params.get('pricing');
-  const urlSort  = params.get('sort');
-
-  if (urlPrice) {
-    const sel = document.getElementById('toolsPricing');
-    if (sel) sel.value = urlPrice;
-  }
-  if (urlSort) {
-    const sel = document.getElementById('toolsSort');
-    if (sel) sel.value = urlSort;
-  }
-  if (urlPrice || urlSort) {
-    handleFilter();
-  }
-
-  if (urlCat) {
-    setTimeout(() => scrollToRow(urlCat), 400);
-  }
-});
-</script>
-
+            // --- Init ---
+            renderNetflix();
+            resultsCounter.innerHTML = `Showing <strong>${TOOLS.length}</strong> Tools`;
+        });
+    </script>
 </body>
 </html>
