@@ -126,7 +126,8 @@
 .tp-lead {
   color: var(--text2);
   font-size: 1.05rem;
-  max-width: 640px;
+  width: 100%;
+  max-width: none;
   margin-bottom: 44px;
   line-height: 1.75;
 }
@@ -210,8 +211,8 @@
 /* Homepage-Style Search Bar */
 .tp-searchbar-wrap {
   position: relative;
-  margin-bottom: 18px;
-  max-width: 820px;
+  margin-bottom: 16px;
+  width: 100%;
 }
 
 .homepage-search {
@@ -268,7 +269,7 @@
   color: #fff;
   border: none;
   border-radius: 100px;
-  padding: 11px 28px;
+  padding: 11px 32px;
   font-size: 0.9rem;
   font-weight: 700;
   font-family: 'Outfit', sans-serif;
@@ -283,21 +284,134 @@
   box-shadow: 0 4px 16px rgba(79,163,255,0.3);
 }
 
-/* Filter Row */
+/* Search + Filter combined row */
+.tp-search-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin-bottom: 0;
+}
+.tp-searchbar-wrap {
+  flex: 1;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+/* Filter Row — inline with search, right-aligned */
 .tp-filter-row {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: wrap;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
 }
-.tp-select-wrap { position: relative; display: inline-flex; align-items: center; }
-.tp-select-icon { position: absolute; left: 14px; pointer-events: none; font-size: 0.95rem; z-index: 2; }
-.tp-select {
-  padding: 12px 44px 12px 38px;
+
+/* Custom dropdown wrapper */
+.tp-select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Custom styled select with icon inside */
+.tp-select-icon {
+  position: absolute;
+  left: 14px;
+  pointer-events: none;
+  font-size: 0.9rem;
+  z-index: 2;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Custom dropdown container for enhanced dropdown */
+.tp-custom-dropdown {
+  position: relative;
+  display: inline-block;
+}
+.tp-dropdown-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  height: 52px;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 12px;
-  color: var(--text2);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  white-space: nowrap;
+  min-width: 160px;
+  justify-content: space-between;
+  transition: all 0.2s;
+}
+.tp-dropdown-btn:hover,
+.tp-dropdown-btn.open {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(79,163,255,0.12);
+}
+.tp-dropdown-btn .dd-icon { font-size: 0.92rem; }
+.tp-dropdown-btn .dd-label { flex: 1; text-align: left; }
+.tp-dropdown-btn .dd-caret {
+  font-size: 0.65rem;
+  color: var(--text3);
+  transition: transform 0.2s;
+}
+.tp-dropdown-btn.open .dd-caret { transform: rotate(180deg); }
+
+.tp-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  z-index: 100;
+  min-width: 100%;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  animation: ddFadeIn 0.15s ease;
+}
+.tp-dropdown-menu.open { display: block; }
+@keyframes ddFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tp-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  font-size: 0.88rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+.tp-dropdown-option:hover { background: rgba(79,163,255,0.08); }
+.tp-dropdown-option.selected {
+  background: rgba(79,163,255,0.1);
+  color: var(--accent);
+}
+.tp-dropdown-option .opt-icon { font-size: 0.95rem; }
+
+/* Hidden real select for accessibility fallback */
+.tp-select {
+  padding: 0 46px 0 40px;
+  height: 52px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
   font-size: 0.88rem;
   font-family: 'Outfit', sans-serif;
   font-weight: 600;
@@ -305,42 +419,52 @@
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238899bb' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238899bb' stroke-width='1.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
-  min-width: 158px;
+  min-width: 160px;
   transition: all 0.2s;
 }
 .tp-select:hover, .tp-select:focus {
   border-color: var(--accent);
-  color: var(--text);
-  box-shadow: 0 0 12px rgba(79,163,255,0.15);
+  box-shadow: 0 0 0 3px rgba(79,163,255,0.12);
 }
-.tp-select option { background: var(--surface2); color: var(--text); }
+.tp-select option { background: var(--surface2); color: var(--text); padding: 8px; }
 
+/* Results box — hidden by default, shown only when searching */
 .tp-results-box {
-  display: inline-flex;
+  display: none;
   align-items: center;
-  gap: 8px;
-  padding: 12px 18px;
+  gap: 6px;
+  padding: 0 16px;
+  height: 52px;
   background: var(--surface);
   border: 1.5px solid var(--border);
   border-radius: 12px;
   white-space: nowrap;
 }
+.tp-results-box.visible {
+  display: inline-flex;
+}
 .rc-num {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--accent);
   min-width: 20px;
   text-align: center;
 }
 .rc-label {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--text3);
   font-family: 'JetBrains Mono', monospace;
+}
+
+@media (max-width: 768px) {
+  .tp-search-filter-row { flex-wrap: wrap; }
+  .tp-filter-row { flex-wrap: wrap; width: 100%; }
+  .tp-dropdown-btn { min-width: 140px; }
 }
 
 /* ══ NETFLIX LAYOUT ══ */
@@ -398,32 +522,36 @@
 
 .nf-header-right { display: flex; align-items: center; gap: 8px; }
 
-/* Scroll Arrow Buttons */
+/* Scroll Arrow Buttons — bigger size */
 .nf-arrow-btn {
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   background: var(--surface);
   border: 1.5px solid var(--border);
-  color: var(--text2);
-  font-size: 1rem;
+  color: var(--text);
+  font-size: 1.8rem;
+  line-height: 1;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s;
   flex-shrink: 0;
+  font-weight: 400;
 }
 .nf-arrow-btn:hover {
   background: rgba(79,163,255,0.1);
   border-color: var(--accent);
   color: var(--accent);
-  transform: scale(1.05);
+  transform: scale(1.08);
+  box-shadow: 0 0 14px rgba(79,163,255,0.2);
 }
 .nf-arrow-btn:disabled {
-  opacity: 0.35;
+  opacity: 0.3;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 .nf-view-all-btn {
@@ -471,12 +599,12 @@
 /* Each card has fixed width */
 .nf-card {
   background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
   transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   cursor: pointer;
   position: relative;
@@ -484,159 +612,171 @@
   animation: nfCardIn 0.35s ease both;
   text-decoration: none;
   color: inherit;
-  flex: 0 0 260px;
-  min-width: 260px;
+  flex: 0 0 270px;
+  min-width: 270px;
 }
-@media (max-width: 640px) { .nf-card { flex: 0 0 220px; min-width: 220px; } }
+@media (max-width: 640px) { .nf-card { flex: 0 0 230px; min-width: 230px; } }
 
-.nf-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--card-hover-bg);
-  opacity: 0;
-  transition: opacity 0.25s;
-  pointer-events: none;
-  border-radius: inherit;
-}
 .nf-card:hover {
-  border-color: var(--border-md);
-  transform: translateY(-5px);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.45), 0 0 0 1px rgba(79,163,255,0.08), 0 0 28px rgba(79,163,255,0.1);
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 0 1px rgba(79,163,255,0.12), 0 0 28px rgba(79,163,255,0.1);
 }
-.nf-card:hover::after { opacity: 1; }
 
 @keyframes nfCardIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Card content */
+/* Top row: logo left + pricing badge top-right */
 .nf-card-top {
   display: flex;
   align-items: flex-start;
-  gap: 12px;
+  justify-content: space-between;
+  margin-bottom: 16px;
   position: relative;
   z-index: 1;
 }
 
-/* Logo without background — transparent */
+/* Logo — transparent bg, clean */
 .nf-card-icon {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  font-size: 1.5rem;
-  background: transparent;
+  font-size: 1.6rem;
+  background: var(--surface2);
   border: 1px solid var(--border);
-  padding: 3px;
 }
 .nf-card-icon img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  border-radius: 8px;
+  border-radius: 10px;
   background: transparent;
 }
-.nf-card-info { flex: 1; min-width: 0; }
+
+/* Pricing badge top-right */
+.nf-card-badge-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.nf-card-info { 
+  margin-bottom: 8px;
+  position: relative;
+  z-index: 1;
+}
 .nf-card-name {
-  font-size: 0.96rem;
+  font-size: 1.05rem;
   font-weight: 800;
   color: var(--text);
   letter-spacing: -0.02em;
   margin-bottom: 5px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 .nf-card-cat {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-family: 'JetBrains Mono', monospace;
   color: var(--text3);
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   font-weight: 500;
-  margin-bottom: 4px;
 }
-.nf-card-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+.nf-card-badges { 
+  display: flex; 
+  gap: 4px; 
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
 
 .nf-card-desc {
-  font-size: 0.79rem;
+  font-size: 0.82rem;
   color: var(--text2);
-  line-height: 1.55;
+  line-height: 1.6;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   position: relative;
   z-index: 1;
+  margin-bottom: 14px;
+  flex: 1;
 }
 
 .nf-card-rating {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
   position: relative;
   z-index: 1;
+  margin-bottom: 16px;
 }
-.nf-stars { color: var(--gold); font-size: 0.72rem; letter-spacing: 1.5px; }
+.nf-stars { color: var(--gold); font-size: 0.78rem; letter-spacing: 1.5px; }
 .nf-rating-val {
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-family: 'JetBrains Mono', monospace;
   color: var(--text2);
-  font-weight: 500;
+  font-weight: 600;
 }
 .nf-reviews { font-size: 0.72rem; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
 
+/* Full-width View Details button at bottom — homepage style */
 .nf-card-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   margin-top: auto;
-  padding-top: 2px;
   position: relative;
   z-index: 1;
 }
+
 .nf-pricing-tag {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  padding: 3px 9px;
-  border-radius: 100px;
+  padding: 5px 12px;
+  border-radius: 7px;
 }
-.nf-pricing-tag.free     { color: var(--green); background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
-.nf-pricing-tag.freemium { color: var(--gold);  background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); }
+.nf-pricing-tag.free     { color: var(--green); background: rgba(52,211,153,0.12); border: 1px solid rgba(52,211,153,0.25); }
+.nf-pricing-tag.freemium { color: var(--gold);  background: rgba(251,191,36,0.12); border: 1px solid rgba(251,191,36,0.25); }
 .nf-pricing-tag.paid     { color: var(--text3); background: var(--surface3); border: 1px solid var(--border); }
 
+/* View Details button — full width, homepage style */
 .nf-view-link {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 0.78rem;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--text);
   text-decoration: none;
-  padding: 6px 12px;
-  border: 1px solid rgba(79,163,255,0.2);
-  border-radius: 8px;
-  background: rgba(79,163,255,0.05);
-  transition: all 0.18s;
+  padding: 10px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  transition: all 0.2s;
   font-family: 'Outfit', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
 }
 .nf-view-link:hover {
-  background: rgba(79,163,255,0.14);
+  background: rgba(79,163,255,0.08);
   border-color: var(--accent);
-  transform: translateX(1px);
+  color: var(--accent);
+}
+.nf-card:hover .nf-view-link {
+  border-color: rgba(79,163,255,0.4);
 }
 
-/* ══ FLAT GRID (search mode) ══ */
+/* ══ FLAT GRID (search mode) — uses nf-card style in a proper grid ══ */
 .tp-flat-section {
   position: relative;
   z-index: 1;
@@ -645,6 +785,18 @@
   padding: 0 32px 80px;
 }
 @media (max-width: 768px) { .tp-flat-section { padding: 0 16px 60px; } }
+
+/* Grid wrapper for search results using nf-cards */
+#flatGridEl {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 16px;
+}
+#flatGridEl .nf-card {
+  flex: unset !important;
+  min-width: unset !important;
+  width: 100%;
+}
 
 .tp-search-banner {
   display: flex;
@@ -704,6 +856,43 @@
   margin-bottom: 32px;
 }
 .tp-best-table-section .section-header .tp-badge { margin-bottom: 16px; }
+.tp-best-table-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.tp-best-table-header-row .section-title {
+  margin-bottom: 0;
+}
+.tp-compare-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.22s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.tp-compare-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(79,163,255,0.3);
+}
+.tp-compare-btn .btn-arrow { transition: transform 0.2s; }
+.tp-compare-btn:hover .btn-arrow { transform: translateX(3px); }
 .section-title {
   font-size: clamp(1.8rem, 3.5vw, 2.4rem);
   font-weight: 900;
@@ -723,7 +912,8 @@
   color: var(--text2);
   font-size: 0.95rem;
   line-height: 1.7;
-  max-width: 580px;
+  max-width: none;
+  width: 100%;
 }
 
 .best-table-wrap {
@@ -862,131 +1052,6 @@
   border-color: var(--accent);
 }
 
-/* ══ NEWSLETTER — HOMEPAGE STYLE ══ */
-.tp-newsletter-section {
-  padding: 0 32px 100px;
-}
-@media (max-width: 768px) { .tp-newsletter-section { padding: 0 16px 80px; } }
-
-.tp-nl-inner {
-  max-width: 1380px;
-  margin: 0 auto;
-}
-
-.tp-nl-box {
-  position: relative;
-  border-radius: 20px;
-  padding: 56px 40px;
-  text-align: center;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(79,163,255,0.04) 0%, rgba(139,92,246,0.04) 100%);
-  border: 1.5px solid rgba(79,163,255,0.15);
-}
-@media (max-width: 640px) { .tp-nl-box { padding: 40px 24px; } }
-
-.tp-nl-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(79,163,255,0.05) 0%, transparent 50%, rgba(139,92,246,0.05) 100%);
-  pointer-events: none;
-}
-
-/* Glowing border effect */
-.tp-nl-box::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 20px;
-  background: linear-gradient(135deg, rgba(79,163,255,0.4), rgba(139,92,246,0.2), rgba(79,163,255,0.15));
-  z-index: -1;
-}
-
-.tp-nl-glow {
-  position: absolute;
-  width: 400px;
-  height: 200px;
-  background: radial-gradient(ellipse at center, rgba(79,163,255,0.15), transparent 70%);
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-.tp-nl-box h2 {
-  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  margin-bottom: 12px;
-  position: relative;
-  z-index: 1;
-}
-.tp-nl-box p {
-  color: var(--text2);
-  font-size: 1rem;
-  line-height: 1.65;
-  margin-bottom: 32px;
-  max-width: 520px;
-  margin-left: auto;
-  margin-right: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.tp-nl-form {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: 520px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-@media (max-width: 560px) { .tp-nl-form { flex-direction: column; } }
-
-.tp-nl-form input {
-  flex: 1;
-  padding: 14px 20px;
-  background: var(--surface);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  color: var(--text);
-  font-size: 0.95rem;
-  font-family: 'Outfit', sans-serif;
-  font-weight: 500;
-  outline: none;
-  transition: all 0.25s;
-}
-.tp-nl-form input::placeholder { color: var(--text3); }
-.tp-nl-form input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(79,163,255,0.1);
-}
-
-.tp-nl-form .nl-btn {
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 14px 28px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  font-family: 'Outfit', sans-serif;
-  cursor: pointer;
-  transition: all 0.22s;
-  white-space: nowrap;
-}
-.tp-nl-form .nl-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(79,163,255,0.3);
-}
-@media (max-width: 560px) {
-  .tp-nl-form input, .tp-nl-form .nl-btn { width: 100%; }
-}
-
 /* ══ DIVIDER ══ */
 .section-divider {
   height: 1px;
@@ -1019,7 +1084,7 @@
   <h1 class="tp-h1">Discover the <em>Best AI Tools</em></h1>
 
   <p class="tp-lead">
-    Explore over 500 artificial intelligence tools across 20 curated categories. From AI assistants and image generators to code assistants and research tools — find the perfect AI software for every creative, business, and technical workflow. Updated monthly with expert reviews and ratings.
+    Explore over 500 artificial intelligence tools across 20 curated categories. From AI assistants and image generators to code assistants and research tools, find the perfect AI software for every creative, business, and technical workflow. Updated monthly with expert reviews and ratings.
   </p>
 
   <div class="tp-pills-grid" id="catPillsContainer" role="list" aria-label="Browse AI tool categories"></div>
@@ -1035,48 +1100,85 @@
   <h2 class="tp-h2">Search <em>All AI Tools</em></h2>
   <p class="tp-search-sub">Find any AI tool by name, category, or feature. Filter by pricing model and sort by ranking or alphabetically.</p>
 
-  <!-- Homepage-Style Search Bar -->
-  <div class="tp-searchbar-wrap">
-    <div class="homepage-search">
-      <span class="hs-icon">🔍</span>
-      <input
-        type="text"
-        id="toolsSearch"
-        placeholder="Search ChatGPT, Midjourney, Runway, Notion AI..."
-        oninput="handleFilter()"
-        autocomplete="off"
-        spellcheck="false"
-        aria-label="Search AI tools by name, category or description"
-      >
-      <button class="hs-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">✕</button>
-      <button class="hs-btn" onclick="handleFilter()">Search</button>
-    </div>
-  </div>
-
-  <!-- Filter Row -->
-  <div class="tp-filter-row">
-    <div class="tp-select-wrap">
-      <span class="tp-select-icon">💰</span>
-      <select id="toolsPricing" class="tp-select" onchange="handleFilter()" aria-label="Filter by pricing model">
-        <option value="">All Pricing</option>
-        <option value="free">Free</option>
-        <option value="freemium">Freemium</option>
-        <option value="paid">Paid</option>
-      </select>
+  <!-- Search + Filters in one row -->
+  <div class="tp-search-filter-row">
+    <!-- Homepage-Style Search Bar -->
+    <div class="tp-searchbar-wrap">
+      <div class="homepage-search">
+        <span class="hs-icon">🔍</span>
+        <input
+          type="text"
+          id="toolsSearch"
+          placeholder="Search ChatGPT, Midjourney, Runway, Notion AI..."
+          oninput="handleFilter()"
+          autocomplete="off"
+          spellcheck="false"
+          aria-label="Search AI tools by name, category or description"
+        >
+        <button class="hs-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">✕</button>
+        <button class="hs-btn" onclick="handleFilter()">Search</button>
+      </div>
     </div>
 
-    <div class="tp-select-wrap">
-      <span class="tp-select-icon">📊</span>
-      <select id="toolsSort" class="tp-select" onchange="handleFilter()" aria-label="Sort AI tools">
-        <option value="rank">By Ranking</option>
-        <option value="az">A to Z</option>
-      </select>
-    </div>
+    <!-- Filter Row — inline right of search -->
+    <div class="tp-filter-row">
+      <!-- Custom Pricing Dropdown -->
+      <div class="tp-custom-dropdown" id="pricingDropdown">
+        <button class="tp-dropdown-btn" id="pricingBtn" onclick="toggleDropdown('pricingDropdown')" aria-label="Filter by pricing model">
+          <span class="dd-icon">💰</span>
+          <span class="dd-label" id="pricingLabel">All Pricing</span>
+          <span class="dd-caret">▾</span>
+        </button>
+        <div class="tp-dropdown-menu" id="pricingMenu">
+          <div class="tp-dropdown-option selected" data-value="" onclick="selectDropdown('pricingDropdown', '', '💰 All Pricing', '💰')">
+            <span class="opt-icon">💰</span> All Pricing
+          </div>
+          <div class="tp-dropdown-option" data-value="free" onclick="selectDropdown('pricingDropdown', 'free', '🆓 Free Only', '🆓')">
+            <span class="opt-icon">🆓</span> Free Only
+          </div>
+          <div class="tp-dropdown-option" data-value="freemium" onclick="selectDropdown('pricingDropdown', 'freemium', '⚡ Freemium', '⚡')">
+            <span class="opt-icon">⚡</span> Freemium
+          </div>
+          <div class="tp-dropdown-option" data-value="paid" onclick="selectDropdown('pricingDropdown', 'paid', '💎 Paid Only', '💎')">
+            <span class="opt-icon">💎</span> Paid Only
+          </div>
+        </div>
+        <!-- Hidden real select for form submission -->
+        <select id="toolsPricing" style="display:none" onchange="handleFilter()" aria-label="Filter by pricing model">
+          <option value="">All Pricing</option>
+          <option value="free">Free Only</option>
+          <option value="freemium">Freemium</option>
+          <option value="paid">Paid Only</option>
+        </select>
+      </div>
 
-    <div class="tp-results-box" id="resultsBox" aria-live="polite" aria-label="Number of AI tools found">
-      <span>📋</span>
-      <span class="rc-num" id="resultsNum">0</span>
-      <span class="rc-label">Tools</span>
+      <!-- Sort Dropdown -->
+      <div class="tp-custom-dropdown" id="sortDropdown">
+        <button class="tp-dropdown-btn" id="sortBtn" onclick="toggleDropdown('sortDropdown')" aria-label="Sort AI tools">
+          <span class="dd-icon">📊</span>
+          <span class="dd-label" id="sortLabel">By Ranking</span>
+          <span class="dd-caret">▾</span>
+        </button>
+        <div class="tp-dropdown-menu" id="sortMenu">
+          <div class="tp-dropdown-option selected" data-value="rank" onclick="selectDropdown('sortDropdown', 'rank', '📊 By Ranking', '📊')">
+            <span class="opt-icon">📊</span> By Ranking
+          </div>
+          <div class="tp-dropdown-option" data-value="az" onclick="selectDropdown('sortDropdown', 'az', '🔤 A to Z', '🔤')">
+            <span class="opt-icon">🔤</span> A to Z
+          </div>
+        </div>
+        <select id="toolsSort" style="display:none" onchange="handleFilter()" aria-label="Sort AI tools">
+          <option value="rank">By Ranking</option>
+          <option value="az">A to Z</option>
+        </select>
+      </div>
+
+      <!-- Results count — only shown when filtering/searching -->
+      <div class="tp-results-box" id="resultsBox" aria-live="polite" aria-label="Number of AI tools found">
+        <span>📋</span>
+        <span class="rc-num" id="resultsNum">0</span>
+        <span class="rc-label">Tools</span>
+      </div>
     </div>
   </div>
 
@@ -1117,8 +1219,13 @@
 <section class="tp-best-table-section" aria-labelledby="bestTableTitle">
   <div class="section-header">
     <span class="tp-badge">// EXPERT PICKS</span>
-    <h2 class="section-title" id="bestTableTitle">The <em>Top Rated AI Tool</em> in Every Category</h2>
-    <p class="section-desc">Our experts tested hundreds of AI tools across every category. These are the highest rated picks based on performance, features, ease of use, and value — updated for 2026.</p>
+    <div class="tp-best-table-header-row">
+      <h2 class="section-title" id="bestTableTitle">The <em>Top Rated AI Tool</em> in Every Category</h2>
+      <a href="/compare/" class="tp-compare-btn" aria-label="Go to Compare AI Tools page">
+        Compare Tools <span class="btn-arrow">→</span>
+      </a>
+    </div>
+    <p class="section-desc">Our experts tested hundreds of AI tools across every category. These are the highest rated picks based on performance, features, ease of use, and value, updated for 2026.</p>
   </div>
 
   <div class="best-table-wrap" role="region" aria-label="Best AI tools by category table">
@@ -1145,22 +1252,15 @@
 <!-- ╔══════════════════════════════════════════════════╗
      ║  SECTION 5 — NEWSLETTER (homepage style)        ║
      ╚══════════════════════════════════════════════════╝ -->
-<div class="tp-newsletter-section">
-  <div class="tp-nl-inner">
-    <div class="tp-nl-box" role="complementary" aria-label="Newsletter signup">
-      <div class="tp-nl-glow"></div>
-      <h2>Stay Ahead of the AI Curve</h2>
-      <p>Weekly digest of the best new AI tools, free alternatives, and expert reviews — straight to your inbox. Join over 40,000 readers who never miss an AI update.</p>
-      <div class="tp-nl-form">
-        <input
-          type="email"
-          id="nlEmail"
-          placeholder="your@email.com"
-          aria-label="Email address for newsletter"
-          onkeydown="if(event.key==='Enter'){event.preventDefault();subscribeNewsletter(this.nextElementSibling);}"
-        >
-        <button class="nl-btn" onclick="subscribeNewsletter(this)">Subscribe</button>
-      </div>
+<div class="newsletter-block" style="padding-bottom: 100px;">
+  <div class="newsletter-inner">
+    <div class="newsletter-glow"></div>
+    <h2>Stay Ahead of the AI Curve</h2>
+    <p>Weekly digest of the best new AI tools, free alternatives, and expert reviews — straight to your inbox.</p>
+    <div class="nl-form">
+      <input type="email" id="nlEmail" placeholder="your@email.com" aria-label="Email address for newsletter"
+        onkeydown="if(event.key==='Enter'){event.preventDefault();subscribeNewsletter(this.nextElementSibling);}">
+      <button class="btn-primary" onclick="subscribeNewsletter(this)">Subscribe</button>
     </div>
   </div>
 </div>
@@ -1223,7 +1323,7 @@ function nfLogo(t, size) {
   return `<span style="font-size:1.4rem">${t.emoji || '🤖'}</span>`;
 }
 
-/* ── BUILD A NETFLIX CARD ── */
+/* ── BUILD A NETFLIX CARD — homepage card style ── */
 function makeNfCard(t, delay) {
   const div = document.createElement('a');
   div.className = 'nf-card';
@@ -1237,17 +1337,20 @@ function makeNfCard(t, delay) {
   let starsHtml = '★'.repeat(fullStars);
   if (hasHalf) starsHtml += '½';
   const pricingClass = t.pricing || 'paid';
-  const pricingLabel = t.pricing === 'free' ? 'Free' : t.pricing === 'freemium' ? 'Freemium' : 'Paid';
+  const pricingLabel = t.pricing === 'free' ? 'FREE' : t.pricing === 'freemium' ? 'FREEMIUM' : 'PAID';
 
   div.innerHTML = `
     <div class="nf-card-top">
-      <div class="nf-card-icon">${nfLogo(t, 50)}</div>
-      <div class="nf-card-info">
-        <div class="nf-card-name">${t.name}</div>
-        <div class="nf-card-cat">${t.cat}</div>
-        <div class="nf-card-badges">${nfBadge(t)}</div>
+      <div class="nf-card-icon">${nfLogo(t, 52)}</div>
+      <div class="nf-card-badge-wrap">
+        <span class="nf-pricing-tag ${pricingClass}">${pricingLabel}</span>
       </div>
     </div>
+    <div class="nf-card-info">
+      <div class="nf-card-name">${t.name}</div>
+      <div class="nf-card-cat">${t.cat}</div>
+    </div>
+    <div class="nf-card-badges">${nfBadge(t)}</div>
     <div class="nf-card-desc">${t.desc}</div>
     <div class="nf-card-rating">
       <span class="nf-stars" aria-label="${t.rating} stars">${starsHtml}</span>
@@ -1255,8 +1358,7 @@ function makeNfCard(t, delay) {
       <span class="nf-reviews">· ${t.reviews} reviews</span>
     </div>
     <div class="nf-card-footer">
-      <span class="nf-pricing-tag ${pricingClass}">${pricingLabel}</span>
-      <span class="nf-view-link" onclick="event.stopPropagation()">View Details →</span>
+      <span class="nf-view-link">View Details →</span>
     </div>
   `;
 
@@ -1498,18 +1600,28 @@ function handleFilter() {
   const clearBtn = document.getElementById('searchClear');
   if (clearBtn) clearBtn.classList.toggle('show', q.length > 0);
 
-  const isFiltered = q || pricing || sort !== 'rank';
+  const isFiltered = q.length > 0 || pricing !== '' || sort !== 'rank';
+
+  // Show/hide results box
+  const resultsBox = document.getElementById('resultsBox');
+  if (resultsBox) {
+    if (isFiltered) {
+      resultsBox.classList.add('visible');
+    } else {
+      resultsBox.classList.remove('visible');
+    }
+  }
 
   if (!isFiltered) {
     showNetflix();
-    setCount(TOOLS.length);
+    setCount(typeof TOOLS !== 'undefined' ? TOOLS.length : 0);
     hideBanner();
     return;
   }
 
   showFlat();
 
-  let matches = TOOLS.filter(t => {
+  let matches = (typeof TOOLS !== 'undefined' ? TOOLS : []).filter(t => {
     const matchQ = !q || (
       t.name.toLowerCase().includes(q) ||
       t.desc.toLowerCase().includes(q) ||
@@ -1545,17 +1657,13 @@ function renderFlatGrid(tools) {
   container.style.display = '';
   if (noResults) noResults.style.display = 'none';
 
-  tools.forEach(t => {
-    if (typeof makeCard === 'function') {
-      container.appendChild(makeCard(t));
-    }
-  });
-
-  requestAnimationFrame(() => {
-    container.querySelectorAll('.card').forEach((c, i) => {
-      c.style.animationDelay = (i * 20) + 'ms';
-      c.classList.add('reveal');
-    });
+  // Use makeNfCard — same card design as the Netflix rows (homepage style)
+  tools.forEach((t, i) => {
+    const card = makeNfCard(t, i * 20);
+    // Override flex-shrink so it wraps in grid properly
+    card.style.flex = '';
+    card.style.minWidth = '';
+    container.appendChild(card);
   });
 }
 
@@ -1624,6 +1732,52 @@ function subscribeNewsletter(btn) {
     if (emailInput) emailInput.value = '';
   }
 }
+
+/* ── CUSTOM DROPDOWN LOGIC ── */
+function toggleDropdown(id) {
+  const dd = document.getElementById(id);
+  if (!dd) return;
+  const btn  = dd.querySelector('.tp-dropdown-btn');
+  const menu = dd.querySelector('.tp-dropdown-menu');
+  const isOpen = menu.classList.contains('open');
+  // Close all dropdowns first
+  document.querySelectorAll('.tp-dropdown-menu').forEach(m => m.classList.remove('open'));
+  document.querySelectorAll('.tp-dropdown-btn').forEach(b => b.classList.remove('open'));
+  if (!isOpen) {
+    menu.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
+function selectDropdown(ddId, value, labelText, icon) {
+  const dd = document.getElementById(ddId);
+  if (!dd) return;
+  // Update label
+  const labelEl = dd.querySelector('.dd-label');
+  if (labelEl) labelEl.textContent = labelText;
+  const iconEl = dd.querySelector('.dd-icon');
+  if (iconEl) iconEl.textContent = icon;
+  // Update selected state in options
+  dd.querySelectorAll('.tp-dropdown-option').forEach(opt => {
+    opt.classList.toggle('selected', opt.dataset.value === value);
+  });
+  // Update hidden select
+  const select = dd.querySelector('select');
+  if (select) { select.value = value; }
+  // Close dropdown
+  dd.querySelector('.tp-dropdown-menu').classList.remove('open');
+  dd.querySelector('.tp-dropdown-btn').classList.remove('open');
+  // Trigger filter
+  handleFilter();
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.tp-custom-dropdown')) {
+    document.querySelectorAll('.tp-dropdown-menu').forEach(m => m.classList.remove('open'));
+    document.querySelectorAll('.tp-dropdown-btn').forEach(b => b.classList.remove('open'));
+  }
+});
 
 /* ── INIT ── */
 document.addEventListener('DOMContentLoaded', () => {
