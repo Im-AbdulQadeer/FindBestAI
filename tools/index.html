@@ -1,483 +1,1658 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All AI Tools - Find Best AI</title>
-    <link rel="stylesheet" href="main.css">
-    <style>
-        /* =========================================
-           PAGE SPECIFIC OVERRIDES & LAYOUT
-           ========================================= */
-        
-        /* --- Section 1: Categories Header --- */
-        .cat-hero {
-            text-align: center;
-            padding: 60px 32px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .cat-hero h1 {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 16px;
-            letter-spacing: -0.04em;
-        }
-        .cat-hero p {
-            font-size: 1.05rem;
-            color: var(--text2);
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto 32px;
-        }
+<meta charset="UTF-8">
+<link rel="icon" type="image/png" href="/logo.png">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="apple-touch-icon" sizes="512x512" href="/logo-512.png">
+<link rel="apple-touch-icon" sizes="192x192" href="/logo-192.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-        /* Category Pills Grid */
-        .cat-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 14px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-        .cat-pill-lg {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 14px 24px;
-            background: var(--surface2);
-            border: 1px solid var(--border-md);
-            border-radius: 100px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            min-width: 200px;
-            flex: 1 1 200px;
-            max-width: 260px;
-            text-decoration: none;
-            color: var(--text);
-        }
-        .cat-pill-lg:hover {
-            background: var(--surface3);
-            border-color: var(--accent);
-            transform: translateY(-2px);
-        }
-        .cat-pill-inner {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .cat-pill-arrow {
-            color: var(--text3);
-            transition: transform 0.2s;
-        }
-        .cat-pill-lg:hover .cat-pill-arrow {
-            transform: translateX(4px);
-            color: var(--accent);
-        }
+<!-- SEO Meta Tags -->
+<title>Best AI Tools Directory 2026 — Find Free and Premium Artificial Intelligence Software</title>
+<meta name="description" content="Browse 500 plus AI tools across 20 categories. Discover the best free AI tools, premium alternatives, and expert reviews for writing, coding, image generation, video editing, research, and more. Updated monthly.">
+<meta name="keywords" content="best AI tools, free AI tools, AI tools directory, artificial intelligence software, AI image generators, AI writing tools, AI code assistants, ChatGPT alternatives, AI productivity tools 2026">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="FindBestAI">
 
-        /* --- Section 2: Tools Header & Filter Bar --- */
-        .tools-header {
-            padding: 60px 32px 0;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .tools-header h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-        .tools-header p {
-            color: var(--text2);
-            margin-bottom: 32px;
-        }
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Best AI Tools Directory 2026 — Find Free and Premium Artificial Intelligence Software">
+<meta property="og:description" content="Browse 500 plus AI tools across 20 categories. Expert-curated directory of the best free and premium AI tools for writing, coding, image generation, video editing, and more.">
+<meta property="og:image" content="https://findbestai.app/logo-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:url" content="https://findbestai.app/tools/">
+<meta property="og:site_name" content="Find Best AI">
 
-        /* The Sticky Filter Bar */
-        .filter-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-        
-        /* Search Box in Filter Bar */
-        .filter-search {
-            flex: 1 1 300px;
-            position: relative;
-        }
-        .filter-search input {
-            width: 100%;
-            padding: 14px 16px 14px 44px;
-            background: var(--surface2);
-            border: 1px solid var(--border-md);
-            border-radius: 12px;
-            color: var(--text);
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.2s;
-        }
-        .filter-search input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--glow);
-        }
-        .filter-search i {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text3);
-        }
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Best AI Tools Directory 2026 — Find Free and Premium AI Software">
+<meta name="twitter:description" content="Browse 500 plus expert-curated AI tools across 20 categories. Find the best free and paid AI tools for any task.">
+<meta name="twitter:image" content="https://findbestai.app/logo-512.png">
 
-        /* Dropdowns */
-        .filter-select {
-            padding: 14px 36px 14px 16px;
-            background: var(--surface2);
-            border: 1px solid var(--border-md);
-            border-radius: 12px;
-            color: var(--text);
-            font-size: 0.95rem;
-            cursor: pointer;
-            outline: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238899bb' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 14px center;
-            min-width: 140px;
-        }
-        .filter-select:focus {
-            border-color: var(--accent);
-        }
+<link rel="canonical" href="https://findbestai.app/tools/">
 
-        /* Results Counter */
-        .results-counter {
-            margin-left: auto;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--text2);
-            background: var(--surface3);
-            padding: 10px 16px;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            white-space: nowrap;
-        }
-        .results-counter strong {
-            color: var(--accent);
-            font-size: 1.1rem;
-        }
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Best AI Tools Directory 2026",
+  "url": "https://findbestai.app/tools/",
+  "description": "Browse 500 plus AI tools across 20 categories including AI assistants, image generation, video editing, code assistants, writing tools, research, voice, music, and more.",
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "AI Tools Directory",
+    "numberOfItems": "500",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "ChatGPT", "url": "https://findbestai.app/tool/chatgpt/"},
+      {"@type": "ListItem", "position": 2, "name": "Claude", "url": "https://findbestai.app/tool/claude/"},
+      {"@type": "ListItem", "position": 3, "name": "Midjourney", "url": "https://findbestai.app/tool/midjourney/"},
+      {"@type": "ListItem", "position": 4, "name": "GitHub Copilot", "url": "https://findbestai.app/tool/github-copilot/"}
+    ]
+  },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://findbestai.app/"},
+      {"@type": "ListItem", "position": 2, "name": "All AI Tools", "item": "https://findbestai.app/tools/"}
+    ]
+  }
+}
+</script>
 
-        /* --- Section 3: Netflix Style Rows --- */
-        .netflix-section {
-            padding: 0 32px 80px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
-        .netflix-row {
-            margin-bottom: 48px;
-        }
-        .netflix-row-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-            padding: 0 4px;
-        }
-        .netflix-row-header h3 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--text);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .view-all-btn {
-            font-size: 0.85rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: color 0.2s;
-        }
-        .view-all-btn:hover {
-            text-decoration: underline;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://logo.clearbit.com">
+<link rel="preconnect" href="https://upload.wikimedia.org">
+<link rel="preconnect" href="https://img.logo.dev">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/main.css">
 
-        /* Horizontal Scroll Container */
-        .netflix-scroll {
-            display: flex;
-            gap: 16px;
-            overflow-x: auto;
-            padding-bottom: 16px;
-            /* Hide scrollbar but allow scrolling */
-            scrollbar-width: none; 
-            -ms-overflow-style: none;
-        }
-        .netflix-scroll::-webkit-scrollbar { display: none; }
+<style>
+/* ══════════════════════════════════════════════════════
+   TOOLS PAGE — FULL REDESIGN
+══════════════════════════════════════════════════════ */
 
-        /* Card sizing for horizontal row */
-        .netflix-scroll .card {
-            min-width: 280px;
-            max-width: 280px;
-            flex-shrink: 0;
-            /* Ensure hover effects don't break layout */
-            margin: 0; 
-        }
+.tp-wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+@media (max-width: 768px) { .tp-wrap { padding: 0 16px; } }
 
-        /* --- Section 4: Grid Layout (Active on Search) --- */
-        .tools-grid-active {
-            display: none; /* Hidden by default */
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            padding: 0 32px 80px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        .tools-grid-active.show {
-            display: grid;
-        }
+/* ══ HERO / CATEGORIES SECTION ══ */
+.tp-cats-section {
+  padding-top: 72px;
+  padding-bottom: 52px;
+}
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .filter-bar { flex-direction: column; align-items: stretch; }
-            .results-counter { margin-left: 0; text-align: center; }
-            .netflix-scroll .card { min-width: 240px; max-width: 240px; }
-            .cat-pill-lg { min-width: 100%; }
-        }
-    </style>
+.tp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding: 6px 14px;
+  background: rgba(79,163,255,0.08);
+  border: 1px solid rgba(79,163,255,0.2);
+  border-radius: 100px;
+}
+
+.tp-h1 {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 14px;
+  line-height: 1.08;
+}
+.tp-h1 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tp-lead {
+  color: var(--text2);
+  font-size: 1.05rem;
+  max-width: 640px;
+  margin-bottom: 44px;
+  line-height: 1.75;
+}
+
+/* Category Pills */
+.tp-pills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px 11px 14px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  text-decoration: none;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  white-space: nowrap;
+  font-family: 'Outfit', sans-serif;
+}
+.tp-pill:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(79,163,255,0.06);
+  box-shadow: 0 4px 20px var(--glow), 0 0 0 1px rgba(79,163,255,0.12);
+  transform: translateY(-2px);
+}
+.tp-pill .pill-emoji { font-size: 1.05rem; }
+.tp-pill .pill-count {
+  font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  background: var(--surface3);
+  padding: 2px 8px;
+  border-radius: 100px;
+  transition: all 0.22s;
+  font-weight: 500;
+}
+.tp-pill:hover .pill-count { color: var(--accent); background: rgba(79,163,255,0.12); }
+.tp-pill .pill-arrow { font-size: 0.85rem; color: var(--text3); transition: all 0.22s; margin-left: 2px; }
+.tp-pill:hover .pill-arrow { color: var(--accent); transform: translateX(3px); }
+
+/* ══ SEARCH SECTION — HOMEPAGE STYLE ══ */
+.tp-search-section {
+  padding-top: 52px;
+  padding-bottom: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.tp-h2 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 8px;
+  line-height: 1.1;
+}
+.tp-h2 em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent2), var(--accent3));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tp-search-sub {
+  color: var(--text2);
+  font-size: 0.92rem;
+  margin-bottom: 28px;
+  line-height: 1.65;
+}
+
+/* Homepage-Style Search Bar */
+.tp-searchbar-wrap {
+  position: relative;
+  margin-bottom: 18px;
+  max-width: 820px;
+}
+
+.homepage-search {
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 8px 6px 22px;
+  gap: 10px;
+  transition: all 0.25s;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+}
+.homepage-search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(79,163,255,0.12), 0 8px 32px rgba(79,163,255,0.14);
+}
+.homepage-search .hs-icon {
+  font-size: 1rem;
+  color: var(--text3);
+  flex-shrink: 0;
+}
+.homepage-search input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 1rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  padding: 10px 0;
+}
+.homepage-search input::placeholder { color: var(--text3); }
+.homepage-search .hs-clear {
+  background: none;
+  border: none;
+  color: var(--text3);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+}
+.homepage-search .hs-clear:hover { background: var(--surface3); color: var(--text); }
+.homepage-search .hs-clear.show { display: flex; }
+.homepage-search .hs-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 11px 28px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.homepage-search .hs-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(79,163,255,0.3);
+}
+
+/* Filter Row */
+.tp-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tp-select-wrap { position: relative; display: inline-flex; align-items: center; }
+.tp-select-icon { position: absolute; left: 14px; pointer-events: none; font-size: 0.95rem; z-index: 2; }
+.tp-select {
+  padding: 12px 44px 12px 38px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  color: var(--text2);
+  font-size: 0.88rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%238899bb' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  min-width: 158px;
+  transition: all 0.2s;
+}
+.tp-select:hover, .tp-select:focus {
+  border-color: var(--accent);
+  color: var(--text);
+  box-shadow: 0 0 12px rgba(79,163,255,0.15);
+}
+.tp-select option { background: var(--surface2); color: var(--text); }
+
+.tp-results-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  white-space: nowrap;
+}
+.rc-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 20px;
+  text-align: center;
+}
+.rc-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text3);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* ══ NETFLIX LAYOUT ══ */
+.tp-netflix {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 0;
+}
+
+.nf-row {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 36px 32px 28px;
+}
+@media (max-width: 768px) { .nf-row { padding: 28px 16px 20px; } }
+
+.nf-row-divider {
+  height: 1px;
+  background: var(--border);
+  max-width: 1380px;
+  margin: 0 auto;
+  opacity: 0.5;
+}
+
+/* Row Header with arrows */
+.nf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+@media (max-width: 600px) {
+  .nf-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+}
+
+.nf-header-left { display: flex; align-items: center; gap: 12px; }
+
+.nf-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.nf-title-emoji { font-size: 1.5rem; }
+.nf-title-text { font-size: 1.2rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+.nf-title-count {
+  font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  background: var(--surface3);
+  padding: 3px 9px;
+  border-radius: 100px;
+  font-weight: 500;
+}
+
+.nf-header-right { display: flex; align-items: center; gap: 8px; }
+
+/* Scroll Arrow Buttons */
+.nf-arrow-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  color: var(--text2);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.nf-arrow-btn:hover {
+  background: rgba(79,163,255,0.1);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.05);
+}
+.nf-arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nf-view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--accent);
+  padding: 9px 16px;
+  border: 1.5px solid rgba(79,163,255,0.25);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: 'Outfit', sans-serif;
+  background: rgba(79,163,255,0.04);
+}
+.nf-view-all-btn:hover {
+  background: rgba(79,163,255,0.12);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px var(--glow);
+  transform: translateY(-1px);
+}
+.nf-view-all-btn .btn-arrow { transition: transform 0.2s; }
+.nf-view-all-btn:hover .btn-arrow { transform: translateX(3px); }
+
+/* Scrollable card track */
+.nf-track-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.nf-grid {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-bottom: 4px;
+}
+.nf-grid::-webkit-scrollbar { display: none; }
+
+/* Each card has fixed width */
+.nf-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: nfCardIn 0.35s ease both;
+  text-decoration: none;
+  color: inherit;
+  flex: 0 0 260px;
+  min-width: 260px;
+}
+@media (max-width: 640px) { .nf-card { flex: 0 0 220px; min-width: 220px; } }
+
+.nf-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-hover-bg);
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.nf-card:hover {
+  border-color: var(--border-md);
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.45), 0 0 0 1px rgba(79,163,255,0.08), 0 0 28px rgba(79,163,255,0.1);
+}
+.nf-card:hover::after { opacity: 1; }
+
+@keyframes nfCardIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Card content */
+.nf-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Logo without background — transparent */
+.nf-card-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  padding: 3px;
+}
+.nf-card-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  background: transparent;
+}
+.nf-card-info { flex: 1; min-width: 0; }
+.nf-card-name {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nf-card-cat {
+  font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+.nf-card-badges { display: flex; gap: 4px; flex-wrap: wrap; }
+
+.nf-card-desc {
+  font-size: 0.79rem;
+  color: var(--text2);
+  line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.nf-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  position: relative;
+  z-index: 1;
+}
+.nf-stars { color: var(--gold); font-size: 0.72rem; letter-spacing: 1.5px; }
+.nf-rating-val {
+  font-size: 0.76rem;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--text2);
+  font-weight: 500;
+}
+.nf-reviews { font-size: 0.72rem; color: var(--text3); font-family: 'JetBrains Mono', monospace; }
+
+.nf-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 2px;
+  position: relative;
+  z-index: 1;
+}
+.nf-pricing-tag {
+  font-size: 0.68rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  border-radius: 100px;
+}
+.nf-pricing-tag.free     { color: var(--green); background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
+.nf-pricing-tag.freemium { color: var(--gold);  background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); }
+.nf-pricing-tag.paid     { color: var(--text3); background: var(--surface3); border: 1px solid var(--border); }
+
+.nf-view-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 6px 12px;
+  border: 1px solid rgba(79,163,255,0.2);
+  border-radius: 8px;
+  background: rgba(79,163,255,0.05);
+  transition: all 0.18s;
+  font-family: 'Outfit', sans-serif;
+}
+.nf-view-link:hover {
+  background: rgba(79,163,255,0.14);
+  border-color: var(--accent);
+  transform: translateX(1px);
+}
+
+/* ══ FLAT GRID (search mode) ══ */
+.tp-flat-section {
+  position: relative;
+  z-index: 1;
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+@media (max-width: 768px) { .tp-flat-section { padding: 0 16px 60px; } }
+
+.tp-search-banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 13px 18px;
+  background: rgba(79,163,255,0.06);
+  border: 1px solid rgba(79,163,255,0.18);
+  border-radius: 12px;
+  margin-bottom: 24px;
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+.tp-search-banner .sb-label { color: var(--text2); font-weight: 500; }
+.tp-search-banner .sb-term {
+  background: rgba(79,163,255,0.12);
+  border: 1px solid rgba(79,163,255,0.25);
+  padding: 2px 10px;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+.tp-clear-all {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--text3);
+  cursor: pointer;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.tp-clear-all:hover { color: var(--text); border-color: var(--text3); }
+
+.tp-no-results {
+  text-align: center;
+  padding: 80px 20px;
+}
+.tp-no-results .nr-emoji { font-size: 3.5rem; margin-bottom: 18px; }
+.tp-no-results .nr-title { font-size: 1.15rem; font-weight: 800; color: var(--text2); margin-bottom: 8px; letter-spacing: -0.02em; }
+.tp-no-results .nr-sub { font-size: 0.88rem; color: var(--text3); }
+
+/* ══ BEST TOOLS TABLE ══ */
+.tp-best-table-section {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 32px 80px;
+}
+@media (max-width: 768px) { .tp-best-table-section { padding: 0 16px 60px; } }
+
+.tp-best-table-section .section-header {
+  margin-bottom: 32px;
+}
+.tp-best-table-section .section-header .tp-badge { margin-bottom: 16px; }
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.1;
+}
+.section-title em {
+  font-style: normal;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.section-desc {
+  color: var(--text2);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 580px;
+}
+
+.best-table-wrap {
+  overflow-x: auto;
+  border-radius: 16px;
+  border: 1.5px solid var(--border);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.2);
+}
+
+.best-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Outfit', sans-serif;
+  min-width: 640px;
+}
+
+.best-table thead tr {
+  background: var(--surface2);
+  border-bottom: 1.5px solid var(--border);
+}
+
+.best-table thead th {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 0.7rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+.best-table thead th:first-child { border-radius: 0; }
+.best-table thead th.th-center { text-align: center; }
+
+.best-table tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.18s;
+}
+.best-table tbody tr:last-child { border-bottom: none; }
+.best-table tbody tr:hover { background: rgba(79,163,255,0.04); }
+
+.best-table td {
+  padding: 14px 18px;
+  font-size: 0.88rem;
+  color: var(--text2);
+  vertical-align: middle;
+}
+
+.bt-cat-col {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bt-cat-emoji { font-size: 1.1rem; }
+.bt-cat-name {
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.bt-tool-col {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.bt-tool-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  padding: 2px;
+}
+.bt-tool-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.bt-tool-name {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: color 0.18s;
+}
+.bt-tool-name:hover { color: var(--accent); }
+
+.bt-pricing {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+.bt-pricing.free     { color: var(--green); background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.2); }
+.bt-pricing.freemium { color: var(--gold);  background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.2); }
+.bt-pricing.paid     { color: var(--text3); background: var(--surface3); border: 1px solid var(--border); }
+
+.bt-stars { color: var(--gold); font-size: 0.7rem; letter-spacing: 2px; }
+
+.bt-rating-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-left: 4px;
+}
+
+.bt-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 5px 12px;
+  border: 1px solid rgba(79,163,255,0.2);
+  border-radius: 8px;
+  background: rgba(79,163,255,0.05);
+  transition: all 0.18s;
+  font-family: 'Outfit', sans-serif;
+}
+.bt-view-btn:hover {
+  background: rgba(79,163,255,0.14);
+  border-color: var(--accent);
+}
+
+/* ══ NEWSLETTER — HOMEPAGE STYLE ══ */
+.tp-newsletter-section {
+  padding: 0 32px 100px;
+}
+@media (max-width: 768px) { .tp-newsletter-section { padding: 0 16px 80px; } }
+
+.tp-nl-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+.tp-nl-box {
+  position: relative;
+  border-radius: 20px;
+  padding: 56px 40px;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(79,163,255,0.04) 0%, rgba(139,92,246,0.04) 100%);
+  border: 1.5px solid rgba(79,163,255,0.15);
+}
+@media (max-width: 640px) { .tp-nl-box { padding: 40px 24px; } }
+
+.tp-nl-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(79,163,255,0.05) 0%, transparent 50%, rgba(139,92,246,0.05) 100%);
+  pointer-events: none;
+}
+
+/* Glowing border effect */
+.tp-nl-box::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(79,163,255,0.4), rgba(139,92,246,0.2), rgba(79,163,255,0.15));
+  z-index: -1;
+}
+
+.tp-nl-glow {
+  position: absolute;
+  width: 400px;
+  height: 200px;
+  background: radial-gradient(ellipse at center, rgba(79,163,255,0.15), transparent 70%);
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.tp-nl-box h2 {
+  font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+.tp-nl-box p {
+  color: var(--text2);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-bottom: 32px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  z-index: 1;
+}
+
+.tp-nl-form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 520px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 560px) { .tp-nl-form { flex-direction: column; } }
+
+.tp-nl-form input {
+  flex: 1;
+  padding: 14px 20px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.25s;
+}
+.tp-nl-form input::placeholder { color: var(--text3); }
+.tp-nl-form input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(79,163,255,0.1);
+}
+
+.tp-nl-form .nl-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: all 0.22s;
+  white-space: nowrap;
+}
+.tp-nl-form .nl-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(79,163,255,0.3);
+}
+@media (max-width: 560px) {
+  .tp-nl-form input, .tp-nl-form .nl-btn { width: 100%; }
+}
+
+/* ══ DIVIDER ══ */
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  max-width: 1380px;
+  margin: 0 auto 60px;
+  opacity: 0.5;
+}
+
+</style>
 </head>
 <body>
 
-    <!-- Navigation (Assumed to be injected via nav.js) -->
-    <nav id="topnav"></nav>
-    <div id="mobileMenu"></div>
+<div class="bg-grid"></div>
+<div class="bg-orb orb-a"></div>
+<div class="bg-orb orb-b"></div>
+<div class="bg-orb orb-c"></div>
 
-    <!-- MAIN CONTENT -->
-    <main>
-        
-        <!-- 1. Categories Section -->
-        <section class="cat-hero">
-            <h1>All AI Categories</h1>
-            <p>Browse 500+ tools across 20 categories. Filter by pricing, rating, and more to find exactly what you need.</p>
-            <div class="cat-grid" id="categoryPills">
-                <!-- Pills injected via JS -->
-            </div>
-        </section>
+<nav id="topnav" role="navigation" aria-label="Main navigation"></nav>
+<div class="mobile-menu" id="mobileMenu" role="menu"></div>
 
-        <!-- 2. Tools Header & Filter Bar -->
-        <section class="tools-header">
-            <h2>All Tools</h2>
-            <p>Discover the best AI tools for every workflow.</p>
-            
-            <div class="filter-bar">
-                <div class="filter-search">
-                    <i>🔍</i>
-                    <input type="text" id="searchInput" placeholder="Search ChatGPT, Claude, Midjourney...">
-                </div>
-                
-                <select class="filter-select" id="pricingFilter">
-                    <option value="all">All Pricing</option>
-                    <option value="free">Free</option>
-                    <option value="freemium">Freemium</option>
-                    <option value="paid">Paid</option>
-                </select>
 
-                <select class="filter-select" id="sortFilter">
-                    <option value="ranking">By Ranking</option>
-                    <option value="az">A to Z</option>
-                </select>
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  SECTION 1 — ALL AI CATEGORIES                  ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="tp-wrap tp-cats-section">
 
-                <div class="results-counter" id="resultsCounter">
-                    Showing <strong>54</strong> Tools
-                </div>
-            </div>
-        </section>
+  <span class="tp-badge">// AI TOOLS DIRECTORY 2026</span>
 
-        <!-- 3. Netflix Style Layout (Default) -->
-        <div id="netflixContainer" class="netflix-section">
-            <!-- Rows injected via JS -->
+  <h1 class="tp-h1">Discover the <em>Best AI Tools</em></h1>
+
+  <p class="tp-lead">
+    Explore over 500 artificial intelligence tools across 20 curated categories. From AI assistants and image generators to code assistants and research tools — find the perfect AI software for every creative, business, and technical workflow. Updated monthly with expert reviews and ratings.
+  </p>
+
+  <div class="tp-pills-grid" id="catPillsContainer" role="list" aria-label="Browse AI tool categories"></div>
+
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  SECTION 2 — SEARCH & FILTERS                   ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="tp-wrap tp-search-section">
+
+  <h2 class="tp-h2">Search <em>All AI Tools</em></h2>
+  <p class="tp-search-sub">Find any AI tool by name, category, or feature. Filter by pricing model and sort by ranking or alphabetically.</p>
+
+  <!-- Homepage-Style Search Bar -->
+  <div class="tp-searchbar-wrap">
+    <div class="homepage-search">
+      <span class="hs-icon">🔍</span>
+      <input
+        type="text"
+        id="toolsSearch"
+        placeholder="Search ChatGPT, Midjourney, Runway, Notion AI..."
+        oninput="handleFilter()"
+        autocomplete="off"
+        spellcheck="false"
+        aria-label="Search AI tools by name, category or description"
+      >
+      <button class="hs-clear" id="searchClear" onclick="clearSearch()" aria-label="Clear search">✕</button>
+      <button class="hs-btn" onclick="handleFilter()">Search</button>
+    </div>
+  </div>
+
+  <!-- Filter Row -->
+  <div class="tp-filter-row">
+    <div class="tp-select-wrap">
+      <span class="tp-select-icon">💰</span>
+      <select id="toolsPricing" class="tp-select" onchange="handleFilter()" aria-label="Filter by pricing model">
+        <option value="">All Pricing</option>
+        <option value="free">Free</option>
+        <option value="freemium">Freemium</option>
+        <option value="paid">Paid</option>
+      </select>
+    </div>
+
+    <div class="tp-select-wrap">
+      <span class="tp-select-icon">📊</span>
+      <select id="toolsSort" class="tp-select" onchange="handleFilter()" aria-label="Sort AI tools">
+        <option value="rank">By Ranking</option>
+        <option value="az">A to Z</option>
+      </select>
+    </div>
+
+    <div class="tp-results-box" id="resultsBox" aria-live="polite" aria-label="Number of AI tools found">
+      <span>📋</span>
+      <span class="rc-num" id="resultsNum">0</span>
+      <span class="rc-label">Tools</span>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  SECTION 3a — NETFLIX ROWS (default view)       ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div id="netflixLayout" class="tp-netflix" aria-label="AI tools organized by category" role="main"></div>
+
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  SECTION 3b — FLAT GRID (search / filter mode)  ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div id="flatSection" style="display:none" aria-label="Filtered AI tools search results">
+  <div class="tp-flat-section">
+    <div class="tp-search-banner" id="searchBanner" style="display:none">
+      <span class="sb-label">Showing results for</span>
+      <span class="sb-term" id="bannerQuery"></span>
+      <button class="tp-clear-all" onclick="clearAll()" aria-label="Clear all filters">Clear all</button>
+    </div>
+    <div class="tools-grid" id="flatGridEl"></div>
+    <div class="tp-no-results" id="noResultsEl" style="display:none">
+      <div class="nr-emoji">🤔</div>
+      <div class="nr-title">No AI tools found</div>
+      <div class="nr-sub">Try a different search term or remove some filters to see more results</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  SECTION 4 — BEST TOOL PER CATEGORY TABLE       ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="section-divider"></div>
+
+<section class="tp-best-table-section" aria-labelledby="bestTableTitle">
+  <div class="section-header">
+    <span class="tp-badge">// EXPERT PICKS</span>
+    <h2 class="section-title" id="bestTableTitle">The <em>Top Rated AI Tool</em> in Every Category</h2>
+    <p class="section-desc">Our experts tested hundreds of AI tools across every category. These are the highest rated picks based on performance, features, ease of use, and value — updated for 2026.</p>
+  </div>
+
+  <div class="best-table-wrap" role="region" aria-label="Best AI tools by category table">
+    <table class="best-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Best AI Tool</th>
+          <th class="th-center">Rating</th>
+          <th class="th-center">Pricing</th>
+          <th class="th-center">Action</th>
+        </tr>
+      </thead>
+      <tbody id="bestTableBody">
+        <!-- Filled by JS -->
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+
+<!-- ╔══════════════════════════════════════════════════╗
+     ║  SECTION 5 — NEWSLETTER (homepage style)        ║
+     ╚══════════════════════════════════════════════════╝ -->
+<div class="tp-newsletter-section">
+  <div class="tp-nl-inner">
+    <div class="tp-nl-box" role="complementary" aria-label="Newsletter signup">
+      <div class="tp-nl-glow"></div>
+      <h2>Stay Ahead of the AI Curve</h2>
+      <p>Weekly digest of the best new AI tools, free alternatives, and expert reviews — straight to your inbox. Join over 40,000 readers who never miss an AI update.</p>
+      <div class="tp-nl-form">
+        <input
+          type="email"
+          id="nlEmail"
+          placeholder="your@email.com"
+          aria-label="Email address for newsletter"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();subscribeNewsletter(this.nextElementSibling);}"
+        >
+        <button class="nl-btn" onclick="subscribeNewsletter(this)">Subscribe</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<footer id="site-footer" role="contentinfo"></footer>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)" role="dialog" aria-modal="true" aria-label="Tool details">
+  <div class="modal-ring">
+    <div class="modal-box" id="modalBox">
+      <button class="modal-close" aria-label="Close modal">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="toast-ic" id="toastIc"></span>
+  <span id="toastMsg"></span>
+</div>
+
+<!-- DATA + SHARED APP LOGIC -->
+<script src="/assets/js/data.js"></script>
+<script src="/assets/js/app.js"></script>
+<script src="/assets/js/nav.js"></script>
+
+<!-- ══════════════════════════════════════════════════
+     TOOLS PAGE — REDESIGNED LOGIC
+══════════════════════════════════════════════════ -->
+<script>
+
+/* ── BADGE HELPER ── */
+function nfBadge(t) {
+  let b = '';
+  if (t.badge === 'best')    b += '<span class="badge b-best">✦ BEST</span>';
+  else if (t.badge === 'new') b += '<span class="badge b-new">NEW</span>';
+  else if (t.badge === 'hot') b += '<span class="badge b-hot">🌶 HOT</span>';
+  else if (t.badge === 'popular') b += '<span class="badge b-popular">🔥</span>';
+  return b;
+}
+
+/* ── LOGO with transparent background (no colored bg) ── */
+function nfLogo(t, size) {
+  const sz = size || 50;
+  if (t.logo) {
+    const sources = [
+      `https://logo.clearbit.com/${t.logo}?size=${sz * 2}`,
+      `https://img.logo.dev/${t.logo}?token=pk_X7XFM29MQK6aCpNKbdKkRA&size=${sz * 2}`,
+      `https://www.google.com/s2/favicons?domain=${t.logo}&sz=64`
+    ];
+    return `<img 
+      src="${sources[0]}" 
+      alt="${t.name} logo"
+      loading="lazy"
+      onerror="this._try=(this._try||0)+1;if(this._try<${sources.length-1})this.src='${sources[1]}';else{this.style.display='none';this.parentElement.innerHTML='<span style=\\'font-size:1.4rem\\'>${t.emoji||'🤖'}</span>';}"
+      style="background:transparent;mix-blend-mode:normal;"
+    >`;
+  }
+  return `<span style="font-size:1.4rem">${t.emoji || '🤖'}</span>`;
+}
+
+/* ── BUILD A NETFLIX CARD ── */
+function makeNfCard(t, delay) {
+  const div = document.createElement('a');
+  div.className = 'nf-card';
+  div.href = toolHref(t);
+  div.setAttribute('role', 'article');
+  div.setAttribute('aria-label', `${t.name} — ${t.cat} AI tool, rated ${t.rating} out of 5`);
+  if (delay) div.style.animationDelay = delay + 'ms';
+
+  const fullStars = Math.floor(t.rating);
+  const hasHalf = (t.rating - fullStars) >= 0.5;
+  let starsHtml = '★'.repeat(fullStars);
+  if (hasHalf) starsHtml += '½';
+  const pricingClass = t.pricing || 'paid';
+  const pricingLabel = t.pricing === 'free' ? 'Free' : t.pricing === 'freemium' ? 'Freemium' : 'Paid';
+
+  div.innerHTML = `
+    <div class="nf-card-top">
+      <div class="nf-card-icon">${nfLogo(t, 50)}</div>
+      <div class="nf-card-info">
+        <div class="nf-card-name">${t.name}</div>
+        <div class="nf-card-cat">${t.cat}</div>
+        <div class="nf-card-badges">${nfBadge(t)}</div>
+      </div>
+    </div>
+    <div class="nf-card-desc">${t.desc}</div>
+    <div class="nf-card-rating">
+      <span class="nf-stars" aria-label="${t.rating} stars">${starsHtml}</span>
+      <span class="nf-rating-val">${t.rating}</span>
+      <span class="nf-reviews">· ${t.reviews} reviews</span>
+    </div>
+    <div class="nf-card-footer">
+      <span class="nf-pricing-tag ${pricingClass}">${pricingLabel}</span>
+      <span class="nf-view-link" onclick="event.stopPropagation()">View Details →</span>
+    </div>
+  `;
+
+  return div;
+}
+
+/* ── SMALL LOGO for table ── */
+function btLogo(t) {
+  if (t.logo) {
+    return `<img src="https://logo.clearbit.com/${t.logo}?size=56" alt="${t.name} logo" loading="lazy" style="background:transparent;" onerror="this.style.display='none';this.parentElement.innerHTML='<span style=\\'font-size:0.95rem\\'>${t.emoji||'🤖'}</span>';">`;
+  }
+  return `<span style="font-size:0.95rem">${t.emoji || '🤖'}</span>`;
+}
+
+/* ── CATEGORY SLUG ── */
+function catSlug(name) {
+  return name.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim().replace(/\s+/g, '-');
+}
+
+/* ── CATEGORY PAGE URLS ── */
+const CAT_URL_MAP = {
+  'AI Assistants': 'https://findbestai.app/category/ai-assistant/',
+  'Image Generation': '/category/image-generation/',
+  'Video Editing': '/category/video-editing/',
+  'Code Assistant': '/category/code-assistant/',
+  'Writing & Copy': '/category/writing-copy/',
+  'Research': '/category/research/',
+  'Voice & Speech': '/category/voice-speech/',
+  'Audio & Music': '/category/audio-music/',
+  'Graphic Design': '/category/graphic-design/',
+  'PDF & Docs': '/category/pdf-docs/',
+  'Notes & PKM': '/category/notes-pkm/',
+  'Data Analysis': '/category/data-analysis/',
+  'Chatbots': '/category/chatbots/',
+  'SEO & Marketing': '/category/seo-marketing/',
+  'Automation': '/category/automation/',
+  'Photo Editing': '/category/photo-editing/',
+  'Email & Outreach': '/category/email-outreach/',
+  'Video Avatars': '/category/video-avatars/',
+  'Productivity': '/category/productivity/',
+  '3D & AR': '/category/3d-ar/'
+};
+
+function getCatUrl(catName) {
+  return CAT_URL_MAP[catName] || `/category/${catSlug(catName)}/`;
+}
+
+/* ── RENDER CATEGORY PILLS — with links to category pages ── */
+function renderCatPills() {
+  const container = document.getElementById('catPillsContainer');
+  if (!container || typeof CATS === 'undefined') return;
+
+  CATS.forEach(cat => {
+    const pill = document.createElement('a');
+    pill.className = 'tp-pill';
+    pill.href = getCatUrl(cat.name);
+    pill.setAttribute('role', 'listitem');
+    pill.setAttribute('aria-label', `${cat.name} AI tools — ${cat.count} tools available`);
+    pill.innerHTML = `
+      <span class="pill-emoji">${cat.icon}</span>
+      <span class="pill-name">${cat.name}</span>
+      <span class="pill-count">${cat.count}</span>
+      <span class="pill-arrow">→</span>
+    `;
+    /* Click on pill scrolls to section, but link still works for SEO */
+    pill.addEventListener('click', (e) => {
+      e.preventDefault();
+      scrollToRow(cat.name);
+    });
+    container.appendChild(pill);
+  });
+}
+
+/* ── RENDER NETFLIX ROWS WITH SCROLL ARROWS ── */
+function renderNetflix() {
+  const layout = document.getElementById('netflixLayout');
+  if (!layout || typeof CATS === 'undefined' || typeof TOOLS === 'undefined') return;
+  layout.innerHTML = '';
+
+  CATS.forEach((cat, idx) => {
+    const catTools = TOOLS.filter(t => t.cat === cat.name);
+    if (!catTools.length) return;
+
+    const slug = catSlug(cat.name);
+    const catUrl = getCatUrl(cat.name);
+
+    const row = document.createElement('div');
+    row.className = 'nf-row';
+    row.id = 'nf-row-' + slug;
+
+    const gridId = `nf-grid-${idx}`;
+
+    row.innerHTML = `
+      <div class="nf-header">
+        <div class="nf-header-left">
+          <a class="nf-title" href="${catUrl}" aria-label="${cat.name} AI tools category page" style="text-decoration:none;color:inherit;">
+            <span class="nf-title-emoji">${cat.icon}</span>
+            <span class="nf-title-text">${cat.name}</span>
+          </a>
+          <span class="nf-title-count">${cat.count} tools</span>
         </div>
-
-        <!-- 4. Grid Layout (Search/Filter Active) -->
-        <div id="gridContainer" class="tools-grid-active">
-            <!-- Cards injected via JS -->
+        <div class="nf-header-right">
+          <button class="nf-arrow-btn" id="arr-left-${idx}" onclick="scrollRow('${gridId}', -1)" aria-label="Scroll left in ${cat.name}" title="Scroll left">‹</button>
+          <button class="nf-arrow-btn" id="arr-right-${idx}" onclick="scrollRow('${gridId}', 1)" aria-label="Scroll right in ${cat.name}" title="Scroll right">›</button>
+          <a class="nf-view-all-btn" href="${catUrl}" aria-label="View all ${cat.name} tools on FindBestAI">
+            View All <span class="btn-arrow">→</span>
+          </a>
         </div>
+      </div>
+      <div class="nf-track-wrapper">
+        <div class="nf-grid" id="${gridId}" onscroll="updateArrows(${idx}, '${gridId}')"></div>
+      </div>
+    `;
 
-    </main>
+    layout.appendChild(row);
 
-    <footer id="site-footer"></footer>
+    if (idx < CATS.length - 1) {
+      const sep = document.createElement('div');
+      sep.className = 'nf-row-divider';
+      layout.appendChild(sep);
+    }
 
-    <!-- Scripts -->
-    <script src="data.js"></script>
-    <script src="nav.js"></script>
-    <script src="app.js"></script>
+    const grid = row.querySelector(`#${gridId}`);
+    catTools.forEach((t, i) => {
+      grid.appendChild(makeNfCard(t, i * 40));
+    });
 
-    <!-- Page Specific Logic -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const TOOLS = window.TOOLS || [];
-            const CATS = window.CATS || [];
-            
-            // DOM Elements
-            const searchInput = document.getElementById('searchInput');
-            const pricingFilter = document.getElementById('pricingFilter');
-            const sortFilter = document.getElementById('sortFilter');
-            const resultsCounter = document.getElementById('resultsCounter');
-            const netflixContainer = document.getElementById('netflixContainer');
-            const gridContainer = document.getElementById('gridContainer');
-            const catPillsContainer = document.getElementById('categoryPills');
+    /* Init arrow state */
+    setTimeout(() => updateArrows(idx, gridId), 100);
+  });
+}
 
-            // State
-            let currentSearch = '';
-            let currentPricing = 'all';
-            let currentSort = 'ranking';
-            let isFiltered = false;
+/* ── SCROLL ROW ── */
+function scrollRow(gridId, dir) {
+  const grid = document.getElementById(gridId);
+  if (!grid) return;
+  const cardW = 276; /* card 260 + gap 16 */
+  const scrollAmt = cardW * 3;
+  grid.scrollBy({ left: dir * scrollAmt, behavior: 'smooth' });
+}
 
-            // --- Helper: Render Card ---
-            function renderCard(tool) {
-                // Reusing the logic from your app.js but simplified for this context
-                // If you have 'makeCard' function in app.js, you can use it.
-                // For this standalone snippet, I'll generate a simple card structure.
-                const div = document.createElement('div');
-                div.className = 'card reveal';
-                div.onclick = () => window.location.href = `/tool/${tool.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}/`;
-                
-                div.innerHTML = `
-                    <div class="card-top">
-                        <div class="tool-icon" style="background:${tool.brand||tool.bg}">
-                            ${tool.emoji || '🤖'}
-                        </div>
-                        <div class="badges">
-                            <span class="badge b-${tool.pricing}">${tool.pricing.toUpperCase()}</span>
-                        </div>
-                    </div>
-                    <div class="tool-name">${tool.name}</div>
-                    <div class="tool-desc">${tool.desc || ''}</div>
-                    <div class="stars-row">
-                        <span class="stars">${'★'.repeat(Math.floor(tool.rating))}</span>
-                        <span class="stars-num">${tool.rating}</span>
-                    </div>
-                `;
-                return div;
-            }
+/* ── UPDATE ARROW STATES ── */
+function updateArrows(idx, gridId) {
+  const grid = document.getElementById(gridId);
+  const leftBtn  = document.getElementById(`arr-left-${idx}`);
+  const rightBtn = document.getElementById(`arr-right-${idx}`);
+  if (!grid || !leftBtn || !rightBtn) return;
+  leftBtn.disabled  = grid.scrollLeft <= 0;
+  rightBtn.disabled = grid.scrollLeft + grid.clientWidth >= grid.scrollWidth - 4;
+}
 
-            // --- 1. Render Category Pills ---
-            CATS.forEach(cat => {
-                const a = document.createElement('a');
-                a.className = 'cat-pill-lg';
-                a.href = `/tools/?category=${encodeURIComponent(cat.name)}`;
-                a.innerHTML = `
-                    <div class="cat-pill-inner">
-                        <span>${cat.icon}</span>
-                        <span>${cat.name}</span>
-                    </div>
-                    <span class="cat-pill-arrow">→</span>
-                `;
-                catPillsContainer.appendChild(a);
-            });
+/* ── RENDER BEST TOOLS TABLE ── */
+function renderBestTable() {
+  const tbody = document.getElementById('bestTableBody');
+  if (!tbody || typeof CATS === 'undefined' || typeof TOOLS === 'undefined') return;
+  tbody.innerHTML = '';
 
-            // --- 2. Render Netflix Rows ---
-            function renderNetflix() {
-                netflixContainer.innerHTML = '';
-                
-                CATS.forEach(cat => {
-                    // Get tools for this category (limit to 5 for the row)
-                    const catTools = TOOLS.filter(t => t.cat === cat.name).slice(0, 6);
-                    if (catTools.length === 0) return;
+  CATS.forEach(cat => {
+    const catTools = TOOLS.filter(t => t.cat === cat.name);
+    if (!catTools.length) return;
 
-                    const row = document.createElement('div');
-                    row.className = 'netflix-row';
-                    row.innerHTML = `
-                        <div class="netflix-row-header">
-                            <h3>${cat.icon} ${cat.name}</h3>
-                            <a href="/tools/?category=${encodeURIComponent(cat.name)}" class="view-all-btn">View All ${cat.name} Tools →</a>
-                        </div>
-                        <div class="netflix-scroll" id="scroll-${cat.name.replace(/\s/g, '')}">
-                            <!-- Cards -->
-                        </div>
-                    `;
-                    
-                    const scrollContainer = row.querySelector('.netflix-scroll');
-                    catTools.forEach(tool => {
-                        scrollContainer.appendChild(renderCard(tool));
-                    });
-                    
-                    netflixContainer.appendChild(row);
-                });
-            }
+    /* Pick top-rated */
+    const best = catTools.reduce((a, b) => (b.rating > a.rating || (b.rating === a.rating && (b.badge === 'best' || b.reviews > a.reviews))) ? b : a, catTools[0]);
 
-            // --- 3. Render Grid (Search/Filter) ---
-            function renderGrid() {
-                gridContainer.innerHTML = '';
-                
-                let filtered = TOOLS.filter(tool => {
-                    // Search Match
-                    const matchSearch = tool.name.toLowerCase().includes(currentSearch) || 
-                                        tool.cat.toLowerCase().includes(currentSearch);
-                    
-                    // Pricing Match
-                    const matchPricing = currentPricing === 'all' || tool.pricing === currentPricing;
+    const fullStars = Math.floor(best.rating);
+    const starsHtml = '★'.repeat(fullStars) + (best.rating % 1 >= 0.5 ? '½' : '');
+    const pricingClass = best.pricing || 'paid';
+    const pricingLabel = best.pricing === 'free' ? 'Free' : best.pricing === 'freemium' ? 'Freemium' : 'Paid';
+    const catUrl = getCatUrl(cat.name);
 
-                    return matchSearch && matchPricing;
-                });
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>
+        <div class="bt-cat-col">
+          <span class="bt-cat-emoji">${cat.icon}</span>
+          <a class="bt-cat-name" href="${catUrl}" style="text-decoration:none;color:inherit;" aria-label="View all ${cat.name} tools">${cat.name}</a>
+        </div>
+      </td>
+      <td>
+        <div class="bt-tool-col">
+          <div class="bt-tool-logo">${btLogo(best)}</div>
+          <a class="bt-tool-name" href="${toolHref(best)}" aria-label="View ${best.name} details">${best.name}</a>
+        </div>
+      </td>
+      <td style="text-align:center;">
+        <span class="bt-stars" aria-label="${best.rating} stars">${starsHtml}</span>
+        <span class="bt-rating-val">${best.rating}</span>
+      </td>
+      <td style="text-align:center;">
+        <span class="bt-pricing ${pricingClass}">${pricingLabel}</span>
+      </td>
+      <td style="text-align:center;">
+        <a class="bt-view-btn" href="${toolHref(best)}" aria-label="View ${best.name} details and alternatives">View →</a>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
-                // Sorting
-                if (currentSort === 'az') {
-                    filtered.sort((a, b) => a.name.localeCompare(b.name));
-                } else {
-                    // Default ranking sort (by ID or rating)
-                    filtered.sort((a, b) => b.rating - a.rating);
-                }
+/* ── SCROLL TO CATEGORY ROW ── */
+function scrollToRow(catName) {
+  const slug = catSlug(catName);
+  const el = document.getElementById('nf-row-' + slug);
+  if (!el) return;
+  showNetflix();
+  setTimeout(() => {
+    const offset = 80;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: 'smooth' });
+    el.style.transition = 'outline 0.3s';
+    el.style.outline = '2px solid rgba(79,163,255,0.45)';
+    el.style.borderRadius = '12px';
+    setTimeout(() => { el.style.outline = ''; el.style.borderRadius = ''; }, 2200);
+  }, 80);
+}
 
-                // Update Counter
-                resultsCounter.innerHTML = `Showing <strong>${filtered.length}</strong> Tools`;
+/* ── SHOW / HIDE MODES ── */
+function showNetflix() {
+  document.getElementById('netflixLayout').style.display = '';
+  document.getElementById('flatSection').style.display = 'none';
+}
+function showFlat() {
+  document.getElementById('netflixLayout').style.display = 'none';
+  document.getElementById('flatSection').style.display = '';
+}
 
-                // Render Cards
-                filtered.forEach(tool => {
-                    gridContainer.appendChild(renderCard(tool));
-                });
-            }
+/* ── UPDATE RESULTS COUNT ── */
+function setCount(n) {
+  const el = document.getElementById('resultsNum');
+  if (el) el.textContent = n;
+}
 
-            // --- Logic Controller ---
-            function updateView() {
-                const hasSearch = currentSearch.length > 0;
-                const hasFilter = currentPricing !== 'all';
-                const shouldFilter = hasSearch || hasFilter;
+/* ── MAIN FILTER ── */
+function handleFilter() {
+  const q       = (document.getElementById('toolsSearch')?.value || '').toLowerCase().trim();
+  const pricing = document.getElementById('toolsPricing')?.value || '';
+  const sort    = document.getElementById('toolsSort')?.value || 'rank';
 
-                if (shouldFilter) {
-                    netflixContainer.style.display = 'none';
-                    gridContainer.classList.add('show');
-                    renderGrid();
-                } else {
-                    netflixContainer.style.display = 'block';
-                    gridContainer.classList.remove('show');
-                    // Reset counter for default view
-                    resultsCounter.innerHTML = `Showing <strong>${TOOLS.length}</strong> Tools`;
-                }
-            }
+  const clearBtn = document.getElementById('searchClear');
+  if (clearBtn) clearBtn.classList.toggle('show', q.length > 0);
 
-            // --- Event Listeners ---
-            searchInput.addEventListener('input', (e) => {
-                currentSearch = e.target.value.toLowerCase().trim();
-                updateView();
-            });
+  const isFiltered = q || pricing || sort !== 'rank';
 
-            pricingFilter.addEventListener('change', (e) => {
-                currentPricing = e.target.value;
-                updateView();
-            });
+  if (!isFiltered) {
+    showNetflix();
+    setCount(TOOLS.length);
+    hideBanner();
+    return;
+  }
 
-            sortFilter.addEventListener('change', (e) => {
-                currentSort = e.target.value;
-                updateView();
-            });
+  showFlat();
 
-            // --- Init ---
-            renderNetflix();
-            resultsCounter.innerHTML = `Showing <strong>${TOOLS.length}</strong> Tools`;
-        });
-    </script>
+  let matches = TOOLS.filter(t => {
+    const matchQ = !q || (
+      t.name.toLowerCase().includes(q) ||
+      t.desc.toLowerCase().includes(q) ||
+      t.cat.toLowerCase().includes(q) ||
+      (t.tags || []).some(tag => tag.toLowerCase().includes(q))
+    );
+    const matchPrice = !pricing || t.pricing === pricing;
+    return matchQ && matchPrice;
+  });
+
+  if (sort === 'az') {
+    matches = [...matches].sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  renderFlatGrid(matches);
+  setCount(matches.length);
+  showBanner(q, pricing, sort);
+}
+
+/* ── RENDER FLAT GRID ── */
+function renderFlatGrid(tools) {
+  const container = document.getElementById('flatGridEl');
+  const noResults = document.getElementById('noResultsEl');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!tools.length) {
+    container.style.display = 'none';
+    if (noResults) noResults.style.display = '';
+    return;
+  }
+
+  container.style.display = '';
+  if (noResults) noResults.style.display = 'none';
+
+  tools.forEach(t => {
+    if (typeof makeCard === 'function') {
+      container.appendChild(makeCard(t));
+    }
+  });
+
+  requestAnimationFrame(() => {
+    container.querySelectorAll('.card').forEach((c, i) => {
+      c.style.animationDelay = (i * 20) + 'ms';
+      c.classList.add('reveal');
+    });
+  });
+}
+
+/* ── BANNER ── */
+function showBanner(q, pricing, sort) {
+  const banner = document.getElementById('searchBanner');
+  const term   = document.getElementById('bannerQuery');
+  if (!banner || !term) return;
+  const parts = [];
+  if (q)       parts.push('"' + q + '"');
+  if (pricing) parts.push(pricing.charAt(0).toUpperCase() + pricing.slice(1));
+  if (sort === 'az') parts.push('A to Z');
+  if (parts.length) {
+    term.textContent = parts.join(' · ');
+    banner.style.display = '';
+  } else {
+    banner.style.display = 'none';
+  }
+}
+function hideBanner() {
+  const banner = document.getElementById('searchBanner');
+  if (banner) banner.style.display = 'none';
+}
+
+/* ── CLEAR ACTIONS ── */
+function clearSearch() {
+  const input = document.getElementById('toolsSearch');
+  if (input) input.value = '';
+  const clearBtn = document.getElementById('searchClear');
+  if (clearBtn) clearBtn.classList.remove('show');
+  handleFilter();
+}
+function clearAll() {
+  const input   = document.getElementById('toolsSearch');
+  const pricing = document.getElementById('toolsPricing');
+  const sort    = document.getElementById('toolsSort');
+  if (input)   input.value = '';
+  if (pricing) pricing.value = '';
+  if (sort)    sort.value = 'rank';
+  const clearBtn = document.getElementById('searchClear');
+  if (clearBtn) clearBtn.classList.remove('show');
+  handleFilter();
+}
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const input = document.getElementById('toolsSearch');
+    if (input && document.activeElement === input) {
+      clearSearch();
+      input.blur();
+    }
+  }
+});
+
+/* ── NEWSLETTER SUBSCRIBE ── */
+function subscribeNewsletter(btn) {
+  const emailInput = document.getElementById('nlEmail');
+  const email = emailInput ? emailInput.value.trim() : '';
+  if (!email || !email.includes('@')) {
+    if (typeof showToast === 'function') showToast('❌', 'Please enter a valid email address');
+    return;
+  }
+  if (typeof subscribeNewsletter !== 'undefined' && typeof showToast === 'function') {
+    showToast('✅', 'You are subscribed! Welcome aboard.');
+    if (emailInput) emailInput.value = '';
+  }
+}
+
+/* ── INIT ── */
+document.addEventListener('DOMContentLoaded', () => {
+  renderCatPills();
+  renderNetflix();
+  renderBestTable();
+
+  if (typeof TOOLS !== 'undefined') setCount(TOOLS.length);
+
+  const params   = new URLSearchParams(window.location.search);
+  const urlCat   = params.get('cat');
+  const urlPrice = params.get('pricing');
+  const urlSort  = params.get('sort');
+
+  if (urlPrice) {
+    const sel = document.getElementById('toolsPricing');
+    if (sel) sel.value = urlPrice;
+  }
+  if (urlSort) {
+    const sel = document.getElementById('toolsSort');
+    if (sel) sel.value = urlSort;
+  }
+  if (urlPrice || urlSort) handleFilter();
+
+  if (urlCat) {
+    setTimeout(() => scrollToRow(urlCat), 500);
+  }
+});
+</script>
+
 </body>
 </html>
