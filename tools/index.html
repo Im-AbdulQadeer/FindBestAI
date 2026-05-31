@@ -467,53 +467,76 @@
 }
 
 @media (max-width: 768px) {
-  /* Search + filter stacked */
-  .tp-search-filter-row { flex-wrap: wrap; gap: 8px; }
-  .tp-filter-row { flex-wrap: nowrap; width: 100%; gap: 8px; }
 
-  /* Dropdowns equal width, fill row */
-  .tp-custom-dropdown { flex: 1; }
-  .tp-dropdown-btn {
-    min-width: unset;
-    width: 100%;
-    height: 46px;
-    font-size: 0.82rem;
-    padding: 0 12px;
-  }
+  /* ── HEADINGS ── */
+  .tp-h1 { font-size: 1.9rem; }
+  .tp-h2 { font-size: 1.45rem; }
+  .section-title { font-size: 1.35rem !important; }
+  .tp-lead { font-size: 0.9rem; margin-bottom: 24px; line-height: 1.6; }
+  .tp-search-sub { font-size: 0.82rem; margin-bottom: 12px; }
 
-  /* Results box full width */
-  .tp-results-box { width: 100%; justify-content: center; }
+  /* ── HERO SECTION ── */
+  .tp-cats-section { padding-top: 32px; padding-bottom: 26px; }
+  .tp-search-section { padding-top: 20px; padding-bottom: 10px; }
 
-  /* Hide search button on mobile — input oninput is enough */
+  /* ── CATEGORY PILLS ── */
+  .tp-pills-grid { gap: 6px; }
+  .tp-pill { font-size: 0.73rem; padding: 5px 9px 5px 8px; gap: 5px; }
+  .tp-pill .pill-emoji { font-size: 0.82rem; }
+  .tp-pill .pill-count { font-size: 0.58rem; padding: 1px 5px; }
+  .tp-pill .pill-arrow { display: none; }
+
+  /* ── SEARCH BAR ── */
+  .homepage-search { padding: 4px 6px 4px 14px; }
+  .homepage-search input { font-size: 0.9rem; padding: 8px 0; }
   .homepage-search .hs-btn { display: none; }
 
-  /* Search bar padding tighten */
-  .homepage-search { padding: 4px 6px 4px 16px; }
-  .homepage-search input { font-size: 0.95rem; padding: 9px 0; }
+  /* ── FILTER DROPDOWNS ── */
+  .tp-search-filter-row { flex-wrap: wrap; gap: 8px; }
+  .tp-filter-row { flex-wrap: nowrap; width: 100%; gap: 8px; }
+  .tp-custom-dropdown { flex: 1; }
+  .tp-dropdown-btn { min-width: unset; width: 100%; height: 44px; font-size: 0.8rem; padding: 0 10px; }
+  .tp-results-box { width: 100%; justify-content: center; }
 
-  /* Hero section less top padding */
-  .tp-cats-section { padding-top: 36px; padding-bottom: 32px; }
+  /* ── NETFLIX ROW HEADER ── */
+  .nf-header { flex-wrap: wrap; align-items: flex-start; gap: 6px; margin-bottom: 14px; }
+  .nf-header-left { flex: 1; min-width: 0; flex-direction: column; align-items: flex-start; gap: 4px; }
+  .nf-title-emoji { font-size: 1.1rem; }
+  .nf-title-text { font-size: 1rem; }
+  .nf-title { flex-wrap: wrap; gap: 6px; }
+  .nf-title-count { order: 3; width: 100%; display: inline-block; margin-top: 2px; }
+  .nf-header-right { flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+  .nf-arrows-row { display: flex; gap: 6px; }
+  .nf-view-all-btn { font-size: 0.75rem; padding: 7px 12px; }
+  .nf-arrow-btn { width: 34px; height: 34px; font-size: 1.8rem; }
 
-  /* Lead text smaller */
-  .tp-lead { font-size: 0.95rem; margin-bottom: 28px; line-height: 1.65; }
+  /* ── NETFLIX CARDS ── */
+  .nf-card { flex: 0 0 195px; min-width: 195px; }
+  .nf-row { padding: 12px 16px 20px; }
 
-  /* Search section tighter */
-  .tp-search-section { padding-top: 24px; padding-bottom: 12px; }
-  .tp-search-sub { font-size: 0.85rem; margin-bottom: 14px; }
+  /* ── FLAT GRID — 2 columns ── */
+  #flatGridEl { grid-template-columns: repeat(2, 1fr) !important; gap: 10px; }
+  #flatGridEl .nf-card { flex: unset !important; min-width: unset !important; width: 100%; padding: 14px; }
+  .nf-card-name { font-size: 0.9rem; }
+  .nf-card-desc { font-size: 0.78rem; -webkit-line-clamp: 2; }
 
-  /* Pills tighter gap */
-  .tp-pills-grid { gap: 7px; }
-  .tp-pill { font-size: 0.78rem; padding: 7px 11px 7px 9px; }
-
-  /* Netflix card min width on mobile */
-  .nf-card { flex: 0 0 200px; min-width: 200px; }
-
-  /* Flat grid single column on small screens */
-  #flatGridEl { grid-template-columns: 1fr; }
-
-  /* Best table section header */
-  .tp-best-table-header-row { flex-direction: column; gap: 12px; }
-  .tp-compare-btn { width: 100%; justify-content: center; }
+  /* ── BEST TABLE SECTION ── */
+  .tp-best-table-section { padding: 0 12px 50px; }
+  .tp-best-table-section .section-header { margin-bottom: 20px; }
+  .tp-best-table-header-row { flex-direction: column; gap: 10px; align-items: flex-start; }
+  .tp-compare-btn { width: auto; align-self: flex-start; font-size: 0.78rem; padding: 8px 14px; }
+  .best-table { min-width: 520px; }
+  .best-table thead th { padding: 10px 10px; font-size: 0.6rem; letter-spacing: 0.08em; }
+  .best-table td { padding: 10px 10px; font-size: 0.78rem; }
+  .bt-cat-name { font-size: 0.78rem; }
+  .bt-cat-emoji { font-size: 0.9rem; }
+  .bt-tool-name { font-size: 0.78rem; }
+  .bt-tool-logo { width: 22px; height: 22px; }
+  .bt-stars { font-size: 0.6rem; letter-spacing: 1px; }
+  .bt-rating-val { font-size: 0.7rem; }
+  .bt-pricing { font-size: 0.58rem; padding: 2px 6px; }
+  .bt-view-btn { font-size: 0.68rem; padding: 4px 8px; white-space: nowrap; }
+  .section-desc { font-size: 0.85rem; }
 }
 
 /* ══ NETFLIX LAYOUT ══ */
@@ -547,9 +570,7 @@
   margin-bottom: 20px;
   gap: 16px;
 }
-@media (max-width: 600px) {
-  .nf-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-}
+/* nf-header mobile handled in main 768px block below */
 
 .nf-header-left { display: flex; align-items: center; gap: 12px; }
 
@@ -571,6 +592,7 @@
 }
 
 .nf-header-right { display: flex; align-items: center; gap: 8px; }
+.nf-arrows-row { display: flex; align-items: center; gap: 8px; }
 
 /* Scroll Arrow Buttons — small circle, large arrow glyph */
 .nf-arrow-btn {
@@ -1539,11 +1561,13 @@ function renderNetflix() {
           <span class="nf-title-count">${cat.count} tools</span>
         </div>
         <div class="nf-header-right">
-          <button class="nf-arrow-btn" id="arr-left-${idx}" onclick="scrollRow('${gridId}', -1)" aria-label="Scroll left in ${cat.name}" title="Scroll left">‹</button>
-          <button class="nf-arrow-btn" id="arr-right-${idx}" onclick="scrollRow('${gridId}', 1)" aria-label="Scroll right in ${cat.name}" title="Scroll right">›</button>
           <a class="nf-view-all-btn" href="${catUrl}" aria-label="View all ${cat.name} tools on FindBestAI">
             View All <span class="btn-arrow">→</span>
           </a>
+          <div class="nf-arrows-row">
+            <button class="nf-arrow-btn" id="arr-left-${idx}" onclick="scrollRow('${gridId}', -1)" aria-label="Scroll left in ${cat.name}" title="Scroll left">‹</button>
+            <button class="nf-arrow-btn" id="arr-right-${idx}" onclick="scrollRow('${gridId}', 1)" aria-label="Scroll right in ${cat.name}" title="Scroll right">›</button>
+          </div>
         </div>
       </div>
       <div class="nf-track-wrapper">
