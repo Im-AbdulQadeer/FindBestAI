@@ -485,7 +485,7 @@
   margin: 0 auto;
   padding: 18px 32px 28px;
 }
-.tp-netflix > .nf-row:first-child { padding-top: 8px; }
+.tp-netflix > .nf-row:first-child { padding-top: 40px; }
 @media (max-width: 768px) { .nf-row { padding: 16px 16px 20px; } }
 
 .nf-row-divider {
@@ -1069,17 +1069,24 @@
   opacity: 0.5;
 }
 
-
 /* Homepage-style tool cards inside horizontal scroll rows */
+.nf-grid > .card,
 .nf-grid > .tool-card,
 .nf-grid > a.tool-card {
   flex: 0 0 300px;
   min-width: 300px;
   scroll-snap-align: start;
+  /* Force visible — IntersectionObserver doesn't fire for cards
+     scrolled horizontally off-screen, so .reveal would hide them. */
+  opacity: 1 !important;
+  transform: none !important;
 }
 @media (max-width: 640px){
+  .nf-grid > .card,
   .nf-grid > .tool-card,
   .nf-grid > a.tool-card { flex: 0 0 260px; min-width: 260px; }
+}
+#flatGridEl > .card { width: 100%; opacity: 1 !important; transform: none !important; }
 }
 /* Search/flat results grid uses homepage cards too */
 #flatGridEl {
