@@ -467,9 +467,53 @@
 }
 
 @media (max-width: 768px) {
-  .tp-search-filter-row { flex-wrap: wrap; }
-  .tp-filter-row { flex-wrap: wrap; width: 100%; }
-  .tp-dropdown-btn { min-width: 140px; }
+  /* Search + filter stacked */
+  .tp-search-filter-row { flex-wrap: wrap; gap: 8px; }
+  .tp-filter-row { flex-wrap: nowrap; width: 100%; gap: 8px; }
+
+  /* Dropdowns equal width, fill row */
+  .tp-custom-dropdown { flex: 1; }
+  .tp-dropdown-btn {
+    min-width: unset;
+    width: 100%;
+    height: 46px;
+    font-size: 0.82rem;
+    padding: 0 12px;
+  }
+
+  /* Results box full width */
+  .tp-results-box { width: 100%; justify-content: center; }
+
+  /* Hide search button on mobile — input oninput is enough */
+  .homepage-search .hs-btn { display: none; }
+
+  /* Search bar padding tighten */
+  .homepage-search { padding: 4px 6px 4px 16px; }
+  .homepage-search input { font-size: 0.95rem; padding: 9px 0; }
+
+  /* Hero section less top padding */
+  .tp-cats-section { padding-top: 36px; padding-bottom: 32px; }
+
+  /* Lead text smaller */
+  .tp-lead { font-size: 0.95rem; margin-bottom: 28px; line-height: 1.65; }
+
+  /* Search section tighter */
+  .tp-search-section { padding-top: 24px; padding-bottom: 12px; }
+  .tp-search-sub { font-size: 0.85rem; margin-bottom: 14px; }
+
+  /* Pills tighter gap */
+  .tp-pills-grid { gap: 7px; }
+  .tp-pill { font-size: 0.78rem; padding: 7px 11px 7px 9px; }
+
+  /* Netflix card min width on mobile */
+  .nf-card { flex: 0 0 200px; min-width: 200px; }
+
+  /* Flat grid single column on small screens */
+  #flatGridEl { grid-template-columns: 1fr; }
+
+  /* Best table section header */
+  .tp-best-table-header-row { flex-direction: column; gap: 12px; }
+  .tp-compare-btn { width: 100%; justify-content: center; }
 }
 
 /* ══ NETFLIX LAYOUT ══ */
