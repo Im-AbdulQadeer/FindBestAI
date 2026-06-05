@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -359,8 +360,8 @@
 .tp-dropdown-btn .dd-icon { font-size: 0.92rem; }
 .tp-dropdown-btn .dd-label { flex: 1; text-align: left; }
 .tp-dropdown-btn .dd-caret {
-  font-size: 0.65rem;
-  color: var(--text3);
+  font-size: 1rem;
+  color: var(--text2);
   transition: transform 0.2s;
 }
 .tp-dropdown-btn.open .dd-caret { transform: rotate(180deg); }
@@ -505,57 +506,26 @@
   .nf-row-divider { display: none; }
 
   /* ── NETFLIX ROW HEADER ── */
-  .nf-header {
-    flex-wrap: nowrap;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-  /* Left: emoji flush left, then title stack */
+  .nf-header { flex-wrap: nowrap; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
   .nf-header-left { gap: 6px; align-items: flex-start; }
   .nf-title-emoji { font-size: 1rem; margin-top: 2px; }
   .nf-title-stack { gap: 2px; }
   .nf-title-text { font-size: 0.95rem; }
   .nf-title-count { font-size: 0.58rem; padding: 2px 6px; }
-
-  /* Right: View All on top, arrows directly below */
   .nf-header-right { flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
   .nf-arrows-row { display: flex; gap: 5px; }
   .nf-view-all-btn { font-size: 0.72rem; padding: 6px 10px; }
-
-  /* Arrow buttons: tight circle, just border no big bg */
-  .nf-arrow-btn {
-    width: 26px;
-    height: 26px;
-    font-size: 1.3rem;
-    border-radius: 50%;
-    padding: 0;
-    line-height: 1;
-  }
+  .nf-arrow-btn { width: 26px; height: 26px; font-size: 1.3rem; border-radius: 50%; padding: 0; line-height: 1; }
 
   /* ── NETFLIX CARDS ── */
+  .nf-grid .nf-card { box-shadow: none; border-width: 1px; }
   .nf-card { flex: 0 0 185px; min-width: 185px; padding: 14px; }
   .nf-card-name { font-size: 0.88rem; }
   .nf-card-desc { font-size: 0.76rem; }
-  /* Remove large outer glow/border on cards in netflix scroll */
-  .nf-grid .nf-card { box-shadow: none; border-width: 1px; }
 
   /* ── FLAT GRID — 2 columns, no gap ── */
-  #flatGridEl {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0 !important;
-  }
-  #flatGridEl .nf-card {
-    flex: unset !important;
-    min-width: unset !important;
-    width: 100%;
-    padding: 12px;
-    border-radius: 0;
-    border-right-width: 0;
-    border-bottom-width: 0;
-    box-shadow: none;
-  }
+  #flatGridEl { grid-template-columns: repeat(2, 1fr) !important; gap: 0 !important; }
+  #flatGridEl .nf-card { flex: unset !important; min-width: unset !important; width: 100%; padding: 12px; border-radius: 0; border-right-width: 0; border-bottom-width: 0; box-shadow: none; }
   #flatGridEl .nf-card:nth-child(even) { border-right-width: 1px; }
   #flatGridEl .nf-card:nth-last-child(-n+2) { border-bottom-width: 1px; }
 
@@ -563,23 +533,9 @@
   .tp-best-table-section { padding: 0 12px 16px; }
   .tp-best-table-section .section-header { margin-bottom: 16px; }
   .tp-best-table-header-row { flex-direction: column; gap: 6px; align-items: flex-start; }
-
-  /* Hide desktop compare btn in header on mobile */
   .tp-compare-desktop { display: none !important; }
-  /* Show mobile compare btn below table */
-  .tp-compare-mobile-wrap {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 4px;
-  }
-  .tp-compare-mobile {
-    display: inline-flex;
-    font-size: 0.8rem;
-    padding: 9px 20px;
-  }
-
-  /* Table compact + unbold */
+  .tp-compare-mobile-wrap { display: flex; justify-content: center; margin-top: 20px; margin-bottom: 4px; }
+  .tp-compare-mobile { display: inline-flex; font-size: 0.8rem; padding: 9px 20px; }
   .best-table { min-width: 480px; }
   .best-table thead th { padding: 8px 8px; font-size: 0.58rem; letter-spacing: 0.06em; font-weight: 600; }
   .best-table td { padding: 8px 8px; font-size: 0.74rem; font-weight: 400; }
@@ -589,7 +545,6 @@
   .bt-tool-col { gap: 5px; }
   .bt-tool-name { font-size: 0.74rem; font-weight: 500; }
   .bt-tool-logo { width: 20px; height: 20px; }
-  /* Rating single row */
   .best-table td:nth-child(3) { white-space: nowrap; }
   .bt-stars { font-size: 0.58rem; letter-spacing: 0.5px; display: inline; }
   .bt-rating-val { font-size: 0.68rem; font-weight: 400; display: inline; margin-left: 2px; }
@@ -647,11 +602,9 @@
 }
 .nf-header-right { display: flex; align-items: center; gap: 8px; }
 .nf-arrows-row { display: flex; align-items: center; gap: 8px; }
-
-/* Compare button: desktop in header, mobile below table */
+/* Compare button: desktop shows in header, mobile shows below table */
 .tp-compare-mobile-wrap { display: none; }
 .tp-compare-desktop { display: inline-flex; }
-.tp-compare-mobile { display: inline-flex; }
 
 /* Scroll Arrow Buttons — small circle, large arrow glyph */
 .nf-arrow-btn {
@@ -916,7 +869,7 @@
   margin: 0 auto;
   padding: 0 32px 80px;
 }
-/* flat-section + best-table mobile padding handled in main 768px block */
+/* flat-section mobile padding handled in main 768px block */
 
 /* Grid wrapper for search results using nf-cards */
 #flatGridEl {
@@ -1276,22 +1229,22 @@
       <!-- Custom Pricing Dropdown -->
       <div class="tp-custom-dropdown" id="pricingDropdown">
         <button class="tp-dropdown-btn" id="pricingBtn" onclick="toggleDropdown('pricingDropdown')" aria-label="Filter by pricing model">
-          <span class="dd-icon">💰</span>
+          <span class="dd-icon"></span>
           <span class="dd-label" id="pricingLabel">All Pricing</span>
           <span class="dd-caret">▾</span>
         </button>
         <div class="tp-dropdown-menu" id="pricingMenu">
-          <div class="tp-dropdown-option selected" data-value="" onclick="selectDropdown('pricingDropdown', '', '💰 All Pricing', '💰')">
-            <span class="opt-icon">💰</span> All Pricing
+          <div class="tp-dropdown-option selected" data-value="" onclick="selectDropdown('pricingDropdown', '', 'All Pricing', '')">
+            All Pricing
           </div>
-          <div class="tp-dropdown-option" data-value="free" onclick="selectDropdown('pricingDropdown', 'free', '🆓 Free Only', '🆓')">
-            <span class="opt-icon">🆓</span> Free Only
+          <div class="tp-dropdown-option" data-value="free" onclick="selectDropdown('pricingDropdown', 'free', 'Free Only', '')">
+            Free Only
           </div>
-          <div class="tp-dropdown-option" data-value="freemium" onclick="selectDropdown('pricingDropdown', 'freemium', '⚡ Freemium', '⚡')">
-            <span class="opt-icon">⚡</span> Freemium
+          <div class="tp-dropdown-option" data-value="freemium" onclick="selectDropdown('pricingDropdown', 'freemium', 'Freemium', '')">
+            Freemium
           </div>
-          <div class="tp-dropdown-option" data-value="paid" onclick="selectDropdown('pricingDropdown', 'paid', '💎 Paid Only', '💎')">
-            <span class="opt-icon">💎</span> Paid Only
+          <div class="tp-dropdown-option" data-value="paid" onclick="selectDropdown('pricingDropdown', 'paid', 'Paid Only', '')">
+            Paid Only
           </div>
         </div>
         <!-- Hidden real select for form submission -->
@@ -1306,16 +1259,16 @@
       <!-- Sort Dropdown -->
       <div class="tp-custom-dropdown" id="sortDropdown">
         <button class="tp-dropdown-btn" id="sortBtn" onclick="toggleDropdown('sortDropdown')" aria-label="Sort AI tools">
-          <span class="dd-icon">📊</span>
+          <span class="dd-icon"></span>
           <span class="dd-label" id="sortLabel">By Ranking</span>
           <span class="dd-caret">▾</span>
         </button>
         <div class="tp-dropdown-menu" id="sortMenu">
-          <div class="tp-dropdown-option selected" data-value="rank" onclick="selectDropdown('sortDropdown', 'rank', '📊 By Ranking', '📊')">
-            <span class="opt-icon">📊</span> By Ranking
+          <div class="tp-dropdown-option selected" data-value="rank" onclick="selectDropdown('sortDropdown', 'rank', 'By Ranking', '')">
+            By Ranking
           </div>
-          <div class="tp-dropdown-option" data-value="az" onclick="selectDropdown('sortDropdown', 'az', '🔤 A to Z', '🔤')">
-            <span class="opt-icon">🔤</span> A to Z
+          <div class="tp-dropdown-option" data-value="az" onclick="selectDropdown('sortDropdown', 'az', 'A to Z', '')">
+            A to Z
           </div>
         </div>
         <select id="toolsSort" style="display:none" onchange="handleFilter()" aria-label="Sort AI tools">
@@ -1378,7 +1331,6 @@
     </div>
     <p class="section-desc">Our experts tested hundreds of AI tools across every category. These are the highest rated picks based on performance, features, ease of use, and value, updated for 2026.</p>
   </div>
-
   <div class="best-table-wrap" role="region" aria-label="Best AI tools by category table">
     <table class="best-table">
       <thead>
@@ -1395,7 +1347,6 @@
       </tbody>
     </table>
   </div>
-  <!-- Mobile only: Compare button below table -->
   <div class="tp-compare-mobile-wrap">
     <a href="/compare/" class="tp-compare-btn tp-compare-mobile" aria-label="Go to Compare AI Tools page">
       Compare Tools <span class="btn-arrow">→</span>
@@ -1759,17 +1710,18 @@ function handleFilter() {
   const clearBtn = document.getElementById('searchClear');
   if (clearBtn) clearBtn.classList.toggle('show', q.length > 0);
 
-  const isFiltered = q.length > 0 || pricing !== '' || sort !== 'rank';
-
-  // Show/hide results box
+  // Results box ONLY shows when search bar has at least 1 character
   const resultsBox = document.getElementById('resultsBox');
   if (resultsBox) {
-    if (isFiltered) {
+    if (q.length > 0) {
       resultsBox.classList.add('visible');
     } else {
       resultsBox.classList.remove('visible');
     }
   }
+
+  // Flat grid triggers when: search text OR pricing filter OR A to Z selected
+  const isFiltered = q.length > 0 || pricing !== '' || sort === 'az';
 
   if (!isFiltered) {
     showNetflix();
@@ -1793,6 +1745,12 @@ function handleFilter() {
 
   if (sort === 'az') {
     matches = [...matches].sort((a, b) => a.name.localeCompare(b.name));
+  } else if (sort === 'rank') {
+    matches = [...matches].sort((a, b) => {
+      const ra = (a.rank !== undefined && a.rank !== null) ? a.rank : (a.rating ? -a.rating : 9999);
+      const rb = (b.rank !== undefined && b.rank !== null) ? b.rank : (b.rating ? -b.rating : 9999);
+      return ra - rb;
+    });
   }
 
   renderFlatGrid(matches);
