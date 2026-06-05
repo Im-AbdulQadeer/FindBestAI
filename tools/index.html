@@ -524,16 +524,14 @@
   .nf-card-desc { font-size: 0.76rem; }
 
   /* ── FLAT GRID — 2 columns, no gap ── */
-  #flatGridEl { grid-template-columns: repeat(2, 1fr) !important; gap: 0 !important; }
-  #flatGridEl .nf-card { flex: unset !important; min-width: unset !important; width: 100%; padding: 12px; border-radius: 0; border-right-width: 0; border-bottom-width: 0; box-shadow: none; }
-  #flatGridEl .nf-card:nth-child(even) { border-right-width: 1px; }
-  #flatGridEl .nf-card:nth-last-child(-n+2) { border-bottom-width: 1px; }
+  #flatGridEl { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+  #flatGridEl .nf-card { flex: unset !important; min-width: unset !important; width: 100%; padding: 12px; border-radius: 10px; box-shadow: none; }
 
   /* ── FLAT GRID SECTION (A-Z search results) ── */
-  .tp-flat-section { padding: 0 6px 40px !important; }
+  .tp-flat-section { padding: 0 10px 40px !important; }
 
   /* ── BEST TABLE SECTION ── */
-  .tp-best-table-section { padding: 0 6px 16px; }
+  .tp-best-table-section { padding: 0 16px 16px; }
   .tp-best-table-section .section-header { margin-bottom: 16px; }
   .tp-best-table-header-row { flex-direction: column; gap: 6px; align-items: flex-start; }
   .tp-best-table-header-row .tp-compare-desktop,
