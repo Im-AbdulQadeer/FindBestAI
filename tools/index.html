@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -468,10 +466,6 @@
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Compare button visibility — desktop shows in header, mobile shows below table */
-.tp-compare-btn-mobile { display: none; }
-.tp-compare-btn-desktop { display: inline-flex; }
-
 @media (max-width: 768px) {
 
   /* ── HEADINGS ── */
@@ -482,7 +476,7 @@
   .tp-search-sub { font-size: 0.82rem; margin-bottom: 12px; }
   .section-desc { font-size: 0.84rem; line-height: 1.6; }
 
-  /* ── HERO SECTION ── */
+  /* ── HERO / SEARCH SECTION ── */
   .tp-cats-section { padding-top: 30px; padding-bottom: 24px; }
   .tp-search-section { padding-top: 20px; padding-bottom: 10px; }
 
@@ -505,89 +499,49 @@
   .tp-dropdown-btn { min-width: unset; width: 100%; height: 44px; font-size: 0.8rem; padding: 0 10px; }
   .tp-results-box { width: 100%; justify-content: center; }
 
-  /* ── NETFLIX LAYOUT ── */
-  /* Sides flush — match the top spacing (~14px) so cards are not inset */
-  .nf-row { padding: 14px 6px 32px; }
-  .tp-netflix > .nf-row:first-child { padding-top: 24px; }
-  /* Divider between categories — remove it on mobile (padding does the job) */
+  /* ── NETFLIX SECTION spacing ── */
+  .nf-row { padding: 14px 14px 30px; }
+  .tp-netflix > .nf-row:first-child { padding-top: 22px; }
   .nf-row-divider { display: none; }
 
   /* ── NETFLIX ROW HEADER ── */
   .nf-header {
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 8px;
     margin-bottom: 12px;
-    padding: 0 4px;
   }
-  /* Left: emoji flush left, title right next to it */
-  .nf-header-left {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0;
-    flex: 1;
-    min-width: 0;
-    padding-left: 0;
-  }
-  /* Emoji: flush to the edge, sits right beside the title text */
-  .nf-title-emoji {
-    font-size: 1.05rem;
-    margin-right: 6px;
-    margin-top: 0;
-    margin-left: 0;
-    flex-shrink: 0;
-    line-height: 1;
-  }
-  /* Title + count stacked in a column */
-  .nf-title-right {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .nf-title-text { font-size: 0.95rem; line-height: 1.15; }
-  /* Count: inline, auto width, smaller */
-  .nf-title-count {
-    display: inline-block;
-    width: auto;
-    align-self: flex-start;
-    font-size: 0.52rem;
-    padding: 1px 6px;
-    line-height: 1.3;
-  }
-  /* Right: View All on top, arrows below */
-  .nf-header-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 5px;
-    flex-shrink: 0;
-  }
-  /* View All button: tighter so it matches title text height */
-  .nf-view-all-btn {
-    font-size: 0.72rem;
-    padding: 2px 9px;
-    border-radius: 7px;
-    line-height: 1.25;
-  }
+  /* Left: emoji flush left, then title stack */
+  .nf-header-left { gap: 6px; align-items: flex-start; }
+  .nf-title-emoji { font-size: 1rem; margin-top: 2px; }
+  .nf-title-stack { gap: 2px; }
+  .nf-title-text { font-size: 0.95rem; }
+  .nf-title-count { font-size: 0.58rem; padding: 2px 6px; }
+
+  /* Right: View All on top, arrows directly below */
+  .nf-header-right { flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
   .nf-arrows-row { display: flex; gap: 5px; }
-  /* Arrow circle: tight border, just hugs the arrow glyph */
+  .nf-view-all-btn { font-size: 0.72rem; padding: 6px 10px; }
+
+  /* Arrow buttons: tight circle, just border no big bg */
   .nf-arrow-btn {
-    width: 24px;
-    height: 24px;
-    font-size: 1.25rem;
-    border-width: 1px;
-    padding: 0 0 2px 0;
-    line-height: 0.6;
+    width: 26px;
+    height: 26px;
+    font-size: 1.3rem;
+    border-radius: 50%;
+    padding: 0;
+    line-height: 1;
   }
 
   /* ── NETFLIX CARDS ── */
   .nf-card { flex: 0 0 185px; min-width: 185px; padding: 14px; }
   .nf-card-name { font-size: 0.88rem; }
   .nf-card-desc { font-size: 0.76rem; }
+  /* Remove large outer glow/border on cards in netflix scroll */
+  .nf-grid .nf-card { box-shadow: none; border-width: 1px; }
 
-  /* ── FLAT GRID — 2 columns, NO gap between cards ── */
+  /* ── FLAT GRID — 2 columns, no gap ── */
   #flatGridEl {
     grid-template-columns: repeat(2, 1fr) !important;
     gap: 0 !important;
@@ -600,45 +554,47 @@
     border-radius: 0;
     border-right-width: 0;
     border-bottom-width: 0;
+    box-shadow: none;
   }
-  /* Restore right border on odd cards (right column) */
-  #flatGridEl .nf-card:nth-child(even) { border-right-width: 1.5px; }
-  /* Restore bottom border on last row */
-  #flatGridEl .nf-card:nth-last-child(-n+2) { border-bottom-width: 1.5px; }
+  #flatGridEl .nf-card:nth-child(even) { border-right-width: 1px; }
+  #flatGridEl .nf-card:nth-last-child(-n+2) { border-bottom-width: 1px; }
 
   /* ── BEST TABLE SECTION ── */
-  .tp-best-table-section { padding: 0 12px 24px; }
-  .tp-best-table-section .section-header { margin-bottom: 18px; }
-  /* Hide BOTH compare buttons that sit near the title on mobile */
-  .tp-compare-btn-desktop { display: none !important; }
-  /* Mobile compare button — centered, sits below table with breathing room */
-  .tp-compare-btn-mobile {
-    display: flex;
-    margin: 28px auto 0;
-    width: auto;
-    align-self: center;
-    font-size: 0.78rem;
-    padding: 9px 20px;
-    justify-content: center;
-  }
+  .tp-best-table-section { padding: 0 12px 16px; }
+  .tp-best-table-section .section-header { margin-bottom: 16px; }
   .tp-best-table-header-row { flex-direction: column; gap: 6px; align-items: flex-start; }
 
-  /* Table compact + unbold content */
+  /* Hide desktop compare btn in header on mobile */
+  .tp-compare-desktop { display: none !important; }
+  /* Show mobile compare btn below table */
+  .tp-compare-mobile-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 4px;
+  }
+  .tp-compare-mobile {
+    display: inline-flex;
+    font-size: 0.8rem;
+    padding: 9px 20px;
+  }
+
+  /* Table compact + unbold */
   .best-table { min-width: 480px; }
-  .best-table thead th { padding: 8px 8px; font-size: 0.58rem; letter-spacing: 0.06em; font-weight: 500; }
-  .best-table td { padding: 8px 8px; font-size: 0.75rem; font-weight: 400; }
-  .bt-cat-name { font-size: 0.75rem; font-weight: 400; }
+  .best-table thead th { padding: 8px 8px; font-size: 0.58rem; letter-spacing: 0.06em; font-weight: 600; }
+  .best-table td { padding: 8px 8px; font-size: 0.74rem; font-weight: 400; }
+  .bt-cat-name { font-size: 0.74rem; font-weight: 500; }
   .bt-cat-emoji { font-size: 0.85rem; }
-  .bt-cat-col { gap: 6px; }
-  .bt-tool-col { gap: 6px; }
-  .bt-tool-name { font-size: 0.75rem; font-weight: 400; }
+  .bt-cat-col { gap: 5px; }
+  .bt-tool-col { gap: 5px; }
+  .bt-tool-name { font-size: 0.74rem; font-weight: 500; }
   .bt-tool-logo { width: 20px; height: 20px; }
-  /* Rating — force single row, no wrap */
+  /* Rating single row */
   .best-table td:nth-child(3) { white-space: nowrap; }
   .bt-stars { font-size: 0.58rem; letter-spacing: 0.5px; display: inline; }
   .bt-rating-val { font-size: 0.68rem; font-weight: 400; display: inline; margin-left: 2px; }
-  .bt-pricing { font-size: 0.56rem; padding: 2px 5px; font-weight: 500; }
-  .bt-view-btn { font-size: 0.65rem; padding: 3px 7px; white-space: nowrap; font-weight: 600; }
+  .bt-pricing { font-size: 0.56rem; padding: 2px 5px; }
+  .bt-view-btn { font-size: 0.65rem; padding: 3px 7px; white-space: nowrap; }
 }
 
 /* ══ NETFLIX LAYOUT ══ */
@@ -675,8 +631,8 @@
 /* nf-header mobile handled in main 768px block */
 
 .nf-header-left { display: flex; align-items: center; gap: 10px; }
-.nf-title-right { display: flex; flex-direction: column; gap: 4px; }
-.nf-title-emoji { font-size: 1.5rem; flex-shrink: 0; }
+.nf-title-stack { display: flex; flex-direction: column; gap: 3px; }
+.nf-title-emoji { font-size: 1.4rem; flex-shrink: 0; }
 .nf-title-text { font-size: 1.2rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
 .nf-title-count {
   font-size: 0.68rem;
@@ -686,10 +642,16 @@
   padding: 3px 9px;
   border-radius: 100px;
   font-weight: 500;
+  display: inline-block;
+  width: fit-content;
 }
-
 .nf-header-right { display: flex; align-items: center; gap: 8px; }
 .nf-arrows-row { display: flex; align-items: center; gap: 8px; }
+
+/* Compare button: desktop in header, mobile below table */
+.tp-compare-mobile-wrap { display: none; }
+.tp-compare-desktop { display: inline-flex; }
+.tp-compare-mobile { display: inline-flex; }
 
 /* Scroll Arrow Buttons — small circle, large arrow glyph */
 .nf-arrow-btn {
@@ -785,7 +747,7 @@
   flex: 0 0 270px;
   min-width: 270px;
 }
-/* nf-card mobile size handled in main 768px block */
+@media (max-width: 640px) { .nf-card { flex: 0 0 230px; min-width: 230px; } }
 
 .nf-card:hover {
   border-color: var(--accent);
@@ -954,7 +916,7 @@
   margin: 0 auto;
   padding: 0 32px 80px;
 }
-@media (max-width: 768px) { .tp-flat-section { padding: 0 16px 60px; } }
+/* flat-section + best-table mobile padding handled in main 768px block */
 
 /* Grid wrapper for search results using nf-cards */
 #flatGridEl {
@@ -1020,7 +982,7 @@
   margin: 0 auto;
   padding: 0 32px 80px;
 }
-@media (max-width: 768px) { .tp-best-table-section { padding: 0 16px 60px; } }
+/* best-table mobile padding handled in main 768px block */
 
 .tp-best-table-section .section-header {
   margin-bottom: 32px;
@@ -1410,7 +1372,7 @@
     <span class="tp-badge">// EXPERT PICKS</span>
     <div class="tp-best-table-header-row">
       <h2 class="section-title" id="bestTableTitle">The <em>Top Rated AI Tool</em> in Every Category</h2>
-      <a href="/compare/" class="tp-compare-btn tp-compare-btn-desktop" aria-label="Go to Compare AI Tools page">
+      <a href="/compare/" class="tp-compare-btn tp-compare-desktop" aria-label="Go to Compare AI Tools page">
         Compare Tools <span class="btn-arrow">→</span>
       </a>
     </div>
@@ -1433,9 +1395,12 @@
       </tbody>
     </table>
   </div>
-  <a href="/compare/" class="tp-compare-btn tp-compare-btn-mobile" aria-label="Go to Compare AI Tools page">
-    Compare Tools <span class="btn-arrow">→</span>
-  </a>
+  <!-- Mobile only: Compare button below table -->
+  <div class="tp-compare-mobile-wrap">
+    <a href="/compare/" class="tp-compare-btn tp-compare-mobile" aria-label="Go to Compare AI Tools page">
+      Compare Tools <span class="btn-arrow">→</span>
+    </a>
+  </div>
 </section>
 
 <div class="section-divider"></div>
@@ -1647,8 +1612,8 @@ function renderNetflix() {
       <div class="nf-header">
         <div class="nf-header-left">
           <span class="nf-title-emoji">${cat.icon}</span>
-          <div class="nf-title-right">
-            <a class="nf-title-text" href="${catUrl}" aria-label="${cat.name} AI tools category page" style="text-decoration:none;color:inherit;">${cat.name}</a>
+          <div class="nf-title-stack">
+            <a class="nf-title-text" href="${catUrl}" aria-label="${cat.name} AI tools" style="text-decoration:none;color:inherit;">${cat.name}</a>
             <span class="nf-title-count">${cat.count} tools</span>
           </div>
         </div>
