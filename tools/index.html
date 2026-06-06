@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
@@ -509,13 +508,13 @@
   .nf-header { flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
   .nf-header-left { gap: 8px; align-items: center; padding-left: 0; }
   .nf-title-emoji { font-size: 1.15rem; line-height: 1; display: inline-flex; align-items: center; margin: 0; }
-  .nf-title-stack { gap: 2px; }
+  .nf-title-stack { flex-direction: row; align-items: center; gap: 6px; }
   .nf-title-text { font-size: 1.1rem; line-height: 1.1; }
   .nf-title-count { font-size: 0.45rem; padding: 1px 5px; }
   .nf-header-right { flex-direction: row-reverse; align-items: center; gap: 6px; flex-shrink: 0; }
   .nf-arrows-row { display: flex; gap: 5px; align-items: center; }
-  .nf-view-all-btn { font-size: 0.82rem; padding: 4px 10px; line-height: 1.1; border-width: 1px; border-radius: 7px; display: inline-flex; align-items: center; }
-  .nf-arrow-btn { width: 24px; height: 24px; min-width: 24px; font-size: 1rem; border-radius: 50%; padding: 0; border-width: 1px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; }
+  .nf-view-all-btn { font-size: 0.82rem; padding: 0 10px; height: 24px; line-height: 1; border-width: 1px; border-radius: 7px; display: inline-flex; align-items: center; }
+  .nf-arrow-btn { width: 24px; height: 24px; min-width: 24px; font-size: 1.3rem; border-radius: 50%; padding: 0; border-width: 1px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; }
 
   /* ── NETFLIX CARDS ── */
   .nf-grid .nf-card { box-shadow: none; border-width: 1px; }
@@ -1224,8 +1223,9 @@
 
   .nf-view-all-btn {
     font-size: 0.82rem !important;
-    line-height: 1.1 !important;
-    padding: 4px 10px !important;
+    line-height: 1 !important;
+    padding: 0 10px !important;
+    height: 24px !important;
     border-width: 1px !important;
     border-radius: 7px !important;
     display: inline-flex !important;
@@ -1236,13 +1236,19 @@
     width: 24px !important;
     height: 24px !important;
     min-width: 24px !important;
-    font-size: 1rem !important;
+    font-size: 1.3rem !important;
     line-height: 1 !important;
     padding: 0 !important;
     border-width: 1px !important;
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
+  }
+
+  .nf-title-stack {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 6px !important;
   }
 }
 
