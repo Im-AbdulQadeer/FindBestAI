@@ -505,10 +505,10 @@
   .nf-row-divider { display: none; }
 
   /* ── NETFLIX ROW HEADER ── */
-  .nf-header { flex-wrap: nowrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
-  .nf-header-left { gap: 8px; align-items: center; padding-left: 0; }
-  .nf-title-emoji { font-size: 1.15rem; line-height: 1; display: inline-flex; align-items: center; margin: 0; }
-  .nf-title-stack { flex-direction: row; align-items: center; gap: 6px; }
+  .nf-header { flex-wrap: nowrap; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 12px; }
+  .nf-header-left { gap: 8px; align-items: flex-start; padding-left: 0; }
+  .nf-title-emoji { font-size: 1.15rem; line-height: 1; display: inline-flex; align-items: center; margin: 0; margin-top: 2px; }
+  .nf-title-stack { flex-direction: column; gap: 4px; }
   .nf-title-text { font-size: 1.1rem; line-height: 1.1; }
   .nf-title-count { font-size: 0.45rem; padding: 1px 5px; }
   .nf-header-right { flex-direction: row-reverse; align-items: center; gap: 6px; flex-shrink: 0; }
@@ -1182,7 +1182,7 @@
   }
 
   .nf-header {
-    align-items: center !important;
+    align-items: flex-start !important;
     gap: 8px !important;
     margin-bottom: 12px !important;
   }
@@ -1190,7 +1190,7 @@
   .nf-header-left {
     gap: 8px !important;
     padding-left: 0 !important;
-    align-items: center !important;
+    align-items: flex-start !important;
   }
 
   .nf-title-emoji {
@@ -1199,6 +1199,7 @@
     display: inline-flex !important;
     align-items: center !important;
     margin: 0 !important;
+    margin-top: 2px !important;
   }
 
   .nf-title-text {
@@ -1208,6 +1209,7 @@
 
   .nf-title-count {
     font-size: 0.45rem !important;
+    padding: 1px 5px !important;
   }
 
   .nf-header-right {
@@ -1246,9 +1248,9 @@
   }
 
   .nf-title-stack {
-    flex-direction: row !important;
-    align-items: center !important;
-    gap: 6px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
   }
 }
 
