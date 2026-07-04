@@ -279,6 +279,22 @@ const TRENDING = [
 
 const ARTICLES = [
   {
+    slug: 'claude-fable-5-banned-by-us-government-now-available',
+    emoji: '🚨',
+    image: '/assets/uploads/claude-fable-5-banned-by-us-government-now-available.png',
+    thumb: 'linear-gradient(135deg,#1a0000,#3d0000)',
+    cat: 'BREAKING NEWS',
+    date: 'July 3, 2026',
+    title: 'Claude Fable 5: Banned by the US Government — Now Available to Everyone',
+    excerpt: 'The US Government banned Claude Fable 5 just 3 days after launch. 18 days later it is back online globally. Here is the full story, what Fable 5 can do, and how to access it now.',
+    keywords: 'Claude Fable 5, Claude Fable 5 banned, Fable 5 review, What is Claude Fable 5, Fable 5 government ban, Anthropic Fable 5 available',
+    readTime: '12 MIN READ',
+    author: 'Find Best AI Editorial',
+    authorRole: 'AI News & Research Team',
+    authorEmoji: '🚨',
+    tags: ['Claude Fable 5', 'Anthropic', 'AI News', 'Government Ban', '2026', 'Breaking News']
+  },
+  {
     slug: 'best-ai-coding-tools-2026-opencode-vs-cursor-vs-claude-code',
     emoji: '💻',
     image: '/assets/uploads/best-ai-coding-tools-2026-opencode-vs-cursor-vs-claude-code.png',
