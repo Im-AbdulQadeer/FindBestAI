@@ -5,8 +5,16 @@
     <link>https://findbestai.app/blog/</link>
     <description>AI tools reviews, comparisons, and guides — updated weekly.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 23 May 2026 08:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Jul 2026 08:00:00 +0000</lastBuildDate>
     <atom:link href="https://findbestai.app/feed.xml" rel="self" type="application/rss+xml"/>
+
+    <item>
+      <title>What Is GPT-5.6 Sol? OpenAI's New Flagship Model Fully Explained (2026)</title>
+      <link>https://findbestai.app/blog/what-is-gpt-5-6-sol-openai-new-flagship-model-2026/</link>
+      <description>GPT-5.6 Sol is OpenAI's new flagship model for July 2026 — a self-orchestrating reasoning model with 2M token context, native tool use, and agentic loops. Here is everything: features, benchmarks, pricing, how to access it, and how it compares to GPT-5.5, Claude Fable 5, and Gemini 3.5.</description>
+      <pubDate>Tue, 14 Jul 2026 08:00:00 +0000</pubDate>
+      <guid isPermaLink="true">https://findbestai.app/blog/what-is-gpt-5-6-sol-openai-new-flagship-model-2026/</guid>
+    </item>
 
     <item>
       <title>Claude Fable 5: Banned by the US Government — Now Available to Everyone</title>
