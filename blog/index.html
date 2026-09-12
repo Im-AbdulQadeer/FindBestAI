@@ -147,7 +147,6 @@
     emoji:    '⚔️'
   });
 
-  /* Second most recent article */
   ARTICLES.unshift({
     slug:     'gpt-5-5-vs-claude-opus-4-8-vs-gemini-3-5-flash',
     title:    'GPT 5.5 vs Claude Opus 4.8 vs Gemini 3.5 Flash (2026): Which AI Model Is Best for You?',
@@ -160,107 +159,15 @@
     emoji:    '🧠'
   });
 
-  /* Third most recent article */
-  ARTICLES.unshift({
-    slug:     'best-ai-coding-tools-2026-opencode-vs-cursor-vs-claude-code',
-    title:    'Best AI Coding Tools 2026: OpenCode vs Cursor vs Claude Code (Honest Comparison)',
-    cat:      'Comparison',
-    date:     'June 26, 2026',
-    readTime: '14 MIN READ',
-    excerpt:  'OpenCode, Cursor and Claude Code compared head-to-head in 2026. We tested all three across real developer workflows. Find the best AI coding tool for your stack.',
-    image:    'https://findbestai.app/assets/uploads/best-ai-coding-tools-2026-opencode-vs-cursor-vs-claude-code.png',
-    thumb:    'linear-gradient(135deg,#070d1a,#0f1e3d)',
-    emoji:    '💻'
-  });
+  /* Remove duplicate slugs and sort newest first */
+  (() => {
+    const seen = new Set();
+    const deduped = ARTICLES.filter(x => x && x.slug && !seen.has(x.slug) && seen.add(x.slug));
+    deduped.sort((x, y) => new Date(y.date) - new Date(x.date));
+    ARTICLES.length = 0;
+    ARTICLES.push(...deduped);
+  })();
 
-  /* Previously newest, now second */
-  ARTICLES.unshift({
-    slug:     'claude-fable-5-banned-by-us-government-now-available',
-    title:    'Claude Fable 5: Banned by the US Government — Now Available to Everyone',
-    cat:      'Breaking News',
-    date:     'July 3, 2026',
-    readTime: '12 MIN READ',
-    excerpt:  'The US Government banned Claude Fable 5 just 3 days after launch. 18 days later it\'s back online globally. Here\'s the full story, what Fable 5 can actually do, and how to access it right now.',
-    image:    'https://findbestai.app/assets/uploads/claude-fable-5-banned-by-us-government-now-available.png',
-    thumb:    'linear-gradient(135deg,#1a0000,#3d0000)',
-    emoji:    '🚨'
-  });
-
-  ARTICLES.unshift({
-    slug:     'what-is-gpt-5-6-sol-openai-flagship-model',
-    title:    "What Is GPT-5.6 Sol? OpenAI's New Flagship Model Fully Explained (2026)",
-    cat:      'AI News',
-    date:     'July 13, 2026',
-    readTime: '15 MIN READ',
-    excerpt:  'OpenAI just launched GPT-5.6 Sol — a unified flagship model that is ~40% faster than GPT-5.5, ships with a 1M token context window, cuts hallucinations by 55%, and is cheaper on the API. Full breakdown, benchmarks, pricing and how to use it.',
-    image:    'https://findbestai.app/assets/uploads/what-is-gpt-5-6-sol-openai-flagship-model.png',
-    thumb:    'linear-gradient(135deg,#002a22,#004d40)',
-    emoji:    '🌞'
-  });
-
-  ARTICLES.unshift({
-    slug:     'kimi-k3-china-biggest-open-source-ai-model',
-    title:    "Kimi K3 Is Here: China's Biggest Open Source AI Model Explained (2026)",
-    cat:      'AI News',
-    date:     'July 17, 2026',
-    readTime: '13 MIN READ',
-    excerpt:  "Moonshot AI just launched Kimi K3 — China's biggest open-source flagship AI model. Full 2026 breakdown: features, benchmarks, pricing, use cases and how Kimi K3 compares to GPT-5.6, Claude, Gemini and DeepSeek.",
-    image:    'https://findbestai.app/assets/uploads/kimi-k3-china-biggest-open-source-ai-model.png',
-    thumb:    'linear-gradient(135deg,#0d0d0d,#1a1a1a)',
-    emoji:    '🚀'
-  });
-
-  ARTICLES.unshift({
-    slug:     'best-ai-automation-tools-for-small-businesses-2026',
-    title:    'Best AI Automation Tools for Small Businesses (2026 Guide)',
-    cat:      'Guides',
-    date:     'July 21, 2026',
-    readTime: '15 MIN READ',
-    excerpt:  'The ultimate 2026 guide to the 15 best AI automation tools for small businesses. Compare Zapier, Make, n8n, Lindy, Gumloop, Relay.app, HubSpot AI, Notion AI and more — save hours, cut costs, work smarter.',
-    image:    'https://findbestai.app/assets/uploads/best-ai-automation-tools-for-small-businesses-2026.png',
-    thumb:    'linear-gradient(135deg,#0a1f3d,#1e3a8a)',
-    emoji:    '⚙️'
-  });
-
-  ARTICLES.unshift({
-    slug:     'best-ai-marketing-tools-2026',
-    title:    '10 Best AI Marketing Tools in 2026 (Tested & Compared)',
-    cat:      'Guides',
-    date:     'July 23, 2026',
-    readTime: '14 MIN READ',
-    excerpt:  'The ultimate 2026 guide to the 10 best AI marketing tools. Compare Jasper, Copy.ai, Writesonic, Surfer SEO, Canva AI, Semrush AI, Pictory, Synthesia, Ocoya and HubSpot AI for content, SEO, social, email and video.',
-    image:    'https://findbestai.app/assets/uploads/best-ai-marketing-tools-2026.png',
-    thumb:    'linear-gradient(135deg,#1a0033,#7c3aed)',
-    emoji:    '📈'
-  });
-
-  /* NEWEST — last unshift = index 0 = featured on blog page */
-  ARTICLES.unshift({
-    slug:     'best-multi-agent-ai-tools-2026',
-    title:    'Best Multi-Agent AI Tools in 2026: Tested & Compared',
-    cat:      'Guides',
-    date:     'July 25, 2026',
-    readTime: '15 MIN READ',
-    excerpt:  "From chatbots to agents — the top multi-agent AI tools for business automation in 2026. Compare Relevance AI, CrewAI, Lindy, Microsoft AutoGen and Vellum AI side by side.",
-    image:    'https://findbestai.app/assets/uploads/best-multi-agent-ai-tools-2026.png',
-    thumb:    'linear-gradient(135deg,#0b1220,#1e40af)',
-    emoji:    '🤖'
-  });
-
-  /* NEWEST — last unshift = index 0 = featured on blog page */
-  ARTICLES.unshift({
-    slug:     'best-ai-video-generators-for-youtube-shorts-2026',
-    title:    '7 Best AI Video Generators for YouTube Shorts in 2026 (Tested & Compared)',
-    cat:      'Guides',
-    date:     'August 15, 2026',
-    readTime: '14 MIN READ',
-    excerpt:  "A hands on 2026 guide to the 7 best AI video generators for YouTube Shorts. We tested InVideo AI, Pictory, HeyGen, Synthesia, Runway, ChatGPT Video and Luma AI on speed, captions, vertical output and price.",
-    image:    'https://findbestai.app/assets/uploads/best-ai-video-generators-for-youtube-shorts-2026.png',
-    thumb:    'linear-gradient(135deg,#12061f,#7c1d6f)',
-    emoji:    '🎬'
-  });
-
-  /* Featured article (first) */
   const a = ARTICLES[0];
   const fa = document.getElementById('featuredArticle');
   fa.innerHTML = `
