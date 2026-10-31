@@ -278,6 +278,7 @@ const TRENDING = [
 ];
 
 const ARTICLES = [
+  {slug:'death-of-ai-super-intelligence-rebrand',emoji:'🏛️',image:'/assets/uploads/the-death-of-ai-super-intelligence-era.png',thumb:'linear-gradient(135deg,#060d1e,#064e8a)',cat:'AI NEWS',date:'October 3, 2026',title:"The Death of 'AI'? Why the White House Is Calling It 'Super Intelligence'",excerpt:"The White House ordered federal agencies to replace AI with Super Intelligence. What Executive Order 14434 changes, what tech leaders signed, and why AI is not dead.",keywords:'superintelligence, AI superintelligence, artificial superintelligence, Executive Order 14434, White House AI policy, AI rebranding, AI vs AGI vs ASI',readTime:'14 MIN READ',author:'Find Best AI Editorial',authorRole:'AI Policy & Industry Research Desk',authorEmoji:'🏛️',tags:['Superintelligence','Artificial Intelligence','AI Policy','White House','AI Safety']},
   {
     slug: 'openai-gpt-6-astra',
     emoji: '🧠',
