@@ -1,0 +1,60 @@
+/* Find Best AI — Related Articles component (shared by every blog post)
+   Works with both token sets used across the site: --surface/--text/... and --sf/--tx/... */
+.fba-related{
+  --r-surface:var(--surface,var(--sf,#0f1320));
+  --r-surface2:var(--surface2,var(--sf2,#141928));
+  --r-surface3:var(--surface3,var(--sf3,#1a2035));
+  --r-border:var(--border,var(--b,rgba(99,179,255,.12)));
+  --r-border-md:var(--border-md,var(--bm,rgba(99,179,255,.25)));
+  --r-text:var(--text,var(--tx,#eef2ff));
+  --r-text2:var(--text2,var(--tx2,#8899bb));
+  --r-text3:var(--text3,var(--tx3,#6c7fa3));
+  --r-accent:var(--accent,var(--ac,#4fa3ff));
+  --r-accent2:var(--accent2,var(--ac2,#a78bfa));
+  clear:both;margin:56px 0 8px;padding-top:34px;border-top:1px solid var(--r-border);
+  font-family:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+.fba-related *,.fba-related *::before,.fba-related *::after{box-sizing:border-box}
+.fba-related .fba-rel-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.fba-related .fba-rel-kicker{display:block;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.66rem;letter-spacing:.14em;color:var(--r-accent);margin:0 0 6px}
+.fba-related .fba-rel-title-h{margin:0;padding:0;border:0;font-size:1.35rem;line-height:1.2;font-weight:800;letter-spacing:-.02em;color:var(--r-text)}
+.fba-related .fba-rel-all{font-size:.8rem;font-weight:600;color:var(--r-accent);text-decoration:none;white-space:nowrap;border:0}
+.fba-related .fba-rel-all:hover{text-decoration:underline}
+.fba-related .fba-rel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:0;padding:0}
+.fba-related a.fba-rel-card{
+  display:flex;flex-direction:column;min-width:0;overflow:hidden;text-decoration:none;color:var(--r-text);
+  background:var(--r-surface);border:1px solid var(--r-border);border-radius:16px;
+  transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;
+}
+.fba-related a.fba-rel-card:hover,.fba-related a.fba-rel-card:focus-visible{
+  transform:translateY(-4px);border-color:var(--r-border-md);
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.55),0 0 0 1px color-mix(in srgb,var(--r-accent) 18%,transparent);outline:none;
+}
+.fba-related .fba-rel-thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--r-surface3);display:flex;align-items:center;justify-content:center}
+.fba-related .fba-rel-emoji{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.6rem}
+.fba-related .fba-rel-thumb img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center;display:block;margin:0;border:0;border-radius:0;box-shadow:none;transition:transform .5s ease}
+.fba-related a.fba-rel-card:hover .fba-rel-thumb img{transform:scale(1.045)}
+.fba-related .fba-rel-thumb::after{content:'';position:absolute;inset:auto 0 0 0;height:46%;z-index:2;background:linear-gradient(to top,rgba(5,8,18,.55),transparent);pointer-events:none}
+.fba-related .fba-rel-cat{
+  position:absolute;z-index:3;top:10px;left:10px;padding:4px 10px;border-radius:999px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.62rem;letter-spacing:.1em;font-weight:600;line-height:1.3;color:#fff;
+  background:rgba(8,12,26,.72);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.fba-related .fba-rel-body{display:flex;flex-direction:column;gap:8px;padding:16px 18px 18px;flex:1}
+.fba-related .fba-rel-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:'JetBrains Mono',ui-monospace,monospace;font-size:.66rem;letter-spacing:.04em;color:var(--r-text2)}
+.fba-related .fba-rel-meta i{font-style:normal;opacity:.6}
+.fba-related .fba-rel-name{margin:0;padding:0;border:0;font-size:1rem;line-height:1.38;font-weight:700;letter-spacing:-.01em;color:var(--r-text);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fba-related .fba-rel-ex{margin:0;padding:0;font-size:.84rem;line-height:1.6;color:var(--r-text2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.fba-related .fba-rel-cta{margin-top:auto;padding-top:6px;font-size:.8rem;font-weight:700;color:var(--r-accent);display:inline-flex;align-items:center;gap:6px}
+.fba-related .fba-rel-cta span{transition:transform .25s ease}
+.fba-related a.fba-rel-card:hover .fba-rel-cta span{transform:translateX(4px)}
+@media(max-width:700px){
+  .fba-related{margin-top:44px}
+  .fba-related .fba-rel-grid{grid-template-columns:1fr;gap:16px}
+  .fba-related .fba-rel-title-h{font-size:1.2rem}
+  .fba-related .fba-rel-body{padding:14px 16px 16px}
+}
+@media(prefers-reduced-motion:reduce){
+  .fba-related a.fba-rel-card,.fba-related .fba-rel-thumb img,.fba-related .fba-rel-cta span{transition:none}
+  .fba-related a.fba-rel-card:hover{transform:none}
+}

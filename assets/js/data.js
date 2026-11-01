@@ -278,6 +278,18 @@ const TRENDING = [
 ];
 
 const ARTICLES = [
+  {
+    slug: 'openai-exponential-time-hypothesis-disproof',
+    emoji: '🧮',
+    image: '/assets/uploads/openai-exponential-time-hypothesis-disproof.png',
+    thumb: 'linear-gradient(135deg,#0a0a23,#1e3a8a)',
+    cat: 'AI NEWS',
+    date: 'October 31, 2026',
+    title: "AI vs a 27-Year-Old Computer Science Hypothesis: What OpenAI Claimed and What Experts Say", excerpt: "OpenAI says an internal AI model disproved the Exponential Time Hypothesis, a 1999 computer science belief. Anthropic reported a rival result a day later. Here's the claim, the Lean check, and what reviewers say.", keywords: 'OpenAI ETH disproof, Exponential Time Hypothesis, 3-SAT, Lean proof checker, Anthropic, P vs NP',
+    readTime: '12 MIN READ',
+    author: 'Find Best AI Editorial', authorRole: 'AI News & Research Desk', authorEmoji: '🧮',
+    tags: ['Exponential Time Hypothesis','OpenAI','3-SAT','Lean','AI in Math']
+  },
   {slug:'death-of-ai-super-intelligence-rebrand',emoji:'🏛️',image:'/assets/uploads/the-death-of-ai-super-intelligence-era.png',thumb:'linear-gradient(135deg,#060d1e,#064e8a)',cat:'AI NEWS',date:'October 3, 2026',title:"The Death of 'AI'? Why the White House Is Calling It 'Super Intelligence'",excerpt:"The White House ordered federal agencies to replace AI with Super Intelligence. What Executive Order 14434 changes, what tech leaders signed, and why AI is not dead.",keywords:'superintelligence, AI superintelligence, artificial superintelligence, Executive Order 14434, White House AI policy, AI rebranding, AI vs AGI vs ASI',readTime:'14 MIN READ',author:'Find Best AI Editorial',authorRole:'AI Policy & Industry Research Desk',authorEmoji:'🏛️',tags:['Superintelligence','Artificial Intelligence','AI Policy','White House','AI Safety']},
   {
     slug: 'openai-gpt-6-astra',
