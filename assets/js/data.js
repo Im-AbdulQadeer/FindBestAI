@@ -279,6 +279,18 @@ const TRENDING = [
 
 const ARTICLES = [
   {
+    slug: 'ai-stock-selloff-us-midterms-2026',
+    emoji: '📉',
+    image: '/assets/uploads/ai-stock-selloff-us-midterms-2026.png',
+    thumb: 'linear-gradient(135deg,#3b0d1c,#0a0d1f)',
+    cat: 'AI NEWS',
+    date: 'November 7, 2026',
+    title: "The $2.5 Trillion AI Stock Selloff: Did the US Midterms Really Trigger It?", excerpt: "Reports say the Nasdaq lost about $2.5 trillion on November 5, 2026. Here are the numbers, the data-center fears behind the AI stock selloff, and what analysts say happens next.", keywords: 'AI stock selloff, midterms stock market, $2.5 trillion selloff, Nasdaq, Nvidia, data center restrictions, AI bubble',
+    readTime: '11 MIN READ',
+    author: 'Find Best AI Editorial', authorRole: 'AI News & Markets Desk', authorEmoji: '📉',
+    tags: ['AI Stock Selloff','US Midterms','Nasdaq','Nvidia','Data Centers']
+  },
+  {
     slug: 'openai-exponential-time-hypothesis-disproof',
     emoji: '🧮',
     image: '/assets/uploads/openai-exponential-time-hypothesis-disproof.png',
