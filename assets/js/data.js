@@ -279,6 +279,18 @@ const TRENDING = [
 
 const ARTICLES = [
   {
+    slug: 'jensen-huang-resigns-nvidia-ceo-what-it-means',
+    emoji: '🏢',
+    image: '/assets/uploads/jensen-huang-resigns-nvidia-ceo-what-it-means.png',
+    thumb: 'linear-gradient(135deg,#14532d,#0a1020)',
+    cat: 'AI NEWS',
+    date: 'November 13, 2026',
+    title: "The End of an Era: How Jensen Huang’s Sudden Exit from Nvidia Shakes the Global AI Race", excerpt: "Jensen Huang resigned as Nvidia CEO on November 12, 2026. Here's what's confirmed, what's only alleged, who runs Nvidia now and what it means for the AI race.", keywords: 'Jensen Huang resigns, Nvidia CEO, Colette Kress, Nvidia leadership, AI chips, AI race',
+    readTime: '12 MIN READ',
+    author: 'Find Best AI Editorial', authorRole: 'AI News & Markets Desk', authorEmoji: '🏢',
+    tags: ['Jensen Huang','Nvidia','Nvidia CEO','AI Chips','AI Race']
+  },
+  {
     slug: 'ai-stock-selloff-us-midterms-2026',
     emoji: '📉',
     image: '/assets/uploads/ai-stock-selloff-us-midterms-2026.png',
