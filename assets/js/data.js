@@ -279,6 +279,18 @@ const TRENDING = [
 
 const ARTICLES = [
   {
+    slug: 'anthropic-ipo-1-4-trillion-ai-bubble-test',
+    emoji: '🏛️',
+    image: '/assets/uploads/anthropic-ipo-1-4-trillion-ai-bubble-test.png',
+    thumb: 'linear-gradient(135deg,#7c2d12,#0a1020)',
+    cat: 'AI NEWS',
+    date: 'November 17, 2026',
+    title: "Anthropic’s $1.4 Trillion IPO: Inside One of the Biggest Tech Listings Ever and Why Wall Street Calls It an AI Bubble Test", excerpt: "Anthropic plans to price its IPO on November 18 at $70 to $78 a share, a valuation of up to about $1.4 trillion. Here are the terms, the numbers and the AI bubble debate.", keywords: 'Anthropic IPO, ANT, Nasdaq, Anthropic valuation, AI bubble, Claude maker IPO',
+    readTime: '12 MIN READ',
+    author: 'Find Best AI Editorial', authorRole: 'AI News & Markets Desk', authorEmoji: '🏛️',
+    tags: ['Anthropic IPO','ANT','Nasdaq','AI Bubble','Claude']
+  },
+  {
     slug: 'jensen-huang-resigns-nvidia-ceo-what-it-means',
     emoji: '🏢',
     image: '/assets/uploads/jensen-huang-resigns-nvidia-ceo-what-it-means.png',
