@@ -279,6 +279,18 @@ const TRENDING = [
 
 const ARTICLES = [
   {
+    slug: 'riemann-hypothesis-ai-proof-claim-anthropic',
+    emoji: '🧮',
+    image: '/assets/uploads/riemann-hypothesis-ai-proof-claim-anthropic.png',
+    thumb: 'linear-gradient(135deg,#1e1b4b,#0a1020)',
+    cat: 'AI NEWS',
+    date: 'November 21, 2026',
+    title: "Did AI Just Solve Math’s Most Famous 167-Year-Old Mystery? Inside the Anthropic Mathematician’s Riemann Hypothesis Claim", excerpt: "An Anthropic mathematician claims a Riemann Hypothesis proof made with Claude, released as Lean code on November 20. Here's what was checked, what experts say and what's unverified.", keywords: 'Riemann Hypothesis, Anthropic, Claude, Levent Alpöge, Lean proof, AI mathematics',
+    readTime: '11 MIN READ',
+    author: 'Find Best AI Editorial', authorRole: 'AI News Desk', authorEmoji: '🧮',
+    tags: ['Riemann Hypothesis','Anthropic','Claude','AI Math','Lean']
+  },
+  {
     slug: 'anthropic-ipo-1-4-trillion-ai-bubble-test',
     emoji: '🏛️',
     image: '/assets/uploads/anthropic-ipo-1-4-trillion-ai-bubble-test.png',
